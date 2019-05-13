@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Courses on Craig Hutton</title>
-    <link>/https://laughing-panini-5d9a50.netlify.com/courses/</link>
+    <link>/courses/</link>
     <description>Recent content in Courses on Craig Hutton</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="/https://laughing-panini-5d9a50.netlify.com/courses/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/courses/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>
