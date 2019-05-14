@@ -1,0 +1,22 @@
+# Theme metadata
+name = "Default"
+
+# Is theme light or dark?
+light = true
+
+# red = "#e21212"
+
+# Primary
+primary = "#2962ff" # default  = "#2962ff", alters links and icons
+primary_light = "#768fff" #default = "#768fff", changes active tab highlight colors
+primary_dark = "#0039cb" #default = "#0039cb", changes background/fill color of active tab
+
+# Menu
+menu_primary = "#fff"
+menu_text = "#34495e"
+menu_text_active = "#2962ff"
+menu_title = "#2b2b2b"
+
+# Home sections
+home_section_odd = "rgb(255, 255, 255)"
+home_section_even = "rgb(247, 247, 247)"
