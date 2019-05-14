@@ -1,28 +1,36 @@
 ---
 authors:
 - admin
-bio: My research interests include distributed robotics, mobile computing and programmable
-  matter.
+bio: 
 education:
   courses:
   - course: Data Scientist with R
     institution: datacamp.com
     year: 2019
-  - course: PhD in Psychology
+  - course: Ph.D. in Psychology
     institution: McMaster University
     year: 2018
-  - course: Hons. BSc in Biopsychology
+  - course: Hons. B.Sc. in Biopsychology
     institution: University of Winnipeg
     year: 2013
 email: ""
-interests:
-- Neuroscience
-- Machine Learning and AI
+academic interests:
+- The neuropsychological basis of learning and memory
+- Determining how the brain ages and falls apart in affective disorders and neurodegenerative diseases
+- Making better decisions and predictions using statistics and machine learning
+- Scientific research and teaching
 - R
+
 name: Craig Hutton, PhD
 organizations:
-- name: University of Victoria
-  url: ""
+- name: Christie Lab, Division of Medical Sciences, University of Victoria
+  url: "https://www.uvic.ca/medsci/people/post-docs/index.php"
+- name: Integrative Analysis of Longitudinal Studies of Aging and Dementia research network (IALSA)
+  url: "https://www.ialsa.org/"
+- name: Data Science Studio, Institute on Aging & Lifelong Health, University of Victoria
+  url: "https://github.com/dss-ialh"
+
+
 role: Postdoctoral Fellow in Neuroscience
 social:
 - icon: envelope
