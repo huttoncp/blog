@@ -13,23 +13,64 @@ subtitle = ""
 # Add/remove as many `[[feature]]` blocks below as you like.
 # 
 # For available icons, see: https://sourcethemes.com/academic/docs/widgets/#icons
-
 [[feature]]
-  icon = "r-project"
-  icon_pack = "fab"
-  name = "R"
-  description = "90%"
+  icon = "brain"
+  icon_pack = "fas"
+  name = "Scientific Research"
+  description = "10+ years experience"
   
 [[feature]]
   icon = "chart-line"
   icon_pack = "fas"
-  name = "Statistics"
-  description = "100%"  
+  name = "Statistical Data Analysis"
+  description = "8 years experience" 
   
 [[feature]]
-  icon = "camera-retro"
+  icon = "r-project"
+  icon_pack = "fab"
+  name = "R"
+  description = "6 years experience"
+  
+[[feature]]
+  icon = "network-wired"
   icon_pack = "fas"
-  name = "Photography"
-  description = "10%"
+  name = "Machine Learning"
+  description = "3 years experience"
+  
+[[feature]]
+  icon = "chart-bar"
+  icon_pack = "fas"
+  name = "SPSS"
+  description = "3 years experience"
+
+[[feature]]
+  icon = "user-tie"
+  icon_pack = "fas"
+  name = "Project Management"
+  description = "6 years experience"
+  
+[[feature]]
+  icon = "user-graduate"
+  icon_pack = "fas"
+  name = "Teaching"
+  description = "5.5 years experience"
+
+[[feature]]
+  icon = "table"
+  icon_pack = "fas"
+  name = "Microsoft Excel"
+  description = "10+ years experience"
+  
+[[feature]]
+  icon = "file-word"
+  icon_pack = "far"
+  name = "Microsoft Word"
+  description = "10+ years experience"
+  
+[[feature]]
+  icon = "file-powerpoint"
+  icon_pack = "far"
+  name = "Microsoft PowerPoint"
+  description = "9 years experience"
 
 +++
