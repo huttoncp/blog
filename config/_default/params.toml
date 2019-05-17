@@ -3,7 +3,7 @@
 
 # Color theme.
 #   Choose from `default`, `ocean`, `forest`, `dark`, `apogee`, `1950s`, `coffee`, `cupcake`.
-color_theme = "default"
+color_theme = "ocean"
 # Enable users to switch between day and night mode?
 day_night = true
 
@@ -18,7 +18,7 @@ description = ""
 sharing_image = ""
 
 # Twitter username (without @). Used when a vistor shares your site on Twitter.
-twitter = ""
+twitter = "huttoncp"
 
 # Diplay a logo in navigation bar rather than title (optional).
 #   To enable, place an image in `static/img/` and reference its filename below. To disable, set the value to "".
@@ -37,7 +37,7 @@ math = false
 # Privacy pack
 #   Show a cookie consent message to visitors
 #   Anonymize IP in Google Analytics (if enabled)
-privacy_pack = false
+privacy_pack = true
 
 # Date and time format (refer to https://sourcethemes.com/academic/docs/customization/#date-format )
 #   Examples: "Mon, Jan 2, 2006" or "2006-01-02"
@@ -51,7 +51,7 @@ time_format = "3:04 PM"
 
 # Enter contact details (optional). To hide a field, clear it to "".
 email = "craighutton@uvic.ca"
-phone = "250-472-4244"
+phone = ""
 address = "Division of Medical Sciences, University of Victoria, Victoria, Canada"
 
 # Office hours: use `<br>` to insert a line break, or set to "" to remove office hours
@@ -105,9 +105,10 @@ plugins_js  = []
 ############################
 ## Advanced options       ##
 ############################
-
 # Get user avatars from Gravatar.com? (true/false)
 gravatar = false
+
+avatar = "portrait.jpg"
 
 # Align the main menu to the right of the page? (true/false)
 menu_align_right = false

@@ -1,6 +1,7 @@
 ---
 authors:
 - admin
+
 bio: 
 education:
   courses:
@@ -13,7 +14,9 @@ education:
   - course: Hons. B.Sc. in Biopsychology
     institution: University of Winnipeg
     year: 2013
-email: ""
+    
+email: "craighutton@uvic.ca"
+
 academic interests:
 - The neuropsychological basis of learning and memory
 - Determining how the brain ages and falls apart in affective disorders and neurodegenerative diseases
@@ -21,7 +24,7 @@ academic interests:
 - Scientific research and teaching
 - R
 
-name: Craig Hutton, PhD
+name: Dr. Craig P. Hutton
 organizations:
 - name: Christie Lab, Division of Medical Sciences, University of Victoria
   url: "https://www.uvic.ca/medsci/people/post-docs/index.php"
@@ -51,7 +54,7 @@ user_groups:
 - Visitors
 ---
 
-I am currently a postdoctoral researcher working in Dr. Brian Christie’s lab at the University of Victoria. My research uses a combination of methods from psychology, neuroscience, and statistics to examine how brain plasticity, learning, memory, and mood are affected by mild traumatic injuries (concussions) and neurodegenerative diseases.
+I am currently a postdoctoral research fellow working in Dr. Brian Christie’s lab at the University of Victoria. My research uses a combination of methods from psychology, neuroscience, and statistics to examine how brain plasticity, learning, memory, and mood are affected by mild traumatic injuries (concussions) and neurodegenerative diseases.
 
 I am also passionate about using statistical modeling and machine learning to accelerate my research using insights extracted from epidemiological studies. To this end I am collaborating with Drs. Scott Hofer, Parminder Raina, Sue Becker, and other members of the Integrative Analysis of Longitudinal Studies of Aging and Dementia research network to examine how environmental and lifestyle factors affect mental health and disease risk in epidemiological studies such as the Canadian Longitudinal Study of Aging.
 
