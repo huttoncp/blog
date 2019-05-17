@@ -11,7 +11,8 @@ tags:
   - R
   - Data Analysis
   - Statistics
-image:
+header:
+  image: '../../img/a-scientist-s-guide-to-r-introduction-and-basic-workflow.png'
   caption: ''
   focal_point: ''
 ---
@@ -54,3 +55,7 @@ Now that we know why you should use R, what are the main steps of analyzing data
 This represents the basic steps involved in the majority of data analysis tasks that one typically encounters in the social and behavioural sciences. As you might expect, for machine learning projects there are a few extra steps involved.
   
 Each of these sections will be covered in detail in future posts. Thanks for reading and I welcome any suggestions for future posts, comments or other feedback you might have.
+
+This post has been peer-reviewed and approved by the University of Victoria [Data Science Studio][DSSlink]
+
+[DSSlink]:https://dss-ialh.rbind.io/#about
