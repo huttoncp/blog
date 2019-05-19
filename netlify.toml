@@ -28,3 +28,27 @@ HUGO_VERSION = "0.55.5"
 
 [context.next.environment]
 HUGO_ENABLEGITINFO = "true"
+
+[[redirects]]
+from = "http://craig.rbind.io/*"
+to = "https://craig.rbind.io/:splat"
+status = 301
+force = true
+
+[[redirects]]
+from = "http://craig.netlify.com*"
+to = "https://craig.rbind.io/:splat"
+status = 301
+force = true
+
+[[redirects]]
+from = "http://laughing-panini-5d9a50.netlify.com*"
+to = "https://craig.rbind.io/:splat"
+status = 301
+force = true
+
+[[redirects]]
+from = "https://laughing-panini-5d9a50.netlify.com*"
+to = "https://craig.rbind.io/:splat"
+status = 301
+force = true
