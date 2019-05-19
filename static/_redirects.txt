@@ -1,0 +1,6 @@
+http://craig.rbind.io/*    https://craig.rbind.io/:splat  301!
+craig.rbind.io/*    https://craig.rbind.io/:splat  301!
+http://craig.netlify.com*    https://craig.rbind.io/:splat  301!
+craig.netlify.com*    https://craig.rbind.io/:splat  301!
+http://laughing-panini-5d9a50.netlify.com*    https://craig.rbind.io/:splat  301!
+laughing-panini-5d9a50.netlify.com*    https://craig.rbind.io/:splat  301!
