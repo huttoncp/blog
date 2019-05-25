@@ -22,7 +22,7 @@ twitter = "huttoncp"
 
 # Diplay a logo in navigation bar rather than title (optional).
 #   To enable, place an image in `static/img/` and reference its filename below. To disable, set the value to "".
-logo = ""
+logo = "icon-192.png"
 
 # Enable global source code highlighting? true/false
 # Documentation: https://sourcethemes.com/academic/docs/writing-markdown-latex/#highlighting-options
@@ -32,7 +32,7 @@ highlight = true
 
 # Enable global LaTeX math rendering?
 #   If false, you can enable it locally on a per page basis.
-math = false
+math = true
 
 # Privacy pack
 #   Show a cookie consent message to visitors
@@ -88,8 +88,8 @@ contact_links = [
 #   3: OpenStreetMap (Mapbox)
 map = 0
 map_api_key = ""
-latitude = "37.4275"
-longitude = "-122.1697"
+latitude = "48.461840"
+longitude = "-123.312441"
 zoom = 15
 
 ############################
@@ -107,8 +107,6 @@ plugins_js  = []
 ############################
 # Get user avatars from Gravatar.com? (true/false)
 gravatar = false
-
-avatar = "portrait.jpg"
 
 # Align the main menu to the right of the page? (true/false)
 menu_align_right = false
