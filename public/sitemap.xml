@@ -34,49 +34,60 @@
   </url>
   
   <url>
-    <loc>/post/a-scientist-s-guide-to-r-intro-basic-workflow/</loc>
-    <lastmod>2019-05-17T00:00:00+00:00</lastmod>
+    <loc>/post/a-scientist-s-guide-to-r-1-getting-data-into-r/</loc>
+    <lastmod>2019-06-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/categories/</loc>
-    <lastmod>2019-05-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/data-analysis/</loc>
-    <lastmod>2019-05-17T00:00:00+00:00</lastmod>
+    <lastmod>2019-06-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/data-analysis/</loc>
-    <lastmod>2019-05-17T00:00:00+00:00</lastmod>
+    <lastmod>2019-06-22T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/data-analysis/</loc>
+    <lastmod>2019-06-22T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/importing-data/</loc>
+    <lastmod>2019-06-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2019-05-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/r/</loc>
-    <lastmod>2019-05-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
+    <lastmod>2019-06-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/categories/r/</loc>
-    <lastmod>2019-05-17T00:00:00+00:00</lastmod>
+    <lastmod>2019-06-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/statistics/</loc>
-    <lastmod>2019-05-17T00:00:00+00:00</lastmod>
+    <loc>/tags/r/</loc>
+    <lastmod>2019-06-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2019-06-22T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/post/a-scientist-s-guide-to-r-intro-basic-workflow/</loc>
+    <lastmod>2019-05-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -86,7 +97,7 @@
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>/tags/statistics/</loc>
     <lastmod>2019-05-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

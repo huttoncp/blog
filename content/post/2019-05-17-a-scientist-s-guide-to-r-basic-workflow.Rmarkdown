@@ -1,6 +1,6 @@
 ---
 title: 'A Scientist''s Guide to R: Introduction and Basic Workflow'
-author: Dr. Craig Hutton, Ph.D.
+author: 'Craig Hutton, Ph.D.'
 date: '2019-05-17'
 slug: a-scientist-s-guide-to-r-intro-basic-workflow
 categories:

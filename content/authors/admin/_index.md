@@ -26,6 +26,7 @@ academic interests:
 
 name: Dr. Craig P. Hutton
 organizations:
+- name: University of Victoria
 - name: Christie Lab, Division of Medical Sciences, University of Victoria
   url: "https://www.uvic.ca/medsci/people/post-docs/index.php"
 - name: Integrative Analysis of Longitudinal Studies of Aging and Dementia research network (IALSA)

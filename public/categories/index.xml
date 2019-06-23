@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
-    <lastBuildDate>Fri, 17 May 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 22 Jun 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>Data Analysis</title>
       <link>/categories/data-analysis/</link>
-      <pubDate>Fri, 17 May 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 22 Jun 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/data-analysis/</guid>
       <description></description>
@@ -24,7 +24,7 @@
     <item>
       <title>R</title>
       <link>/categories/r/</link>
-      <pubDate>Fri, 17 May 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 22 Jun 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/r/</guid>
       <description></description>

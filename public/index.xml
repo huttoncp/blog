@@ -109,6 +109,287 @@
     </item>
     
     <item>
+      <title>A Scientist&#39;s Guide to R: Step 1. Getting Data into R</title>
+      <link>/post/a-scientist-s-guide-to-r-1-getting-data-into-r/</link>
+      <pubDate>Sat, 22 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/a-scientist-s-guide-to-r-1-getting-data-into-r/</guid>
+      <description>
+
+&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#tldr&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;1&lt;/span&gt; &lt;strong&gt;TL;DR&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;2&lt;/span&gt; &lt;strong&gt;Introduction&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#installing-and-loading-r-packages&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;3&lt;/span&gt; &lt;strong&gt;Installing and loading R packages&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#how-to-get-your-data-into-r&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;4&lt;/span&gt; &lt;strong&gt;How to get your data into R&lt;/strong&gt;&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#comma-delimited-files-.csv-files&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;4.1&lt;/span&gt; comma delimited files (.csv) files&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#tab-delimited-.txt-files&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;4.2&lt;/span&gt; tab delimited (.txt) files&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#files-with-other-delimiting-characters-also-.txt&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;4.3&lt;/span&gt; files with other delimiting characters (also .txt)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#microsoft-excel-files-.xlsx-.xls&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;4.4&lt;/span&gt; Microsoft Excel files (.xlsx, .xls)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#files-from-spss-sas-or-stata&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;4.5&lt;/span&gt; files from SPSS, SAS, or Stata&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#fixed-width-files-.txt-.gz-.bz2-.xz-.zip-etc.&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;4.6&lt;/span&gt; fixed width files (.txt, .gz, .bz2, .xz, .zip, etc.)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#htmlxml-files&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;4.7&lt;/span&gt; html/xml files&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#javascript-object-notation-json-files&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;4.8&lt;/span&gt; JavaScript Object Notation (&lt;span&gt;JSON&lt;/span&gt;) files&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#notes&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;4.9&lt;/span&gt; notes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&#34;tldr&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;span class=&#34;header-section-number&#34;&gt;1&lt;/span&gt; &lt;strong&gt;TL;DR&lt;/strong&gt;&lt;/h1&gt;
+&lt;p&gt;As the second post in the Scientist’s Guide to R series (click &lt;a href=&#34;https://craig.rbind.io/post/a-scientist-s-guide-to-r-intro-basic-workflow/&#34;&gt;here&lt;/a&gt; for the 1st post), this post will goes into the first step of the data analysis with R process: importing your data from a variety of common &lt;a href=&#34;https://en.wikipedia.org/wiki/Flat-file_database&#34;&gt;“flat file”&lt;/a&gt; sources (.csv, .txt, .xlsx, etc).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;span class=&#34;header-section-number&#34;&gt;2&lt;/span&gt; &lt;strong&gt;Introduction&lt;/strong&gt;&lt;/h1&gt;
+&lt;p&gt;So you’ve spent weeks/months/years conducting a carefully planned research project and collected a bunch of data, and want to know how the study turned out using the advanced functionality of R? The first things you will need to do are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;i) Install R &amp;amp; R studio.&lt;/strong&gt; Install R using &lt;a href=&#34;https://cloud.r-project.org/&#34;&gt;this link&lt;/a&gt;. The R studio integrated development environment (IDE) is available &lt;a href=&#34;https://www.rstudio.com/products/rstudio/download/#download&#34;&gt;here&lt;/a&gt; (R studio is not necessary to use R but it is strongly recommended). For instructional videos on using R studio, see &lt;a href=&#34;https://resources.rstudio.com/&#34;&gt;these&lt;/a&gt; videos.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;ii) install and load R add-on packages.&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;iii) import your data.&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;After you’ve installed R studio, read on for a brief explanation of how to install and load R packages. These additional greatly packages expand the functionality of R (e.g. allow you to build webpages like this blog using the &lt;a href=&#34;https://bookdown.org/yihui/blogdown/&#34;&gt;blogdown&lt;/a&gt; package), making it much easier to learn and use. While there are many different ways to do things using R, this guide will cover the ways I have found in practice to have the right balance of effectiveness, efficiency, and accessibility/transparency. There are many excellent books and online resources for those wanting to learn more about alternative methods. However, to avoid confusing those attempting to learn data analysis with R for the 1st time, the scope of these tutorials will be limited to recommended methods only.&lt;/p&gt;
+&lt;p&gt;After explaining how to install and load R packages, this post will cover how to easily import data from a variety of common sources ranging from comma-separated-variable (.csv) files, to excel spreadsheets, and fixed width files.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;installing-and-loading-r-packages&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;span class=&#34;header-section-number&#34;&gt;3&lt;/span&gt; &lt;strong&gt;Installing and loading R packages&lt;/strong&gt;&lt;/h1&gt;
+&lt;p&gt;Installing &amp;amp; loading packages into R is a very straightforward process. For packages hosted on &lt;a href=&#34;https://cran.r-project.org/web/packages/available_packages_by_name.html&#34;&gt;CRAN&lt;/a&gt; (which is where the “official” versions of most R packages reside), simply run the following:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#To include comments in R (like this), begin the comment with &amp;quot;#&amp;quot;, which will tell R
+#to treat the following info as a comment and not try to run it as live R code.
+
+#installation command
+install.packages(&amp;quot;package_name&amp;quot;) #replace &amp;quot;package_name&amp;quot; with the name of the package 
+# you want to install
+
+#load the package when you want to use it using the base R library() function
+library(package_name) #replace &amp;quot;package_name&amp;quot; with the name of the package 
+#you&amp;#39;ve installed and want to use
+
+# for example, some of the functions I recommend below for importing data use
+# the readr package, which is part of the tidyverse suite of pacakges:
+
+install.packages(&amp;quot;readr&amp;quot;) #replace &amp;quot;package_name&amp;quot; with the name of the package 
+
+library(readr)
+
+#or if you want all of the tidyverse packages (which we will be using throughout this guide)
+install.packages(&amp;quot;tidyverse&amp;quot;)
+
+library(tidyverse) #loads readr along with other helpful packages, like ggplot2 for graphing.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For packages hosted on GitHub, which are typically in development, the process is slightly more complicated but still requires only couple of lines of code:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#1. first install and load the devtools package
+
+#install devtools from CRAN
+install.packages(&amp;quot;devtools&amp;quot;)
+
+#load the devtools package
+library(devtools)
+
+#2. install the package of interest from its github repository using 
+# the install_github function()
+
+install_github(&amp;quot;repository_name/package_name&amp;quot;)
+
+# For example, to get the development version of the tidyr package, 
+# which contains excellent new functions for converting between the long and wide 
+# forms of data (there will be a later post on this), you would run:
+
+install_github(&amp;quot;tidyverse/tidyr&amp;quot;) #contains more flexible 
+# pivoting functions than the CRAN version of tidyr.
+
+# Packages installed from GitHub can then also be loaded using the library() function 
+# and the package name only:
+
+library(tidyr)
+
+#N.B. If you are using R studio, you can also install packages from CRAN 
+# by clicking on the packages tab of the lower right panel and clicking the &amp;quot;Install&amp;quot; button&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;how-to-get-your-data-into-r&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;span class=&#34;header-section-number&#34;&gt;4&lt;/span&gt; &lt;strong&gt;How to get your data into R&lt;/strong&gt;&lt;/h1&gt;
+&lt;p&gt;Getting your data into R is also easy. Commands and packages specific to different data sources are listed below:&lt;/p&gt;
+&lt;div id=&#34;comma-delimited-files-.csv-files&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;4.1&lt;/span&gt; comma delimited files (.csv) files&lt;/h2&gt;
+&lt;p&gt;CSV files are the most common type of data file you’ll encounter as a data analyst. These can be imported using the &lt;strong&gt;read_csv()&lt;/strong&gt; function from the &lt;a href=&#34;https://readr.tidyverse.org/articles/readr.html&#34;&gt;&lt;strong&gt;readr&lt;/strong&gt;&lt;/a&gt; package.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#using the readr package:
+library(readr)
+
+read_csv(&amp;quot;directory_path/filename.csv&amp;quot;) #e.g. C:/Users/your_name/Desktop/documents/data.csv
+
+# If you want to use the data after importing it, assign it to be stored in an object using 
+# the assignment operator: &amp;quot;&amp;lt;-&amp;quot;
+
+data &amp;lt;- read_csv(&amp;quot;directory_path/filename.csv&amp;quot;)
+
+# N.B. If you are using R studio, you can use the keyboard shortcut 
+# [&amp;quot;alt&amp;quot; + &amp;quot;-&amp;quot;] to insert &amp;quot;&amp;lt;-&amp;quot;  
+
+# you can then examine the data by simply running the assigned name
+
+data
+
+# or clicking on it in the &amp;quot;environment&amp;quot; window in R studio (by default it is 
+# in the top right panel)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tab-delimited-.txt-files&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;4.2&lt;/span&gt; tab delimited (.txt) files&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(readr)
+
+data &amp;lt;- read_tsv(&amp;quot;directory_path/filename.txt&amp;quot;)
+
+#yes, it is that easy ;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;files-with-other-delimiting-characters-also-.txt&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;4.3&lt;/span&gt; files with other delimiting characters (also .txt)&lt;/h2&gt;
+&lt;p&gt;The read_csv() and read_tsv() functions are actually convienience wrappers for the workhorse function of the readr package, &lt;strong&gt;read_delim()&lt;/strong&gt;, which can be used to read in data files with any delimiting character (e.g. “-”, “$”, etc.). This is only slightly more complicated, in that you have to specify what the delimiting character is using the &lt;strong&gt;delim&lt;/strong&gt; argument.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(readr)
+
+data &amp;lt;- read_delim(&amp;quot;directory_path/filename.txt&amp;quot;, delim = &amp;quot;|&amp;quot;) 
+# specify the file path/name.txt and the delimiting character, 
+# whatever it happens to be for your data file&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;microsoft-excel-files-.xlsx-.xls&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;4.4&lt;/span&gt; Microsoft Excel files (.xlsx, .xls)&lt;/h2&gt;
+&lt;p&gt;Excel files are fairly easy to import using the &lt;a href=&#34;https://readxl.tidyverse.org/&#34;&gt;&lt;strong&gt;readxl&lt;/strong&gt;&lt;/a&gt; package. Since these files may contain several speadsheets, you also have to specify the sheet that you want to use… unless it is the first one, which is assumed by default.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(readxl)
+
+# If you want the first sheet then you can just specify the path
+data &amp;lt;- read_excel(path = &amp;quot;path/file.xlsx&amp;quot;)
+
+# If you want a different sheet then you have to specify which one using the sheet argument
+
+data &amp;lt;- read_excel(path = &amp;quot;path/file.xlsx&amp;quot;,
+                   sheet = &amp;quot;sheet_name&amp;quot;)
+
+# Using the excel_sheets helper function makes things easier by showing you what the names 
+# of each sheet are in the excel file.
+excel_sheets(&amp;quot;path/file.xlsx&amp;quot;)
+
+# You can also specify the sheet using an integer
+data &amp;lt;- read_excel(path = &amp;quot;path/file.xlsx&amp;quot;,
+                   sheet = 2) #to get the 2nd sheet&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;files-from-spss-sas-or-stata&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;4.5&lt;/span&gt; files from SPSS, SAS, or Stata&lt;/h2&gt;
+&lt;p&gt;If you’ve decided to start using R because you’re tired of working in SPSS, SAS, or Stata (or are collaborating with someone who uses these programs), you can also easily import your existing SPSS or SAS data files directly into R using the &lt;a href=&#34;https://cran.r-project.org/web/packages/haven/index.html&#34;&gt;haven&lt;/a&gt; package.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(haven)
+
+#SAS files
+data &amp;lt;- read_sas(&amp;quot;file_name.sas7bdat&amp;quot;) #if the file is in your working directory
+#otherwise specify the file path as well, e.g. &amp;quot;path/file_name.sas7bdat&amp;quot;
+
+#SPSS files
+data &amp;lt;- read_sav(&amp;quot;file_name.sav&amp;quot;)
+
+#Stata files
+data &amp;lt;- read_dta(&amp;quot;file_name.dta&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;fixed-width-files-.txt-.gz-.bz2-.xz-.zip-etc.&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;4.6&lt;/span&gt; fixed width files (.txt, .gz, .bz2, .xz, .zip, etc.)&lt;/h2&gt;
+&lt;p&gt;Fixed width files are a less common type of data source where the values are separated not by tabs or specific characters but a set amount of white/empty space other than a tab. These can be loaded using the &lt;strong&gt;read_fwf()&lt;/strong&gt; function in &lt;strong&gt;readr&lt;/strong&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(readr)
+
+# For these fixed width files, you can specify column positions (i.e. breaks between values)
+# in multiple ways. See https://readr.tidyverse.org/reference/read_fwf.html, 
+# which I used to obtain templates of the commands below, for further details.
+
+# The main arguments you need to include are file = the file path/name.extension,
+# col_positions, and col_names().
+
+# the col_positions argument is different from the others we&amp;#39;ve see so far (e.g. delim) 
+# in that it is primarily intended to be used by specifying a call to another function, 
+# such as fwf_empty (see below), which tells read_fwf() how you want to specify the columns.
+# some options are:
+
+# 1. Guess based on position of empty columns using the fwf_empty helper function 
+# as an argument(easiest):
+
+file_path &amp;lt;- c(&amp;quot;directory_path/filename.txt&amp;quot;) #store the file path/name as &amp;quot;file_path&amp;quot;
+
+data &amp;lt;- read_fwf(file = file_path,
+                 col_positions = fwf_empty(file_path, 
+                                           col_names = c(&amp;quot;col_1&amp;quot;, &amp;quot;col_2&amp;quot;, &amp;quot;col_3&amp;quot;)) 
+                 #replace the above labels with column names you want to use.
+                 #note that col_names is an argument supplied to the fwf_empty helper function
+                 #which is then passed along to the read_fwf function.
+
+# 2. Using a vector of field widths (a bit more tedious) with 
+# the fwf_widths() helper function:
+
+data &amp;lt;- read_fwf(file = file_path,
+                 col_positions = fwf_widths(c(10, 7, 19, 290),
+                 #replace the above with values appropriate to your data 
+                           col_names = c(&amp;quot;col_1&amp;quot;, &amp;quot;col_2&amp;quot;, &amp;quot;col_3&amp;quot;))
+                 
+# 3. Specifying starting and ending positions of the columns with paired vectors
+# using the fwf_positions() helper function
+
+read_fwf(file = file_path, 
+         fwf_positions(start = c(1, 50), #which positions do the columns start at
+                       end = c(25, 75), #which positions do the columns end at
+                       col_names = c(&amp;quot;col_1&amp;quot;, &amp;quot;col_2&amp;quot;))) #list of column names
+
+# 4. Using named arguments for starting and ending positions with 
+# the fwf_cols() helper function:
+
+read_fwf(file = file_path, 
+         col_positions = fwf_cols(name = c(1, 10), 
+                                  birthdate = c(20, 50),
+                                  age = c(60, 63)))
+
+# 5. Via named arguments and column widths, also using the fwf_cols helper function:
+
+read_fwf(file = file_path,
+         fwf_cols(subject_id = 15, 
+         #e.g. the subject_id column contains data in the 1st 15 characters of each row
+                  test_score = 20))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;htmlxml-files&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;4.7&lt;/span&gt; html/xml files&lt;/h2&gt;
+&lt;p&gt;Those who need to scrape data from the web for their research can use the &lt;a href=&#34;https://rdrr.io/cran/rvest/&#34;&gt;rvest&lt;/a&gt; and &lt;a href=&#34;https://cran.r-project.org/web/packages/XML/index.html&#34;&gt;XML&lt;/a&gt; packages. Since this is not what most experimental scientists (at least among the many I’ve had the pleasure of meeting) will need to do, I have only provided the necessary functions below without a detailed explanation. See &lt;a href=&#34;http://bradleyboehmke.github.io/2015/12/scraping-html-tables.html&#34;&gt;this&lt;/a&gt; blog post for further details.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#HTML pages
+library(rvest)
+
+#store the url
+url &amp;lt;- c(&amp;quot;http://www.webpagename.com&amp;quot;)
+
+#read in the html data
+web_page &amp;lt;- read_html(url)
+
+#extract the html info for the target table
+web_page_table &amp;lt;- html_nodes(web_page, &amp;quot;table&amp;quot;)
+
+#parse the html table info into a data set that you can use in R 
+data &amp;lt;- html_table(web_page_table, fill = TRUE)
+
+#XML
+library(XML)
+
+#read in the html data
+data &amp;lt;- readHTMLTable(url)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;javascript-object-notation-json-files&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;4.8&lt;/span&gt; JavaScript Object Notation (&lt;a href=&#34;https://www.json.org/&#34;&gt;JSON&lt;/a&gt;) files&lt;/h2&gt;
+&lt;p&gt;JSON files are way of storing JavaScript objects as text that can easily be imported in to R using the &lt;strong&gt;fromJSON()&lt;/strong&gt; function from the &lt;a href=&#34;https://cran.r-project.org/web/packages/jsonlite/vignettes/json-aaquickstart.html&#34;&gt;jsonlite&lt;/a&gt; package. Science trainees are unlikely to encounter this type of data unless they are working with web sources, e.g. twitter. See this &lt;a href=&#34;https://www.digitalocean.com/community/tutorials/an-introduction-to-json&#34;&gt;link&lt;/a&gt; for an accessible overview.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(jsonlite)
+r_bloggers_data &amp;lt;- fromJSON(&amp;quot;~/Desktop/r-bloggers.json&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;notes&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;4.9&lt;/span&gt; notes&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;A link to the next post (on basic operations and data structures) in R will be added in the near future.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Exporting data is also easy and will be covered in a later post. E.g. for readr functions this is usually done via the appropriately named write_ functions, like write_csv().&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;By default, the above functions will assume that the first row of your data file contains the variable names. For the &lt;a href=&#34;https://readr.tidyverse.org/&#34;&gt;readr&lt;/a&gt; package functions, you can disable this by setting the &lt;strong&gt;col_names&lt;/strong&gt; argument to &lt;strong&gt;FALSE&lt;/strong&gt;, or you can provide a string/character vector of names to use instead by setting &lt;strong&gt;col_names&lt;/strong&gt; to the name of the string vector (see the next post for more on data vectors).&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Arguments to a function can either be specified by name (which I have done here for the sake of transparency) or by position to save some typing. E.g. &lt;em&gt;read_fwf(file_path, fwf_cols(subject_id = 15, test_score = 20))&lt;/em&gt; is equivalent to the read_fwf syntax I provided above with argument names specified. There will be more on this in the next section of the blog.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;An R package only needs to be loaded once in an R session for the functions it contains to be available for use throughout the same session.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;There are also ways to import data from relational databases using SQL syntax. However, these methods go beyond the scope of this blog series since they are not relevant to most academic researchers and may be covered in the distant future if/when I write a second volume on R for machine learning and data science. A decent introduction to importing data from these sources can be found &lt;a href=&#34;https://datacarpentry.org/R-ecology-lesson/05-r-and-databases.html&#34;&gt;here&lt;/a&gt;. Those who are interested in starting to learn SQL (e.g. for work) would benefit from the free &lt;a href=&#34;https://www.datacamp.com/courses/intro-to-sql-for-data-science&#34;&gt;Introduction to SQL for Data Science&lt;/a&gt; course provided by datacamp.com, which is where I started learning how to use SQL.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Thank you for reading and I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>A Scientist&#39;s Guide to R: Introduction and Basic Workflow</title>
       <link>/post/a-scientist-s-guide-to-r-intro-basic-workflow/</link>
       <pubDate>Fri, 17 May 2019 00:00:00 +0000</pubDate>
