@@ -17,7 +17,7 @@ header:
 output:
   blogdown::html_page:
     number_sections: true
-    toc: true
+    toc: yes
 ---
 
 # **TL;DR**
@@ -34,7 +34,7 @@ So you've spent weeks/months/years conducting a carefully planned research proje
   
   * **iii) import your data.**
   
-After you've installed R studio, read on for a brief explanation of how to install and load R packages. These additional greatly packages expand the functionality of R (e.g. allow you to build webpages like this blog using the [blogdown](https://bookdown.org/yihui/blogdown/) package), making it much easier to learn and use. While there are many different ways to do things using R, this guide will cover the ways I have found in practice to have the right balance of effectiveness, efficiency, and accessibility/transparency. There are many excellent books and online resources for those wanting to learn more about alternative methods. However, to avoid confusing those attempting to learn data analysis with R for the 1st time, the scope of these tutorials will be limited to recommended methods only. 
+After you've installed R studio, read on for a brief explanation of how to install and load R packages. These additional packages greatly expand the functionality of R (e.g. allow you to build webpages like this blog using the [blogdown](https://bookdown.org/yihui/blogdown/) package), making it much easier to learn and use. While there are many different ways to do things using R, this guide will cover the ways I have found in practice to have the right balance of effectiveness, efficiency, and accessibility/transparency. There are many excellent books and online resources for those wanting to learn more about alternative methods. However, to avoid confusing those attempting to learn data analysis with R for the 1st time, the scope of these tutorials will be limited to recommended methods only. 
 
 After explaining how to install and load R packages, this post will cover how to easily import data from a variety of common sources ranging from comma-separated-variable (.csv) files, to excel spreadsheets, and fixed width files.  
 
@@ -303,14 +303,14 @@ r_bloggers_data <- fromJSON("~/Desktop/r-bloggers.json")
   
   * Exporting data is also easy and will be covered in a later post. E.g. for readr functions this is usually done via the appropriately named write_ functions, like write_csv().
   
-  * By default, the above functions will assume that the first row of your data file contains the variable names. For the [readr](https://readr.tidyverse.org/) package functions, you can disable this by setting the **col_names** argument to **FALSE**, or you can provide a string/character vector of names to use instead by setting **col_names** to the name of the string vector (see the next post for more on data vectors). 
+  * By default, the above [**readr**](https://readr.tidyverse.org/) functions will assume that the first row of your data file contains the variable names. For these functions, you can disable this by setting the **col_names** argument to **FALSE**, or you can provide a string/character vector of names to use instead by setting **col_names** to the name of the string vector (see the next post for more on data vectors). 
   
   
-  * Arguments to a function can either be specified by name (which I have done here for the sake of transparency) or by position to save some typing. E.g. *read_fwf(file_path, fwf_cols(subject_id = 15, test_score = 20))* is equivalent to the read_fwf syntax I provided above with argument names specified. There will be more on this in the next section of the blog.
+  * Arguments to a function can either be specified by name (which I have done here for the sake of transparency) or by position to save some typing. E.g. `read_fwf(file_path, fwf_cols(subject_id = 15, test_score = 20))` is equivalent to the read_fwf syntax I provided above with argument names specified. There will be more on this in the next section of the blog.
 
   * An R package only needs to be loaded once in an R session for the functions it contains to be available for use throughout the same session.  
 
-  * There are also ways to import data from relational databases using SQL syntax. However, these methods go beyond the scope of this blog series since they are not relevant to most academic researchers and may be covered in the distant future if/when I write a second volume on R for machine learning and data science. A decent introduction to importing data from these sources can be found [here](https://datacarpentry.org/R-ecology-lesson/05-r-and-databases.html). Those who are interested in starting to learn SQL (e.g. for work) would benefit from the free [Introduction to SQL for Data Science](https://www.datacamp.com/courses/intro-to-sql-for-data-science) course provided by datacamp.com, which is where I started learning how to use SQL. 
+  * There are also ways to import data from relational databases using SQL syntax. However, these methods go beyond the scope of this blog series since they are not relevant to most academic researchers and may be covered in the distant future if/when I write a second volume on R for machine learning and data science. An introduction to importing data from these sources can be found [here](https://datacarpentry.org/R-ecology-lesson/05-r-and-databases.html). Those who are interested in starting to learn SQL (e.g. for work) would benefit from the free [Introduction to SQL for Data Science](https://www.datacamp.com/courses/intro-to-sql-for-data-science) course provided by datacamp.com, which is where I started learning how to use SQL. 
 
 Thank you for reading and I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.
 
