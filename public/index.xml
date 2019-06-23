@@ -436,6 +436,8 @@ r_bloggers_data &amp;lt;- fromJSON(&amp;quot;~/Desktop/r-bloggers.json&amp;quot;
 
 &lt;p&gt;Each of these sections will be covered in detail in future posts. Thanks for reading and I welcome any suggestions for future posts, comments or other feedback you might have.&lt;/p&gt;
 
+&lt;p&gt;Click &lt;a href=&#34;https://craig.rbind.io/post/a-scientist-s-guide-to-r-1-getting-data-into-r/&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt; to continue to the next post on installing R, R packages, and importing data.&lt;/p&gt;
+
 &lt;p&gt;This post has been peer-reviewed and approved by the University of Victoria &lt;a href=&#34;https://dss-ialh.rbind.io/#about&#34; target=&#34;_blank&#34;&gt;Data Science Studio&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
