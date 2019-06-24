@@ -28,7 +28,7 @@ As the second post in the Scientist's Guide to R series (click [here](https://cr
 
 So you've spent weeks/months/years conducting a carefully planned research project and collected a bunch of data, and want to know how the study turned out using the advanced functionality of R? The first things you will need to do are:
 
-  * **i) Install R & R studio.** Install R using [this link](https://cloud.r-project.org/). The R studio integrated development environment (IDE) is available [here](https://www.rstudio.com/products/rstudio/download/#download) (R studio is not necessary to use R but it is strongly recommended). For instructional videos on using R studio, see [these](https://resources.rstudio.com/) videos.
+  * **i) Install R & R studio.** Install R using [this link](https://cloud.r-project.org/). The R studio integrated development environment (IDE) is available [here](https://www.rstudio.com/products/rstudio/download/#download) (R studio is not necessary to use R but it is strongly recommended). For instructions on using R studio, see [these videos](https://resources.rstudio.com/).
   
   * **ii) install and load R add-on packages.** 
   
@@ -179,7 +179,7 @@ data <- read_excel(path = "path/file.xlsx",
 
 ## files from SPSS, SAS, or Stata
 
-If you've decided to start using R because you're tired of working in SPSS, SAS, or Stata (or are collaborating with someone who uses these programs), you can also easily import your existing SPSS or SAS data files directly into R using the [haven](https://cran.r-project.org/web/packages/haven/index.html) package.
+If you've recently switched from working in SPSS, SAS, or Stata (or are collaborating with someone who uses these programs), you can also easily import your existing SPSS or SAS data files directly into R using the [haven](https://cran.r-project.org/web/packages/haven/index.html) package.
 
 ```{r, eval = F}
 library(haven)
@@ -301,7 +301,7 @@ r_bloggers_data <- fromJSON("~/Desktop/r-bloggers.json")
 
   * A link to the next post (on basic operations and data structures) in R will be added in the near future.
   
-  * Exporting data is also easy and will be covered in a later post. E.g. for readr functions this is usually done via the appropriately named write_ functions, like write_csv().
+  * Exporting data is also easy and will be covered in a later post. E.g. for readr functions this is usually done via the appropriately named *write_* functions, like **write_csv()**.
   
   * By default, the above [**readr**](https://readr.tidyverse.org/) functions will assume that the first row of your data file contains the variable names. For these functions, you can disable this by setting the **col_names** argument to **FALSE**, or you can provide a string/character vector of names to use instead by setting **col_names** to the name of the string vector (see the next post for more on data vectors). 
   
