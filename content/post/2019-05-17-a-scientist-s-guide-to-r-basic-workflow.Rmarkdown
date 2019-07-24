@@ -63,4 +63,4 @@ This post has been peer-reviewed and approved by the University of Victoria [Dat
 
 [DSSlink]:https://dss-ialh.rbind.io/#about
 
-Note: The workflow I recommend above is very similar to the well-known data science workflow advocated by Grolemund and Wickham's [R for data science](https://r4ds.had.co.nz/explore-intro.html) book. However, an important difference is that I recommend that most/all of the exploration and wrangling of the data be completed prior to advancing to the modelling stage. The idea is to sort out the structure of your final analytical dataset first and fit fewer models to save time.
+Note: The workflow I recommend above is very similar to the well-known data science workflow advocated by Grolemund and Wickham in their [R for data science](https://r4ds.had.co.nz/explore-intro.html) book. However, an important difference is that I recommend that most/all of the exploration and wrangling of the data be completed prior to advancing to the modelling stage. The idea is to sort out the structure of your final analytical dataset first and fit fewer models to save time.

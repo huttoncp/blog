@@ -453,7 +453,7 @@ r_bloggers_data &amp;lt;- fromJSON(&amp;quot;~/Desktop/r-bloggers.json&amp;quot;
 
 &lt;p&gt;This post has been peer-reviewed and approved by the University of Victoria &lt;a href=&#34;https://dss-ialh.rbind.io/#about&#34; target=&#34;_blank&#34;&gt;Data Science Studio&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;Note: The workflow I recommend above is very similar to the well-known data science workflow advocated by Grolemund and Wickham&amp;rsquo;s &lt;a href=&#34;https://r4ds.had.co.nz/explore-intro.html&#34; target=&#34;_blank&#34;&gt;R for data science&lt;/a&gt; book. However, an important difference is that I recommend that most/all of the exploration and wrangling of the data be completed prior to advancing to the modelling stage. The idea is to sort out the structure of your final analytical dataset first and fit fewer models to save time.&lt;/p&gt;
+&lt;p&gt;Note: The workflow I recommend above is very similar to the well-known data science workflow advocated by Grolemund and Wickham in their &lt;a href=&#34;https://r4ds.had.co.nz/explore-intro.html&#34; target=&#34;_blank&#34;&gt;R for data science&lt;/a&gt; book. However, an important difference is that I recommend that most/all of the exploration and wrangling of the data be completed prior to advancing to the modelling stage. The idea is to sort out the structure of your final analytical dataset first and fit fewer models to save time.&lt;/p&gt;
 </description>
     </item>
     
