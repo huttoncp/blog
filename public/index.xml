@@ -143,7 +143,7 @@
 &lt;h1&gt;&lt;span class=&#34;header-section-number&#34;&gt;2&lt;/span&gt; &lt;strong&gt;Introduction&lt;/strong&gt;&lt;/h1&gt;
 &lt;p&gt;So you’ve spent weeks/months/years conducting a carefully planned research project and collected a bunch of data, and want to know how the study turned out using the advanced functionality of R? The first things you will need to do are:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;i) Install R &amp;amp; R studio.&lt;/strong&gt; Install R using &lt;a href=&#34;https://cloud.r-project.org/&#34;&gt;this link&lt;/a&gt;. The R studio integrated development environment (IDE) is available &lt;a href=&#34;https://www.rstudio.com/products/rstudio/download/#download&#34;&gt;here&lt;/a&gt; (R studio is not necessary to use R but it is strongly recommended). For instructional videos on using R studio, see &lt;a href=&#34;https://resources.rstudio.com/&#34;&gt;these&lt;/a&gt; videos.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;i) Install R &amp;amp; R studio.&lt;/strong&gt; Install R using &lt;a href=&#34;https://cloud.r-project.org/&#34;&gt;this link&lt;/a&gt;. The R studio integrated development environment (IDE) is available &lt;a href=&#34;https://www.rstudio.com/products/rstudio/download/#download&#34;&gt;here&lt;/a&gt; (R studio is not necessary to use R but it is strongly recommended). For instructions on using R studio, see &lt;a href=&#34;https://resources.rstudio.com/&#34;&gt;these videos&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;ii) install and load R add-on packages.&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;iii) import your data.&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -270,7 +270,7 @@ data &amp;lt;- read_excel(path = &amp;quot;path/file.xlsx&amp;quot;,
 &lt;/div&gt;
 &lt;div id=&#34;files-from-spss-sas-or-stata&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;4.5&lt;/span&gt; files from SPSS, SAS, or Stata&lt;/h2&gt;
-&lt;p&gt;If you’ve decided to start using R because you’re tired of working in SPSS, SAS, or Stata (or are collaborating with someone who uses these programs), you can also easily import your existing SPSS or SAS data files directly into R using the &lt;a href=&#34;https://cran.r-project.org/web/packages/haven/index.html&#34;&gt;haven&lt;/a&gt; package.&lt;/p&gt;
+&lt;p&gt;If you’ve recently switched from working in SPSS, SAS, or Stata (or are collaborating with someone who uses these programs), you can also easily import your existing SPSS or SAS data files directly into R using the &lt;a href=&#34;https://cran.r-project.org/web/packages/haven/index.html&#34;&gt;haven&lt;/a&gt; package.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(haven)
 
 #SAS files
@@ -377,7 +377,7 @@ r_bloggers_data &amp;lt;- fromJSON(&amp;quot;~/Desktop/r-bloggers.json&amp;quot;
 &lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;4.9&lt;/span&gt; notes&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;A link to the next post (on basic operations and data structures) in R will be added in the near future.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Exporting data is also easy and will be covered in a later post. E.g. for readr functions this is usually done via the appropriately named write_ functions, like write_csv().&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Exporting data is also easy and will be covered in a later post. E.g. for readr functions this is usually done via the appropriately named &lt;em&gt;write_&lt;/em&gt; functions, like &lt;strong&gt;write_csv()&lt;/strong&gt;.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;By default, the above &lt;a href=&#34;https://readr.tidyverse.org/&#34;&gt;&lt;strong&gt;readr&lt;/strong&gt;&lt;/a&gt; functions will assume that the first row of your data file contains the variable names. For these functions, you can disable this by setting the &lt;strong&gt;col_names&lt;/strong&gt; argument to &lt;strong&gt;FALSE&lt;/strong&gt;, or you can provide a string/character vector of names to use instead by setting &lt;strong&gt;col_names&lt;/strong&gt; to the name of the string vector (see the next post for more on data vectors).&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Arguments to a function can either be specified by name (which I have done here for the sake of transparency) or by position to save some typing. E.g. &lt;code&gt;read_fwf(file_path, fwf_cols(subject_id = 15, test_score = 20))&lt;/code&gt; is equivalent to the read_fwf syntax I provided above with argument names specified. There will be more on this in the next section of the blog.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;An R package only needs to be loaded once in an R session for the functions it contains to be available for use throughout the same session.&lt;/p&gt;&lt;/li&gt;

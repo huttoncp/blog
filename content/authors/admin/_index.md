@@ -26,16 +26,14 @@ academic interests:
 
 name: Dr. Craig P. Hutton
 organizations:
-- name: University of Victoria
+- name: Data Science Studio, Institute on Aging & Lifelong Health, University of Victoria
+  url: "https://github.com/dss-ialh"
 - name: Christie Lab, Division of Medical Sciences, University of Victoria
   url: "https://www.uvic.ca/medsci/people/post-docs/index.php"
 - name: Integrative Analysis of Longitudinal Studies of Aging and Dementia research network (IALSA)
   url: "https://www.ialsa.org/"
-- name: Data Science Studio, Institute on Aging & Lifelong Health, University of Victoria
-  url: "https://github.com/dss-ialh"
 
-
-role: Postdoctoral Fellow in Neuroscience
+role: Behavioural Neuroscientist | Data Scientist
 social:
 - icon: envelope
   icon_pack: fas
@@ -55,8 +53,8 @@ user_groups:
 - Visitors
 ---
 
-I am currently a postdoctoral research fellow working in Dr. Brian Christie’s lab at the University of Victoria. My research uses a combination of methods from psychology, neuroscience, and statistics to examine how brain plasticity, learning, memory, and mood are affected by mild traumatic injuries (concussions) and neurodegenerative diseases.
+I use a combination of methods from psychology, neuroscience, and statistics to examine how brain plasticity, memory, and mood are affected by mild traumatic injuries and neurodegenerative diseases.
 
-I am also passionate about using statistical modeling and machine learning to accelerate my research using insights extracted from epidemiological studies. To this end I am collaborating with Drs. Scott Hofer, Parminder Raina, Sue Becker, and other members of the Integrative Analysis of Longitudinal Studies of Aging and Dementia research network to examine how environmental and lifestyle factors affect mental health and disease risk in epidemiological studies such as the Canadian Longitudinal Study of Aging.
+I am also passionate about using machine learning to accelerate my research via insights extracted from epidemiological studies. To this end I collaborate with researchers at the University of Victoria, McMaster University, and the [IALSA](https://www.ialsa.org/) research network to examine how environmental and lifestyle factors affect mental health and morbidity risk in epidemiological studies such as the [Canadian Longitudinal Study of Aging](https://www.clsa-elcv.ca/).
 
-In my free time I enjoy learning about data science, biking, hiking, playing guitar, listening to live music, and visiting with friends and family.
+In my free time I enjoy coding, reading, biking, hiking, playing guitar, listening to live music, and visiting with friends and family.

@@ -22,16 +22,18 @@
   name = "Posts"
   url = "#posts"
   weight = 40
+  
+[[main]]
+  name = "Publications"
+  url = "#publications"
+  weight = 50  
 
 [[main]]
   name = "Contact"
   url = "#contact"
-  weight = 50
+  weight = 60
   
-#[[main]]
-#  name = "Publications"
-#  url = "#featured"
-#  weight = 40
+
 
 #[[main]]
 #  name = "Courses"
