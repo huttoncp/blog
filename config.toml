@@ -19,7 +19,7 @@ copyright = "Copyright &copy; {year} by Craig P. Hutton"
 googleAnalytics = "UA-140167948-1"
 
 # Enable comments by entering your Disqus shortname
-disqusShortname = ""
+disqusShortname = "craig-rbind-io"
 
 ############################
 ## Advanced options below ##

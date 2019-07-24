@@ -520,11 +520,14 @@ As someone who has spent many years analyzing data using a variety of technologi
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    5 min read
+    6 min read
   </span>
   
 
   
+  
+  <span class="middot-divider"></span>
+  <a href="/post/a-scientist-s-guide-to-r-intro-basic-workflow/#disqus_thread"></a>
   
 
   
@@ -632,12 +635,12 @@ As someone who has spent many years analyzing data using a variety of technologi
 <ul>
 <li><strong>0. Install and load necessary packages</strong> (e.g. tidyverse)</li>
 <li><strong>1. Import the data.</strong></li>
-<li><strong>2. Cleaning/Tidying/Manipulating data.</strong> This part usually takes longer than the analysis, but may not be necessary if you&rsquo;ve entered the data yourself.</li>
+<li><strong>2. Clean/Transform the data.</strong> This part usually takes longer than the analysis, but may not be necessary if you&rsquo;ve entered the data yourself.</li>
 <li><strong>3. Explore the data</strong> using descriptive summary statistics and visualizations.</li>
 <li><strong>4. Resolve structural issues.</strong> If any issues are detected in step 3, go back to step 2 and resolve them, restructuring data as needed.</li>
-<li><strong>5. Modelling:</strong> Fit an appropriate statistical model &amp; check model assumptions (e.g. normality). Use a different model/test if assumptions are violated (e.g. a permutation test). Conduct follow-up or <em>post-hoc</em> tests if desired.</li>
-<li><strong>6. Interpret results</strong> using appropriate graphics (e.g. tables/figures) and text summaries. These can easily be used as a foundation for building presentation slides or the results section of a manuscript.</li>
-<li><strong>7. Communicate results</strong> to the target audience (e.g. other scientists) with a description of the methods used, relevant background/introduction and insightful discussion in a coherent and accessible report.
+<li><strong>5. Model:</strong> Fit an appropriate statistical model &amp; check model assumptions (e.g. normality). Use a different model/test if assumptions are violated (e.g. a permutation test). Conduct follow-up or <em>post-hoc</em> tests if desired.</li>
+<li><strong>6. Analyze and Interpret</strong> the results using appropriate graphics (e.g. tables/figures) and text summaries. These can easily be used as a foundation for building presentation slides or the results section of a manuscript.</li>
+<li><strong>7. Communicate the results</strong> to the target audience (e.g. other scientists) with a description of the methods used, relevant background/introduction and insightful discussion in a coherent and accessible report.
 <br /></li>
 </ul>
 
@@ -648,6 +651,8 @@ As someone who has spent many years analyzing data using a variety of technologi
 <p>Click <a href="https://craig.rbind.io/post/a-scientist-s-guide-to-r-1-getting-data-into-r/" target="_blank">here</a> to continue to the next post on installing R, R packages, and importing data.</p>
 
 <p>This post has been peer-reviewed and approved by the University of Victoria <a href="https://dss-ialh.rbind.io/#about" target="_blank">Data Science Studio</a></p>
+
+<p>Note: The workflow I recommend above is very similar to the well-known data science workflow advocated by Grolemund and Wickham&rsquo;s <a href="https://r4ds.had.co.nz/explore-intro.html" target="_blank">R for data science</a> book. However, an important difference is that I recommend that most/all of the exploration and wrangling of the data be completed prior to advancing to the modelling stage. The idea is to sort out the structure of your final analytical dataset first and fit fewer models to save time.</p>
 
     </div>
 
@@ -772,8 +777,16 @@ As someone who has spent many years analyzing data using a variety of technologi
 
     
 
-    
-
+    <div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://craig-rbind-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
   </div>
 </article>
@@ -866,6 +879,8 @@ As someone who has spent many years analyzing data using a variety of technologi
 
     
     
+    
+    <script id="dsq-count-scr" src="//craig-rbind-io.disqus.com/count.js" async></script>
     
 
     
