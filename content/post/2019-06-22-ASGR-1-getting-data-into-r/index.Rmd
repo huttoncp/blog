@@ -22,7 +22,7 @@ output:
 
 # **TL;DR**
 
-As the second post in the Scientist's Guide to R series (click [here](https://craig.rbind.io/post/a-scientist-s-guide-to-r-intro-basic-workflow/) for the 1st post), this post will goes into the first step of the data analysis with R process: importing your data from a variety of common ["flat file"](https://en.wikipedia.org/wiki/Flat-file_database) sources (.csv, .txt, .xlsx, etc).
+As the second post in the Scientist's Guide to R series (click [here](https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/) for the 1st post), this post will goes into the first step of the data analysis with R process: importing your data from a variety of common ["flat file"](https://en.wikipedia.org/wiki/Flat-file_database) sources (.csv, .txt, .xlsx, etc).
 
 # **Introduction**
 

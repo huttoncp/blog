@@ -123,10 +123,10 @@
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 1. Getting Data into R</title>
-      <link>/post/2019-06-22-scientist-guide-to-r-1-getting-data-into-r/</link>
+      <link>/post/2019-06-22-asgr-1-getting-data-into-r/</link>
       <pubDate>Sat, 22 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/2019-06-22-scientist-guide-to-r-1-getting-data-into-r/</guid>
+      <guid>/post/2019-06-22-asgr-1-getting-data-into-r/</guid>
       <description>
 
 &lt;div id=&#34;TOC&#34;&gt;
@@ -150,7 +150,7 @@
 
 &lt;div id=&#34;tldr&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;&lt;span class=&#34;header-section-number&#34;&gt;1&lt;/span&gt; &lt;strong&gt;TL;DR&lt;/strong&gt;&lt;/h1&gt;
-&lt;p&gt;As the second post in the Scientist’s Guide to R series (click &lt;a href=&#34;https://craig.rbind.io/post/a-scientist-s-guide-to-r-intro-basic-workflow/&#34;&gt;here&lt;/a&gt; for the 1st post), this post will goes into the first step of the data analysis with R process: importing your data from a variety of common &lt;a href=&#34;https://en.wikipedia.org/wiki/Flat-file_database&#34;&gt;“flat file”&lt;/a&gt; sources (.csv, .txt, .xlsx, etc).&lt;/p&gt;
+&lt;p&gt;As the second post in the Scientist’s Guide to R series (click &lt;a href=&#34;https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/&#34;&gt;here&lt;/a&gt; for the 1st post), this post will goes into the first step of the data analysis with R process: importing your data from a variety of common &lt;a href=&#34;https://en.wikipedia.org/wiki/Flat-file_database&#34;&gt;“flat file”&lt;/a&gt; sources (.csv, .txt, .xlsx, etc).&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;&lt;span class=&#34;header-section-number&#34;&gt;2&lt;/span&gt; &lt;strong&gt;Introduction&lt;/strong&gt;&lt;/h1&gt;
@@ -450,7 +450,7 @@ r_bloggers_data &amp;lt;- fromJSON(&amp;quot;~/Desktop/r-bloggers.json&amp;quot;
 
 &lt;p&gt;Each of these sections will be covered in detail in future posts. Thanks for reading and I welcome any suggestions for future posts, comments or other feedback you might have.&lt;/p&gt;
 
-&lt;p&gt;Click &lt;a href=&#34;https://craig.rbind.io/post/a-scientist-s-guide-to-r-1-getting-data-into-r/&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt; to continue to the next post on installing R, R packages, and importing data.&lt;/p&gt;
+&lt;p&gt;Click &lt;a href=&#34;https://craig.rbind.io/post/2019-06-22-asgr-1-getting-data-into-r/&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt; to continue to the next post on installing R, R packages, and importing data.&lt;/p&gt;
 
 &lt;p&gt;This post has been peer-reviewed and approved by the University of Victoria &lt;a href=&#34;https://dss-ialh.rbind.io/#about&#34; target=&#34;_blank&#34;&gt;Data Science Studio&lt;/a&gt;&lt;/p&gt;
 
