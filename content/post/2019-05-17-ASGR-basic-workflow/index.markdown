@@ -1,8 +1,8 @@
 ---
 title: 'A Scientist''s Guide to R: Introduction and Basic Workflow'
-author: 'Craig Hutton, Ph.D.'
+author: 'Craig Hutton'
 date: '2019-05-17'
-slug: a-scientist-s-guide-to-r-intro-basic-workflow
+slug: 
 categories:
   - R
   - Data Analysis
@@ -12,7 +12,7 @@ tags:
   - Data Analysis
   - Statistics
 header:
-  image: '../../img/a-scientist-s-guide-to-r-introduction-and-basic-workflow.png'
+  image: ''
   caption: ''
   focal_point: ''
 ---

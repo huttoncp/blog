@@ -1,8 +1,8 @@
 ---
 title: 'A Scientist''s Guide to R: Step 1. Getting Data into R'
-author: 'Craig Hutton, Ph.D.'
+author: 'Craig Hutton'
 date: '2019-06-22'
-slug: a-scientist-s-guide-to-r-1-getting-data-into-r
+slug: 
 categories:
   - R
   - Data Analysis
@@ -11,7 +11,7 @@ tags:
   - Data Analysis
   - Importing Data
 header:
-  image: '../../img/a-scientist-s-guide-to-r-importing-data.png'
+  image: ''
   caption: ''
   focal_point: ''
 output:
@@ -287,6 +287,7 @@ r_bloggers_data &lt;- fromJSON(&quot;~/Desktop/r-bloggers.json&quot;)</code></pr
 <li><p>Arguments to a function can either be specified by name (which I have done here for the sake of transparency) or by position to save some typing. E.g. <code>read_fwf(file_path, fwf_cols(subject_id = 15, test_score = 20))</code> is equivalent to the read_fwf syntax I provided above with argument names specified. There will be more on this in the next section of the blog.</p></li>
 <li><p>An R package only needs to be loaded once in an R session for the functions it contains to be available for use throughout the same session.</p></li>
 <li><p>There are also ways to import data from relational databases using SQL syntax. However, these methods go beyond the scope of this blog series since they are not relevant to most academic researchers and may be covered in the distant future if/when I write a second volume on R for machine learning and data science. An introduction to importing data from these sources can be found <a href="https://datacarpentry.org/R-ecology-lesson/05-r-and-databases.html">here</a>. Those who are interested in starting to learn SQL (e.g. for work) would benefit from the free <a href="https://www.datacamp.com/courses/intro-to-sql-for-data-science">Introduction to SQL for Data Science</a> course provided by datacamp.com, which is where I started learning how to use SQL.</p></li>
+<li><p>Users working with large flat files (&gt; 100 MB) may want to consider the <a href="https://www.rdocumentation.org/packages/vroom/versions/1.0.2/topics/vroom"><strong>vroom</strong></a> function in the <strong>vroom</strong> package or <a href="https://www.rdocumentation.org/packages/data.table/versions/1.8.8/topics/fread"><strong>fread</strong></a> function in the <strong>data.table</strong> package instead of <strong>readr</strong> to import their data. You could use these for flat files of any size, but the speed difference probably won’t really be noticable for smaller files.</p></li>
 </ul>
 <p>Thank you for reading and I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.</p>
 </div>

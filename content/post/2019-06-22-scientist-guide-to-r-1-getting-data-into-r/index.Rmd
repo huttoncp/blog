@@ -2,7 +2,7 @@
 title: 'A Scientist''s Guide to R: Step 1. Getting Data into R'
 author: 'Craig Hutton'
 date: '2019-06-22'
-slug: a-scientist-s-guide-to-r-1-getting-data-into-r
+slug: 
 categories:
   - R
   - Data Analysis
@@ -11,7 +11,7 @@ tags:
   - Data Analysis
   - Importing Data
 header:
-  image: '../../img/a-scientist-s-guide-to-r-importing-data.png'
+  image: ''
   caption: ''
   focal_point: ''
 output:

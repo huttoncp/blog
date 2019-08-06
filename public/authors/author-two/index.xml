@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Author Two on Craig Hutton, PhD</title>
+    <link>/authors/author-two/</link>
+    <description>Recent content in Author Two on Craig Hutton, PhD</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
+    <lastBuildDate>Thu, 25 Feb 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/authors/author-two/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Title</title>
+      <link>/post/2019-06-22-scientist-guide-to-r-1-getting-data-into-r/</link>
+      <pubDate>Thu, 25 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-06-22-scientist-guide-to-r-1-getting-data-into-r/</guid>
+      <description>30-50 words</description>
+    </item>
+    
+  </channel>
+</rss>

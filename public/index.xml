@@ -123,10 +123,10 @@
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 1. Getting Data into R</title>
-      <link>/post/a-scientist-s-guide-to-r-1-getting-data-into-r/</link>
+      <link>/post/2019-06-22-scientist-guide-to-r-1-getting-data-into-r/</link>
       <pubDate>Sat, 22 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/a-scientist-s-guide-to-r-1-getting-data-into-r/</guid>
+      <guid>/post/2019-06-22-scientist-guide-to-r-1-getting-data-into-r/</guid>
       <description>
 
 &lt;div id=&#34;TOC&#34;&gt;
@@ -395,6 +395,7 @@ r_bloggers_data &amp;lt;- fromJSON(&amp;quot;~/Desktop/r-bloggers.json&amp;quot;
 &lt;li&gt;&lt;p&gt;Arguments to a function can either be specified by name (which I have done here for the sake of transparency) or by position to save some typing. E.g. &lt;code&gt;read_fwf(file_path, fwf_cols(subject_id = 15, test_score = 20))&lt;/code&gt; is equivalent to the read_fwf syntax I provided above with argument names specified. There will be more on this in the next section of the blog.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;An R package only needs to be loaded once in an R session for the functions it contains to be available for use throughout the same session.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;There are also ways to import data from relational databases using SQL syntax. However, these methods go beyond the scope of this blog series since they are not relevant to most academic researchers and may be covered in the distant future if/when I write a second volume on R for machine learning and data science. An introduction to importing data from these sources can be found &lt;a href=&#34;https://datacarpentry.org/R-ecology-lesson/05-r-and-databases.html&#34;&gt;here&lt;/a&gt;. Those who are interested in starting to learn SQL (e.g. for work) would benefit from the free &lt;a href=&#34;https://www.datacamp.com/courses/intro-to-sql-for-data-science&#34;&gt;Introduction to SQL for Data Science&lt;/a&gt; course provided by datacamp.com, which is where I started learning how to use SQL.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Users working with large flat files (&amp;gt; 100 MB) may want to consider the &lt;a href=&#34;https://www.rdocumentation.org/packages/vroom/versions/1.0.2/topics/vroom&#34;&gt;&lt;strong&gt;vroom&lt;/strong&gt;&lt;/a&gt; function in the &lt;strong&gt;vroom&lt;/strong&gt; package or &lt;a href=&#34;https://www.rdocumentation.org/packages/data.table/versions/1.8.8/topics/fread&#34;&gt;&lt;strong&gt;fread&lt;/strong&gt;&lt;/a&gt; function in the &lt;strong&gt;data.table&lt;/strong&gt; package instead of &lt;strong&gt;readr&lt;/strong&gt; to import their data. You could use these for flat files of any size, but the speed difference probably won’t really be noticable for smaller files.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Thank you for reading and I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.&lt;/p&gt;
 &lt;/div&gt;
@@ -404,10 +405,10 @@ r_bloggers_data &amp;lt;- fromJSON(&amp;quot;~/Desktop/r-bloggers.json&amp;quot;
     
     <item>
       <title>A Scientist&#39;s Guide to R: Introduction and Basic Workflow</title>
-      <link>/post/a-scientist-s-guide-to-r-intro-basic-workflow/</link>
+      <link>/post/2019-05-17-asgr-basic-workflow/</link>
       <pubDate>Fri, 17 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/a-scientist-s-guide-to-r-intro-basic-workflow/</guid>
+      <guid>/post/2019-05-17-asgr-basic-workflow/</guid>
       <description>
 
 &lt;h1 id=&#34;introduction&#34;&gt;&lt;strong&gt;Introduction&lt;/strong&gt;&lt;/h1&gt;

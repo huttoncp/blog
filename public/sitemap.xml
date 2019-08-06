@@ -56,7 +56,7 @@
   </url>
   
   <url>
-    <loc>/post/a-scientist-s-guide-to-r-1-getting-data-into-r/</loc>
+    <loc>/post/2019-06-22-scientist-guide-to-r-1-getting-data-into-r/</loc>
     <lastmod>2019-06-22T00:00:00+00:00</lastmod>
   </url>
   
@@ -81,6 +81,7 @@
   <url>
     <loc>/post/</loc>
     <lastmod>2019-06-22T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -102,7 +103,7 @@
   </url>
   
   <url>
-    <loc>/post/a-scientist-s-guide-to-r-intro-basic-workflow/</loc>
+    <loc>/post/2019-05-17-asgr-basic-workflow/</loc>
     <lastmod>2019-05-17T00:00:00+00:00</lastmod>
   </url>
   
