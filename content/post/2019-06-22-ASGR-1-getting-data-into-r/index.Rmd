@@ -5,9 +5,10 @@ date: '2019-06-22'
 slug: 
 categories:
   - R
-  - Data Analysis
+  - Reproducible Research
 tags:
   - R
+  - R Basics
   - Data Analysis
   - Importing Data
 header:
@@ -22,7 +23,7 @@ output:
 
 # **TL;DR**
 
-As the second post in the Scientist's Guide to R series (click [here](https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/) for the 1st post), this post will goes into the first step of the data analysis with R process: importing your data from a variety of common ["flat file"](https://en.wikipedia.org/wiki/Flat-file_database) sources (.csv, .txt, .xlsx, etc).
+As the second post in the Scientist's Guide to R series (click [here](https://craig.rbind.io/post/2019-05-17-asgr-0-basic-workflow/) for the 1st post), this post will goes into the first step of the data analysis with R process: importing your data from a variety of common ["flat file"](https://en.wikipedia.org/wiki/Flat-file_database) sources (.csv, .txt, .xlsx, etc).
 
 # **Introduction**
 
@@ -297,10 +298,10 @@ r_bloggers_data <- fromJSON("~/Desktop/r-bloggers.json")
 
 ```
 
+Click [here](https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/) for the next post (on basic operations and data structures) in R.
+
 ## notes
 
-  * A link to the next post (on basic operations and data structures) in R will be added in the near future.
-  
   * Exporting data is also easy and will be covered in a later post. E.g. for readr functions this is usually done via the appropriately named *write_* functions, like **write_csv()**.
   
   * By default, the above [**readr**](https://readr.tidyverse.org/) functions will assume that the first row of your data file contains the variable names. For these functions, you can disable this by setting the **col_names** argument to **FALSE**, or you can provide a string/character vector of names to use instead by setting **col_names** to the name of the string vector (see the next post for more on data vectors). 

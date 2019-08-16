@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Data Cleaning on Craig Hutton, PhD</title>
+    <link>/tags/data-cleaning/</link>
+    <description>Recent content in Data Cleaning on Craig Hutton, PhD</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
+    <lastBuildDate>Tue, 06 Aug 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/data-cleaning/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>A Scientist&#39;s Guide to R: Step 2.1. Basic Operations &amp; Data Structures</title>
+      <link>/post/2019-08-06-asgr-2-1-basic-operations-and-data-structures/</link>
+      <pubDate>Tue, 06 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-08-06-asgr-2-1-basic-operations-and-data-structures/</guid>
+      <description>1 TL;DR2 Introduction3 Basic Calculations4 Logical Operators5 Object Assignment6 Data Structures and Object Assignment7 basic summary statistics8 options and the working environment8.1 files with other delimiting characters (also .txt)8.2 Microsoft Excel files (.xlsx, .xls)8.3 files from SPSS, SAS, or Stata8.4 fixed width files (.txt, .gz, .bz2, .xz, .zip, etc.)8.5 html/xml files8.6 JavaScript Object Notation (JSON) files8.</description>
+    </item>
+    
+  </channel>
+</rss>

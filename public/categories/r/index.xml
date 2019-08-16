@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
-    <lastBuildDate>Sat, 22 Jun 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 06 Aug 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A Scientist&#39;s Guide to R: Step 2.0. Basic Operations &amp; Data Structures</title>
+      <link>/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/</link>
+      <pubDate>Tue, 06 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/</guid>
+      <description>1 TL;DR2 Introduction3 Basic Calculations4 Logical Operators5 Object Assignment6 basic summary statistics7 Data Structures and Object Assignment7.1 Numeric and Character Vectors7.2 logical vectors7.3 Factors7.4 Matrices7.5 Dataframes7.6 Tibbles8 random numbers and sampling9 functions for describing the structural information of data objects10 the global environment11 the working directory12 projects13 useful keyboard shortcuts (for R studio users)13.</description>
+    </item>
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 1. Getting Data into R</title>

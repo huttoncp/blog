@@ -1,0 +1,768 @@
+---
+title: 'A Scientist''s Guide to R: Step 2.0. Basic Operations & Data Structures'
+author: 'Craig Hutton'
+date: '2019-08-06'
+slug: 
+categories:
+  - R
+  - Reproducible Research
+  - Data Cleaning and Transformation
+tags:
+  - R
+  - R basics
+header:
+  image: ''
+  caption: ''
+  focal_point: ''
+output:
+  blogdown::html_page:
+    number_sections: true
+    toc: yes
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#tldr"><span class="toc-section-number">1</span> <strong>TL;DR</strong></a></li>
+<li><a href="#introduction"><span class="toc-section-number">2</span> <strong>Introduction</strong></a></li>
+<li><a href="#basic-calculations"><span class="toc-section-number">3</span> <strong>Basic Calculations</strong></a></li>
+<li><a href="#logical-operators"><span class="toc-section-number">4</span> <strong>Logical Operators</strong></a></li>
+<li><a href="#object-assignment"><span class="toc-section-number">5</span> <strong>Object Assignment</strong></a></li>
+<li><a href="#basic-summary-statistics"><span class="toc-section-number">6</span> <strong>basic summary statistics</strong></a></li>
+<li><a href="#data-structures-and-object-assignment"><span class="toc-section-number">7</span> <strong>Data Structures and Object Assignment</strong></a><ul>
+<li><a href="#numeric-and-character-vectors"><span class="toc-section-number">7.1</span> Numeric and Character Vectors</a></li>
+<li><a href="#logical-vectors"><span class="toc-section-number">7.2</span> logical vectors</a></li>
+<li><a href="#factors"><span class="toc-section-number">7.3</span> Factors</a></li>
+<li><a href="#matrices"><span class="toc-section-number">7.4</span> Matrices</a></li>
+<li><a href="#dataframes"><span class="toc-section-number">7.5</span> Dataframes</a></li>
+<li><a href="#tibbles"><span class="toc-section-number">7.6</span> Tibbles</a></li>
+</ul></li>
+<li><a href="#random-numbers-and-sampling"><span class="toc-section-number">8</span> <strong>random numbers and sampling</strong></a></li>
+<li><a href="#functions-for-describing-the-structural-information-of-data-objects"><span class="toc-section-number">9</span> <strong>functions for describing the structural information of data objects</strong></a></li>
+<li><a href="#the-global-environment"><span class="toc-section-number">10</span> <strong>the global environment</strong></a></li>
+<li><a href="#the-working-directory"><span class="toc-section-number">11</span> <strong>the working directory</strong></a></li>
+<li><a href="#projects"><span class="toc-section-number">12</span> <strong>projects</strong></a></li>
+<li><a href="#useful-keyboard-shortcuts-for-r-studio-users"><span class="toc-section-number">13</span> <strong>useful keyboard shortcuts (for R studio users)</strong></a><ul>
+<li><a href="#notes"><span class="toc-section-number">13.1</span> notes</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="tldr" class="section level1">
+<h1><span class="header-section-number">1</span> <strong>TL;DR</strong></h1>
+<p>As the third post in the Scientist’s Guide to R series (click <a href="https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/">here</a> for the 1st post), we advance to the brink of the next major stage of the data analysis with R process: cleaning and transforming data. However, before we can clean or transform anything, we will need to know how to perform a few basic operations in R and introduce you to some common data structures in R, which are the topics of this post.</p>
+</div>
+<div id="introduction" class="section level1">
+<h1><span class="header-section-number">2</span> <strong>Introduction</strong></h1>
+<p>You’ve managed to import your data and are wondering what to do next? The way in which you <em>should</em> proceed will critically depend upon the structure of your data (e.g. variable types, organization, etc.), but before we get there you need to know which sorts of things you <em>can</em> do in R. Accordingly, this post will introduce you to some basic operations and data structures in R, followed by progressively more advanced operations moving forward. There is a lot of content here so feel free to skip sections you are already familiar with. If this is all new you should take the time to read through it since we will continue building upon this foundation as we progress to more advanced topics. For example, you need to understand how data are represented by R before you start manipulating those representations.</p>
+</div>
+<div id="basic-calculations" class="section level1">
+<h1><span class="header-section-number">3</span> <strong>Basic Calculations</strong></h1>
+<p>Like any decent data analysis software, R can perform an array of common mathematical and logical operations, as simply as you probably expect them to be.</p>
+<pre class="r"><code>#Basic calculations#####
+5+6 #addition
+
+89-28 #subtraction
+
+7000*10 #multiplication
+
+25/5 #division
+
+2^20 #^ means to the power of
+
+exp(8) #exponential
+
+37 %% 2 #modulus. Returns the remainder after division.</code></pre>
+</div>
+<div id="logical-operators" class="section level1">
+<h1><span class="header-section-number">4</span> <strong>Logical Operators</strong></h1>
+<p>Also very straightforward. These are mostly useful when selecting subsets of data or programming.</p>
+<pre class="r"><code>#use double equality symbols to check for equality since &quot;=&quot; is reserved for
+#assignment or value specification
+
+1 == 1 #LHS is equal to RHS
+
+1 != 1 #LHS is not equal to RHS
+
+10 &gt; 8 #LHS greater than RHS
+
+10 &gt;= 8 #LHS greater than or equal to RHS
+
+10 &lt; 8 #LHS less than RHS
+
+5 &lt;= 5 #LHS less than or equal to RHS
+
+(1 &gt; 3) &amp; (10 &gt; 3) #are both 1 and 10 greater than 3?
+
+(1 &gt; 3) | (10 &gt; 3) #is 1 or 10 greater than 3? 
+
+#see https://www.statmethods.net/management/operators.html for more examples. </code></pre>
+</div>
+<div id="object-assignment" class="section level1">
+<h1><span class="header-section-number">5</span> <strong>Object Assignment</strong></h1>
+<p>To save some values (or virtually anything else) to use again later you assign them to a variable. This can be done in R using either “&lt;-” or “=”, but “&lt;-” is typically recommended since “=” is also used to specify function arguments. See <a href="https://stackoverflow.com/questions/1741820/what-are-the-differences-between-and-in-r">here</a> for more info if you’re interested in the subtleties, e.g. “=” sometimes fails when you wouldn’t expect it to, but “&lt;-” typically does not. R studio also provides a handy keyboard shortcut for inserting “&lt;-”: [Alt] &amp; [-]</p>
+<pre class="r"><code>x &lt;- 27 #this stores whatever is on the RHS in the arbitrarily named variable on the LHS
+x #to print it to the console, just call the variable.</code></pre>
+<pre><code>## [1] 27</code></pre>
+<pre class="r"><code>#you can assign something to a variable and print it at the same time by wrapping it in parentheses
+(y &lt;- 900)</code></pre>
+<pre><code>## [1] 900</code></pre>
+<pre class="r"><code>#although doing so is uncommon, the use of arrows for assignment also enables
+#you to assign things in the opposite direction, from left to right. Arrows also
+#make it obvious which side is being assigned to which side of the operator
+
+90 -&gt; z
+z</code></pre>
+<pre><code>## [1] 90</code></pre>
+<pre class="r"><code>#to remove a variable from your environment use the rm() function
+rm(x)
+
+
+#assigning something to a variable that is already in use will overwrite the variable
+y &lt;- 8
+y</code></pre>
+<pre><code>## [1] 8</code></pre>
+<pre class="r"><code>#the only naming conventions are that a variable name should not begin with a
+#number, and you should avoid using names that already exist as functions in R
+#or special characters, e.g.:
+
+1.m &lt;- 7 #starting a variable name with a number produces an error
+
+TRUE &lt;- 9 #TRUE is a reserved keyword for the logical statement true, also results in an error
+
+mean &lt;- 99 #here I assign the number 99 to the same name as the mean function
+#this is probably not what you want since it makes calling mean ambiguous.
+
+mean
+rm(mean)
+
+#to check if a name is already reserved for something else, just try to look up
+#the help page for it using ?name
+?mean
+
+#since pretty much anything can be assigned to a variable, you can also chain assignment operations
+(y &lt;- 900)
+(z &lt;- y &lt;- 900) #store the RHS in 2 separate variables, called y and z
+
+#usually you would store something slightly different in each of them, e.g. a
+#modification of the 1st variable is stored in a 2nd variable
+z &lt;- y + 10 
+z</code></pre>
+</div>
+<div id="basic-summary-statistics" class="section level1">
+<h1><span class="header-section-number">6</span> <strong>basic summary statistics</strong></h1>
+<p>R makes it incredibly easy to get simple summary statistics for numeric variables. So while we won’t dive too deeply into exploratory data analysis until later in the blog series we’ll get our toes wet here.</p>
+<pre class="r"><code>#R also provides a set of basic functions for conducting common summary
+#statistic calculations
+x &lt;- 0:10
+sum(x) #obtain the sum of the sequence of numbers from 1 to 100</code></pre>
+<pre><code>## [1] 55</code></pre>
+<pre class="r"><code>mean(x) #mean</code></pre>
+<pre><code>## [1] 5</code></pre>
+<pre class="r"><code>sd(x) #standard deviation</code></pre>
+<pre><code>## [1] 3.316625</code></pre>
+<pre class="r"><code>median(x) #a shortcut for the 50th percentile AKA the median</code></pre>
+<pre><code>## [1] 5</code></pre>
+<pre class="r"><code>min(x) #the minimum</code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre class="r"><code>max(x) #the maximum</code></pre>
+<pre><code>## [1] 10</code></pre>
+</div>
+<div id="data-structures-and-object-assignment" class="section level1">
+<h1><span class="header-section-number">7</span> <strong>Data Structures and Object Assignment</strong></h1>
+<p>Most of the other things you will do in R operate on stored values or objects in a variety of forms.</p>
+<p><em>N.B.</em> One of the most important functions that base R provides is <a href="https://www.rdocumentation.org/packages/utils/versions/3.6.1/topics/str">str()</a>, which enables you to inspect the structure of any object.</p>
+<p>The common R data structures are:</p>
+<ul>
+<li><p><a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/vector.html">Vectors</a> = a one-dimensional array of data elements/values</p></li>
+<li><p><a href="https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/factor">Factors</a> = R’s way of representing vectors as categorical variables for statistical testing and data visualization purposes.</p></li>
+<li><p><a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/matrix.html">Matrices</a> = a two-dimensional array of vectors arranged in columns and rows. All data elements are typically of the same class. Columns are rows are numbered by position from left to right (columns) and top to bottom (rows).</p></li>
+<li><p><a href="https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/data.frame">Data Frames</a> = Also a 2D array with but column vectors can be different classes. These are the most common type of data structure in R.</p></li>
+<li><p><a href="https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html">Tibbles</a> = an enhanced version of the data frame with improved display characteristics. Tibbles have gained popularity as the <a href="https://www.tidyverse.org/">tidyverse</a> has become more prominent over the past few years.</p></li>
+<li><p><a href="https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/list">Lists</a>: a list of arbitrary objects, more flexible than data frames but slightly less intuitive to work with. Lists elements can consist of multiple different data types, including the output of statistical tests and even entire data frames. Lists are a slightly more advanced topic, so they won’t be covered further until later on in the blog series.</p></li>
+</ul>
+<div id="numeric-and-character-vectors" class="section level2">
+<h2><span class="header-section-number">7.1</span> Numeric and Character Vectors</h2>
+<pre class="r"><code>#A vector is a one-dimensional array of numerical values or character strings.
+#You can create one using the c() function in R, e.g.:
+
+c(1, 3, 4, 5, 6)</code></pre>
+<pre><code>## [1] 1 3 4 5 6</code></pre>
+<pre class="r"><code>#to save this vector for future use, you assign it to a variable using either &quot;=&quot; or &quot;&lt;-&quot;
+#it is generally recommended to use &quot;&lt;-&quot; for assignment instead of &quot;=&quot;, although either will work 
+
+#By wrapping the vector in str(), you gain structural information
+str(c(1, 3, 4, 5, 6)) #a numeric vector of length 5, with values shown</code></pre>
+<pre><code>##  num [1:5] 1 3 4 5 6</code></pre>
+<pre class="r"><code>c(1:100) #all numbers between a range can be specified using number:number</code></pre>
+<pre><code>##   [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17
+##  [18]  18  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34
+##  [35]  35  36  37  38  39  40  41  42  43  44  45  46  47  48  49  50  51
+##  [52]  52  53  54  55  56  57  58  59  60  61  62  63  64  65  66  67  68
+##  [69]  69  70  71  72  73  74  75  76  77  78  79  80  81  82  83  84  85
+##  [86]  86  87  88  89  90  91  92  93  94  95  96  97  98  99 100</code></pre>
+<pre class="r"><code>str(c(1:100)) #a numeric vector of length 100, with the 1st 10 values shown</code></pre>
+<pre><code>##  int [1:100] 1 2 3 4 5 6 7 8 9 10 ...</code></pre>
+<pre class="r"><code>c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;) #character values/strings need to be quoted to be parsed correctly</code></pre>
+<pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
+<pre class="r"><code>#anything entered in quotation marks is read text/character, and if at least 1
+#element is quoted, all elements of a vector are coerced to string format
+c(&quot;1&quot;, 2, &quot;3&quot;) #prints as a character vector</code></pre>
+<pre><code>## [1] &quot;1&quot; &quot;2&quot; &quot;3&quot;</code></pre>
+<pre class="r"><code>#if a string vector contains only numbers, you can reclassify it as numeric
+#using as.numeric()
+as.numeric(c(&quot;1&quot;, 2, &quot;3&quot;)) #now it prints as a numeric vector</code></pre>
+<pre><code>## [1] 1 2 3</code></pre>
+<pre class="r"><code>str(c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)) #str tells us that this is a character vector of length 3</code></pre>
+<pre><code>##  chr [1:3] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
+<pre class="r"><code>c(&quot;apples&quot;, &quot;bananas&quot;, &quot;cherries&quot;) #each entry is in quotations and separated by a comma</code></pre>
+<pre><code>## [1] &quot;apples&quot;   &quot;bananas&quot;  &quot;cherries&quot;</code></pre>
+<pre class="r"><code>str(c(&quot;apples&quot;, &quot;bananas&quot;, &quot;cherries&quot;)) #also a character vector of length 3</code></pre>
+<pre><code>##  chr [1:3] &quot;apples&quot; &quot;bananas&quot; &quot;cherries&quot;</code></pre>
+<pre class="r"><code>c_vect &lt;- letters[seq(from = 1, to = 26)] #letters[] lets you quickly create a character vector of letters
+
+#There are 2 subclasses of numeric vector: 
+#&quot;integer&quot;, which contains only whole numbers, and &quot;double&quot;(also simply called
+#numeric, both labels refer to the same thing), which has both integer and
+#decimal components
+
+#the class function returns the class of an object. see ?class for more info.
+x &lt;- c(1, 3, 4, 5, 6)
+class(x) #by default, both integers and doubles are classified as &quot;numeric&quot;</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<pre class="r"><code>x &lt;- as.integer(x) #you can coerce a vector into a different class, if it is reasonable to do so.
+class(x) #now R reads the number list as an integer vector</code></pre>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<pre class="r"><code>#to conduct a logical test to see if an object is a particular class use
+#is.[class] (insert the class name), e.g.
+is.integer(x)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="logical-vectors" class="section level2">
+<h2><span class="header-section-number">7.2</span> logical vectors</h2>
+<pre class="r"><code>l &lt;- c(TRUE, FALSE, TRUE, TRUE, FALSE, TRUE) #logical vector
+l &lt;- c(T, F, T, T, F, T) #equivalent short hand version
+class(l)</code></pre>
+<pre><code>## [1] &quot;logical&quot;</code></pre>
+<pre class="r"><code>#&quot;TRUE&quot; and &quot;FALSE&quot;, which may be abbreviated as &quot;T&quot; and &quot;F&quot;, are also read by R as 1 and 0 respectively.
+#this conveniently enables you to obtain the total number of TRUE elements using the sum() function
+sum(l)</code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="r"><code>#you can also get the proportion of TRUE values using the mean function
+mean(l)</code></pre>
+<pre><code>## [1] 0.6666667</code></pre>
+<pre class="r"><code>#both of these are very useful when conducting logical tests of a vector to see
+#how many elements match the specified criteria, e.g.:
+x &lt;- c(1:50, 100:150)
+
+x &lt; 50 #returns a logical vector with True corresponding to elements matching the logical test, </code></pre>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [12]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [23]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [34]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [45]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [56] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [67] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [78] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [89] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [100] FALSE FALSE</code></pre>
+<pre class="r"><code>#in this case that the value is less than 50
+
+sum(x &lt; 50) #how many values in x are less than 50</code></pre>
+<pre><code>## [1] 49</code></pre>
+<pre class="r"><code>mean(x &lt; 50) #what proportion of the values in x are less than 50</code></pre>
+<pre><code>## [1] 0.4851485</code></pre>
+<pre class="r"><code>#using modulus 2 (divide by 2 and return the remainder) can tell you about even
+#and odd components of a numeric vector
+
+sum((x %% 2) == 0) #how many even values are in x</code></pre>
+<pre><code>## [1] 51</code></pre>
+<pre class="r"><code>sum((x %% 2) == 1) #how many odd values are in x</code></pre>
+<pre><code>## [1] 50</code></pre>
+<pre class="r"><code>mean((x %% 2) == 1) #which proportion of x is odd</code></pre>
+<pre><code>## [1] 0.4950495</code></pre>
+<pre class="r"><code>mean((x %% 2) == 0) #which proportion of x is even</code></pre>
+<pre><code>## [1] 0.5049505</code></pre>
+<pre class="r"><code>#you can do similar tests with character vectors
+c_vect &lt;- c(&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;c&quot;, &quot;d&quot;)
+mean(c_vect == &quot;a&quot;) #how many elements of c_vect are &quot;a&quot;</code></pre>
+<pre><code>## [1] 0.4</code></pre>
+<pre class="r"><code>sum(c_vect == &quot;a&quot;) #what proportion of the elements of c_vect are &quot;a&quot;</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>#logical tests are also used to subset or filter data, as demonstrated later on...</code></pre>
+</div>
+<div id="factors" class="section level2">
+<h2><span class="header-section-number">7.3</span> Factors</h2>
+<pre class="r"><code>#Factors are a modified form of either a characeter or numeric vector which
+#facilitates their representation and use as categorical variables. You can
+#create a factor in R using either the factor() function, or by reclassifying
+#another vector type using as.factor()
+
+x &lt;- c(1:3, 1:3, 1:3)
+as.factor(x) </code></pre>
+<pre><code>## [1] 1 2 3 1 2 3 1 2 3
+## Levels: 1 2 3</code></pre>
+<pre class="r"><code>#note the addition of levels to the output. What as.factor does is assign each
+#unique value of the vector to a level of the factor. Under the hood this also
+#involves constructing a set of 0/1 dummy variables for each level of the factor
+#(but don&#39;t worry about this, because R will do it for you automatically)
+
+#using the factor() function instead allows you to assign labels to the levels 
+#you can also specify whether or not the factor is ordered
+factor(x, levels = c(1, 2, 3), labels = c(&quot;one&quot;, &quot;two&quot;, &quot;three&quot;), ordered = TRUE)</code></pre>
+<pre><code>## [1] one   two   three one   two   three one   two   three
+## Levels: one &lt; two &lt; three</code></pre>
+</div>
+<div id="matrices" class="section level2">
+<h2><span class="header-section-number">7.4</span> Matrices</h2>
+<pre class="r"><code>#the matrix() function allows you to create a matrix
+
+#create an empty matrix with row and column dimensions specified using nrow and
+#ncol arguments. This can be useful if you plan to fill it in later (e.g. when
+#writing loops).
+mat1 &lt;- matrix(nrow = 100, ncol = 10) 
+
+str(mat1) #view the structure of the new matrix</code></pre>
+<pre><code>##  logi [1:100, 1:10] NA NA NA NA NA NA ...</code></pre>
+<pre class="r"><code>#take a vector and distribute the values into 2 columns with 20 rows each
+matrix(data = c(1:40), nrow = 20, ncol = 2) </code></pre>
+<pre><code>##       [,1] [,2]
+##  [1,]    1   21
+##  [2,]    2   22
+##  [3,]    3   23
+##  [4,]    4   24
+##  [5,]    5   25
+##  [6,]    6   26
+##  [7,]    7   27
+##  [8,]    8   28
+##  [9,]    9   29
+## [10,]   10   30
+## [11,]   11   31
+## [12,]   12   32
+## [13,]   13   33
+## [14,]   14   34
+## [15,]   15   35
+## [16,]   16   36
+## [17,]   17   37
+## [18,]   18   38
+## [19,]   19   39
+## [20,]   20   40</code></pre>
+<pre class="r"><code>#you can combine vectors into a matrix using cbind(vector1, vector2) or
+#rbind(vector1, vector2) depending on whether you want to combine elements as
+#row vectors or column vectors. each must be the same lenght, otherwise some
+#elements will be coded as NA for the shorter vector
+
+x1 &lt;- c(1:50)
+x2 &lt;- c(51:100)
+x3 &lt;- c(1:10)
+
+(mat1 &lt;- cbind(x1, x2)) #combined by column</code></pre>
+<pre><code>##       x1  x2
+##  [1,]  1  51
+##  [2,]  2  52
+##  [3,]  3  53
+##  [4,]  4  54
+##  [5,]  5  55
+##  [6,]  6  56
+##  [7,]  7  57
+##  [8,]  8  58
+##  [9,]  9  59
+## [10,] 10  60
+## [11,] 11  61
+## [12,] 12  62
+## [13,] 13  63
+## [14,] 14  64
+## [15,] 15  65
+## [16,] 16  66
+## [17,] 17  67
+## [18,] 18  68
+## [19,] 19  69
+## [20,] 20  70
+## [21,] 21  71
+## [22,] 22  72
+## [23,] 23  73
+## [24,] 24  74
+## [25,] 25  75
+## [26,] 26  76
+## [27,] 27  77
+## [28,] 28  78
+## [29,] 29  79
+## [30,] 30  80
+## [31,] 31  81
+## [32,] 32  82
+## [33,] 33  83
+## [34,] 34  84
+## [35,] 35  85
+## [36,] 36  86
+## [37,] 37  87
+## [38,] 38  88
+## [39,] 39  89
+## [40,] 40  90
+## [41,] 41  91
+## [42,] 42  92
+## [43,] 43  93
+## [44,] 44  94
+## [45,] 45  95
+## [46,] 46  96
+## [47,] 47  97
+## [48,] 48  98
+## [49,] 49  99
+## [50,] 50 100</code></pre>
+<pre class="r"><code>class(mat1)</code></pre>
+<pre><code>## [1] &quot;matrix&quot;</code></pre>
+<pre class="r"><code>(mat2 &lt;- rbind(x1, x2)) #combined by row</code></pre>
+<pre><code>##    [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
+## x1    1    2    3    4    5    6    7    8    9    10    11    12    13
+## x2   51   52   53   54   55   56   57   58   59    60    61    62    63
+##    [,14] [,15] [,16] [,17] [,18] [,19] [,20] [,21] [,22] [,23] [,24] [,25]
+## x1    14    15    16    17    18    19    20    21    22    23    24    25
+## x2    64    65    66    67    68    69    70    71    72    73    74    75
+##    [,26] [,27] [,28] [,29] [,30] [,31] [,32] [,33] [,34] [,35] [,36] [,37]
+## x1    26    27    28    29    30    31    32    33    34    35    36    37
+## x2    76    77    78    79    80    81    82    83    84    85    86    87
+##    [,38] [,39] [,40] [,41] [,42] [,43] [,44] [,45] [,46] [,47] [,48] [,49]
+## x1    38    39    40    41    42    43    44    45    46    47    48    49
+## x2    88    89    90    91    92    93    94    95    96    97    98    99
+##    [,50]
+## x1    50
+## x2   100</code></pre>
+<pre class="r"><code>class(mat2)</code></pre>
+<pre><code>## [1] &quot;matrix&quot;</code></pre>
+<pre class="r"><code>#combining vecotrs of unequal length produces NAs for the extra indices of the 
+
+#common matrix operations work as expected with matrix objects in R
+
+t(mat1) #transposition</code></pre>
+<pre><code>##    [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
+## x1    1    2    3    4    5    6    7    8    9    10    11    12    13
+## x2   51   52   53   54   55   56   57   58   59    60    61    62    63
+##    [,14] [,15] [,16] [,17] [,18] [,19] [,20] [,21] [,22] [,23] [,24] [,25]
+## x1    14    15    16    17    18    19    20    21    22    23    24    25
+## x2    64    65    66    67    68    69    70    71    72    73    74    75
+##    [,26] [,27] [,28] [,29] [,30] [,31] [,32] [,33] [,34] [,35] [,36] [,37]
+## x1    26    27    28    29    30    31    32    33    34    35    36    37
+## x2    76    77    78    79    80    81    82    83    84    85    86    87
+##    [,38] [,39] [,40] [,41] [,42] [,43] [,44] [,45] [,46] [,47] [,48] [,49]
+## x1    38    39    40    41    42    43    44    45    46    47    48    49
+## x2    88    89    90    91    92    93    94    95    96    97    98    99
+##    [,50]
+## x1    50
+## x2   100</code></pre>
+<pre class="r"><code>t(mat1) + mat2 #addition (both matrices need to have the same dimensions)</code></pre>
+<pre><code>##    [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
+## x1    2    4    6    8   10   12   14   16   18    20    22    24    26
+## x2  102  104  106  108  110  112  114  116  118   120   122   124   126
+##    [,14] [,15] [,16] [,17] [,18] [,19] [,20] [,21] [,22] [,23] [,24] [,25]
+## x1    28    30    32    34    36    38    40    42    44    46    48    50
+## x2   128   130   132   134   136   138   140   142   144   146   148   150
+##    [,26] [,27] [,28] [,29] [,30] [,31] [,32] [,33] [,34] [,35] [,36] [,37]
+## x1    52    54    56    58    60    62    64    66    68    70    72    74
+## x2   152   154   156   158   160   162   164   166   168   170   172   174
+##    [,38] [,39] [,40] [,41] [,42] [,43] [,44] [,45] [,46] [,47] [,48] [,49]
+## x1    76    78    80    82    84    86    88    90    92    94    96    98
+## x2   176   178   180   182   184   186   188   190   192   194   196   198
+##    [,50]
+## x1   100
+## x2   200</code></pre>
+<pre class="r"><code>t(mat1) - mat2 #subtraction</code></pre>
+<pre><code>##    [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
+## x1    0    0    0    0    0    0    0    0    0     0     0     0     0
+## x2    0    0    0    0    0    0    0    0    0     0     0     0     0
+##    [,14] [,15] [,16] [,17] [,18] [,19] [,20] [,21] [,22] [,23] [,24] [,25]
+## x1     0     0     0     0     0     0     0     0     0     0     0     0
+## x2     0     0     0     0     0     0     0     0     0     0     0     0
+##    [,26] [,27] [,28] [,29] [,30] [,31] [,32] [,33] [,34] [,35] [,36] [,37]
+## x1     0     0     0     0     0     0     0     0     0     0     0     0
+## x2     0     0     0     0     0     0     0     0     0     0     0     0
+##    [,38] [,39] [,40] [,41] [,42] [,43] [,44] [,45] [,46] [,47] [,48] [,49]
+## x1     0     0     0     0     0     0     0     0     0     0     0     0
+## x2     0     0     0     0     0     0     0     0     0     0     0     0
+##    [,50]
+## x1     0
+## x2     0</code></pre>
+<pre class="r"><code>t(mat1) * mat2 #multiplication</code></pre>
+<pre><code>##    [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
+## x1    1    4    9   16   25   36   49   64   81   100   121   144   169
+## x2 2601 2704 2809 2916 3025 3136 3249 3364 3481  3600  3721  3844  3969
+##    [,14] [,15] [,16] [,17] [,18] [,19] [,20] [,21] [,22] [,23] [,24] [,25]
+## x1   196   225   256   289   324   361   400   441   484   529   576   625
+## x2  4096  4225  4356  4489  4624  4761  4900  5041  5184  5329  5476  5625
+##    [,26] [,27] [,28] [,29] [,30] [,31] [,32] [,33] [,34] [,35] [,36] [,37]
+## x1   676   729   784   841   900   961  1024  1089  1156  1225  1296  1369
+## x2  5776  5929  6084  6241  6400  6561  6724  6889  7056  7225  7396  7569
+##    [,38] [,39] [,40] [,41] [,42] [,43] [,44] [,45] [,46] [,47] [,48] [,49]
+## x1  1444  1521  1600  1681  1764  1849  1936  2025  2116  2209  2304  2401
+## x2  7744  7921  8100  8281  8464  8649  8836  9025  9216  9409  9604  9801
+##    [,50]
+## x1  2500
+## x2 10000</code></pre>
+<pre class="r"><code>t(mat1) / mat2 #division</code></pre>
+<pre><code>##    [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
+## x1    1    1    1    1    1    1    1    1    1     1     1     1     1
+## x2    1    1    1    1    1    1    1    1    1     1     1     1     1
+##    [,14] [,15] [,16] [,17] [,18] [,19] [,20] [,21] [,22] [,23] [,24] [,25]
+## x1     1     1     1     1     1     1     1     1     1     1     1     1
+## x2     1     1     1     1     1     1     1     1     1     1     1     1
+##    [,26] [,27] [,28] [,29] [,30] [,31] [,32] [,33] [,34] [,35] [,36] [,37]
+## x1     1     1     1     1     1     1     1     1     1     1     1     1
+## x2     1     1     1     1     1     1     1     1     1     1     1     1
+##    [,38] [,39] [,40] [,41] [,42] [,43] [,44] [,45] [,46] [,47] [,48] [,49]
+## x1     1     1     1     1     1     1     1     1     1     1     1     1
+## x2     1     1     1     1     1     1     1     1     1     1     1     1
+##    [,50]
+## x1     1
+## x2     1</code></pre>
+</div>
+<div id="dataframes" class="section level2">
+<h2><span class="header-section-number">7.5</span> Dataframes</h2>
+<pre class="r"><code>#data frames can be constructed using the dataframe function,
+#or by converting a combination of vectors/matrix using as.data.frame()
+x &lt;- cbind(sample(1:6), rep(c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), 2)) #create a 2-column
+
+class(x) #a matrix</code></pre>
+<pre><code>## [1] &quot;matrix&quot;</code></pre>
+<pre class="r"><code>#if names are not associated with the columns the variables are labelled using
+#V[index]
+
+df &lt;- as.data.frame(x) 
+df</code></pre>
+<pre><code>##   V1 V2
+## 1  1  a
+## 2  6  b
+## 3  4  c
+## 4  3  a
+## 5  2  b
+## 6  5  c</code></pre>
+<pre class="r"><code>class(df) #now a data frame</code></pre>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<pre class="r"><code>df &lt;- as.data.frame(x) 
+
+names(df) &lt;- c(&quot;var_1&quot;, &quot;var_2&quot;) #change column  names using the names() function
+
+str(df)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    6 obs. of  2 variables:
+##  $ var_1: Factor w/ 6 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 6 4 3 2 5
+##  $ var_2: Factor w/ 3 levels &quot;a&quot;,&quot;b&quot;,&quot;c&quot;: 1 2 3 1 2 3</code></pre>
+<pre class="r"><code>#create the data frame directly and specify names
+df &lt;- data.frame(&quot;var_1&quot; = c(sample(1:6, 6)), 
+                 &quot;var_2&quot; = rep(c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), 2)) 
+str(df)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    6 obs. of  2 variables:
+##  $ var_1: int  1 2 6 5 3 4
+##  $ var_2: Factor w/ 3 levels &quot;a&quot;,&quot;b&quot;,&quot;c&quot;: 1 2 3 1 2 3</code></pre>
+<pre class="r"><code>#if you don&#39;t want strings to be converted to factors automatically, set
+#stringsAsFactors = FALSE
+df &lt;- data.frame(&quot;var_1&quot; = c(sample(1:6, 6)), 
+                 &quot;var_2&quot; = rep(c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), 2),
+                 stringsAsFactors = FALSE) 
+
+library(tidyverse)</code></pre>
+<pre><code>## Warning: package &#39;tidyverse&#39; was built under R version 3.5.3</code></pre>
+<pre><code>## -- Attaching packages --------------------------------------------------------------------------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## v ggplot2 3.1.1.9000     v purrr   0.3.2     
+## v tibble  2.1.3          v dplyr   0.8.0.9014
+## v tidyr   0.8.3.9000     v stringr 1.4.0     
+## v readr   1.3.1          v forcats 0.4.0</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 3.5.3</code></pre>
+<pre><code>## Warning: package &#39;purrr&#39; was built under R version 3.5.3</code></pre>
+<pre><code>## Warning: package &#39;stringr&#39; was built under R version 3.5.3</code></pre>
+<pre><code>## Warning: package &#39;forcats&#39; was built under R version 3.5.3</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<div id="tibbles" class="section level2">
+<h2><span class="header-section-number">7.6</span> Tibbles</h2>
+<pre class="r"><code>#load the tidyverse packages, which contain the tibble and as_tibble functions
+library(tidyverse)
+
+#convert a df or matrix to a tibble using as_tibble()
+df &lt;- data.frame(&quot;var_1&quot; = c(sample(1:6, 6)), 
+                 &quot;var_2&quot; = rep(c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), 2)) 
+
+tbl1 &lt;- as_tibble(df)
+
+tbl1 #printout also tells you the dimensions and class of each column</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   var_1 var_2
+##   &lt;int&gt; &lt;fct&gt;
+## 1     3 a    
+## 2     2 b    
+## 3     4 c    
+## 4     1 a    
+## 5     6 b    
+## 6     5 c</code></pre>
+<pre class="r"><code>#when creating a tibble, strings are not automatically converted to factors this
+#is better from a data manipulation standpoint, which will be covered in a
+#future post on working with strings
+
+tbl1 &lt;- tibble(&quot;var_1&quot; = c(sample(1:6, 6)), 
+               &quot;var_2&quot; = rep(c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), 2)) 
+tbl1</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   var_1 var_2
+##   &lt;int&gt; &lt;chr&gt;
+## 1     5 a    
+## 2     3 b    
+## 3     6 c    
+## 4     4 a    
+## 5     2 b    
+## 6     1 c</code></pre>
+</div>
+</div>
+<div id="random-numbers-and-sampling" class="section level1">
+<h1><span class="header-section-number">8</span> <strong>random numbers and sampling</strong></h1>
+<pre class="r"><code>#sampling####
+#obtain a random sample 6 numbers with values ranging between 1 and 40 without replacement
+sample(1:40, 6, replace=F) </code></pre>
+<pre><code>## [1] 13  6 14  5  8  1</code></pre>
+<pre class="r"><code>x &lt;- c(1:30)
+x</code></pre>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+## [24] 24 25 26 27 28 29 30</code></pre>
+<pre class="r"><code>df &lt;- sample(1:200, 100, replace=T) #sample with replacement, save it in a vector called &quot;df&quot;
+df</code></pre>
+<pre><code>##   [1] 106 174  54  47 181  65  78  60 110  64 180  49  54 164 136 188 132
+##  [18] 200 150 164 168 185 171 131  81 104 124  42  38  22 175 123 130  97
+##  [35] 160  26  43 171  60  64 135 122  24 179  27 164  67 125  76  44  43
+##  [52]  10 127 141  38  62 132  82 197 151 137 145 178 182  42 151  45 155
+##  [69] 147 134  37  68  26 137 136  12  69 168 182  99 112 128  73 188 132
+##  [86] 130 168 130 122 135 141  69   9 161 132 106 106 159 120 149</code></pre>
+<pre class="r"><code>set.seed(seed = 934) #sets criteria for random sampling for variable creation if you want it to be repeatable
+
+random.sample &lt;- rnorm(1000, mean = 100, sd = 1) #create a dataset of random, normally distributed data
+
+#creating a data frame from scratch
+y &lt;- c(rnorm(n = 60, mean = 100, sd = 20), rnorm(n = 10, mean = 110, sd = 20)) #creates variable y composed of 60 random scores from a normal distribution with a mean of 100 and sd of 20, along with 10 random scores from a normal distribution with a mean of 110 and sd of 20
+g &lt;- factor(rep(seq(1, 7, 1), each = 10), labels = &quot;g&quot;, ordered = FALSE) #groups the scores from &#39;y&#39; into 7 sets (g1,g2,etc) containing 10 scores each
+z &lt;- letters[1:5]
+data &lt;- as.data.frame(cbind(y, g, z))
+
+class(data)</code></pre>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<pre class="r"><code>class(data$y)</code></pre>
+<pre><code>## [1] &quot;factor&quot;</code></pre>
+<pre class="r"><code>data$y &lt;- as.numeric(data$y) #convert to numeric
+
+class(data$z) #check the class of variable &quot;Z&quot;</code></pre>
+<pre><code>## [1] &quot;factor&quot;</code></pre>
+<pre class="r"><code>class(data$g) #check the class of variable &quot;g&quot;</code></pre>
+<pre><code>## [1] &quot;factor&quot;</code></pre>
+</div>
+<div id="functions-for-describing-the-structural-information-of-data-objects" class="section level1">
+<h1><span class="header-section-number">9</span> <strong>functions for describing the structural information of data objects</strong></h1>
+<pre class="r"><code>length(c(1:100)) #number of elements in a vector = the length of the vector</code></pre>
+<pre><code>## [1] 100</code></pre>
+<pre class="r"><code>data &lt;- mtcars #we&#39;ll use the built-in mtcars dataframe as an example again
+
+length(data) #when used on a matrix or data frame, returns the number of columns</code></pre>
+<pre><code>## [1] 11</code></pre>
+<pre class="r"><code>nrow(data) #number of rows</code></pre>
+<pre><code>## [1] 32</code></pre>
+<pre class="r"><code>ncol(data) #number of columns</code></pre>
+<pre><code>## [1] 11</code></pre>
+<pre class="r"><code>dim(data) #returns the number of rows and columns of the object</code></pre>
+<pre><code>## [1] 32 11</code></pre>
+<pre class="r"><code>unique(data$cyl) #display the unique values of the specified variable</code></pre>
+<pre><code>## [1] 6 4 8</code></pre>
+<pre class="r"><code>#useful applications of the unique() function include making it easier to
+#construct factors (since you need to know what the unique values are) and
+#quickly identifying data entry errors (to be demonstrated in a future post)
+
+levels(as.factor(data$cyl)) #this is the same as unique but for factors. </code></pre>
+<pre><code>## [1] &quot;4&quot; &quot;6&quot; &quot;8&quot;</code></pre>
+<pre class="r"><code>#It provides the added benefit of revealing what the order of factor levels is.
+
+table(data$cyl) #show the unique values of a vector as well as the count of each</code></pre>
+<pre><code>## 
+##  4  6  8 
+## 11  7 14</code></pre>
+<pre class="r"><code>#of course the str() function, which we&#39;ve already covered is incredibly
+#versatile and informative
+
+str(data$cyl) #the structure of a variable within a dataframe</code></pre>
+<pre><code>##  num [1:32] 6 6 4 6 8 6 8 4 4 6 ...</code></pre>
+<pre class="r"><code>str(data) #the structure of a whole dataframe</code></pre>
+<pre><code>## &#39;data.frame&#39;:    32 obs. of  11 variables:
+##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+##  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+##  $ disp: num  160 160 108 258 360 ...
+##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+##  $ qsec: num  16.5 17 18.6 19.4 17 ...
+##  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
+<pre class="r"><code>str(table) #the structure of a function</code></pre>
+<pre><code>## function (..., exclude = if (useNA == &quot;no&quot;) c(NA, NaN), useNA = c(&quot;no&quot;, 
+##     &quot;ifany&quot;, &quot;always&quot;), dnn = list.names(...), deparse.level = 1)</code></pre>
+<pre class="r"><code>#the tidyverse alternative to str is the glimpse function(), which is
+#specialized for displaying the structural info of dataframes and tibbles,
+#providing a slightly nicer printout, and enabling you to peak at the structure
+#of the data in the middle of a series of &quot;piped&quot; or &quot;chained&quot; operations
+#without interrupting the sequence (more on this in the next post).
+
+library(tidyverse)
+
+df &lt;- data.frame(&quot;var_1&quot; = c(sample(1:6, 6)), 
+                 &quot;var_2&quot; = rep(c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), 2)) 
+
+glimpse(df)</code></pre>
+<pre><code>## Observations: 6
+## Variables: 2
+## $ var_1 &lt;int&gt; 6, 4, 1, 2, 3, 5
+## $ var_2 &lt;fct&gt; a, b, c, a, b, c</code></pre>
+</div>
+<div id="the-global-environment" class="section level1">
+<h1><span class="header-section-number">10</span> <strong>the global environment</strong></h1>
+<p>The functions you use in R operate within what is appropriately called the working environment, which consists of the functions and other objects that you have loaded in the current R session (this is what happens you load a package with the library function), as well as any variables, data objects, or functions you have created during the session.</p>
+<pre class="r"><code>#to get a list of the objects in your global environment, use the ls() function
+ls()</code></pre>
+<pre><code>##  [1] &quot;c_vect&quot;        &quot;data&quot;          &quot;df&quot;            &quot;g&quot;            
+##  [5] &quot;l&quot;             &quot;mat1&quot;          &quot;mat2&quot;          &quot;random.sample&quot;
+##  [9] &quot;tbl1&quot;          &quot;x&quot;             &quot;x1&quot;            &quot;x2&quot;           
+## [13] &quot;x3&quot;            &quot;y&quot;             &quot;z&quot;</code></pre>
+</div>
+<div id="the-working-directory" class="section level1">
+<h1><span class="header-section-number">11</span> <strong>the working directory</strong></h1>
+<p>R is always connected to a specific folder on your computer called the working directory, which is the default path for loading/importing files or saving/exporting them</p>
+<pre class="r"><code>#to view your current working directory, use the getwd() function, or you can
+#click on the &quot;files&quot; tab in the bottom right pane of R studio.
+getwd()
+
+#you can change your working directory using the setwd() function, 
+#or you can use the &quot;set working directory&#39; menu under the &quot;Session&quot; drop down
+#menu along the top of the R studio window, 
+#or you can just use the keyboard shortcut Ctrl + Shift + H
+
+setwd(&quot;C:/Users/CPH/Documents/&quot;)</code></pre>
+</div>
+<div id="projects" class="section level1">
+<h1><span class="header-section-number">12</span> <strong>projects</strong></h1>
+<p>The projects feature of R studio makes it much easier to keep your work organized, and using it is strongly recommended if you are working on anything that will take longer to complete than a single R session.</p>
+<p>You can create/start a project using the <img src="/2019-08-06-ASGR-2-0-basic-operations-and-data-structures/index_files/projects%20icon.png" alt="projects" /> menu in the top right corner of R studio, directly below the minimize/maximize/exit buttons. Creating a package and then returning to it later also sets the working directory to the project folder automatically.</p>
+</div>
+<div id="useful-keyboard-shortcuts-for-r-studio-users" class="section level1">
+<h1><span class="header-section-number">13</span> <strong>useful keyboard shortcuts (for R studio users)</strong></h1>
+<p>One of the great benefits of using R studio is that you can take advantage of keyboard shortcuts that make the coding process easier/faster. Here is a list of some shortcuts that I’ve found to be useful:</p>
+<ul>
+<li><p>assignment operator <em>&lt;-</em>: [Alt] + [-]</p></li>
+<li><p>extract variable: [Ctrl] + [Alt] + [v]. Highlight some code, use this shortcut, and enter the variable name</p></li>
+<li><p>comment lines in/out: [Ctrl] + [Shift] + [c]</p></li>
+<li><p>reflow comments: highlight/select comments that extend beyond the viewable area of the screen or multiple lines and use [Ctrl] + [Shift] + [/] to reflow/wrap them for easier reading</p></li>
+<li><p>reindent lines: use [Ctrl] + [i] to realign the indentation of your R code so it is easier to read.</p></li>
+<li><p>insert code section title: [Ctrl] + [Shift] + [r]. This can also be done by starting a line with # to comment it out, and ending it with #### or —-</p></li>
+<li><p>open/close the R script outline, which contains a list of the code sections you’ve defined using the code section titles that can be clicked on to quickly navigate through your script: [Ctrl] + [Shift] + [o]</p></li>
+<li><p>view the definition of a function: press [F2] when the cursor is on a function name</p></li>
+</ul>
+<p><em>N.B.</em> To see all available keyboard shortcuts use [Alt] + [Shift] + [K] or click “keyboard shortcuts help” under the R studio help menu. Many of the more useful ones are also accessible under the R studio code menu.</p>
+<div id="notes" class="section level2">
+<h2><span class="header-section-number">13.1</span> notes</h2>
+<ul>
+<li>A link to the next post (data manipulation part 1) will be added in the near future.</li>
+</ul>
+<p>Thank you for reading and I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.</p>
+</div>
+</div>
