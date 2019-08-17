@@ -22,15 +22,16 @@ output:
 
 # **TL;DR**
 
-As the third post in the Scientist's Guide to R series (click [here](https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/) for the 1st post), we advance to the brink of the next major stage of the data analysis with R process: cleaning and transforming data. However, before we can clean or transform anything, we will need to know how to perform a few basic operations in R and introduce you to some common data structures in R, which are the topics of this post. 
+As the third post in the Scientist's Guide to R series (click [here](https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/) for the 1st post), we advance to the brink of the next major stage of the data analysis with R process: cleaning and transforming data. However, before we can clean or transform anything we will need to know how to do a few basic things and familiarize ourselves with some common data structures in R, which are the topics of this post. 
 
 # **Introduction**
 
-You've managed to import your data and are wondering what to do next? The way in which you *should* proceed will critically depend upon the structure of your data (e.g. variable types, organization, etc.), but before we get there you need to know which sorts of things you *can* do in R. Accordingly, this post will introduce you to some basic operations and data structures in R, followed by progressively more advanced operations moving forward. There is a lot of content here so feel free to skip sections you are already familiar with. If this is all new you should take the time to read through it since we will continue building upon this foundation as we progress to more advanced topics. For example, you need to understand how data are represented by R before you start manipulating those representations.
+You've managed to import your data and are wondering what to do next? The way in which you *should* proceed will critically depend upon the structure of your data, but before we get there you need to know which sorts of things you *can* do in R. Accordingly, this post will introduce you to some basic operations and data structures. There is a lot of content here so feel free to skip sections you are already familiar with. If this is all new you should take the time to read it since we will continue building upon this foundation as we progress to more advanced topics. You need to understand how data are represented by R before you start manipulating those representations.
 
 # **Basic Calculations**
 
-Like any decent data analysis software, R can perform an array of common mathematical and logical operations, as simply as you probably expect them to be.
+Like any decent data analysis software, R can perform common mathematical and logical operations, as simply as you probably expect them to be.
+
 ```{r, eval = F}
 #Basic calculations#####
 5+6 #addition
@@ -77,7 +78,7 @@ Also very straightforward. These are mostly useful when selecting subsets of dat
 
 # **Object Assignment**
 
-To save some values (or virtually anything else) to use again later you assign them to a variable. This can be done in R using either "<-" or "=", but "<-" is typically recommended since "=" is also used to specify function arguments. See [here](https://stackoverflow.com/questions/1741820/what-are-the-differences-between-and-in-r) for more info if you're interested in the subtleties, e.g. "=" sometimes fails when you wouldn't expect it to, but "<-" typically does not. R studio also provides a handy keyboard shortcut for inserting "<-": [Alt] & [-]
+To save some values (or virtually anything else) to use again later you assign them to a variable. This can be done in R using either "<-" or "=", but "<-" is typically recommended. See [here](https://stackoverflow.com/questions/1741820/what-are-the-differences-between-and-in-r) for the subtleties, e.g. "=" sometimes fails when you wouldn't expect it to, but "<-" typically does not. R studio also provides a handy keyboard shortcut for inserting "<-": [Alt] & [-]
 ```{r, eval = T}
 x <- 27 #this stores whatever is on the RHS in the arbitrarily named variable on the LHS
 x #to print it to the console, just call the variable.
@@ -104,7 +105,7 @@ y
 
 
 ```{r, eval = F}
-#the only naming conventions are that a variable name should not begin with a
+#the only naming conventions are that a name should not begin with a
 #number, and you should avoid using names that already exist as functions in R
 #or special characters, e.g.:
 
@@ -139,7 +140,8 @@ R makes it incredibly easy to get simple summary statistics for numeric variable
 ```{r, eval = T}
 #R also provides a set of basic functions for conducting common summary
 #statistic calculations
-x <- 0:10
+x <- c(0:10)
+
 sum(x) #obtain the sum of the sequence of numbers from 1 to 100
 
 mean(x) #mean
@@ -155,9 +157,7 @@ max(x) #the maximum
 
 # **Data Structures and Object Assignment**
 
-Most of the other things you will do in R operate on stored values or objects in a variety of forms. 
-
-*N.B.* One of the most important functions that base R provides is [str()](https://www.rdocumentation.org/packages/utils/versions/3.6.1/topics/str), which enables you to inspect the structure of any object.
+Most of the things you will do in R operate upon a variety of objects. 
 
 The common R data structures are:
 
@@ -167,11 +167,13 @@ The common R data structures are:
 
 * [Matrices](https://stat.ethz.ch/R-manual/R-devel/library/base/html/matrix.html) = a two-dimensional array of vectors arranged in columns and rows. All data elements are typically of the same class. Columns are rows are numbered by position from left to right (columns) and top to bottom (rows).
 
-* [Data Frames](https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/data.frame) = Also a 2D array with but column vectors can be different classes. These are the most common type of data structure in R. 
+* [Data Frames](https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/data.frame) = Also a 2D array with but column vectors can be different classes. These are the most common data structure in R. 
 
 * [Tibbles](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html) = an enhanced version of the data frame with improved display characteristics. Tibbles have gained popularity as the [tidyverse](https://www.tidyverse.org/) has become more prominent over the past few years.
 
-* [Lists](https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/list): a list of arbitrary objects, more flexible than data frames but slightly less intuitive to work with. Lists elements can consist of multiple different data types, including the output of statistical tests and even entire data frames. Lists are a slightly more advanced topic, so they won't be covered further until later on in the blog series.
+* [Lists](https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/list): a list of arbitrary objects, more flexible than data frames but less intuitive to work with. Lists elements can consist of multiple different data types, including the output of statistical tests and even entire data frames. Lists are a more advanced topic so they won't be covered further for the time being.
+
+*N.B.* One of the most important functions that base R provides is [str()](https://www.rdocumentation.org/packages/utils/versions/3.6.1/topics/str), which enables you to inspect the structure of any object.
 
 ## Numeric and Character Vectors
 ```{r, eval = T}
@@ -210,7 +212,7 @@ c_vect <- letters[seq(from = 1, to = 26)] #letters[] lets you quickly create a c
 
 #There are 2 subclasses of numeric vector: 
 #"integer", which contains only whole numbers, and "double"(also simply called
-#numeric, both labels refer to the same thing), which has both integer and
+#numeric; both labels refer to the same thing), which has both integer and
 #decimal components
 
 #the class function returns the class of an object. see ?class for more info.
@@ -241,7 +243,7 @@ mean(l)
 
 #both of these are very useful when conducting logical tests of a vector to see
 #how many elements match the specified criteria, e.g.:
-x <- c(1:50, 100:150)
+x <- c(1:10, 100:130)
 
 x < 50 #returns a logical vector with True corresponding to elements matching the logical test, 
 #in this case that the value is less than 50
@@ -249,14 +251,11 @@ x < 50 #returns a logical vector with True corresponding to elements matching th
 sum(x < 50) #how many values in x are less than 50
 mean(x < 50) #what proportion of the values in x are less than 50
 
-#using modulus 2 (divide by 2 and return the remainder) can tell you about even
-#and odd components of a numeric vector
+#using modulus 2 (divide by 2 and return the remainder) can tell you which
+#elements of a numeric vector are odd or even, which is most useful for programming.
 
-sum((x %% 2) == 0) #how many even values are in x
-sum((x %% 2) == 1) #how many odd values are in x
-
-mean((x %% 2) == 1) #which proportion of x is odd
-mean((x %% 2) == 0) #which proportion of x is even
+(x %% 2) == 0 #even values in x = TRUE
+(x %% 2) == 1 #odd values in x = TRUE
 
 #you can do similar tests with character vectors
 c_vect <- c("a", "b", "a", "c", "d")
@@ -271,16 +270,18 @@ sum(c_vect == "a") #what proportion of the elements of c_vect are "a"
 
 ```{r}
 #Factors are a modified form of either a characeter or numeric vector which
-#facilitates their representation and use as categorical variables. You can
-#create a factor in R using either the factor() function, or by reclassifying
-#another vector type using as.factor()
+#facilitates their use as categorical variables. You can create a factor in R
+#using either the factor() function, or by reclassifying another vector type
+#using as.factor()
 
 x <- c(1:3, 1:3, 1:3)
 as.factor(x) 
-#note the addition of levels to the output. What as.factor does is assign each
+
+#Note the addition of levels to the output. What as.factor does is assign each
 #unique value of the vector to a level of the factor. Under the hood this also
-#involves constructing a set of 0/1 dummy variables for each level of the factor
-#(but don't worry about this, because R will do it for you automatically)
+#involves constructing a set of 0/1 dummy variables for each level of the
+#factor, which are needed to fit some models, like linear regession models (but
+#don't worry about this, because R will do it for you automatically).
 
 #using the factor() function instead allows you to assign labels to the levels 
 #you can also specify whether or not the factor is ordered
@@ -318,7 +319,8 @@ class(mat1)
 (mat2 <- rbind(x1, x2)) #combined by row
 class(mat2)
 
-#combining vecotrs of unequal length produces NAs for the extra indices of the 
+#combining vecotrs of unequal length produces NAs for the extra indices of the
+#longer one
 
 #common matrix operations work as expected with matrix objects in R
 
@@ -352,7 +354,7 @@ class(df) #now a data frame
 
 df <- as.data.frame(x) 
 
-names(df) <- c("var_1", "var_2") #change column  names using the names() function
+names(df) <- c("var_1", "var_2") #change column names using the names() function
 
 str(df)
 
@@ -384,8 +386,8 @@ tbl1 <- as_tibble(df)
 
 tbl1 #printout also tells you the dimensions and class of each column
 
-#when creating a tibble, strings are not automatically converted to factors this
-#is better from a data manipulation standpoint, which will be covered in a
+#When creating a tibble, strings are not automatically converted to factors. 
+#This is better from a data manipulation standpoint, which will be covered in a
 #future post on working with strings
 
 tbl1 <- tibble("var_1" = c(sample(1:6, 6)), 
@@ -396,32 +398,50 @@ tbl1
 # **random numbers and sampling**
 
 ```{r}
-#sampling####
+#sampling
+
 #obtain a random sample 6 numbers with values ranging between 1 and 40 without replacement
 sample(1:40, 6, replace=F) 
 
 x <- c(1:30)
 x
 
-df <- sample(1:200, 100, replace=T) #sample with replacement, save it in a vector called "df"
-df
+v <- sample(1:200, 100, replace=T) #sample with replacement, save it in a vector called "v"
+v
 
 set.seed(seed = 934) #sets criteria for random sampling for variable creation if you want it to be repeatable
 
 random.sample <- rnorm(1000, mean = 100, sd = 1) #create a dataset of random, normally distributed data
 
+#generating sequences
+seq(from = 1, to = 7, by = 1) #generate a sequence of numbers from 1 to 7, in 1 unit increments.
+
+seq(1, 7, 1) #specify arguments by position instead
+
+rep(1:10, each = 2)
+
+x <- c(1:12) 
+
+rep(x, each = 2) #create a numeric vector containing each element of x repeated twice
+
+rep(seq(1, 7, 1), each = 3) #repeat a sequence
+
+x <- seq(1, 7, 1)
+rep(x, each = 3) #equivalent to the nested version
+
+
 #creating a data frame from scratch
 y <- c(rnorm(n = 60, mean = 100, sd = 20), rnorm(n = 10, mean = 110, sd = 20)) #creates variable y composed of 60 random scores from a normal distribution with a mean of 100 and sd of 20, along with 10 random scores from a normal distribution with a mean of 110 and sd of 20
 g <- factor(rep(seq(1, 7, 1), each = 10), labels = "g", ordered = FALSE) #groups the scores from 'y' into 7 sets (g1,g2,etc) containing 10 scores each
 z <- letters[1:5]
-data <- as.data.frame(cbind(y, g, z))
+df <- as.data.frame(cbind(y, g, z))
 
-class(data)
-class(data$y)
-data$y <- as.numeric(data$y) #convert to numeric
+class(df)
+class(df$y)
+data$y <- as.numeric(df$y) #convert to numeric
 
-class(data$z) #check the class of variable "Z"
-class(data$g) #check the class of variable "g"
+class(df$z) #check the class of variable "Z"
+class(df$g) #check the class of variable "g"
 
 ```
 
@@ -441,14 +461,18 @@ ncol(data) #number of columns
 dim(data) #returns the number of rows and columns of the object
 
 unique(data$cyl) #display the unique values of the specified variable
+
 #useful applications of the unique() function include making it easier to
 #construct factors (since you need to know what the unique values are) and
-#quickly identifying data entry errors (to be demonstrated in a future post)
+#making it easier to identify data entry errors (to be demonstrated in a future
+#post)
 
 levels(as.factor(data$cyl)) #this is the same as unique but for factors. 
-#It provides the added benefit of revealing what the order of factor levels is.
+#It provides the added benefit of revealing the order of factor levels.
 
-table(data$cyl) #show the unique values of a vector as well as the count of each
+#show the unique values of a vector (top line) 
+#as well as the count of each (bottom line)
+table(data$cyl) 
 
 #of course the str() function, which we've already covered is incredibly
 #versatile and informative
@@ -476,7 +500,7 @@ glimpse(df)
 
 # **the global environment**
 
-The functions you use in R operate within what is appropriately called the working environment, which consists of the functions and other objects that you have loaded in the current R session (this is what happens you load a package with the library function), as well as any variables, data objects, or functions you have created during the session.
+The functions you use in R operate within what is called the global environment, which consists of the functions and other objects that you have loaded in the current R session (this is what happens you load a package with the library function), as well as any variables, data objects, or functions you have created during the session.
 
 ```{r}
 #to get a list of the objects in your global environment, use the ls() function
@@ -504,14 +528,17 @@ setwd("C:/Users/CPH/Documents/")
 
 # **projects**
 
-The projects feature of R studio makes it much easier to keep your work organized, and using it is strongly recommended if you are working on anything that will take longer to complete than a single R session.
+The projects feature of R studio makes it much easier to keep your work organized, and using it is strongly recommended if you are working on anything that will take longer than one or two sessions to complete.
 
-You can create/start a project using the ![projects](/2019-08-06-ASGR-2-0-basic-operations-and-data-structures/index_files/projects icon.png) menu in the top right corner of R studio, directly below the minimize/maximize/exit buttons. Creating a package and then returning to it later also sets the working directory to the project folder automatically. 
+You can create/start a project using the projects menu by clicking on this button:
 
+![](data:image/png;base64,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) 
+
+You can find it in the top right corner of R studio, directly below the minimize/maximize/exit buttons. Creating (or loading) a package also sets the working directory to the project folder automatically. 
 
 # **useful keyboard shortcuts (for R studio users)**
 
-One of the great benefits of using R studio is that you can take advantage of keyboard shortcuts that make the coding process easier/faster. Here is a list of some shortcuts that I've found to be useful:
+One of the great benefits of using R studio are the keyboard shortcuts that speed up the coding process. Here are some I've found to be useful:
 
 * assignment operator *<-*: [Alt] + [-]
 
@@ -519,11 +546,11 @@ One of the great benefits of using R studio is that you can take advantage of ke
 
 * comment lines in/out: [Ctrl] + [Shift] + [c]
 
-* reflow comments: highlight/select comments that extend beyond the viewable area of the screen or multiple lines and use [Ctrl] + [Shift] + [/] to reflow/wrap them for easier reading
+* reflow comments: highlight/select comments and use [Ctrl] + [Shift] + [/] to reflow/wrap them for easier reading.
 
 * reindent lines: use [Ctrl] + [i] to realign the indentation of your R code so it is easier to read. 
 
-* insert code section title: [Ctrl] + [Shift] + [r]. This can also be done by starting a line with # to comment it out, and ending it with #### or ----
+* insert code section title: [Ctrl] + [Shift] + [r]. This can also be done by starting a line with # to comment it out, and ending it with *####* or *----*
 
 * open/close the R script outline, which contains a list of the code sections you've defined using the code section titles that can be clicked on to quickly navigate through your script: [Ctrl] + [Shift] + [o]
 
@@ -535,5 +562,5 @@ One of the great benefits of using R studio is that you can take advantage of ke
 
 * A link to the next post (data manipulation part 1) will be added in the near future.
 
-Thank you for reading and I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.
+Thank you for visiting my blog. I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.
 
