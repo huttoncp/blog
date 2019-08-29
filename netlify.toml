@@ -42,13 +42,13 @@ status = 301
 force = true
 
 [[redirects]]
-from = "http://laughing-panini-5d9a50.netlify.com*"
+from = "http://craighutton.netlify.com*"
 to = "https://craig.rbind.io/:splat"
 status = 301
 force = true
 
 [[redirects]]
-from = "https://laughing-panini-5d9a50.netlify.com*"
+from = "https://craighutton.netlify.com*"
 to = "https://craig.rbind.io/:splat"
 status = 301
 force = true
