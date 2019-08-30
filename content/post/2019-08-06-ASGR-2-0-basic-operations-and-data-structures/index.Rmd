@@ -173,6 +173,8 @@ The common R data structures are:
 
 * [Lists](https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/list): a list of arbitrary objects, more flexible than data frames but less intuitive to work with. Lists elements can consist of multiple different data types, including the output of statistical tests and even entire data frames. Lists are a more advanced topic so they won't be covered further for the time being.
 
+* [Arrays](https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/array): If you want to work with matrices that have more than 2 dimensions, checkout the array function. Arrays with more than 2 dimensions (note: a 2D array is equivalent to a matrix) are not commonly used for the analysis of most forms of experimental data (e.g. I've never needed them), so I won't be covering them in this blog series. Those who are interested in learning more about can find out more [here](http://adv-r.had.co.nz/Data-structures.html#matrices-and-arrays), in the function documentation (?array), or a more detailed treatment in section 5 of the [official R introductory manual](https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf)
+
 *N.B.* One of the most important functions that base R provides is [str()](https://www.rdocumentation.org/packages/utils/versions/3.6.1/topics/str), which enables you to inspect the structure of any object.
 
 ## Numeric and Character Vectors
@@ -559,6 +561,8 @@ One of the great benefits of using R studio are the keyboard shortcuts that spee
 ## notes
 
 * A link to the next post (data manipulation part 1) will be added in the near future.
+
+* For more details on the data structures and operations introduced in this post, you may find the [official R introductory manual](https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf) or Michael Crawley's ["The R Book"](https://www.amazon.ca/R-Book-Michael-J-Crawley/dp/0470973927) helpful. 
 
 Thank you for visiting my blog. I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.
 
