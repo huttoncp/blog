@@ -32,7 +32,7 @@ highlight = true
 
 # Enable global LaTeX math rendering?
 #   If false, you can enable it locally on a per page basis.
-math = true
+math = false
 
 # Privacy pack
 #   Show a cookie consent message to visitors
@@ -50,7 +50,7 @@ time_format = "3:04 PM"
 ############################
 
 # Enter contact details (optional). To hide a field, clear it to "".
-email = "craighutton@uvic.ca"
+email = "craig.hutton@gmail.com"
 phone = ""
 address = "Victoria, Canada"
 

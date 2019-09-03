@@ -7,28 +7,190 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
-    <lastBuildDate>Sun, 07 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jul 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/authors/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title></title>
-      <link>/authors/admin/</link>
-      <pubDate>Sun, 07 Apr 2019 00:00:00 +0000</pubDate>
+      <title>Christie, B.R.</title>
+      <link>/authors/christie-b.r./</link>
+      <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>/authors/admin/</guid>
-      <description>I use a combination of methods from psychology, neuroscience, and statistics to examine how brain plasticity, memory, and mood are affected by mild traumatic injuries and neurodegenerative diseases.
-I am also passionate about using machine learning to accelerate my research via insights extracted from epidemiological studies. To this end I collaborate with researchers at the University of Victoria, McMaster University, and the IALSA research network to examine how environmental and lifestyle factors affect mental health and morbidity risk in epidemiological studies such as the Canadian Longitudinal Study of Aging.</description>
+      <guid>/authors/christie-b.r./</guid>
+      <description></description>
     </item>
     
     <item>
-      <title>Robert Ford</title>
-      <link>/authors/robert-ford/</link>
-      <pubDate>Tue, 01 Sep 2015 00:00:00 +0000</pubDate>
+      <title>Hutton, C.P.</title>
+      <link>/authors/hutton-c.p./</link>
+      <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>/authors/robert-ford/</guid>
+      <guid>/authors/hutton-c.p./</guid>
       <description></description>
+    </item>
+    
+    <item>
+      <title>Meconi, A.</title>
+      <link>/authors/meconi-a./</link>
+      <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/meconi-a./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Neale, K.J.</title>
+      <link>/authors/neale-k.j./</link>
+      <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/neale-k.j./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Pinar, C.</title>
+      <link>/authors/pinar-c./</link>
+      <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/pinar-c./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Reid, H.</title>
+      <link>/authors/reid-h./</link>
+      <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/reid-h./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Trivino-Paredes, J.</title>
+      <link>/authors/trivino-paredes-j./</link>
+      <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/trivino-paredes-j./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Becker, S.</title>
+      <link>/authors/becker-s./</link>
+      <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/becker-s./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Boreham, D.R.</title>
+      <link>/authors/boreham-d.r./</link>
+      <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/boreham-d.r./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Fahnestock, M.</title>
+      <link>/authors/fahnestock-m./</link>
+      <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/fahnestock-m./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Lemon, J.A.</title>
+      <link>/authors/lemon-j.a./</link>
+      <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/lemon-j.a./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rollo, C.D.</title>
+      <link>/authors/rollo-c.d./</link>
+      <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/rollo-c.d./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sakic, B.</title>
+      <link>/authors/sakic-b./</link>
+      <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/sakic-b./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Wojtowicz, J.M.</title>
+      <link>/authors/wojtowicz-j.m./</link>
+      <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/wojtowicz-j.m./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Déry, N.</title>
+      <link>/authors/d%C3%A9ry-n./</link>
+      <pubDate>Thu, 12 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/d%C3%A9ry-n./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rosa, R.</title>
+      <link>/authors/rosa-r./</link>
+      <pubDate>Thu, 12 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/rosa-r./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>deCatanzaro, D.</title>
+      <link>/authors/decatanzaro-d./</link>
+      <pubDate>Thu, 12 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/decatanzaro-d./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Aujla, H.</title>
+      <link>/authors/aujla-h./</link>
+      <pubDate>Tue, 01 Jan 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/aujla-h./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rogala, B.</title>
+      <link>/authors/rogala-b./</link>
+      <pubDate>Tue, 01 Jan 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/rogala-b./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/authors/admin/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/admin/</guid>
+      <description>I use a combination of methods from psychology, neuroscience, and statistics to examine how brain plasticity, memory, and mood are affected by mild traumatic injuries and neurodegenerative diseases.
+I am also passionate about using machine learning to accelerate my research. To this end I collaborate with researchers at the University of Victoria, McMaster University, and the IALSA research network to examine how environmental and lifestyle factors affect mental health and morbidity risk in epidemiological studies such as the Canadian Longitudinal Study of Aging.</description>
     </item>
     
   </channel>

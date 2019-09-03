@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Behavioural Neuroscience on Craig Hutton, PhD</title>
+    <link>/tags/behavioural-neuroscience/</link>
+    <description>Recent content in Behavioural Neuroscience on Craig Hutton, PhD</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
+    <lastBuildDate>Thu, 12 Nov 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/behavioural-neuroscience/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Assessing anxiety and reward-related behaviors following alcohol administration or chronic stress</title>
+      <link>/publication/2019-09-03-hutton-et-al-2015/</link>
+      <pubDate>Thu, 12 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/publication/2019-09-03-hutton-et-al-2015/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
