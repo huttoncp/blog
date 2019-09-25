@@ -167,7 +167,7 @@ The common R data structures are:
 
 * [Matrices](https://stat.ethz.ch/R-manual/R-devel/library/base/html/matrix.html) = a two-dimensional array of vectors arranged in columns and rows. All data elements are typically of the same class. Columns are rows are numbered by position from left to right (columns) and top to bottom (rows).
 
-* [Data Frames](https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/data.frame) = Also a 2D array with but column vectors can be different classes. These are the most common data structure in R. 
+* [Data Frames](https://www.rdocumentation.org/packages/base/versions/3.6.1/topics/data.frame) = Also a 2D array but columns can be different classes. These are the most common data structure in R. 
 
 * [Tibbles](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html) = an enhanced version of the data frame with improved display characteristics. Tibbles have gained popularity as the [tidyverse](https://www.tidyverse.org/) has become more prominent over the past few years.
 
