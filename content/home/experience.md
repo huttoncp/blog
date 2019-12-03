@@ -19,12 +19,28 @@ date_format = "Jan 2006"
 #   Begin/end multi-line descriptions with 3 quotes `"""`.
 
 [[experience]]
+  title = "Data Science Fellow"
+  company = "Office of the Chief Information Officer, Ministry of Citizen's Services, Province of British Columbia"
+  company_url = "https://www2.gov.bc.ca/gov/content/governments/organizational-structure/ministries-organizations/central-government-agencies/office-of-the-chief-information-officer"
+  location = "Victoria, BC, Canada"
+  date_start = "2019-06-01"
+  date_end = ""
+  description = """"
+  Responsibilites:
+  * Statistical modelling, hypothesis testing, and machine learning with R & SAS.
+  * In partnership with the BC Centre for Disease Control, I am leading a team of 4 researchers seeking to use unsupervised machine learning and statistical models to identify determinants of overdose risk among British Columbians struggling with opiod addiction.
+  * Using time-series regression models to evaluate the public service utilization and economic impacts of social assistance policies in collaboration with other policy analysts, economists, and administrators.
+  * Developing an R package to make data analysis easier and more accessible to scientific researchers.
+  * Querying, modifying, and constructing relational databases using SQL and Git Bash. 
+  * Cleaning, transforming, and processing high dimensional data (millions of rows) to facilitate reproducible analysis.
+
+[[experience]]
   title = "Postdoctoral Fellow in Neuroscience"
   company = "Division of Medical Sciences, University of Victoria"
   company_url = "https://www.uvic.ca/medsci/people/post-docs/index.php"
   location = "Victoria, BC, Canada"
   date_start = "2018-10-01"
-  date_end = ""
+  date_end = "2019-04-15"
   description = """
   Responsibilities:
   
@@ -34,6 +50,7 @@ date_format = "Jan 2006"
   * Uncovered novel therapeutic targets for post-concussion treatment via differential expression analysis of proteomics data.  
   * Leveraged multiple correspondence analysis and clustering to identify disease comorbidity patterns using questionnaire data from over 50,000 participants in the Canadian Longitudinal Study on Aging (CLSA; https://www.clsa-elcv.ca/).
   * Used random forest models to predict depression with 87% test accuracy based on lifestyle patterns and cognitive data from over 30,000 Canadians.
+  * Predicted concussion status with over 95% test accuracy based on demographic information, clinical history, and cognitive evaluations from hundreds of patients with a decision tree and used permutation techniques to characterize concussion-related behavioural impairments many months after a traumatic brain injury.  
   """
 
 [[experience]]

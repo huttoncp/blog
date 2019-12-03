@@ -10,7 +10,7 @@ authors:
 - Wojtowicz, J.M.
 - Becker, S.
 date: "2018"
-doi: "10.1016/j.neuroscience.2015.09.005"
+doi: "10.3233/JAD-170921"
 featured: false
 image:
   caption: ""

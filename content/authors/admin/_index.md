@@ -12,7 +12,7 @@ education:
     institution: University of Winnipeg
     year: 2013
     
-email: "craighutton@uvic.ca"
+email: "craig.hutton@gov.bc.ca"
 
 academic interests:
 - The neuropsychological basis of learning and memory
@@ -23,14 +23,14 @@ academic interests:
 
 name: Dr. Craig P. Hutton
 organizations:
+- name: Office of the Chief Information Officer, Ministry of Citizens' Services, Province of British Columbia
+  url: "https://www2.gov.bc.ca/gov/content/governments/organizational-structure/ministries-organizations/central-government-agencies/office-of-the-chief-information-officer"
 - name: Data Science Studio, Institute on Aging & Lifelong Health, University of Victoria
   url: "https://dss-ialh.rbind.io"
 - name: Christie Lab, Division of Medical Sciences, University of Victoria
   url: "https://www.uvic.ca/medsci/people/post-docs/index.php"
-- name: Integrative Analysis of Longitudinal Studies of Aging and Dementia research network (IALSA)
-  url: "https://www.maelstrom-research.org/mica/network/ialsa"
 
-role: Behavioural Neuroscientist | Data Scientist
+role: Data Scientist | Behavioural Neuroscientist
 social:
 - icon: envelope
   icon_pack: fas
@@ -50,8 +50,8 @@ user_groups:
 - Visitors
 ---
 
-I use a combination of methods from psychology, neuroscience, and statistics to examine how brain plasticity, memory, and mood are affected by mild traumatic injuries and neurodegenerative diseases.
+I am a scientist working within the domains of machine learning and mental health. My diverse background in behavioural neuroscience, applied statistics, and epidemiology leads me to apply a multidisciplinary and creative approach to doing research. I deeply enjoy solving complex problems and exploring new ideas.
 
-I am also passionate about using machine learning to accelerate my research. To this end I collaborate with researchers at the University of Victoria, McMaster University, and the [IALSA](https://www.ialsa.org/) research network to examine how environmental and lifestyle factors affect mental health and morbidity risk in epidemiological studies such as the [Canadian Longitudinal Study of Aging](https://www.clsa-elcv.ca/).
+I’ve worked both as an independent contributor and as a leader of teams of up to 10. In my current role as a Data Science Fellow with the Province of British Columbia I primarily work in R and SQL.
 
 In my free time I enjoy coding, reading, biking, hiking, playing guitar, listening to live music, and visiting with friends and family.

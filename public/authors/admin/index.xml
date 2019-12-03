@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Craig Hutton, PhD</title>
@@ -10,16 +10,6 @@
     
 	<atom:link href="/authors/admin/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title></title>
-      <link>/authors/admin/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/authors/admin/</guid>
-      <description>I use a combination of methods from psychology, neuroscience, and statistics to examine how brain plasticity, memory, and mood are affected by mild traumatic injuries and neurodegenerative diseases.
-I am also passionate about using machine learning to accelerate my research. To this end I collaborate with researchers at the University of Victoria, McMaster University, and the IALSA research network to examine how environmental and lifestyle factors affect mental health and morbidity risk in epidemiological studies such as the Canadian Longitudinal Study of Aging.</description>
-    </item>
     
   </channel>
 </rss>
