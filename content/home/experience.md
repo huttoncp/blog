@@ -25,7 +25,7 @@ date_format = "Jan 2006"
   location = "Victoria, BC, Canada"
   date_start = "2019-06-01"
   date_end = ""
-  description = """"
+  description = """
   Responsibilites:
   * Statistical modelling, hypothesis testing, and machine learning with R & SAS.
   * In partnership with the BC Centre for Disease Control, I am leading a team of 4 researchers seeking to use unsupervised machine learning and statistical models to identify determinants of overdose risk among British Columbians struggling with opiod addiction.
