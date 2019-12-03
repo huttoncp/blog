@@ -29,7 +29,7 @@ date_format = "Jan 2006"
   Responsibilites:
   
   * Statistical modelling, hypothesis testing, and machine learning with R & SAS.
-  * In partnership with the BC Centre for Disease Control, I am leading a team of 4 researchers seeking to use unsupervised machine learning and statistical models to identify determinants of overdose risk among British Columbians struggling with opiod addiction.
+  * In partnership with the BC Centre for Disease Control, I am leading a team of 4 researchers seeking to use unsupervised machine learning and statistical models to identify determinants of overdose risk among British Columbians struggling with opioid addiction.
   * Using time-series regression models to evaluate the public service utilization and economic impacts of social assistance policies in collaboration with other policy analysts, economists, and administrators.
   * Developing an R package to make data analysis easier and more accessible to scientific researchers.
   * Querying, modifying, and constructing relational databases using SQL and Git Bash. 
