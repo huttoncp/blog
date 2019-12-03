@@ -33,7 +33,8 @@ date_format = "Jan 2006"
   * Developing an R package to make data analysis easier and more accessible to scientific researchers.
   * Querying, modifying, and constructing relational databases using SQL and Git Bash. 
   * Cleaning, transforming, and processing high dimensional data (millions of rows) to facilitate reproducible analysis.
-
+  """
+  
 [[experience]]
   title = "Postdoctoral Fellow in Neuroscience"
   company = "Division of Medical Sciences, University of Victoria"
