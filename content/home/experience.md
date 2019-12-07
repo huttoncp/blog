@@ -23,7 +23,7 @@ date_format = "Jan 2006"
   company = "Office of the Chief Information Officer, Ministry of Citizen's Services, Province of British Columbia"
   company_url = "https://www2.gov.bc.ca/gov/content/governments/organizational-structure/ministries-organizations/central-government-agencies/office-of-the-chief-information-officer"
   location = "Victoria, BC, Canada"
-  date_start = "2019-06-01"
+  date_start = "2019-05-27"
   date_end = ""
   description = """
   Responsibilites:
@@ -51,7 +51,6 @@ date_format = "Jan 2006"
   * Discovering health-related patterns and predictors in experimental and epidemiological data.
   * Uncovered novel therapeutic targets for post-concussion treatment via differential expression analysis of proteomics data.  
   * Leveraged multiple correspondence analysis and clustering to identify disease comorbidity patterns using questionnaire data from over 50,000 participants in the Canadian Longitudinal Study on Aging (CLSA; https://www.clsa-elcv.ca/).
-  * Used random forest models to predict depression with 87% test accuracy based on lifestyle patterns and cognitive data from over 30,000 Canadians.
   * Predicted concussion status with over 95% test accuracy based on demographic information, clinical history, and cognitive evaluations from hundreds of patients with a decision tree and used permutation techniques to characterize concussion-related behavioural impairments many months after a traumatic brain injury.  
   """
 
@@ -69,6 +68,7 @@ date_format = "Jan 2006"
   * Employed domain knowledge, unsupervised learning (hierarchical clustering and principal component analysis), and predictive modeling (logistic and linear regression) with R. 
   * Identified dietary patterns conducive to healthy brain aging using data from 30,000 Canadians.
   * Established and coordinated a collaborative research program between 5 different laboratories across McMaster University and the University of Toronto.
+  * Used random forest models to predict depression with 87% test accuracy based on lifestyle patterns and cognitive data from over 30,000 Canadians.
   * Coded, manipulated, visualized, and analysed various data types using R and SPSS.
   * Communicated research findings to stakeholders and senior decision-makers in organizational meetings, peer-reviewed publications, and at 10 conferences (national and international). 
   """
