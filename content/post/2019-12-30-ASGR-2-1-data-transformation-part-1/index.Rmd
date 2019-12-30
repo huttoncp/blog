@@ -68,19 +68,23 @@ glimpse(df)
 
 filter(df, 
        homeworld == "Tatooine" | homeworld == "Naboo") #recall that the vertical bar `|` is the logical operator 'or'
-# this is read: "filter the data frame "df" to extract rows where the value of the variable homeworld is equal to
-# "Tatooine" or homeworld is equal to "Naboo"
+
+# this is read: filter the data frame "df" to extract rows where the value of
+# the variable homeworld is equal to "Tatooine" or homeworld is equal to "Naboo"
 
 #in base R, one equivalent option would be:
 
 df[(df$homeworld == "Tatooine" | df$homeworld == "Naboo"), ]
-#notice that the $ is not needed to specify which data set the variable "homeworld" is in for filter
-#but it is if you are passing a logical vector to subset a data frame using `[]` in base R
 
-# this is because R reads (df$homeworld == "Tatooine" | df$homeworld == "Naboo") as a logical test and returns
-# a logical vector, which is then used to specify which rows to extract (those with values == TRUE) and which
-# to discard (those with values == FALSE). This becomes really clear if you just pull out the subsetting predicates
-# and print the result
+# notice that the $ is not needed to specify which data set the variable
+# "homeworld" is in for filter but it is if you are passing a logical vector to
+# subset a data frame using `[]` in base R
+
+# this is because R reads (df$homeworld == "Tatooine" | df$homeworld == "Naboo")
+# as a logical test and returns a logical vector, which is then used to specify
+# which rows to extract (those with values == TRUE) and which to discard (those
+# with values == FALSE). This becomes really clear if you just pull out the
+# subsetting predicates and print the result
 
 (df$homeworld == "Tatooine" | df$homeworld == "Naboo")
 
@@ -306,13 +310,13 @@ if_else(df$height > 180, #part 1. logical test
 
 # use mutate to add it to an existing data frame
 
-mutate(df, 
+mutate(select(df, name, height), #apply mutate to a subset of the data using a nested select call
        tall_or_short = if_else(height > 180, 
                               "tall", 
                               "short")) 
 
 # to specify more than 2 conditions/outputs you can use case_when():
-mutate(df, 
+mutate(select(df, name, height), 
        size_class = case_when(height > 200 ~ "tall", #logical_test ~ value_if_TRUE,
                               height < 200 &  height > 100 ~ "medium", 
                               height < 100 ~ "short")
@@ -321,7 +325,7 @@ mutate(df,
 
 # you can recode a variable using recode():
 
-recoded_using_recode <- mutate(df, 
+recoded_using_recode <- mutate(select(df, name, hair_color),
        hair_color = recode(hair_color, #the variable you want to recode
                            "blond" = "BLOND",#old_value = new_value
                            "brown" = "BROWN") #you can recode any number of values this way
@@ -336,7 +340,7 @@ recoded_using_recode
 
 # an alternative would be to use case_when(), e.g.:
 
-recoded_using_case_when <- mutate(df, 
+recoded_using_case_when <- mutate(select(df, name, hair_color),
        hair_color = case_when(hair_color == "blond" ~ "BLOND",
                               hair_color == "brown" ~ "BROWN", 
                               TRUE ~ as.character(hair_color)))
@@ -419,7 +423,7 @@ identical(summary1, summary2)
 mutated_grouped_data <- mutate(grouped_data, 
                                scaled_mass = scale(mass)) #convert raw masses into standardized masses (i.e. z-scores)
 
-mutated_grouped_data
+select(mutated_grouped_data, name, mass, scaled_mass) #just print the relevant parts
 
 #note that this is done within species, and the results differ from the same
 #operation applied to the ungrouped data

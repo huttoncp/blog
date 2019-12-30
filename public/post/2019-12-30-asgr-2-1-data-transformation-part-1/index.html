@@ -546,7 +546,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    37 min read
+    35 min read
   </span>
   
 
@@ -669,7 +669,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    37 min read
+    35 min read
   </span>
   
 
@@ -799,16 +799,8 @@
 <h1><span class="header-section-number">3</span> <strong>filter()</strong></h1>
 <p><code>filter()</code> is the one of two core dplyr verbs you can use for subsetting your data. <code>filter()</code> lets you extract a subset of rows using <a href="https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/#logical-operators">logical operators</a>.</p>
 <p>To filter a data frame, specify the name of the data frame as the 1st argument, then any number of logical tests for values of variables in the data frame that you want to use as filtering criteria.</p>
-<pre class="r"><code>library(dplyr) #load the dplyr package with the library function.</code></pre>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code>#the dplyr package will be used throughout this tutorial so make sure it is
+<pre class="r"><code>library(dplyr) #load the dplyr package with the library function.
+#the dplyr package will be used throughout this tutorial so make sure it is
 #loaded before trying to run the examples yourself
 
 df &lt;- starwars #assign the star wars data frame (imported when dplyr is loaded) to the label/name &quot;df&quot;
@@ -850,8 +842,8 @@ filter(df,
 ## 10 Palp~    170    75 grey       pale       yellow          82   male  
 ## # ... with 11 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
 ## #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
-<pre class="r"><code># this is read: &quot;filter the data frame &quot;df&quot; to extract rows where the value of the variable homeworld is equal to
-# &quot;Tatooine&quot; or homeworld is equal to &quot;Naboo&quot;
+<pre class="r"><code># this is read: filter the data frame &quot;df&quot; to extract rows where the value of
+# the variable homeworld is equal to &quot;Tatooine&quot; or homeworld is equal to &quot;Naboo&quot;
 
 #in base R, one equivalent option would be:
 
@@ -871,13 +863,15 @@ df[(df$homeworld == &quot;Tatooine&quot; | df$homeworld == &quot;Naboo&quot;), ]
 ## 10 &lt;NA&gt;      NA    NA &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;            NA   &lt;NA&gt;  
 ## # ... with 21 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
 ## #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
-<pre class="r"><code>#notice that the $ is not needed to specify which data set the variable &quot;homeworld&quot; is in for filter
-#but it is if you are passing a logical vector to subset a data frame using `[]` in base R
+<pre class="r"><code># notice that the $ is not needed to specify which data set the variable
+# &quot;homeworld&quot; is in for filter but it is if you are passing a logical vector to
+# subset a data frame using `[]` in base R
 
-# this is because R reads (df$homeworld == &quot;Tatooine&quot; | df$homeworld == &quot;Naboo&quot;) as a logical test and returns
-# a logical vector, which is then used to specify which rows to extract (those with values == TRUE) and which
-# to discard (those with values == FALSE). This becomes really clear if you just pull out the subsetting predicates
-# and print the result
+# this is because R reads (df$homeworld == &quot;Tatooine&quot; | df$homeworld == &quot;Naboo&quot;)
+# as a logical test and returns a logical vector, which is then used to specify
+# which rows to extract (those with values == TRUE) and which to discard (those
+# with values == FALSE). This becomes really clear if you just pull out the
+# subsetting predicates and print the result
 
 (df$homeworld == &quot;Tatooine&quot; | df$homeworld == &quot;Naboo&quot;)</code></pre>
 <pre><code>##  [1]  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE FALSE
@@ -1348,49 +1342,47 @@ if_else(df$height &gt; 180, #part 1. logical test
 ## [82] NA      NA      NA      NA      NA      &quot;short&quot;</code></pre>
 <pre class="r"><code># use mutate to add it to an existing data frame
 
-mutate(df, 
+mutate(select(df, name, height), #apply mutate to a subset of the data using a nested select call
        tall_or_short = if_else(height &gt; 180, 
                               &quot;tall&quot;, 
                               &quot;short&quot;)) </code></pre>
-<pre><code>## # A tibble: 87 x 14
-##    name  height  mass hair_color skin_color eye_color birth_year gender
-##    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; 
-##  1 Luke~    172    77 blond      fair       blue            19   male  
-##  2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   &lt;NA&gt;  
-##  3 R2-D2     96    32 &lt;NA&gt;       white, bl~ red             33   &lt;NA&gt;  
-##  4 Dart~    202   136 none       white      yellow          41.9 male  
-##  5 Leia~    150    49 brown      light      brown           19   female
-##  6 Owen~    178   120 brown, gr~ light      blue            52   male  
-##  7 Beru~    165    75 brown      light      blue            47   female
-##  8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   &lt;NA&gt;  
-##  9 Bigg~    183    84 black      light      brown           24   male  
-## 10 Obi-~    182    77 auburn, w~ fair       blue-gray       57   male  
-## # ... with 77 more rows, and 6 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-## #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;, tall_or_short &lt;chr&gt;</code></pre>
+<pre><code>## # A tibble: 87 x 3
+##    name               height tall_or_short
+##    &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;        
+##  1 Luke Skywalker        172 short        
+##  2 C-3PO                 167 short        
+##  3 R2-D2                  96 short        
+##  4 Darth Vader           202 tall         
+##  5 Leia Organa           150 short        
+##  6 Owen Lars             178 short        
+##  7 Beru Whitesun lars    165 short        
+##  8 R5-D4                  97 short        
+##  9 Biggs Darklighter     183 tall         
+## 10 Obi-Wan Kenobi        182 tall         
+## # ... with 77 more rows</code></pre>
 <pre class="r"><code># to specify more than 2 conditions/outputs you can use case_when():
-mutate(df, 
+mutate(select(df, name, height), 
        size_class = case_when(height &gt; 200 ~ &quot;tall&quot;, #logical_test ~ value_if_TRUE,
                               height &lt; 200 &amp;  height &gt; 100 ~ &quot;medium&quot;, 
                               height &lt; 100 ~ &quot;short&quot;)
        ) </code></pre>
-<pre><code>## # A tibble: 87 x 14
-##    name  height  mass hair_color skin_color eye_color birth_year gender
-##    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; 
-##  1 Luke~    172    77 blond      fair       blue            19   male  
-##  2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   &lt;NA&gt;  
-##  3 R2-D2     96    32 &lt;NA&gt;       white, bl~ red             33   &lt;NA&gt;  
-##  4 Dart~    202   136 none       white      yellow          41.9 male  
-##  5 Leia~    150    49 brown      light      brown           19   female
-##  6 Owen~    178   120 brown, gr~ light      blue            52   male  
-##  7 Beru~    165    75 brown      light      blue            47   female
-##  8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   &lt;NA&gt;  
-##  9 Bigg~    183    84 black      light      brown           24   male  
-## 10 Obi-~    182    77 auburn, w~ fair       blue-gray       57   male  
-## # ... with 77 more rows, and 6 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-## #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;, size_class &lt;chr&gt;</code></pre>
+<pre><code>## # A tibble: 87 x 3
+##    name               height size_class
+##    &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;     
+##  1 Luke Skywalker        172 medium    
+##  2 C-3PO                 167 medium    
+##  3 R2-D2                  96 short     
+##  4 Darth Vader           202 tall      
+##  5 Leia Organa           150 medium    
+##  6 Owen Lars             178 medium    
+##  7 Beru Whitesun lars    165 medium    
+##  8 R5-D4                  97 short     
+##  9 Biggs Darklighter     183 medium    
+## 10 Obi-Wan Kenobi        182 medium    
+## # ... with 77 more rows</code></pre>
 <pre class="r"><code># you can recode a variable using recode():
 
-recoded_using_recode &lt;- mutate(df, 
+recoded_using_recode &lt;- mutate(select(df, name, hair_color),
        hair_color = recode(hair_color, #the variable you want to recode
                            &quot;blond&quot; = &quot;BLOND&quot;,#old_value = new_value
                            &quot;brown&quot; = &quot;BROWN&quot;) #you can recode any number of values this way
@@ -1398,28 +1390,27 @@ recoded_using_recode &lt;- mutate(df,
        ) 
 
 recoded_using_recode</code></pre>
-<pre><code>## # A tibble: 87 x 13
-##    name  height  mass hair_color skin_color eye_color birth_year gender
-##    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; 
-##  1 Luke~    172    77 BLOND      fair       blue            19   male  
-##  2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   &lt;NA&gt;  
-##  3 R2-D2     96    32 &lt;NA&gt;       white, bl~ red             33   &lt;NA&gt;  
-##  4 Dart~    202   136 none       white      yellow          41.9 male  
-##  5 Leia~    150    49 BROWN      light      brown           19   female
-##  6 Owen~    178   120 brown, gr~ light      blue            52   male  
-##  7 Beru~    165    75 BROWN      light      blue            47   female
-##  8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   &lt;NA&gt;  
-##  9 Bigg~    183    84 black      light      brown           24   male  
-## 10 Obi-~    182    77 auburn, w~ fair       blue-gray       57   male  
-## # ... with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-## #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+<pre><code>## # A tibble: 87 x 2
+##    name               hair_color   
+##    &lt;chr&gt;              &lt;chr&gt;        
+##  1 Luke Skywalker     BLOND        
+##  2 C-3PO              &lt;NA&gt;         
+##  3 R2-D2              &lt;NA&gt;         
+##  4 Darth Vader        none         
+##  5 Leia Organa        BROWN        
+##  6 Owen Lars          brown, grey  
+##  7 Beru Whitesun lars BROWN        
+##  8 R5-D4              &lt;NA&gt;         
+##  9 Biggs Darklighter  black        
+## 10 Obi-Wan Kenobi     auburn, white
+## # ... with 77 more rows</code></pre>
 <pre class="r"><code># unforunately, unlike other dplyr functions, recode()-ed values are specified as
 # &quot;old_value&quot; = &quot;new_value&quot; instead of the more common &quot;new&quot; = &quot;old&quot; scheme used
 # by select() and rename()
 
 # an alternative would be to use case_when(), e.g.:
 
-recoded_using_case_when &lt;- mutate(df, 
+recoded_using_case_when &lt;- mutate(select(df, name, hair_color),
        hair_color = case_when(hair_color == &quot;blond&quot; ~ &quot;BLOND&quot;,
                               hair_color == &quot;brown&quot; ~ &quot;BROWN&quot;, 
                               TRUE ~ as.character(hair_color)))
@@ -1537,23 +1528,23 @@ identical(summary1, summary2)</code></pre>
 mutated_grouped_data &lt;- mutate(grouped_data, 
                                scaled_mass = scale(mass)) #convert raw masses into standardized masses (i.e. z-scores)
 
-mutated_grouped_data</code></pre>
-<pre><code>## # A tibble: 87 x 14
+select(mutated_grouped_data, name, mass, scaled_mass) #just print the relevant parts</code></pre>
+<pre><code>## Adding missing grouping variables: `species`</code></pre>
+<pre><code>## # A tibble: 87 x 4
 ## # Groups:   species [38]
-##    name  height  mass hair_color skin_color eye_color birth_year gender
-##    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; 
-##  1 Luke~    172    77 BLOND      fair       blue            19   male  
-##  2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   &lt;NA&gt;  
-##  3 R2-D2     96    32 &lt;NA&gt;       white, bl~ red             33   &lt;NA&gt;  
-##  4 Dart~    202   136 none       white      yellow          41.9 male  
-##  5 Leia~    150    49 BROWN      light      brown           19   female
-##  6 Owen~    178   120 brown, gr~ light      blue            52   male  
-##  7 Beru~    165    75 BROWN      light      blue            47   female
-##  8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   &lt;NA&gt;  
-##  9 Bigg~    183    84 black      light      brown           24   male  
-## 10 Obi-~    182    77 auburn, w~ fair       blue-gray       57   male  
-## # ... with 77 more rows, and 6 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-## #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;, scaled_mass &lt;dbl&gt;</code></pre>
+##    species name                mass scaled_mass
+##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Human   Luke Skywalker        77     -0.298 
+##  2 Droid   C-3PO                 75      0.103 
+##  3 Droid   R2-D2                 32     -0.740 
+##  4 Human   Darth Vader          136      2.75  
+##  5 Human   Leia Organa           49     -1.74  
+##  6 Human   Owen Lars            120      1.92  
+##  7 Human   Beru Whitesun lars    75     -0.401 
+##  8 Droid   R5-D4                 32     -0.740 
+##  9 Human   Biggs Darklighter     84      0.0628
+## 10 Human   Obi-Wan Kenobi        77     -0.298 
+## # ... with 77 more rows</code></pre>
 <pre class="r"><code>#note that this is done within species, and the results differ from the same
 #operation applied to the ungrouped data
 identical(
