@@ -289,7 +289,7 @@ transmute(df2,
 
 ```
 
-## recoding or creating indicator variables using mutate(), transmute(), or recode()
+## recoding or creating indicator variables using if_else(), case_when(), or recode()
 
 A common use of mutate (or transmute) is to encode a new variable (or overwrite an existing one) based on values of an existing variable in a data frame using the [recode()](https://dplyr.tidyverse.org/reference/recode.html), [if_else()](https://dplyr.tidyverse.org/reference/if_else.html) or [case_when()](https://dplyr.tidyverse.org/reference/case_when.html) functions in the dplyr package.
 
