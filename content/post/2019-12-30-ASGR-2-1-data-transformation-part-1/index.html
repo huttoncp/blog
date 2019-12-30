@@ -1,5 +1,5 @@
 ---
-title: 'A Scientist''s Guide to R: Step 2.1. Data Transformation part 1'
+title: 'A Scientist''s Guide to R: Step 2.1. Data Transformation - Part 1'
 author: 'Craig Hutton'
 date: '2019-12-30'
 slug: 
@@ -30,7 +30,7 @@ output:
 <li><a href="#renaming-columns-using-select-or-rename"><span class="toc-section-number">4.1</span> renaming columns using select() or rename()</a></li>
 </ul></li>
 <li><a href="#mutate"><span class="toc-section-number">5</span> <strong>mutate()</strong></a><ul>
-<li><a href="#recoding-or-creating-indicator-variables-using-mutate-transmute-or-recode"><span class="toc-section-number">5.1</span> recoding or creating indicator variables using mutate(), transmute(), or recode()</a></li>
+<li><a href="#recoding-or-creating-indicator-variables-using-if_else-case_when-or-recode"><span class="toc-section-number">5.1</span> recoding or creating indicator variables using if_else(), case_when(), or recode()</a></li>
 </ul></li>
 <li><a href="#summarise"><span class="toc-section-number">6</span> <strong>summarise()</strong></a></li>
 <li><a href="#group_by"><span class="toc-section-number">7</span> <strong>group_by()</strong></a></li>
@@ -42,7 +42,7 @@ output:
 
 <div id="tldr" class="section level1">
 <h1><span class="header-section-number">1</span> <strong>TL;DR</strong></h1>
-<p>The 4th post in the <a href="https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/">Scientist’s Guide to R series</a> introduces data transformation techniques useful for wrangling/tidying/cleaning data, which often takes as longer than any other step in the data analysis process. Specifically, we will be learning how to use the 6 core functions of the popular <a href="https://www.rdocumentation.org/packages/dplyr/versions/0.7.8">dplyr</a> package, perform similar operations in base R, and how to chain operations with the pipe operator (<code>print("%&gt;%")</code>) to streamline the process.</p>
+<p>The 4th post in the <a href="https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/">Scientist’s Guide to R series</a> introduces data transformation techniques useful for wrangling/tidying/cleaning data. Specifically, we will be learning how to use the 6 core functions (and a few others) from the popular <a href="https://www.rdocumentation.org/packages/dplyr/versions/0.7.8">dplyr</a> package, perform similar operations in base R, and chain operations with the pipe operator (<code>%&gt;%</code>) to streamline the process.</p>
 </div>
 <div id="introduction" class="section level1">
 <h1><span class="header-section-number">2</span> <strong>Introduction</strong></h1>
@@ -51,12 +51,13 @@ output:
 <li><p><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a> rows using logical tests with values of specified columns.</p></li>
 <li><p>Easily <a href="https://dplyr.tidyverse.org/reference/select.html">select</a> a subset of columns.</p></li>
 <li><p>Modify columns or add new ones using <a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a>.</p></li>
-<li><p>Obtain descriptive summaries of data using <a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a> (or the equivalent <code>summarize()</code>).</p></li>
+<li><p>Obtain descriptive summaries of data using <a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a> (or the equivalent summarize()).</p></li>
 <li><p>Assign a grouping structure to a data frame to enable subsequent dplyr package function calls to be executed within groups using <a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a>.</p></li>
 <li><p><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a> a data frame for improved readability.</p></li>
 </ol>
+<p>Some additional relevant functions that build on this foundation will also be covered where appropriate (see below).</p>
 <p>While other great packages (and other functions in base R) exist to help you manipulate data, using the dplyr package is perhaps the easiest way to learn these essential data processing techniques. However, if you find yourself working with very large datasets (e.g. &gt; 1,000,000 rows) you might want to check out the <a href="https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html">data.table</a> package, which emphasizes efficiency and performance over readability and ease of use.</p>
-<p>All dplyr functions accept a data frame or tibble as their first argument and return a data frame as their output. This is a key design feature that enables you to apply a series of operations to a data frame in a chain using the pipe operator (<code>%&gt;%</code>). Using the pipe operator and chaining operations lets you perform complex multi-step transformations using a relatively small set of functions. Learning how to use the pipe operator makes the data manipulation process much more fluid and will fundamentally change how you use R for the better.</p>
+<p>All dplyr functions accept a data frame or tibble as their first argument and return a data frame as their output. This is a key design feature that enables you to apply a series of operations to a data frame in a chain using the pipe operator (<code>%&gt;%</code>), as demonstrated in <a href="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#chaining-functions-with-the-pipe-operator">section 8</a>.</p>
 </div>
 <div id="filter" class="section level1">
 <h1><span class="header-section-number">3</span> <strong>filter()</strong></h1>
@@ -252,7 +253,6 @@ all.equal(c, d, e)</code></pre>
 <h1><span class="header-section-number">4</span> <strong>select()</strong></h1>
 <p><code>select()</code> is the other main dplyr verb for used for subsetting. <code>select()</code> lets you extract a subset of columns.</p>
 <pre class="r"><code>#in base R, you would extract columns using either [, &quot;names&quot;] or [[&quot;name]], or $name
-
 df[, &quot;name&quot;] #[] returns another data frame</code></pre>
 <pre><code>## # A tibble: 87 x 1
 ##    name              
@@ -268,36 +268,9 @@ df[, &quot;name&quot;] #[] returns another data frame</code></pre>
 ##  9 Biggs Darklighter 
 ## 10 Obi-Wan Kenobi    
 ## # ... with 77 more rows</code></pre>
-<pre class="r"><code>df[[&quot;name&quot;]] #[[]] returns a 1 dimensional vector</code></pre>
-<pre><code>##  [1] &quot;Luke Skywalker&quot;        &quot;C-3PO&quot;                 &quot;R2-D2&quot;                
-##  [4] &quot;Darth Vader&quot;           &quot;Leia Organa&quot;           &quot;Owen Lars&quot;            
-##  [7] &quot;Beru Whitesun lars&quot;    &quot;R5-D4&quot;                 &quot;Biggs Darklighter&quot;    
-## [10] &quot;Obi-Wan Kenobi&quot;        &quot;Anakin Skywalker&quot;      &quot;Wilhuff Tarkin&quot;       
-## [13] &quot;Chewbacca&quot;             &quot;Han Solo&quot;              &quot;Greedo&quot;               
-## [16] &quot;Jabba Desilijic Tiure&quot; &quot;Wedge Antilles&quot;        &quot;Jek Tono Porkins&quot;     
-## [19] &quot;Yoda&quot;                  &quot;Palpatine&quot;             &quot;Boba Fett&quot;            
-## [22] &quot;IG-88&quot;                 &quot;Bossk&quot;                 &quot;Lando Calrissian&quot;     
-## [25] &quot;Lobot&quot;                 &quot;Ackbar&quot;                &quot;Mon Mothma&quot;           
-## [28] &quot;Arvel Crynyd&quot;          &quot;Wicket Systri Warrick&quot; &quot;Nien Nunb&quot;            
-## [31] &quot;Qui-Gon Jinn&quot;          &quot;Nute Gunray&quot;           &quot;Finis Valorum&quot;        
-## [34] &quot;Jar Jar Binks&quot;         &quot;Roos Tarpals&quot;          &quot;Rugor Nass&quot;           
-## [37] &quot;Ric Olié&quot;              &quot;Watto&quot;                 &quot;Sebulba&quot;              
-## [40] &quot;Quarsh Panaka&quot;         &quot;Shmi Skywalker&quot;        &quot;Darth Maul&quot;           
-## [43] &quot;Bib Fortuna&quot;           &quot;Ayla Secura&quot;           &quot;Dud Bolt&quot;             
-## [46] &quot;Gasgano&quot;               &quot;Ben Quadinaros&quot;        &quot;Mace Windu&quot;           
-## [49] &quot;Ki-Adi-Mundi&quot;          &quot;Kit Fisto&quot;             &quot;Eeth Koth&quot;            
-## [52] &quot;Adi Gallia&quot;            &quot;Saesee Tiin&quot;           &quot;Yarael Poof&quot;          
-## [55] &quot;Plo Koon&quot;              &quot;Mas Amedda&quot;            &quot;Gregar Typho&quot;         
-## [58] &quot;Cordé&quot;                 &quot;Cliegg Lars&quot;           &quot;Poggle the Lesser&quot;    
-## [61] &quot;Luminara Unduli&quot;       &quot;Barriss Offee&quot;         &quot;Dormé&quot;                
-## [64] &quot;Dooku&quot;                 &quot;Bail Prestor Organa&quot;   &quot;Jango Fett&quot;           
-## [67] &quot;Zam Wesell&quot;            &quot;Dexter Jettster&quot;       &quot;Lama Su&quot;              
-## [70] &quot;Taun We&quot;               &quot;Jocasta Nu&quot;            &quot;Ratts Tyerell&quot;        
-## [73] &quot;R4-P17&quot;                &quot;Wat Tambor&quot;            &quot;San Hill&quot;             
-## [76] &quot;Shaak Ti&quot;              &quot;Grievous&quot;              &quot;Tarfful&quot;              
-## [79] &quot;Raymus Antilles&quot;       &quot;Sly Moore&quot;             &quot;Tion Medon&quot;           
-## [82] &quot;Finn&quot;                  &quot;Rey&quot;                   &quot;Poe Dameron&quot;          
-## [85] &quot;BB8&quot;                   &quot;Captain Phasma&quot;        &quot;Padmé Amidala&quot;</code></pre>
+<pre class="r"><code>head(df[[&quot;name&quot;]]) #[[]] returns a 1 dimensional vector. head() just shows the 1st 6 values</code></pre>
+<pre><code>## [1] &quot;Luke Skywalker&quot; &quot;C-3PO&quot;          &quot;R2-D2&quot;          &quot;Darth Vader&quot;   
+## [5] &quot;Leia Organa&quot;    &quot;Owen Lars&quot;</code></pre>
 <pre class="r"><code>df[, c(&quot;name&quot;, &quot;mass&quot;, &quot;hair_color&quot;)] #[] can accept a vector of names</code></pre>
 <pre><code>## # A tibble: 87 x 3
 ##    name                mass hair_color   
@@ -617,8 +590,8 @@ transmute(df2,
 ##  9        1.83  25.1
 ## 10        1.82  23.2
 ## # ... with 77 more rows</code></pre>
-<div id="recoding-or-creating-indicator-variables-using-mutate-transmute-or-recode" class="section level2">
-<h2><span class="header-section-number">5.1</span> recoding or creating indicator variables using mutate(), transmute(), or recode()</h2>
+<div id="recoding-or-creating-indicator-variables-using-if_else-case_when-or-recode" class="section level2">
+<h2><span class="header-section-number">5.1</span> recoding or creating indicator variables using if_else(), case_when(), or recode()</h2>
 <p>A common use of mutate (or transmute) is to encode a new variable (or overwrite an existing one) based on values of an existing variable in a data frame using the <a href="https://dplyr.tidyverse.org/reference/recode.html">recode()</a>, <a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else()</a> or <a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a> functions in the dplyr package.</p>
 <p>if_else is a condensed version of a simple if/else statement with only 2 outcomes: one if the condition specified as the 1st argument evaluates to <code>TRUE</code> and one if it evaluates to <code>FALSE</code> (i.e. no <code>else if</code> components). General control flow operations using conditional statments (<code>if</code>, <code>else</code>, <code>else if</code>, etc.) may be covered in a later blog post… For now I recommend <a href="https://adv-r.hadley.nz/control-flow.html">this section of the advanced R book</a> for those who want to learn more about it before moving on.</p>
 <pre class="r"><code># to create an indicator/dummy/2-level variable (e.g. 1/0, T/F) you can use
@@ -739,7 +712,7 @@ df$hair_color[df$hair_color == &quot;brown&quot;] &lt;- &quot;BROWN&quot;
 </div>
 <div id="summarise" class="section level1">
 <h1><span class="header-section-number">6</span> <strong>summarise()</strong></h1>
-<p><code>summarize()</code> makes it easy to turn a data frame into a smaller data frame of summary statistics.</p>
+<p><code>summarise()</code> makes it easy to turn a data frame into a smaller data frame of summary statistics.</p>
 <pre class="r"><code>summary1 &lt;- summarise(df, #as for the other dplyr functions, the data source is specified as the 1st argument
                       n = n(), #n() is a special function for use in summarize that returns the number of values
                       mean_height = mean(height, na.rm = TRUE), #summary stat name in the output = function(column) in the input
@@ -762,7 +735,7 @@ identical(summary1, summary2)</code></pre>
 </div>
 <div id="group_by" class="section level1">
 <h1><span class="header-section-number">7</span> <strong>group_by()</strong></h1>
-<p><code>group_by()</code> adds an explicit grouping structure to a dataframe that can subsequently be used by other dplyr functions to perform operations within each level of the grouping variable or level combination of the grouping variables if you specify multiple grouping variables. This is particularly useful in conjunction with either <code>summarize()</code> or <code>mutate()</code>, enabling you to calculate summary statistics or transform variables separately for each of the groups defined by <code>group_by()</code>.</p>
+<p><code>group_by()</code> adds an explicit grouping structure to a data frame that can subsequently be used by other dplyr functions to perform operations within each level of the grouping variable or level combination of the grouping variables if you specify multiple grouping variables. This is particularly useful in conjunction with either <code>summarize()</code> or <code>mutate()</code>, enabling you to calculate summary statistics or transform variables separately for each of the groups defined by <code>group_by()</code>.</p>
 <pre class="r"><code>#structure of the data before grouping
 glimpse(df)</code></pre>
 <pre><code>## Observations: 87
@@ -881,7 +854,8 @@ class(ungrouped_data)</code></pre>
 <div id="chaining-functions-with-the-pipe-operator" class="section level1">
 <h1><span class="header-section-number">8</span> chaining functions with the <strong>pipe operator (%&gt;%)</strong></h1>
 <p>Thanks to the <a href="https://github.com/tidyverse/magrittr">magrittr</a> package, you can use the pipe operator, “%&gt;%”, which allows you to apply a series of functions to an object using easily readable code without requiring you to save intermediate objects.
-The pipe operator takes the object on the left and passes it to the first argument of the function to the right. Functions in dplyr and other tidyverse packages take data as the 1st argument. Those function which output the same type of object that they accept as inputs (i.e. the data argument) can be chained using the “%&gt;%” quite easily.<br />
+Note that you don’t have to load the magrittr package in a separate call to the library() function since the pipe operator is imported from magrittr automatically when you load the dplyr package.</p>
+<p>The pipe operator takes the object on the left and passes it to the first argument of the function to the right. Functions in dplyr and other tidyverse packages take data as the 1st argument. Those function which output the same type of object that they accept as inputs (i.e. the data argument) can be chained using the “%&gt;%” quite easily.<br />
 For example,</p>
 <pre class="r"><code># %&gt;% lets you turn this nested code (evaluated from the inside out)... 
 
@@ -986,7 +960,7 @@ identical(sorted_mass_by_sw_species_chained, sorted_mass_by_sw_species_unchained
 </div>
 <div id="navigation" class="section level1">
 <h1><span class="header-section-number">9</span> navigation</h1>
-<p>Click <a href="https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/">here</a> to go back to the previous post. A link to the next one (reshaping data with the tidyr package) will be added as soon as I have time to write it.</p>
+<p>Click <a href="https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/">here</a> to go back to the previous post. A link to the next one (data transformation - part 2 - reshaping data with the tidyr package) will be added as soon as I have time to write it.</p>
 </div>
 <div id="notes" class="section level1">
 <h1><span class="header-section-number">10</span> notes</h1>

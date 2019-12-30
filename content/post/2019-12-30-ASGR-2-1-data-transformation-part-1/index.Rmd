@@ -1,5 +1,5 @@
 ---
-title: 'A Scientist''s Guide to R: Step 2.1. Data Transformation part 1'
+title: 'A Scientist''s Guide to R: Step 2.1. Data Transformation - Part 1'
 author: 'Craig Hutton'
 date: '2019-12-30'
 slug: 
@@ -23,7 +23,7 @@ output:
 
 # **TL;DR**
 
-The 4th post in the [Scientist's Guide to R series](https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/) introduces data transformation techniques useful for wrangling/tidying/cleaning data, which often takes as longer than any other step in the data analysis process. Specifically, we will be learning how to use the 6 core functions of the popular [dplyr](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8) package, perform similar operations in base R, and how to chain operations with the pipe operator (```print("%>%")```) to streamline the process. 
+The 4th post in the [Scientist's Guide to R series](https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/) introduces data transformation techniques useful for wrangling/tidying/cleaning data. Specifically, we will be learning how to use the 6 core functions (and a few others) from the popular [dplyr](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8) package, perform similar operations in base R, and chain operations with the pipe operator (`%>%`) to streamline the process. 
 
 # **Introduction**
 
@@ -35,15 +35,17 @@ The 4th post in the [Scientist's Guide to R series](https://craig.rbind.io/post/
 
 3. Modify columns or add new ones using [mutate](https://dplyr.tidyverse.org/reference/mutate.html).
 
-4. Obtain descriptive summaries of data using [summarise](https://dplyr.tidyverse.org/reference/summarise.html) (or the equivalent `summarize()`).
+4. Obtain descriptive summaries of data using [summarise](https://dplyr.tidyverse.org/reference/summarise.html) (or the equivalent summarize()).
 
 5. Assign a grouping structure to a data frame to enable subsequent dplyr package function calls to be executed within groups using [group_by](https://dplyr.tidyverse.org/reference/group_by.html).
 
 6. [arrange](https://dplyr.tidyverse.org/reference/arrange.html) a data frame for improved readability. 
 
+Some additional relevant functions that build on this foundation will also be covered where appropriate (see below).
+
 While other great packages (and other functions in base R) exist to help you manipulate data, using the dplyr package is perhaps the easiest way to learn these essential data processing techniques. However, if you find yourself working with very large datasets (e.g. > 1,000,000 rows) you might want to check out the [data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html) package, which emphasizes efficiency and performance over readability and ease of use. 
 
-All dplyr functions accept a data frame or tibble as their first argument and return a data frame as their output. This is a key design feature that enables you to apply a series of operations to a data frame in a chain using the pipe operator (`%>%`). Using the pipe operator and chaining operations lets you perform complex multi-step transformations using a relatively small set of functions. Learning how to use the pipe operator makes the data manipulation process much more fluid and will fundamentally change how you use R for the better.
+All dplyr functions accept a data frame or tibble as their first argument and return a data frame as their output. This is a key design feature that enables you to apply a series of operations to a data frame in a chain using the pipe operator (`%>%`), as demonstrated in [section 8](https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#chaining-functions-with-the-pipe-operator).
 
 # **filter()**
 
@@ -150,13 +152,11 @@ all.equal(c, d, e)
 
 `select()` is the other main dplyr verb for used for subsetting. `select()` lets you extract a subset of columns. 
 
-```{r, eval = T}
-
+```{r, eval = T, cache = TRUE}
 #in base R, you would extract columns using either [, "names"] or [["name]], or $name
-
 df[, "name"] #[] returns another data frame
 
-df[["name"]] #[[]] returns a 1 dimensional vector
+head(df[["name"]]) #[[]] returns a 1 dimensional vector. head() just shows the 1st 6 values
 
 df[, c("name", "mass", "hair_color")] #[] can accept a vector of names
 
@@ -216,7 +216,7 @@ all.equal(
 
 Columns can also be renamed when subsetting with the select() function or without subsetting using the rename() function (also in the dplyr package)
 
-```{r, eval = T, cache=FALSE}
+```{r, eval = T, cache = TRUE}
 #rename and subset using select
 select(df, nm = name, hgt = height, byear = birth_year) #select columns and rename them
 
@@ -247,7 +247,7 @@ names(df) <- df_names #restore the original names from the vector saved above
 
 `mutate()` lets you modify or create new columns in a data frame. 
 
-```{r, eval = T}
+```{r, eval = T, cache = TRUE}
 #Say for example that you wanted to calculate the BMI of each character in the starwars data frame
 
 df2 <- select(df, name, height, mass) #extract columns of interest
@@ -295,7 +295,7 @@ A common use of mutate (or transmute) is to encode a new variable (or overwrite 
 
 if_else is a condensed version of a simple if/else statement with only 2 outcomes: one if the condition specified as the 1st argument evaluates to `TRUE` and one if it evaluates to `FALSE` (i.e. no `else if` components). General control flow operations using conditional statments (`if`, `else`, `else if`, etc.) may be covered in a later blog post... For now I recommend [this section of the advanced R book](https://adv-r.hadley.nz/control-flow.html) for those who want to learn more about it before moving on.
 
-```{r, eval = T}
+```{r, eval = T, cache = TRUE}
 
 # to create an indicator/dummy/2-level variable (e.g. 1/0, T/F) you can use
 # if_else() (or ifelse()):
@@ -367,9 +367,9 @@ df$hair_color[df$hair_color == "brown"] <- "BROWN"
 
 # **summarise()**
 
-`summarize()` makes it easy to turn a data frame into a smaller data frame of summary statistics.
+`summarise()` makes it easy to turn a data frame into a smaller data frame of summary statistics.
 
-```{r, eval = T}
+```{r, eval = T, cache = TRUE}
 
 summary1 <- summarise(df, #as for the other dplyr functions, the data source is specified as the 1st argument
                       n = n(), #n() is a special function for use in summarize that returns the number of values
@@ -391,9 +391,9 @@ identical(summary1, summary2)
 
 # **group_by()**
 
-`group_by()` adds an explicit grouping structure to a dataframe that can subsequently be used by other dplyr functions to perform operations within each level of the grouping variable or level combination of the grouping variables if you specify multiple grouping variables. This is particularly useful in conjunction with either `summarize()` or `mutate()`, enabling you to calculate summary statistics or transform variables separately for each of the groups defined by `group_by()`. 
+`group_by()` adds an explicit grouping structure to a data frame that can subsequently be used by other dplyr functions to perform operations within each level of the grouping variable or level combination of the grouping variables if you specify multiple grouping variables. This is particularly useful in conjunction with either `summarize()` or `mutate()`, enabling you to calculate summary statistics or transform variables separately for each of the groups defined by `group_by()`. 
 
-```{r, eval = T}
+```{r, eval = T, cache = TRUE}
 #structure of the data before grouping
 glimpse(df)
 
@@ -443,11 +443,13 @@ class(ungrouped_data)
 
 # chaining functions with the **pipe operator (%>%)**
 
-Thanks to the [magrittr](https://github.com/tidyverse/magrittr) package, you can use the pipe operator, "%>%", which allows you to apply a series of functions to an object using easily readable code without requiring you to save intermediate objects.
+Thanks to the [magrittr](https://github.com/tidyverse/magrittr) package, you can use the pipe operator, "%>%", which allows you to apply a series of functions to an object using easily readable code without requiring you to save intermediate objects. 
+Note that you don't have to load the magrittr package in a separate call to the library() function since the pipe operator is imported from magrittr automatically when you load the dplyr package.
+
 The pipe operator takes the object on the left and passes it to the first argument of the function to the right. Functions in dplyr and other tidyverse packages take data as the 1st argument. Those function which output the same type of object that they accept as inputs (i.e. the data argument) can be chained using the "%>%" quite easily.  
 For example,
 
-```{r echo=TRUE}
+```{r, eval = T, cache = TRUE}
 # %>% lets you turn this nested code (evaluated from the inside out)... 
 
 arrange(summarize(group_by(select(starwars, species, mass), species), 
@@ -516,7 +518,7 @@ identical(sorted_mass_by_sw_species_chained, sorted_mass_by_sw_species_unchained
 
 # navigation
 
-Click [here](https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/) to go back to the previous post. A link to the next one (reshaping data with the tidyr package) will be added as soon as I have time to write it. 
+Click [here](https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/) to go back to the previous post. A link to the next one (data transformation - part 2 - reshaping data with the tidyr package) will be added as soon as I have time to write it. 
 
 # notes
 
