@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
-    <lastBuildDate>Tue, 06 Aug 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/data-cleaning-and-transformation/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A Scientist&#39;s Guide to R: Step 2.1. Data Transformation part 1</title>
+      <link>/post/2019-12-30-asgr-2-1-data-transformation-part-1/</link>
+      <pubDate>Mon, 30 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-12-30-asgr-2-1-data-transformation-part-1/</guid>
+      <description>1 TL;DR2 Introduction3 filter()4 select()4.1 renaming columns using select() or rename()5 mutate()5.1 recoding or creating indicator variables using mutate(), transmute(), or recode()6 summarise()7 group_by()8 chaining functions with the pipe operator (%&amp;gt;%)9 navigation10 notes1 TL;DRThe 4th post in the Scientist’s Guide to R series introduces data transformation techniques useful for wrangling/tidying/cleaning data, which often takes as longer than any other step in the data analysis process.</description>
+    </item>
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 2.0. Basic Operations &amp; Data Structures</title>

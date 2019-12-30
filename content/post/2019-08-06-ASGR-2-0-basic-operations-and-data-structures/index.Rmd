@@ -562,6 +562,10 @@ One of the great benefits of using R studio are the keyboard shortcuts that spee
 
 *N.B.* To see all available keyboard shortcuts use [Alt] + [Shift] + [K] or click "keyboard shortcuts help" under the R studio help menu. Many of the more useful ones are also accessible under the R studio code menu.
 
+## navigation
+
+Click [here](https://craig.rbind.io/post/2019-06-22-asgr-1-getting-data-into-r/) to go back to the previous post or [here](https://craig.rbind.io/post/2019-06-22-asgr-1-getting-data-into-r/) to go to the next one.
+
 ## notes
 
 * A link to the next post (data manipulation part 1) will be added in the near future.

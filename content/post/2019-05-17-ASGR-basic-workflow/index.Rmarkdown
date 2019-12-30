@@ -59,10 +59,14 @@ This represents the basic steps involved in the majority of data analysis tasks 
   
 Each of these sections will be covered in detail in future posts. Thanks for reading and I welcome any suggestions for future posts, comments or other feedback you might have.
 
+## navigation
+
 Click [here](https://craig.rbind.io/post/2019-06-22-asgr-1-getting-data-into-r/) to continue to the next post on installing R, R packages, and importing data.
 
-This post has been peer-reviewed and approved by the University of Victoria [Data Science Studio][DSSlink]
+## notes
+
+* This post has been peer-reviewed and approved by the University of Victoria [Data Science Studio][DSSlink]
 
 [DSSlink]:https://dss-ialh.rbind.io/#about
 
-Note: The workflow I recommend above is very similar to the well-known data science workflow advocated by Grolemund and Wickham in their [R for data science](https://r4ds.had.co.nz/explore-intro.html) book. However, an important difference is that I recommend that most/all of the exploration and wrangling of the data be completed prior to advancing to the modelling stage. The idea is to sort out the structure of your final analytical dataset first and fit fewer models to save time.
+* The workflow I recommend above is very similar to the well-known data science workflow advocated by Grolemund and Wickham in their [R for data science](https://r4ds.had.co.nz/explore-intro.html) book. However, an important difference is that I recommend that most/all of the exploration and wrangling of the data be completed prior to advancing to the modelling stage. The idea is to sort out the structure of your final analytical dataset first and fit fewer models to save time.

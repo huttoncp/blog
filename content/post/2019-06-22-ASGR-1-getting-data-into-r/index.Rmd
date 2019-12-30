@@ -298,7 +298,9 @@ r_bloggers_data <- fromJSON("~/Desktop/r-bloggers.json")
 
 ```
 
-Click [here](https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/) for the next post (on basic operations and data structures) in R.
+## navigation
+
+Click [here](https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/) to go back to the previous post or [here](https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/) for the next post (on basic operations and data structures) in R.
 
 ## notes
 

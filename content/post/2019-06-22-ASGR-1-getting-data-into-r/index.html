@@ -36,7 +36,8 @@ output:
 <li><a href="#fixed-width-files-.txt-.gz-.bz2-.xz-.zip-etc."><span class="toc-section-number">4.6</span> fixed width files (.txt, .gz, .bz2, .xz, .zip, etc.)</a></li>
 <li><a href="#htmlxml-files"><span class="toc-section-number">4.7</span> html/xml files</a></li>
 <li><a href="#javascript-object-notation-json-files"><span class="toc-section-number">4.8</span> JavaScript Object Notation (<span>JSON</span>) files</a></li>
-<li><a href="#notes"><span class="toc-section-number">4.9</span> notes</a></li>
+<li><a href="#navigation"><span class="toc-section-number">4.9</span> navigation</a></li>
+<li><a href="#notes"><span class="toc-section-number">4.10</span> notes</a></li>
 </ul></li>
 </ul>
 </div>
@@ -278,10 +279,13 @@ data &lt;- readHTMLTable(url)</code></pre>
 <p>JSON files are way of storing JavaScript objects as text that can easily be imported in to R using the <strong>fromJSON()</strong> function from the <a href="https://cran.r-project.org/web/packages/jsonlite/vignettes/json-aaquickstart.html">jsonlite</a> package. Science trainees are unlikely to encounter this type of data unless they are working with web sources, e.g. twitter. See this <a href="https://www.digitalocean.com/community/tutorials/an-introduction-to-json">link</a> for an accessible overview.</p>
 <pre class="r"><code>library(jsonlite)
 r_bloggers_data &lt;- fromJSON(&quot;~/Desktop/r-bloggers.json&quot;)</code></pre>
-<p>Click <a href="https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/">here</a> for the next post (on basic operations and data structures) in R.</p>
+</div>
+<div id="navigation" class="section level2">
+<h2><span class="header-section-number">4.9</span> navigation</h2>
+<p>Click <a href="https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/">here</a> to go back to the previous post or <a href="https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/">here</a> for the next post (on basic operations and data structures) in R.</p>
 </div>
 <div id="notes" class="section level2">
-<h2><span class="header-section-number">4.9</span> notes</h2>
+<h2><span class="header-section-number">4.10</span> notes</h2>
 <ul>
 <li><p>Exporting data is also easy and will be covered in a later post. E.g. for readr functions this is usually done via the appropriately named <em>write_</em> functions, like <strong>write_csv()</strong>.</p></li>
 <li><p>By default, the above <a href="https://readr.tidyverse.org/"><strong>readr</strong></a> functions will assume that the first row of your data file contains the variable names. For these functions, you can disable this by setting the <strong>col_names</strong> argument to <strong>FALSE</strong>, or you can provide a string/character vector of names to use instead by setting <strong>col_names</strong> to the name of the string vector (see the next post for more on data vectors).</p></li>
