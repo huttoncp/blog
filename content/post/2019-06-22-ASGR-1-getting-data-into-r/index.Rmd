@@ -39,7 +39,7 @@ After you've installed R studio, read on for a brief explanation of how to insta
 
 After explaining how to install and load R packages, this post will cover how to easily import data from a variety of common sources ranging from comma-separated-variable (.csv) files, to excel spreadsheets, and fixed width files.  
 
-# **Installing and loading R packages**
+# **Installing and Loading R Packages**
 
 Installing & loading packages into R is a very straightforward process. For packages hosted on [CRAN](https://cran.r-project.org/web/packages/available_packages_by_name.html) (which is where the "official" versions of most R packages reside), simply run the following:
 
@@ -101,11 +101,11 @@ library(tidyr)
 ```
 
 
-# **How to get your data into R**
+# **How to Get Your Data Into R**
 
 Getting your data into R is also easy. Commands and packages specific to different data sources are listed below:
 
-## comma delimited files (.csv) files 
+## Comma Delimited (.csv) Files
 
 CSV files are the most common type of data file you'll encounter as a data analyst. These can be imported using the **read_csv()** function from the [**readr**](https://readr.tidyverse.org/articles/readr.html) package.
 
@@ -131,7 +131,7 @@ data
 # in the top right panel)
 ```
 
-## tab delimited (.txt) files 
+## Tab Delimited (.txt) Files 
 
 ```{r, eval = F}
 library(readr)
@@ -141,7 +141,7 @@ data <- read_tsv("directory_path/filename.txt")
 #yes, it is that easy ;)
 ```
 
-## files with other delimiting characters (also .txt)
+## Files With Other Delimiting Characters (also .txt)
 
 The read_csv() and read_tsv() functions are actually convienience wrappers for the workhorse function of the readr package, **read_delim()**, which can be used to read in data files with any delimiting character (e.g. "-", "$", etc.). This is only slightly more complicated, in that you have to specify what the delimiting character is using the **delim** argument.
 
@@ -154,7 +154,7 @@ data <- read_delim("directory_path/filename.txt", delim = "|")
 
 ```
 
-## Microsoft Excel files (.xlsx, .xls)
+## Microsoft Excel Files (.xlsx, .xls)
 
 Excel files are fairly easy to import using the [**readxl**](https://readxl.tidyverse.org/) package. Since these files may contain several speadsheets, you also have to specify the sheet that you want to use... unless it is the first one, which is assumed by default.
 
@@ -178,7 +178,7 @@ data <- read_excel(path = "path/file.xlsx",
                    sheet = 2) #to get the 2nd sheet
 ```
 
-## files from SPSS, SAS, or Stata
+## Files from SPSS, SAS, or Stata
 
 If you've recently switched from working in SPSS, SAS, or Stata (or are collaborating with someone who uses these programs), you can also easily import your existing SPSS or SAS data files directly into R using the [haven](https://cran.r-project.org/web/packages/haven/index.html) package.
 
@@ -196,7 +196,7 @@ data <- read_sav("file_name.sav")
 data <- read_dta("file_name.dta")
 ```
 
-## fixed width files (.txt, .gz, .bz2, .xz, .zip, etc.)
+## Fixed Width Files (.txt, .gz, .bz2, .xz, .zip, etc.)
 
 Fixed width files are a less common type of data source where the values are separated not by tabs or specific characters but a set amount of white/empty space other than a tab. These can be loaded using the **read_fwf()** function in **readr**.
 
@@ -287,7 +287,7 @@ library(XML)
 data <- readHTMLTable(url)
 ```
 
-## JavaScript Object Notation ([JSON](https://www.json.org/)) files
+## JavaScript Object Notation ([JSON](https://www.json.org/)) Files
 
 JSON files are way of storing JavaScript objects as text that can easily be imported in to R using the **fromJSON()** function from the [jsonlite](https://cran.r-project.org/web/packages/jsonlite/vignettes/json-aaquickstart.html) package. Science trainees are unlikely to encounter this type of data unless they are working with web sources, e.g. twitter. See this [link](https://www.digitalocean.com/community/tutorials/an-introduction-to-json) for an accessible overview.
 
@@ -298,11 +298,11 @@ r_bloggers_data <- fromJSON("~/Desktop/r-bloggers.json")
 
 ```
 
-## navigation
+## Navigation
 
-Click [here](https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/) to go back to the previous post or [here](https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/) for the next post (on basic operations and data structures) in R.
+Click [here](https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/) to go back to the previous post or [here](https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/) for the next post (on basic operations and data structures) in R. 
 
-## notes
+## Notes
 
   * Exporting data is also easy and will be covered in a later post. E.g. for readr functions this is usually done via the appropriately named *write_* functions, like **write_csv()**.
   

@@ -27,11 +27,11 @@ The 4th post in the [Scientist's Guide to R series](https://craig.rbind.io/post/
 
 # **Introduction**
 
-The 4th post in the [Scientist's Guide to R series](https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/) introduces data transformation techniques useful for wrangling/tidying/cleaning data, which often takes as longer than any other step in the data analysis process. Specifically, we will be learning how to use the 6 core functions or "verbs" of the popular [dplyr](https://dplyr.tidyverse.org/) package to:
+The 4th post in the [Scientist's Guide to R series](https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/) introduces data transformation techniques useful for wrangling/tidying/cleaning data, which often takes longer than any other step in the data analysis process. Specifically, we will be learning how to use the 6 core functions or "verbs" of the popular [dplyr](https://dplyr.tidyverse.org/) package to:
 
-1. [filter](https://dplyr.tidyverse.org/reference/filter.html) rows using logical tests with values of specified columns.
+1. Easily [select](https://dplyr.tidyverse.org/reference/select.html) a subset of columns.
 
-2. Easily [select](https://dplyr.tidyverse.org/reference/select.html) a subset of columns.
+2. [filter](https://dplyr.tidyverse.org/reference/filter.html) rows using logical tests with values of specified columns.
 
 3. Modify columns or add new ones using [mutate](https://dplyr.tidyverse.org/reference/mutate.html).
 
@@ -41,17 +41,18 @@ The 4th post in the [Scientist's Guide to R series](https://craig.rbind.io/post/
 
 6. [arrange](https://dplyr.tidyverse.org/reference/arrange.html) a data frame for improved readability. 
 
-Some additional relevant functions that build on this foundation will also be covered where appropriate (see below).
+Some additional relevant functions that build on this foundation will also be covered where appropriate.
 
 While other great packages (and other functions in base R) exist to help you manipulate data, using the dplyr package is perhaps the easiest way to learn these essential data processing techniques. However, if you find yourself working with very large datasets (e.g. > 1,000,000 rows) you might want to check out the [data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html) package, which emphasizes efficiency and performance over readability and ease of use. 
 
-All dplyr functions accept a data frame or tibble as their first argument and return a data frame as their output. This is a key design feature that enables you to apply a series of operations to a data frame in a chain using the pipe operator (`%>%`), as demonstrated in [section 8](https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#chaining-functions-with-the-pipe-operator).
+Most dplyr functions accept a data frame or tibble as their first argument and return a data frame as their output. This is a key design feature that enables you to apply a series of operations to a data frame in a chain using the pipe operator (`%>%`), as demonstrated in [section 8](https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#chaining-functions-with-the-pipe-operator).
 
-# **filter()**
 
-`filter()` is the one of two core dplyr verbs you can use for subsetting your data. `filter()` lets you extract a subset of rows using [logical operators](https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/#logical-operators). 
+# **select()**
 
-To filter a data frame, specify the name of the data frame as the 1st argument, then any number of logical tests for values of variables in the data frame that you want to use as filtering criteria.  
+`select()` is the one of the dplyr functions you can use for subsetting. `select()` lets you extract a subset of **columns** from a data frame. 
+
+Columns may be specified using indices, names, or using string patterns with the assistance of a few [tidyselect helper functions](https://www.rdocumentation.org/packages/dplyr/versions/0.5.0/topics/select_helpers) such as `contains()`, `starts_with()`, and `ends_with()`.
 
 ```{r, eval = T, cache = TRUE}
 library(dplyr) #load the dplyr package with the library function.
@@ -64,99 +65,6 @@ df <- starwars #assign the star wars data frame (imported when dplyr is loaded) 
 
 glimpse(df)
 
-# use filter to get a subset of all characters from either Tatooine or Naboo
-
-filter(df, 
-       homeworld == "Tatooine" | homeworld == "Naboo") #recall that the vertical bar `|` is the logical operator 'or'
-
-# this is read: filter the data frame "df" to extract rows where the value of
-# the variable homeworld is equal to "Tatooine" or homeworld is equal to "Naboo"
-
-#in base R, one equivalent option would be:
-
-df[(df$homeworld == "Tatooine" | df$homeworld == "Naboo"), ]
-
-# notice that the $ is not needed to specify which data set the variable
-# "homeworld" is in for filter but it is if you are passing a logical vector to
-# subset a data frame using `[]` in base R
-
-# this is because R reads (df$homeworld == "Tatooine" | df$homeworld == "Naboo")
-# as a logical test and returns a logical vector, which is then used to specify
-# which rows to extract (those with values == TRUE) and which to discard (those
-# with values == FALSE). This becomes really clear if you just pull out the
-# subsetting predicates and print the result
-
-(df$homeworld == "Tatooine" | df$homeworld == "Naboo")
-
-# to get indices instead of logical values, you can wrap the above in which(), e.g.
-
-ind <- which(df$homeworld == "Tatooine" | df$homeworld == "Naboo") #returns the indices where the criteria are TRUE
-
-ind #calling an object itself without applying any functions to it just prints it to the console
-
-#note that you could also pass a vector of integers to subset a df using `[]`
-df[ind, ]
-
-#to negate a logical test, you can use `!` which means "not"
-# in the context of subsetting, this negates a logical vector 
-
-!(df$homeworld == "Tatooine" | df$homeworld == "Naboo")
-
-#this is why the logical test for not equal to is "!="
-identical(!(df$homeworld == "Tatooine"), df$homeworld != "Tatooine") #use identical() or all.equal() to test for equality between entire R objects
-
-# extract rows for characters who are at least 100 cm tall and are from Naboo
-filter(df, height >= 100 & homeworld == "Naboo")
-
-# when using filter(), you can substitute a comma for `&` when specifying multiple criteria
-identical(filter(df, height >= 100 & homeworld == "Naboo"),
-          
-          filter(df, height >= 100, homeworld == "Naboo"))
-
-# multiple or (`|`) clauses can instead be specified using the %in% infix operator
-option1 <- filter(df, homeworld == "Tatooine" | homeworld == "Naboo" | homeworld == "Alderaan")
-
-option2 <- filter(filter(df, homeworld %in% c("Tatooine", "Naboo", "Alderaan")))
-
-identical(option1, option2)
-
-# since %in% also returns a logical vector, it can also be negated using `!`, 
-# although they give different results if the data contain missing values (NA)
-
-a <- !(df$homeworld == "Tatooine" | df$homeworld == "Naboo" | df$homeworld == "Alderaan")
-
-b <- !(df$homeworld %in% c("Tatooine", "Naboo", "Alderaan"))
-
-all.equal(a, b)
-
-b[is.na(a)] #these missing values were converted to TRUE by %in%
-
-# to avoid this and other problems many functions have with processing NA
-# values, it is often best to either remove them or impute them, or use the
-# na.rm argument for the function
-
-x <- na.omit(df$homeworld)
-
-c <- !(x == "Tatooine" | x == "Naboo" | x == "Alderaan")
-
-# negating a set of `or` clauses for equality is the same as multiple `and`
-# clauses for inequality
-
-d <- x != "Tatooine" & x != "Naboo" & x != "Alderaan"
-
-e <- !(x %in% c("Tatooine", "Naboo", "Alderaan"))
-
-all.equal(c, d, e)
-
-# key point: you can use logical comparisons and vectors for subsetting in R
-
-```
-
-# **select()**
-
-`select()` is the other main dplyr verb for used for subsetting. `select()` lets you extract a subset of columns. 
-
-```{r, eval = T, cache = TRUE}
 #in base R, you would extract columns using either [, "names"] or [["name]], or $name
 df[, "name"] #[] returns another data frame
 
@@ -178,6 +86,8 @@ select(df,
        name, mass, hair_color) #note that names don't have to be quoted
 
 select(df, name:hair_color) #and you can get all columns in a range using unquoted names
+
+select(df, 1:5, 9, 10) #select also accepts column indices and doesn't require c()
 
 #select everything other than a specified column using the subtraction operator "-"
 select(df, -hair_color, -mass) 
@@ -216,9 +126,10 @@ all.equal(
 
 ```
 
-## renaming columns using select() or rename()
 
-Columns can also be renamed when subsetting with the select() function or without subsetting using the rename() function (also in the dplyr package)
+## Renaming Columns with **select()** or **rename()**
+
+Columns can also be renamed when subsetting with the `select()` function or without subsetting using the `rename()` function (also in the dplyr package).
 
 ```{r, eval = T, cache = TRUE}
 #rename and subset using select
@@ -247,9 +158,121 @@ names(df) <- df_names #restore the original names from the vector saved above
 ```
 
 
+# **filter()**
+
+`filter()` is the other core dplyr verb you can use for subsetting your data. `filter()` lets you extract a subset of **rows** using [logical operators](https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/#logical-operators). 
+
+To filter a data frame, specify the name of the data frame as the 1st argument, then any number of logical tests for values of variables in the data frame that you want to use as filtering criteria.  
+
+```{r, eval = T, cache = TRUE}
+
+# we'll just work with a few columns to simplify the output and highlight the filtering
+df2 <- select(df, name, height, species, homeworld) 
+
+unique(df2$homeworld) #check the unique values of the homeworld variable, which we will use for filtering
+
+# use filter to get a subset of all star wars characters from either Tatooine or Naboo
+
+filter(df2, 
+       homeworld == "Tatooine" | homeworld == "Naboo") #recall that the vertical bar `|` is the logical operator 'or'
+
+# this is read: filter the data frame "df2" to extract rows where the value of
+# the variable homeworld is equal to "Tatooine" or homeworld is equal to "Naboo"
+
+#in base R, one equivalent option would be:
+
+df2[(df2$homeworld == "Tatooine" | df2$homeworld == "Naboo"), ]
+
+# notice that the $ is not needed to specify which data set the variable
+# "homeworld" is in for filter but it is if you are passing a logical vector to
+# subset a data frame using `[]` in base R
+
+# this is because R reads (df2$homeworld == "Tatooine" | df2$homeworld == "Naboo")
+# as a logical test and returns a logical vector, which is then used to specify
+# which rows to extract (those with values == TRUE) and which to discard (those
+# with values == FALSE). This becomes really clear if you just pull out the
+# subsetting predicates and print the result
+
+(df2$homeworld == "Tatooine" | df2$homeworld == "Naboo")
+
+# to get indices instead of logical values, you can wrap the above in which(), e.g.
+
+ind <- which(df2$homeworld == "Tatooine" | df2$homeworld == "Naboo") #returns the indices where the criteria are TRUE
+
+ind #calling an object itself without applying any functions to it just prints it to the console
+
+#note that you could also pass a vector of integers to subset a df2 using `[]`
+df2[ind, ]
+
+#to negate a logical test, you can use `!` which means "not"
+# in the context of subsetting, this negates a logical vector 
+
+!(df2$homeworld == "Tatooine" | df2$homeworld == "Naboo")
+
+#this is why the logical test for not equal to is "!="
+identical(!(df2$homeworld == "Tatooine"), df2$homeworld != "Tatooine") #use identical() or all.equal() to test for equality between entire R objects
+
+# extract rows for characters who are at least 100 cm tall and are from Naboo
+filter(df2, height >= 100 & homeworld == "Naboo")
+
+# when using filter(), you can substitute a comma for `&` when specifying multiple criteria
+identical(filter(df2, height >= 100 & homeworld == "Naboo"),
+          
+          filter(df2, height >= 100, homeworld == "Naboo"))
+
+# multiple or (`|`) clauses can instead be specified using the %in% infix operator
+option1 <- filter(df2, homeworld == "Tatooine" | homeworld == "Naboo" | homeworld == "Alderaan")
+
+option2 <- filter(filter(df2, homeworld %in% c("Tatooine", "Naboo", "Alderaan")))
+
+identical(option1, option2)
+
+# since %in% also returns a logical vector, it can also be negated using `!`, 
+# although they give different results if the data contain missing values (NA)
+
+a <- !(df2$homeworld == "Tatooine" | df2$homeworld == "Naboo" | df2$homeworld == "Alderaan")
+
+b <- !(df2$homeworld %in% c("Tatooine", "Naboo", "Alderaan"))
+
+all.equal(a, b)
+
+b[is.na(a)] #these missing values were converted to TRUE by %in%
+
+# to avoid this and other problems many functions have with processing NA
+# values, it is often best to either remove them or impute them, or use the
+# na.rm argument for the function
+
+x <- na.omit(df2$homeworld)
+
+c <- !(x == "Tatooine" | x == "Naboo" | x == "Alderaan")
+
+# negating a set of `or` clauses for equality is the same as multiple `and`
+# clauses for inequality
+
+d <- x != "Tatooine" & x != "Naboo" & x != "Alderaan"
+
+e <- !(x %in% c("Tatooine", "Naboo", "Alderaan"))
+
+all.equal(c, d, e)
+
+# key point: you can use logical comparisons and vectors for subsetting in R
+
+```
+
+## Subset Rows using Indices with **slice()**
+
+Unlike `select()`, `filter()` doesn't allow the use of indices for subsetting. Instead, dplyr has another funciton called [slice()](https://dplyr.tidyverse.org/reference/slice.html) for this purpose. `slice()` doesn't require you to enclose multiple index values in c() either and it can also operate on indices within groups (see the [section 7](https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#group_by) below for an example). 
+
+
+```{r, eval = T, cache = TRUE}
+
+slice(df2, 1:5, 9:14, 25:50)
+
+```
+
 # **mutate()**
 
-`mutate()` lets you modify or create new columns in a data frame. 
+`mutate()` lets you modify and/or create new columns in a data frame. 
 
 ```{r, eval = T, cache = TRUE}
 #Say for example that you wanted to calculate the BMI of each character in the starwars data frame
@@ -293,11 +316,11 @@ transmute(df2,
 
 ```
 
-## recoding or creating indicator variables using if_else(), case_when(), or recode()
+## Recoding or Creating Indicator Variables using **if_else()**, **case_when()**, or **recode()**
 
 A common use of mutate (or transmute) is to encode a new variable (or overwrite an existing one) based on values of an existing variable in a data frame using the [recode()](https://dplyr.tidyverse.org/reference/recode.html), [if_else()](https://dplyr.tidyverse.org/reference/if_else.html) or [case_when()](https://dplyr.tidyverse.org/reference/case_when.html) functions in the dplyr package.
 
-if_else is a condensed version of a simple if/else statement with only 2 outcomes: one if the condition specified as the 1st argument evaluates to `TRUE` and one if it evaluates to `FALSE` (i.e. no `else if` components). General control flow operations using conditional statments (`if`, `else`, `else if`, etc.) may be covered in a later blog post... For now I recommend [this section of the advanced R book](https://adv-r.hadley.nz/control-flow.html) for those who want to learn more about it before moving on.
+`if_else()` is a condensed version of a simple if/else statement with only 2 outcomes: one if the condition specified as the 1st argument evaluates to `TRUE` and one if it evaluates to `FALSE` (i.e. no `else if` components). `case_when()` lets you use multiple `if_else()` calls together without having to nest them explicitly. General control flow operations using conditional statments (`if`, `else`, `else if`, etc.) may be covered in a later blog post... For now I recommend [this section of the advanced R book](https://adv-r.hadley.nz/control-flow.html) for those who want to learn more about it before moving on.
 
 ```{r, eval = T, cache = TRUE}
 
@@ -401,11 +424,15 @@ identical(summary1, summary2)
 #structure of the data before grouping
 glimpse(df)
 
-grouped_data <- group_by(df, species) #group the data frame "df" by the variable "species"
+df3 <- select(df, name, species, height, mass)#1st. extract just the columns of interest
+
+grouped_data <- group_by(df3, species) #group the data frame "df3" by the variable "species"
 
 class(grouped_data) #new additional class = "grouped_df"
 
 glimpse(grouped_data) #note that the structure now has a groups attribute
+
+slice(grouped_data, 1) #look at the 1st row of each group
 
 #next summarise calculates the specified summary statistics within species
 summarise(grouped_data,
@@ -429,7 +456,7 @@ select(mutated_grouped_data, name, mass, scaled_mass) #just print the relevant p
 #operation applied to the ungrouped data
 identical(
 mutated_grouped_data$scaled_mass,
-mutate(df, scaled_mass = scale(mass))$scaled_mass,
+mutate(df3, scaled_mass = scale(mass))$scaled_mass,
 )
 
 #it is recommended that you ungroup the data after you're finished mutating it
@@ -439,13 +466,13 @@ ungrouped_data <- ungroup(mutated_grouped_data)
 
 glimpse(ungrouped_data) #notice that the groups attribute is no longer there
 
-#and grouped_df is no longer one of the data frame's classes
+#and grouped_df3 is no longer one of the data frame's classes
 class(ungrouped_data)
 
 ```
 
 
-# chaining functions with the **pipe operator (%>%)**
+# Chaining Functions with the **pipe operator (%>%)**
 
 Thanks to the [magrittr](https://github.com/tidyverse/magrittr) package, you can use the pipe operator, "%>%", which allows you to apply a series of functions to an object using easily readable code without requiring you to save intermediate objects. 
 Note that you don't have to load the magrittr package in a separate call to the library() function since the pipe operator is imported from magrittr automatically when you load the dplyr package.
@@ -520,11 +547,11 @@ identical(sorted_mass_by_sw_species_chained, sorted_mass_by_sw_species_unchained
 ```
 
 
-# navigation
+# Navigation
 
 Click [here](https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/) to go back to the previous post. A link to the next one (data transformation - part 2 - reshaping data with the tidyr package) will be added as soon as I have time to write it. 
 
-# notes
+# Notes
 
 * To explore dplyr and in more depth checkout [chapter 5 of R for data science](https://r4ds.had.co.nz/transform.html). 
 

@@ -134,7 +134,7 @@ z
 ```
 
 
-#  **basic summary statistics**
+#  **Basic Summary Statistics**
 
 R makes it incredibly easy to get simple summary statistics for numeric variables. So while we won't dive too deeply into exploratory data analysis until later in the blog series we'll get our toes wet here.
 ```{r, eval = T}
@@ -230,7 +230,7 @@ is.integer(x)
 ```
 
 
-## logical vectors
+## Logical Vectors
 ```{r}
 l <- c(TRUE, FALSE, TRUE, TRUE, FALSE, TRUE) #logical vector
 l <- c(T, F, T, T, F, T) #equivalent short hand version
@@ -395,7 +395,7 @@ tbl1 <- tibble("var_1" = c(sample(1:6, 6)),
 tbl1
 ```
 
-# **random numbers and sampling**
+# **Random Numbers and Sampling**
 
 ```{r}
 #sampling
@@ -449,7 +449,7 @@ class(df$g) #check the class of variable "g"
 
 ```
 
-# **functions for describing the structural information of data objects**
+# **Functions for Describing the Structural Information of Data Objects**
 
 ```{r}
 length(c(1:100)) #number of elements in a vector = the length of the vector
@@ -502,7 +502,7 @@ glimpse(df)
 
 ```
 
-# **the global environment**
+# **The Global Environment**
 
 The functions you use in R operate within what is called the global environment, which consists of the functions and other objects that you have loaded in the current R session (this is what happens you load a package with the library function), as well as any variables, data objects, or functions you have created during the session.
 
@@ -512,7 +512,7 @@ ls()
 
 ```
 
-# **the working directory**
+# **The Working Directory**
 
 R is always connected to a specific folder on your computer called the working directory, which is the default path for loading/importing files or saving/exporting them 
 
@@ -530,7 +530,7 @@ setwd("C:/Users/CPH/Documents/")
 ```
 
 
-# **projects**
+# **Projects**
 
 The projects feature of R studio makes it much easier to keep your work organized, and using it is strongly recommended if you are working on anything that will take longer than one or two sessions to complete.
 
@@ -540,7 +540,7 @@ You can create/start a project using the projects menu by clicking on this butto
 
 You can find it in the top right corner of R studio, directly below the minimize/maximize/exit buttons. Creating (or loading) a package also sets the working directory to the project folder automatically. 
 
-# **useful keyboard shortcuts (for R studio users)**
+# **Useful Keyboard Shortcuts (for R studio users)**
 
 One of the great benefits of using R studio are the keyboard shortcuts that speed up the coding process. Here are some I've found to be useful:
 
@@ -562,11 +562,11 @@ One of the great benefits of using R studio are the keyboard shortcuts that spee
 
 *N.B.* To see all available keyboard shortcuts use [Alt] + [Shift] + [K] or click "keyboard shortcuts help" under the R studio help menu. Many of the more useful ones are also accessible under the R studio code menu.
 
-## navigation
+## Navigation
 
 Click [here](https://craig.rbind.io/post/2019-06-22-asgr-1-getting-data-into-r/) to go back to the previous post or [here](https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/) to go to the next one.
 
-## notes
+## Notes
 
 * For more details on the data structures and operations introduced in this post, you may find the [official R introductory manual](https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf) or Michael Crawley's ["The R Book"](https://www.amazon.ca/R-Book-Michael-J-Crawley/dp/0470973927) helpful. 
 

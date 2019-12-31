@@ -18,7 +18,7 @@
       <pubDate>Mon, 30 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>/post/2019-12-30-asgr-2-1-data-transformation-part-1/</guid>
-      <description>1 TL;DR2 Introduction3 filter()4 select()4.1 renaming columns using select() or rename()5 mutate()5.1 recoding or creating indicator variables using if_else(), case_when(), or recode()6 summarise()7 group_by()8 chaining functions with the pipe operator (%&amp;gt;%)9 navigation10 notes1 TL;DRThe 4th post in the Scientist’s Guide to R series introduces data transformation techniques useful for wrangling/tidying/cleaning data. Specifically, we will be learning how to use the 6 core functions (and a few others) from the popular dplyr package, perform similar operations in base R, and chain operations with the pipe operator (%&amp;gt;%) to streamline the process.</description>
+      <description>1 TL;DR2 Introduction3 select()3.1 Renaming Columns with select() or rename()4 filter()4.1 Subset Rows using Indices with slice()5 mutate()5.1 Recoding or Creating Indicator Variables using if_else(), case_when(), or recode()6 summarise()7 group_by()8 Chaining Functions with the pipe operator (%&amp;gt;%)9 Navigation10 Notes1 TL;DRThe 4th post in the Scientist’s Guide to R series introduces data transformation techniques useful for wrangling/tidying/cleaning data.</description>
     </item>
     
     <item>
@@ -27,7 +27,7 @@
       <pubDate>Tue, 06 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/</guid>
-      <description>1 TL;DR2 Introduction3 Basic Calculations4 Logical Operators5 Object Assignment6 basic summary statistics7 Data Structures and Object Assignment7.1 Numeric and Character Vectors7.2 logical vectors7.3 Factors7.4 Matrices7.5 Dataframes7.6 Tibbles8 random numbers and sampling9 functions for describing the structural information of data objects10 the global environment11 the working directory12 projects13 useful keyboard shortcuts (for R studio users)13.</description>
+      <description>1 TL;DR2 Introduction3 Basic Calculations4 Logical Operators5 Object Assignment6 Basic Summary Statistics7 Data Structures and Object Assignment7.1 Numeric and Character Vectors7.2 Logical Vectors7.3 Factors7.4 Matrices7.5 Dataframes7.6 Tibbles8 Random Numbers and Sampling9 Functions for Describing the Structural Information of Data Objects10 The Global Environment11 The Working Directory12 Projects13 Useful Keyboard Shortcuts (for R studio users)13.</description>
     </item>
     
     <item>
@@ -36,7 +36,7 @@
       <pubDate>Sat, 22 Jun 2019 00:00:00 +0000</pubDate>
       
       <guid>/post/2019-06-22-asgr-1-getting-data-into-r/</guid>
-      <description>1 TL;DR2 Introduction3 Installing and loading R packages4 How to get your data into R4.1 comma delimited files (.csv) files4.2 tab delimited (.txt) files4.3 files with other delimiting characters (also .txt)4.4 Microsoft Excel files (.xlsx, .xls)4.5 files from SPSS, SAS, or Stata4.6 fixed width files (.txt, .gz, .bz2, .xz, .zip, etc.)4.7 html/xml files4.8 JavaScript Object Notation (JSON) files4.</description>
+      <description>1 TL;DR2 Introduction3 Installing and Loading R Packages4 How to Get Your Data Into R4.1 Comma Delimited (.csv) Files4.2 Tab Delimited (.txt) Files4.3 Files With Other Delimiting Characters (also .txt)4.4 Microsoft Excel Files (.xlsx, .xls)4.5 Files from SPSS, SAS, or Stata4.6 Fixed Width Files (.txt, .gz, .bz2, .xz, .zip, etc.)4.7 html/xml files4.8 JavaScript Object Notation (JSON) Files4.</description>
     </item>
     
     <item>

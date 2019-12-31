@@ -25,18 +25,20 @@ output:
 <ul>
 <li><a href="#tldr"><span class="toc-section-number">1</span> <strong>TL;DR</strong></a></li>
 <li><a href="#introduction"><span class="toc-section-number">2</span> <strong>Introduction</strong></a></li>
-<li><a href="#filter"><span class="toc-section-number">3</span> <strong>filter()</strong></a></li>
-<li><a href="#select"><span class="toc-section-number">4</span> <strong>select()</strong></a><ul>
-<li><a href="#renaming-columns-using-select-or-rename"><span class="toc-section-number">4.1</span> renaming columns using select() or rename()</a></li>
+<li><a href="#select"><span class="toc-section-number">3</span> <strong>select()</strong></a><ul>
+<li><a href="#renaming-columns-with-select-or-rename"><span class="toc-section-number">3.1</span> Renaming Columns with <strong>select()</strong> or <strong>rename()</strong></a></li>
+</ul></li>
+<li><a href="#filter"><span class="toc-section-number">4</span> <strong>filter()</strong></a><ul>
+<li><a href="#subset-rows-using-indices-with-slice"><span class="toc-section-number">4.1</span> Subset Rows using Indices with <strong>slice()</strong></a></li>
 </ul></li>
 <li><a href="#mutate"><span class="toc-section-number">5</span> <strong>mutate()</strong></a><ul>
-<li><a href="#recoding-or-creating-indicator-variables-using-if_else-case_when-or-recode"><span class="toc-section-number">5.1</span> recoding or creating indicator variables using if_else(), case_when(), or recode()</a></li>
+<li><a href="#recoding-or-creating-indicator-variables-using-if_else-case_when-or-recode"><span class="toc-section-number">5.1</span> Recoding or Creating Indicator Variables using <strong>if_else()</strong>, <strong>case_when()</strong>, or <strong>recode()</strong></a></li>
 </ul></li>
 <li><a href="#summarise"><span class="toc-section-number">6</span> <strong>summarise()</strong></a></li>
 <li><a href="#group_by"><span class="toc-section-number">7</span> <strong>group_by()</strong></a></li>
-<li><a href="#chaining-functions-with-the-pipe-operator"><span class="toc-section-number">8</span> chaining functions with the <strong>pipe operator (%&gt;%)</strong></a></li>
-<li><a href="#navigation"><span class="toc-section-number">9</span> navigation</a></li>
-<li><a href="#notes"><span class="toc-section-number">10</span> notes</a></li>
+<li><a href="#chaining-functions-with-the-pipe-operator"><span class="toc-section-number">8</span> Chaining Functions with the <strong>pipe operator (%&gt;%)</strong></a></li>
+<li><a href="#navigation"><span class="toc-section-number">9</span> Navigation</a></li>
+<li><a href="#notes"><span class="toc-section-number">10</span> Notes</a></li>
 </ul>
 </div>
 
@@ -46,23 +48,23 @@ output:
 </div>
 <div id="introduction" class="section level1">
 <h1><span class="header-section-number">2</span> <strong>Introduction</strong></h1>
-<p>The 4th post in the <a href="https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/">Scientist’s Guide to R series</a> introduces data transformation techniques useful for wrangling/tidying/cleaning data, which often takes as longer than any other step in the data analysis process. Specifically, we will be learning how to use the 6 core functions or “verbs” of the popular <a href="https://dplyr.tidyverse.org/">dplyr</a> package to:</p>
+<p>The 4th post in the <a href="https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/">Scientist’s Guide to R series</a> introduces data transformation techniques useful for wrangling/tidying/cleaning data, which often takes longer than any other step in the data analysis process. Specifically, we will be learning how to use the 6 core functions or “verbs” of the popular <a href="https://dplyr.tidyverse.org/">dplyr</a> package to:</p>
 <ol style="list-style-type: decimal">
-<li><p><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a> rows using logical tests with values of specified columns.</p></li>
 <li><p>Easily <a href="https://dplyr.tidyverse.org/reference/select.html">select</a> a subset of columns.</p></li>
+<li><p><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a> rows using logical tests with values of specified columns.</p></li>
 <li><p>Modify columns or add new ones using <a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a>.</p></li>
 <li><p>Obtain descriptive summaries of data using <a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a> (or the equivalent summarize()).</p></li>
 <li><p>Assign a grouping structure to a data frame to enable subsequent dplyr package function calls to be executed within groups using <a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a>.</p></li>
 <li><p><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a> a data frame for improved readability.</p></li>
 </ol>
-<p>Some additional relevant functions that build on this foundation will also be covered where appropriate (see below).</p>
+<p>Some additional relevant functions that build on this foundation will also be covered where appropriate.</p>
 <p>While other great packages (and other functions in base R) exist to help you manipulate data, using the dplyr package is perhaps the easiest way to learn these essential data processing techniques. However, if you find yourself working with very large datasets (e.g. &gt; 1,000,000 rows) you might want to check out the <a href="https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html">data.table</a> package, which emphasizes efficiency and performance over readability and ease of use.</p>
-<p>All dplyr functions accept a data frame or tibble as their first argument and return a data frame as their output. This is a key design feature that enables you to apply a series of operations to a data frame in a chain using the pipe operator (<code>%&gt;%</code>), as demonstrated in <a href="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#chaining-functions-with-the-pipe-operator">section 8</a>.</p>
+<p>Most dplyr functions accept a data frame or tibble as their first argument and return a data frame as their output. This is a key design feature that enables you to apply a series of operations to a data frame in a chain using the pipe operator (<code>%&gt;%</code>), as demonstrated in <a href="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#chaining-functions-with-the-pipe-operator">section 8</a>.</p>
 </div>
-<div id="filter" class="section level1">
-<h1><span class="header-section-number">3</span> <strong>filter()</strong></h1>
-<p><code>filter()</code> is the one of two core dplyr verbs you can use for subsetting your data. <code>filter()</code> lets you extract a subset of rows using <a href="https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/#logical-operators">logical operators</a>.</p>
-<p>To filter a data frame, specify the name of the data frame as the 1st argument, then any number of logical tests for values of variables in the data frame that you want to use as filtering criteria.</p>
+<div id="select" class="section level1">
+<h1><span class="header-section-number">3</span> <strong>select()</strong></h1>
+<p><code>select()</code> is the one of the dplyr functions you can use for subsetting. <code>select()</code> lets you extract a subset of <strong>columns</strong> from a data frame.</p>
+<p>Columns may be specified using indices, names, or using string patterns with the assistance of a few <a href="https://www.rdocumentation.org/packages/dplyr/versions/0.5.0/topics/select_helpers">tidyselect helper functions</a> such as <code>contains()</code>, <code>starts_with()</code>, and <code>ends_with()</code>.</p>
 <pre class="r"><code>library(dplyr) #load the dplyr package with the library function.
 #the dplyr package will be used throughout this tutorial so make sure it is
 #loaded before trying to run the examples yourself
@@ -87,165 +89,6 @@ glimpse(df)</code></pre>
 ## $ films      &lt;list&gt; [&lt;&quot;Revenge of the Sith&quot;, &quot;Return of the Jedi&quot;, &quot;The Emp...
 ## $ vehicles   &lt;list&gt; [&lt;&quot;Snowspeeder&quot;, &quot;Imperial Speeder Bike&quot;&gt;, &lt;&gt;, &lt;&gt;, &lt;&gt;, ...
 ## $ starships  &lt;list&gt; [&lt;&quot;X-wing&quot;, &quot;Imperial shuttle&quot;&gt;, &lt;&gt;, &lt;&gt;, &quot;TIE Advanced ...</code></pre>
-<pre class="r"><code># use filter to get a subset of all characters from either Tatooine or Naboo
-
-filter(df, 
-       homeworld == &quot;Tatooine&quot; | homeworld == &quot;Naboo&quot;) #recall that the vertical bar `|` is the logical operator &#39;or&#39;</code></pre>
-<pre><code>## # A tibble: 21 x 13
-##    name  height  mass hair_color skin_color eye_color birth_year gender
-##    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; 
-##  1 Luke~    172    77 blond      fair       blue            19   male  
-##  2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   &lt;NA&gt;  
-##  3 R2-D2     96    32 &lt;NA&gt;       white, bl~ red             33   &lt;NA&gt;  
-##  4 Dart~    202   136 none       white      yellow          41.9 male  
-##  5 Owen~    178   120 brown, gr~ light      blue            52   male  
-##  6 Beru~    165    75 brown      light      blue            47   female
-##  7 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   &lt;NA&gt;  
-##  8 Bigg~    183    84 black      light      brown           24   male  
-##  9 Anak~    188    84 blond      fair       blue            41.9 male  
-## 10 Palp~    170    75 grey       pale       yellow          82   male  
-## # ... with 11 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-## #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
-<pre class="r"><code># this is read: filter the data frame &quot;df&quot; to extract rows where the value of
-# the variable homeworld is equal to &quot;Tatooine&quot; or homeworld is equal to &quot;Naboo&quot;
-
-#in base R, one equivalent option would be:
-
-df[(df$homeworld == &quot;Tatooine&quot; | df$homeworld == &quot;Naboo&quot;), ]</code></pre>
-<pre><code>## # A tibble: 31 x 13
-##    name  height  mass hair_color skin_color eye_color birth_year gender
-##    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; 
-##  1 Luke~    172    77 blond      fair       blue            19   male  
-##  2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   &lt;NA&gt;  
-##  3 R2-D2     96    32 &lt;NA&gt;       white, bl~ red             33   &lt;NA&gt;  
-##  4 Dart~    202   136 none       white      yellow          41.9 male  
-##  5 Owen~    178   120 brown, gr~ light      blue            52   male  
-##  6 Beru~    165    75 brown      light      blue            47   female
-##  7 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   &lt;NA&gt;  
-##  8 Bigg~    183    84 black      light      brown           24   male  
-##  9 Anak~    188    84 blond      fair       blue            41.9 male  
-## 10 &lt;NA&gt;      NA    NA &lt;NA&gt;       &lt;NA&gt;       &lt;NA&gt;            NA   &lt;NA&gt;  
-## # ... with 21 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-## #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
-<pre class="r"><code># notice that the $ is not needed to specify which data set the variable
-# &quot;homeworld&quot; is in for filter but it is if you are passing a logical vector to
-# subset a data frame using `[]` in base R
-
-# this is because R reads (df$homeworld == &quot;Tatooine&quot; | df$homeworld == &quot;Naboo&quot;)
-# as a logical test and returns a logical vector, which is then used to specify
-# which rows to extract (those with values == TRUE) and which to discard (those
-# with values == FALSE). This becomes really clear if you just pull out the
-# subsetting predicates and print the result
-
-(df$homeworld == &quot;Tatooine&quot; | df$homeworld == &quot;Naboo&quot;)</code></pre>
-<pre><code>##  [1]  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE FALSE
-## [13] FALSE FALSE FALSE FALSE FALSE FALSE    NA  TRUE FALSE    NA FALSE FALSE
-## [25] FALSE FALSE FALSE    NA FALSE FALSE    NA FALSE FALSE  TRUE  TRUE  TRUE
-## [37]  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [49] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE
-## [61] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [73]    NA FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE    NA    NA    NA
-## [85]    NA    NA  TRUE</code></pre>
-<pre class="r"><code># to get indices instead of logical values, you can wrap the above in which(), e.g.
-
-ind &lt;- which(df$homeworld == &quot;Tatooine&quot; | df$homeworld == &quot;Naboo&quot;) #returns the indices where the criteria are TRUE
-
-ind #calling an object itself without applying any functions to it just prints it to the console</code></pre>
-<pre><code>##  [1]  1  2  3  4  6  7  8  9 11 20 34 35 36 37 40 41 57 58 59 63 87</code></pre>
-<pre class="r"><code>#note that you could also pass a vector of integers to subset a df using `[]`
-df[ind, ]</code></pre>
-<pre><code>## # A tibble: 21 x 13
-##    name  height  mass hair_color skin_color eye_color birth_year gender
-##    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; 
-##  1 Luke~    172    77 blond      fair       blue            19   male  
-##  2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   &lt;NA&gt;  
-##  3 R2-D2     96    32 &lt;NA&gt;       white, bl~ red             33   &lt;NA&gt;  
-##  4 Dart~    202   136 none       white      yellow          41.9 male  
-##  5 Owen~    178   120 brown, gr~ light      blue            52   male  
-##  6 Beru~    165    75 brown      light      blue            47   female
-##  7 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   &lt;NA&gt;  
-##  8 Bigg~    183    84 black      light      brown           24   male  
-##  9 Anak~    188    84 blond      fair       blue            41.9 male  
-## 10 Palp~    170    75 grey       pale       yellow          82   male  
-## # ... with 11 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-## #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
-<pre class="r"><code>#to negate a logical test, you can use `!` which means &quot;not&quot;
-# in the context of subsetting, this negates a logical vector 
-
-!(df$homeworld == &quot;Tatooine&quot; | df$homeworld == &quot;Naboo&quot;)</code></pre>
-<pre><code>##  [1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE
-## [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE    NA FALSE  TRUE    NA  TRUE  TRUE
-## [25]  TRUE  TRUE  TRUE    NA  TRUE  TRUE    NA  TRUE  TRUE FALSE FALSE FALSE
-## [37] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [49]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE
-## [61]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [73]    NA  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE    NA    NA    NA
-## [85]    NA    NA FALSE</code></pre>
-<pre class="r"><code>#this is why the logical test for not equal to is &quot;!=&quot;
-identical(!(df$homeworld == &quot;Tatooine&quot;), df$homeworld != &quot;Tatooine&quot;) #use identical() or all.equal() to test for equality between entire R objects</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code># extract rows for characters who are at least 100 cm tall and are from Naboo
-filter(df, height &gt;= 100 &amp; homeworld == &quot;Naboo&quot;)</code></pre>
-<pre><code>## # A tibble: 10 x 13
-##    name  height  mass hair_color skin_color eye_color birth_year gender
-##    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; 
-##  1 Palp~    170    75 grey       pale       yellow            82 male  
-##  2 Jar ~    196    66 none       orange     orange            52 male  
-##  3 Roos~    224    82 none       grey       orange            NA male  
-##  4 Rugo~    206    NA none       green      orange            NA male  
-##  5 Ric ~    183    NA brown      fair       blue              NA male  
-##  6 Quar~    183    NA black      dark       brown             62 male  
-##  7 Greg~    185    85 black      dark       brown             NA male  
-##  8 Cordé    157    NA brown      light      brown             NA female
-##  9 Dormé    165    NA brown      light      brown             NA female
-## 10 Padm~    165    45 brown      light      brown             46 female
-## # ... with 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
-## #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
-<pre class="r"><code># when using filter(), you can substitute a comma for `&amp;` when specifying multiple criteria
-identical(filter(df, height &gt;= 100 &amp; homeworld == &quot;Naboo&quot;),
-          
-          filter(df, height &gt;= 100, homeworld == &quot;Naboo&quot;))</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code># multiple or (`|`) clauses can instead be specified using the %in% infix operator
-option1 &lt;- filter(df, homeworld == &quot;Tatooine&quot; | homeworld == &quot;Naboo&quot; | homeworld == &quot;Alderaan&quot;)
-
-option2 &lt;- filter(filter(df, homeworld %in% c(&quot;Tatooine&quot;, &quot;Naboo&quot;, &quot;Alderaan&quot;)))
-
-identical(option1, option2)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code># since %in% also returns a logical vector, it can also be negated using `!`, 
-# although they give different results if the data contain missing values (NA)
-
-a &lt;- !(df$homeworld == &quot;Tatooine&quot; | df$homeworld == &quot;Naboo&quot; | df$homeworld == &quot;Alderaan&quot;)
-
-b &lt;- !(df$homeworld %in% c(&quot;Tatooine&quot;, &quot;Naboo&quot;, &quot;Alderaan&quot;))
-
-all.equal(a, b)</code></pre>
-<pre><code>## [1] &quot;&#39;is.NA&#39; value mismatch: 0 in current 10 in target&quot;</code></pre>
-<pre class="r"><code>b[is.na(a)] #these missing values were converted to TRUE by %in%</code></pre>
-<pre><code>##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
-<pre class="r"><code># to avoid this and other problems many functions have with processing NA
-# values, it is often best to either remove them or impute them, or use the
-# na.rm argument for the function
-
-x &lt;- na.omit(df$homeworld)
-
-c &lt;- !(x == &quot;Tatooine&quot; | x == &quot;Naboo&quot; | x == &quot;Alderaan&quot;)
-
-# negating a set of `or` clauses for equality is the same as multiple `and`
-# clauses for inequality
-
-d &lt;- x != &quot;Tatooine&quot; &amp; x != &quot;Naboo&quot; &amp; x != &quot;Alderaan&quot;
-
-e &lt;- !(x %in% c(&quot;Tatooine&quot;, &quot;Naboo&quot;, &quot;Alderaan&quot;))
-
-all.equal(c, d, e)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code># key point: you can use logical comparisons and vectors for subsetting in R</code></pre>
-</div>
-<div id="select" class="section level1">
-<h1><span class="header-section-number">4</span> <strong>select()</strong></h1>
-<p><code>select()</code> is the other main dplyr verb for used for subsetting. <code>select()</code> lets you extract a subset of columns.</p>
 <pre class="r"><code>#in base R, you would extract columns using either [, &quot;names&quot;] or [[&quot;name]], or $name
 df[, &quot;name&quot;] #[] returns another data frame</code></pre>
 <pre><code>## # A tibble: 87 x 1
@@ -345,6 +188,21 @@ select(df,
 ##  8 R5-D4                  97    32 &lt;NA&gt;         
 ##  9 Biggs Darklighter     183    84 black        
 ## 10 Obi-Wan Kenobi        182    77 auburn, white
+## # ... with 77 more rows</code></pre>
+<pre class="r"><code>select(df, 1:5, 9, 10) #select also accepts column indices and doesn&#39;t require c()</code></pre>
+<pre><code>## # A tibble: 87 x 7
+##    name               height  mass hair_color    skin_color  homeworld species
+##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;  
+##  1 Luke Skywalker        172    77 blond         fair        Tatooine  Human  
+##  2 C-3PO                 167    75 &lt;NA&gt;          gold        Tatooine  Droid  
+##  3 R2-D2                  96    32 &lt;NA&gt;          white, blue Naboo     Droid  
+##  4 Darth Vader           202   136 none          white       Tatooine  Human  
+##  5 Leia Organa           150    49 brown         light       Alderaan  Human  
+##  6 Owen Lars             178   120 brown, grey   light       Tatooine  Human  
+##  7 Beru Whitesun lars    165    75 brown         light       Tatooine  Human  
+##  8 R5-D4                  97    32 &lt;NA&gt;          white, red  Tatooine  Droid  
+##  9 Biggs Darklighter     183    84 black         light       Tatooine  Human  
+## 10 Obi-Wan Kenobi        182    77 auburn, white fair        Stewjon   Human  
 ## # ... with 77 more rows</code></pre>
 <pre class="r"><code>#select everything other than a specified column using the subtraction operator &quot;-&quot;
 select(df, -hair_color, -mass) </code></pre>
@@ -461,9 +319,9 @@ all.equal(
   df[[&quot;mass&quot;]] # or the equivalent `[[` operator
   )</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<div id="renaming-columns-using-select-or-rename" class="section level2">
-<h2><span class="header-section-number">4.1</span> renaming columns using select() or rename()</h2>
-<p>Columns can also be renamed when subsetting with the select() function or without subsetting using the rename() function (also in the dplyr package)</p>
+<div id="renaming-columns-with-select-or-rename" class="section level2">
+<h2><span class="header-section-number">3.1</span> Renaming Columns with <strong>select()</strong> or <strong>rename()</strong></h2>
+<p>Columns can also be renamed when subsetting with the <code>select()</code> function or without subsetting using the <code>rename()</code> function (also in the dplyr package).</p>
 <pre class="r"><code>#rename and subset using select
 select(df, nm = name, hgt = height, byear = birth_year) #select columns and rename them</code></pre>
 <pre><code>## # A tibble: 87 x 3
@@ -516,9 +374,200 @@ names(df) &lt;- c(&quot;nm&quot;, &quot;hgt&quot;, &quot;mass&quot;,
 <pre class="r"><code>names(df) &lt;- df_names #restore the original names from the vector saved above</code></pre>
 </div>
 </div>
+<div id="filter" class="section level1">
+<h1><span class="header-section-number">4</span> <strong>filter()</strong></h1>
+<p><code>filter()</code> is the other core dplyr verb you can use for subsetting your data. <code>filter()</code> lets you extract a subset of <strong>rows</strong> using <a href="https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/#logical-operators">logical operators</a>.</p>
+<p>To filter a data frame, specify the name of the data frame as the 1st argument, then any number of logical tests for values of variables in the data frame that you want to use as filtering criteria.</p>
+<pre class="r"><code># we&#39;ll just work with a few columns to simplify the output and highlight the filtering
+df2 &lt;- select(df, name, height, species, homeworld) 
+
+unique(df2$homeworld) #check the unique values of the homeworld variable, which we will use for filtering</code></pre>
+<pre><code>##  [1] &quot;Tatooine&quot;       &quot;Naboo&quot;          &quot;Alderaan&quot;       &quot;Stewjon&quot;       
+##  [5] &quot;Eriadu&quot;         &quot;Kashyyyk&quot;       &quot;Corellia&quot;       &quot;Rodia&quot;         
+##  [9] &quot;Nal Hutta&quot;      &quot;Bestine IV&quot;     NA               &quot;Kamino&quot;        
+## [13] &quot;Trandosha&quot;      &quot;Socorro&quot;        &quot;Bespin&quot;         &quot;Mon Cala&quot;      
+## [17] &quot;Chandrila&quot;      &quot;Endor&quot;          &quot;Sullust&quot;        &quot;Cato Neimoidia&quot;
+## [21] &quot;Coruscant&quot;      &quot;Toydaria&quot;       &quot;Malastare&quot;      &quot;Dathomir&quot;      
+## [25] &quot;Ryloth&quot;         &quot;Vulpter&quot;        &quot;Troiken&quot;        &quot;Tund&quot;          
+## [29] &quot;Haruun Kal&quot;     &quot;Cerea&quot;          &quot;Glee Anselm&quot;    &quot;Iridonia&quot;      
+## [33] &quot;Iktotch&quot;        &quot;Quermia&quot;        &quot;Dorin&quot;          &quot;Champala&quot;      
+## [37] &quot;Geonosis&quot;       &quot;Mirial&quot;         &quot;Serenno&quot;        &quot;Concord Dawn&quot;  
+## [41] &quot;Zolan&quot;          &quot;Ojom&quot;           &quot;Aleen Minor&quot;    &quot;Skako&quot;         
+## [45] &quot;Muunilinst&quot;     &quot;Shili&quot;          &quot;Kalee&quot;          &quot;Umbara&quot;        
+## [49] &quot;Utapau&quot;</code></pre>
+<pre class="r"><code># use filter to get a subset of all star wars characters from either Tatooine or Naboo
+
+filter(df2, 
+       homeworld == &quot;Tatooine&quot; | homeworld == &quot;Naboo&quot;) #recall that the vertical bar `|` is the logical operator &#39;or&#39;</code></pre>
+<pre><code>## # A tibble: 21 x 4
+##    name               height species homeworld
+##    &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;    
+##  1 Luke Skywalker        172 Human   Tatooine 
+##  2 C-3PO                 167 Droid   Tatooine 
+##  3 R2-D2                  96 Droid   Naboo    
+##  4 Darth Vader           202 Human   Tatooine 
+##  5 Owen Lars             178 Human   Tatooine 
+##  6 Beru Whitesun lars    165 Human   Tatooine 
+##  7 R5-D4                  97 Droid   Tatooine 
+##  8 Biggs Darklighter     183 Human   Tatooine 
+##  9 Anakin Skywalker      188 Human   Tatooine 
+## 10 Palpatine             170 Human   Naboo    
+## # ... with 11 more rows</code></pre>
+<pre class="r"><code># this is read: filter the data frame &quot;df2&quot; to extract rows where the value of
+# the variable homeworld is equal to &quot;Tatooine&quot; or homeworld is equal to &quot;Naboo&quot;
+
+#in base R, one equivalent option would be:
+
+df2[(df2$homeworld == &quot;Tatooine&quot; | df2$homeworld == &quot;Naboo&quot;), ]</code></pre>
+<pre><code>## # A tibble: 31 x 4
+##    name               height species homeworld
+##    &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;    
+##  1 Luke Skywalker        172 Human   Tatooine 
+##  2 C-3PO                 167 Droid   Tatooine 
+##  3 R2-D2                  96 Droid   Naboo    
+##  4 Darth Vader           202 Human   Tatooine 
+##  5 Owen Lars             178 Human   Tatooine 
+##  6 Beru Whitesun lars    165 Human   Tatooine 
+##  7 R5-D4                  97 Droid   Tatooine 
+##  8 Biggs Darklighter     183 Human   Tatooine 
+##  9 Anakin Skywalker      188 Human   Tatooine 
+## 10 &lt;NA&gt;                   NA &lt;NA&gt;    &lt;NA&gt;     
+## # ... with 21 more rows</code></pre>
+<pre class="r"><code># notice that the $ is not needed to specify which data set the variable
+# &quot;homeworld&quot; is in for filter but it is if you are passing a logical vector to
+# subset a data frame using `[]` in base R
+
+# this is because R reads (df2$homeworld == &quot;Tatooine&quot; | df2$homeworld == &quot;Naboo&quot;)
+# as a logical test and returns a logical vector, which is then used to specify
+# which rows to extract (those with values == TRUE) and which to discard (those
+# with values == FALSE). This becomes really clear if you just pull out the
+# subsetting predicates and print the result
+
+(df2$homeworld == &quot;Tatooine&quot; | df2$homeworld == &quot;Naboo&quot;)</code></pre>
+<pre><code>##  [1]  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE FALSE
+## [13] FALSE FALSE FALSE FALSE FALSE FALSE    NA  TRUE FALSE    NA FALSE FALSE
+## [25] FALSE FALSE FALSE    NA FALSE FALSE    NA FALSE FALSE  TRUE  TRUE  TRUE
+## [37]  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [49] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE
+## [61] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [73]    NA FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE    NA    NA    NA
+## [85]    NA    NA  TRUE</code></pre>
+<pre class="r"><code># to get indices instead of logical values, you can wrap the above in which(), e.g.
+
+ind &lt;- which(df2$homeworld == &quot;Tatooine&quot; | df2$homeworld == &quot;Naboo&quot;) #returns the indices where the criteria are TRUE
+
+ind #calling an object itself without applying any functions to it just prints it to the console</code></pre>
+<pre><code>##  [1]  1  2  3  4  6  7  8  9 11 20 34 35 36 37 40 41 57 58 59 63 87</code></pre>
+<pre class="r"><code>#note that you could also pass a vector of integers to subset a df2 using `[]`
+df2[ind, ]</code></pre>
+<pre><code>## # A tibble: 21 x 4
+##    name               height species homeworld
+##    &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;    
+##  1 Luke Skywalker        172 Human   Tatooine 
+##  2 C-3PO                 167 Droid   Tatooine 
+##  3 R2-D2                  96 Droid   Naboo    
+##  4 Darth Vader           202 Human   Tatooine 
+##  5 Owen Lars             178 Human   Tatooine 
+##  6 Beru Whitesun lars    165 Human   Tatooine 
+##  7 R5-D4                  97 Droid   Tatooine 
+##  8 Biggs Darklighter     183 Human   Tatooine 
+##  9 Anakin Skywalker      188 Human   Tatooine 
+## 10 Palpatine             170 Human   Naboo    
+## # ... with 11 more rows</code></pre>
+<pre class="r"><code>#to negate a logical test, you can use `!` which means &quot;not&quot;
+# in the context of subsetting, this negates a logical vector 
+
+!(df2$homeworld == &quot;Tatooine&quot; | df2$homeworld == &quot;Naboo&quot;)</code></pre>
+<pre><code>##  [1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE
+## [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE    NA FALSE  TRUE    NA  TRUE  TRUE
+## [25]  TRUE  TRUE  TRUE    NA  TRUE  TRUE    NA  TRUE  TRUE FALSE FALSE FALSE
+## [37] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [49]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE
+## [61]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [73]    NA  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE    NA    NA    NA
+## [85]    NA    NA FALSE</code></pre>
+<pre class="r"><code>#this is why the logical test for not equal to is &quot;!=&quot;
+identical(!(df2$homeworld == &quot;Tatooine&quot;), df2$homeworld != &quot;Tatooine&quot;) #use identical() or all.equal() to test for equality between entire R objects</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code># extract rows for characters who are at least 100 cm tall and are from Naboo
+filter(df2, height &gt;= 100 &amp; homeworld == &quot;Naboo&quot;)</code></pre>
+<pre><code>## # A tibble: 10 x 4
+##    name          height species homeworld
+##    &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;    
+##  1 Palpatine        170 Human   Naboo    
+##  2 Jar Jar Binks    196 Gungan  Naboo    
+##  3 Roos Tarpals     224 Gungan  Naboo    
+##  4 Rugor Nass       206 Gungan  Naboo    
+##  5 Ric Olié         183 &lt;NA&gt;    Naboo    
+##  6 Quarsh Panaka    183 &lt;NA&gt;    Naboo    
+##  7 Gregar Typho     185 Human   Naboo    
+##  8 Cordé            157 Human   Naboo    
+##  9 Dormé            165 Human   Naboo    
+## 10 Padmé Amidala    165 Human   Naboo</code></pre>
+<pre class="r"><code># when using filter(), you can substitute a comma for `&amp;` when specifying multiple criteria
+identical(filter(df2, height &gt;= 100 &amp; homeworld == &quot;Naboo&quot;),
+          
+          filter(df2, height &gt;= 100, homeworld == &quot;Naboo&quot;))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code># multiple or (`|`) clauses can instead be specified using the %in% infix operator
+option1 &lt;- filter(df2, homeworld == &quot;Tatooine&quot; | homeworld == &quot;Naboo&quot; | homeworld == &quot;Alderaan&quot;)
+
+option2 &lt;- filter(filter(df2, homeworld %in% c(&quot;Tatooine&quot;, &quot;Naboo&quot;, &quot;Alderaan&quot;)))
+
+identical(option1, option2)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code># since %in% also returns a logical vector, it can also be negated using `!`, 
+# although they give different results if the data contain missing values (NA)
+
+a &lt;- !(df2$homeworld == &quot;Tatooine&quot; | df2$homeworld == &quot;Naboo&quot; | df2$homeworld == &quot;Alderaan&quot;)
+
+b &lt;- !(df2$homeworld %in% c(&quot;Tatooine&quot;, &quot;Naboo&quot;, &quot;Alderaan&quot;))
+
+all.equal(a, b)</code></pre>
+<pre><code>## [1] &quot;&#39;is.NA&#39; value mismatch: 0 in current 10 in target&quot;</code></pre>
+<pre class="r"><code>b[is.na(a)] #these missing values were converted to TRUE by %in%</code></pre>
+<pre><code>##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
+<pre class="r"><code># to avoid this and other problems many functions have with processing NA
+# values, it is often best to either remove them or impute them, or use the
+# na.rm argument for the function
+
+x &lt;- na.omit(df2$homeworld)
+
+c &lt;- !(x == &quot;Tatooine&quot; | x == &quot;Naboo&quot; | x == &quot;Alderaan&quot;)
+
+# negating a set of `or` clauses for equality is the same as multiple `and`
+# clauses for inequality
+
+d &lt;- x != &quot;Tatooine&quot; &amp; x != &quot;Naboo&quot; &amp; x != &quot;Alderaan&quot;
+
+e &lt;- !(x %in% c(&quot;Tatooine&quot;, &quot;Naboo&quot;, &quot;Alderaan&quot;))
+
+all.equal(c, d, e)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code># key point: you can use logical comparisons and vectors for subsetting in R</code></pre>
+<div id="subset-rows-using-indices-with-slice" class="section level2">
+<h2><span class="header-section-number">4.1</span> Subset Rows using Indices with <strong>slice()</strong></h2>
+<p>Unlike <code>select()</code>, <code>filter()</code> doesn’t allow the use of indices for subsetting. Instead, dplyr has another funciton called <a href="https://dplyr.tidyverse.org/reference/slice.html">slice()</a> for this purpose. <code>slice()</code> doesn’t require you to enclose multiple index values in c() either and it can also operate on indices within groups (see the <a href="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#group_by">section 7</a> below for an example).</p>
+<pre class="r"><code>slice(df2, 1:5, 9:14, 25:50)</code></pre>
+<pre><code>## # A tibble: 37 x 4
+##    name              height species homeworld
+##    &lt;chr&gt;              &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;    
+##  1 Luke Skywalker       172 Human   Tatooine 
+##  2 C-3PO                167 Droid   Tatooine 
+##  3 R2-D2                 96 Droid   Naboo    
+##  4 Darth Vader          202 Human   Tatooine 
+##  5 Leia Organa          150 Human   Alderaan 
+##  6 Biggs Darklighter    183 Human   Tatooine 
+##  7 Obi-Wan Kenobi       182 Human   Stewjon  
+##  8 Anakin Skywalker     188 Human   Tatooine 
+##  9 Wilhuff Tarkin       180 Human   Eriadu   
+## 10 Chewbacca            228 Wookiee Kashyyyk 
+## # ... with 27 more rows</code></pre>
+</div>
+</div>
 <div id="mutate" class="section level1">
 <h1><span class="header-section-number">5</span> <strong>mutate()</strong></h1>
-<p><code>mutate()</code> lets you modify or create new columns in a data frame.</p>
+<p><code>mutate()</code> lets you modify and/or create new columns in a data frame.</p>
 <pre class="r"><code>#Say for example that you wanted to calculate the BMI of each character in the starwars data frame
 
 df2 &lt;- select(df, name, height, mass) #extract columns of interest
@@ -585,9 +634,9 @@ transmute(df2,
 ## 10        1.82  23.2
 ## # ... with 77 more rows</code></pre>
 <div id="recoding-or-creating-indicator-variables-using-if_else-case_when-or-recode" class="section level2">
-<h2><span class="header-section-number">5.1</span> recoding or creating indicator variables using if_else(), case_when(), or recode()</h2>
+<h2><span class="header-section-number">5.1</span> Recoding or Creating Indicator Variables using <strong>if_else()</strong>, <strong>case_when()</strong>, or <strong>recode()</strong></h2>
 <p>A common use of mutate (or transmute) is to encode a new variable (or overwrite an existing one) based on values of an existing variable in a data frame using the <a href="https://dplyr.tidyverse.org/reference/recode.html">recode()</a>, <a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else()</a> or <a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a> functions in the dplyr package.</p>
-<p>if_else is a condensed version of a simple if/else statement with only 2 outcomes: one if the condition specified as the 1st argument evaluates to <code>TRUE</code> and one if it evaluates to <code>FALSE</code> (i.e. no <code>else if</code> components). General control flow operations using conditional statments (<code>if</code>, <code>else</code>, <code>else if</code>, etc.) may be covered in a later blog post… For now I recommend <a href="https://adv-r.hadley.nz/control-flow.html">this section of the advanced R book</a> for those who want to learn more about it before moving on.</p>
+<p><code>if_else()</code> is a condensed version of a simple if/else statement with only 2 outcomes: one if the condition specified as the 1st argument evaluates to <code>TRUE</code> and one if it evaluates to <code>FALSE</code> (i.e. no <code>else if</code> components). <code>case_when()</code> lets you use multiple <code>if_else()</code> calls together without having to nest them explicitly. General control flow operations using conditional statments (<code>if</code>, <code>else</code>, <code>else if</code>, etc.) may be covered in a later blog post… For now I recommend <a href="https://adv-r.hadley.nz/control-flow.html">this section of the advanced R book</a> for those who want to learn more about it before moving on.</p>
 <pre class="r"><code># to create an indicator/dummy/2-level variable (e.g. 1/0, T/F) you can use
 # if_else() (or ifelse()):
 
@@ -744,27 +793,36 @@ glimpse(df)</code></pre>
 ## $ films      &lt;list&gt; [&lt;&quot;Revenge of the Sith&quot;, &quot;Return of the Jedi&quot;, &quot;The Emp...
 ## $ vehicles   &lt;list&gt; [&lt;&quot;Snowspeeder&quot;, &quot;Imperial Speeder Bike&quot;&gt;, &lt;&gt;, &lt;&gt;, &lt;&gt;, ...
 ## $ starships  &lt;list&gt; [&lt;&quot;X-wing&quot;, &quot;Imperial shuttle&quot;&gt;, &lt;&gt;, &lt;&gt;, &quot;TIE Advanced ...</code></pre>
-<pre class="r"><code>grouped_data &lt;- group_by(df, species) #group the data frame &quot;df&quot; by the variable &quot;species&quot;
+<pre class="r"><code>df3 &lt;- select(df, name, species, height, mass)#1st. extract just the columns of interest
+
+grouped_data &lt;- group_by(df3, species) #group the data frame &quot;df3&quot; by the variable &quot;species&quot;
 
 class(grouped_data) #new additional class = &quot;grouped_df&quot;</code></pre>
 <pre><code>## [1] &quot;grouped_df&quot; &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
 <pre class="r"><code>glimpse(grouped_data) #note that the structure now has a groups attribute</code></pre>
 <pre><code>## Observations: 87
-## Variables: 13
+## Variables: 4
 ## Groups: species [38]
-## $ name       &lt;chr&gt; &quot;Luke Skywalker&quot;, &quot;C-3PO&quot;, &quot;R2-D2&quot;, &quot;Darth Vader&quot;, &quot;Leia...
-## $ height     &lt;int&gt; 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 180...
-## $ mass       &lt;dbl&gt; 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 84.0, ...
-## $ hair_color &lt;chr&gt; &quot;BLOND&quot;, NA, NA, &quot;none&quot;, &quot;BROWN&quot;, &quot;brown, grey&quot;, &quot;BROWN&quot;...
-## $ skin_color &lt;chr&gt; &quot;fair&quot;, &quot;gold&quot;, &quot;white, blue&quot;, &quot;white&quot;, &quot;light&quot;, &quot;light&quot;...
-## $ eye_color  &lt;chr&gt; &quot;blue&quot;, &quot;yellow&quot;, &quot;red&quot;, &quot;yellow&quot;, &quot;brown&quot;, &quot;blue&quot;, &quot;blu...
-## $ birth_year &lt;dbl&gt; 19.0, 112.0, 33.0, 41.9, 19.0, 52.0, 47.0, NA, 24.0, 57....
-## $ gender     &lt;chr&gt; &quot;male&quot;, NA, NA, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, NA, ...
-## $ homeworld  &lt;chr&gt; &quot;Tatooine&quot;, &quot;Tatooine&quot;, &quot;Naboo&quot;, &quot;Tatooine&quot;, &quot;Alderaan&quot;,...
-## $ species    &lt;chr&gt; &quot;Human&quot;, &quot;Droid&quot;, &quot;Droid&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;H...
-## $ films      &lt;list&gt; [&lt;&quot;Revenge of the Sith&quot;, &quot;Return of the Jedi&quot;, &quot;The Emp...
-## $ vehicles   &lt;list&gt; [&lt;&quot;Snowspeeder&quot;, &quot;Imperial Speeder Bike&quot;&gt;, &lt;&gt;, &lt;&gt;, &lt;&gt;, ...
-## $ starships  &lt;list&gt; [&lt;&quot;X-wing&quot;, &quot;Imperial shuttle&quot;&gt;, &lt;&gt;, &lt;&gt;, &quot;TIE Advanced ...</code></pre>
+## $ name    &lt;chr&gt; &quot;Luke Skywalker&quot;, &quot;C-3PO&quot;, &quot;R2-D2&quot;, &quot;Darth Vader&quot;, &quot;Leia Or...
+## $ species &lt;chr&gt; &quot;Human&quot;, &quot;Droid&quot;, &quot;Droid&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Huma...
+## $ height  &lt;int&gt; 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 180, 2...
+## $ mass    &lt;dbl&gt; 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 84.0, 77....</code></pre>
+<pre class="r"><code>slice(grouped_data, 1) #look at the 1st row of each group</code></pre>
+<pre><code>## # A tibble: 38 x 4
+## # Groups:   species [38]
+##    name                  species   height  mass
+##    &lt;chr&gt;                 &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt;
+##  1 Ratts Tyerell         Aleena        79    15
+##  2 Dexter Jettster       Besalisk     198   102
+##  3 Ki-Adi-Mundi          Cerean       198    82
+##  4 Mas Amedda            Chagrian     196    NA
+##  5 Zam Wesell            Clawdite     168    55
+##  6 C-3PO                 Droid        167    75
+##  7 Sebulba               Dug          112    40
+##  8 Wicket Systri Warrick Ewok          88    20
+##  9 Poggle the Lesser     Geonosian    183    80
+## 10 Jar Jar Binks         Gungan       196    66
+## # ... with 28 more rows</code></pre>
 <pre class="r"><code>#next summarise calculates the specified summary statistics within species
 summarise(grouped_data,
           n = n(), 
@@ -813,7 +871,7 @@ select(mutated_grouped_data, name, mass, scaled_mass) #just print the relevant p
 #operation applied to the ungrouped data
 identical(
 mutated_grouped_data$scaled_mass,
-mutate(df, scaled_mass = scale(mass))$scaled_mass,
+mutate(df3, scaled_mass = scale(mass))$scaled_mass,
 )</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <pre class="r"><code>#it is recommended that you ungroup the data after you&#39;re finished mutating it
@@ -823,27 +881,18 @@ ungrouped_data &lt;- ungroup(mutated_grouped_data)
 
 glimpse(ungrouped_data) #notice that the groups attribute is no longer there</code></pre>
 <pre><code>## Observations: 87
-## Variables: 14
+## Variables: 5
 ## $ name        &lt;chr&gt; &quot;Luke Skywalker&quot;, &quot;C-3PO&quot;, &quot;R2-D2&quot;, &quot;Darth Vader&quot;, &quot;Lei...
+## $ species     &lt;chr&gt; &quot;Human&quot;, &quot;Droid&quot;, &quot;Droid&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;...
 ## $ height      &lt;int&gt; 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 18...
 ## $ mass        &lt;dbl&gt; 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 84.0,...
-## $ hair_color  &lt;chr&gt; &quot;BLOND&quot;, NA, NA, &quot;none&quot;, &quot;BROWN&quot;, &quot;brown, grey&quot;, &quot;BROWN...
-## $ skin_color  &lt;chr&gt; &quot;fair&quot;, &quot;gold&quot;, &quot;white, blue&quot;, &quot;white&quot;, &quot;light&quot;, &quot;light...
-## $ eye_color   &lt;chr&gt; &quot;blue&quot;, &quot;yellow&quot;, &quot;red&quot;, &quot;yellow&quot;, &quot;brown&quot;, &quot;blue&quot;, &quot;bl...
-## $ birth_year  &lt;dbl&gt; 19.0, 112.0, 33.0, 41.9, 19.0, 52.0, 47.0, NA, 24.0, 57...
-## $ gender      &lt;chr&gt; &quot;male&quot;, NA, NA, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, NA,...
-## $ homeworld   &lt;chr&gt; &quot;Tatooine&quot;, &quot;Tatooine&quot;, &quot;Naboo&quot;, &quot;Tatooine&quot;, &quot;Alderaan&quot;...
-## $ species     &lt;chr&gt; &quot;Human&quot;, &quot;Droid&quot;, &quot;Droid&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;...
-## $ films       &lt;list&gt; [&lt;&quot;Revenge of the Sith&quot;, &quot;Return of the Jedi&quot;, &quot;The Em...
-## $ vehicles    &lt;list&gt; [&lt;&quot;Snowspeeder&quot;, &quot;Imperial Speeder Bike&quot;&gt;, &lt;&gt;, &lt;&gt;, &lt;&gt;,...
-## $ starships   &lt;list&gt; [&lt;&quot;X-wing&quot;, &quot;Imperial shuttle&quot;&gt;, &lt;&gt;, &lt;&gt;, &quot;TIE Advanced...
 ## $ scaled_mass &lt;dbl&gt; -0.29828800, 0.10287692, -0.73973407, 2.74556278, -1.74...</code></pre>
-<pre class="r"><code>#and grouped_df is no longer one of the data frame&#39;s classes
+<pre class="r"><code>#and grouped_df3 is no longer one of the data frame&#39;s classes
 class(ungrouped_data)</code></pre>
 <pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
 </div>
 <div id="chaining-functions-with-the-pipe-operator" class="section level1">
-<h1><span class="header-section-number">8</span> chaining functions with the <strong>pipe operator (%&gt;%)</strong></h1>
+<h1><span class="header-section-number">8</span> Chaining Functions with the <strong>pipe operator (%&gt;%)</strong></h1>
 <p>Thanks to the <a href="https://github.com/tidyverse/magrittr">magrittr</a> package, you can use the pipe operator, “%&gt;%”, which allows you to apply a series of functions to an object using easily readable code without requiring you to save intermediate objects.
 Note that you don’t have to load the magrittr package in a separate call to the library() function since the pipe operator is imported from magrittr automatically when you load the dplyr package.</p>
 <p>The pipe operator takes the object on the left and passes it to the first argument of the function to the right. Functions in dplyr and other tidyverse packages take data as the 1st argument. Those function which output the same type of object that they accept as inputs (i.e. the data argument) can be chained using the “%&gt;%” quite easily.<br />
@@ -950,11 +999,11 @@ identical(sorted_mass_by_sw_species_chained, sorted_mass_by_sw_species_unchained
 <pre class="r"><code># note: the keyboard shortcut for %&gt;% is ctrl + shift + M (at least on Windows machines)</code></pre>
 </div>
 <div id="navigation" class="section level1">
-<h1><span class="header-section-number">9</span> navigation</h1>
+<h1><span class="header-section-number">9</span> Navigation</h1>
 <p>Click <a href="https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/">here</a> to go back to the previous post. A link to the next one (data transformation - part 2 - reshaping data with the tidyr package) will be added as soon as I have time to write it.</p>
 </div>
 <div id="notes" class="section level1">
-<h1><span class="header-section-number">10</span> notes</h1>
+<h1><span class="header-section-number">10</span> Notes</h1>
 <ul>
 <li><p>To explore dplyr and in more depth checkout <a href="https://r4ds.had.co.nz/transform.html">chapter 5 of R for data science</a>.</p></li>
 <li><p>To learn more about subsetting using base R I highly recommend <a href="https://adv-r.hadley.nz/subsetting.html">chapter 4 of the Advanced R book</a>.</p></li>

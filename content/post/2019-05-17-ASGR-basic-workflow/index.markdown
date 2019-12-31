@@ -41,13 +41,13 @@ Perhaps the greatest benefit of using R is that once you have written a script t
 Another major advantage of using R is of course that it is free. 
 
 
-# **workflow outline**
+# **Workflow Outline**
 
 Now that we know why you should use R, what are the main steps of analyzing data? My typical analytical workflow follows these 7 steps:
 
-  * **0. Install and load necessary packages** (e.g. tidyverse)
-  * **1. Import the data.**
-  * **2. Clean/Transform the data.** This part usually takes longer than the analysis, but may not be necessary if you've entered the data yourself.
+  * **0.[Install and load necessary packages](https://craig.rbind.io/post/2019-06-22-asgr-1-getting-data-into-r/#installing-and-loading-r-packages) (e.g. tidyverse)**
+  * **1. [Import the data](https://craig.rbind.io/post/2019-06-22-asgr-1-getting-data-into-r/#how-to-get-your-data-into-r).**
+  * **2. [Clean/Transform the data](https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/).** This part usually takes longer than the analysis, but may not be necessary if you've entered the data yourself.
   * **3. Explore the data** using descriptive summary statistics and visualizations.
   * **4. Resolve structural issues.** If any issues are detected in step 3, go back to step 2 and resolve them, restructuring data as needed.
   * **5. Model:** Fit an appropriate statistical model & check model assumptions (e.g. normality). Use a different model/test if assumptions are violated (e.g. a permutation test). Conduct follow-up or *post-hoc* tests if desired.
@@ -58,11 +58,11 @@ This represents the basic steps involved in the majority of data analysis tasks 
   
 Each of these sections will be covered in detail in future posts. Thanks for reading and I welcome any suggestions for future posts, comments or other feedback you might have.
 
-## navigation
+## Navigation
 
 Click [here](https://craig.rbind.io/post/2019-06-22-asgr-1-getting-data-into-r/) to continue to the next post on installing R, R packages, and importing data.
 
-## notes
+## Notes
 
 * This post has been peer-reviewed and approved by the University of Victoria [Data Science Studio][DSSlink]
 
