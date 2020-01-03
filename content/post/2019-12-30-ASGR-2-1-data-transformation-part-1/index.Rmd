@@ -50,7 +50,7 @@ Most dplyr functions accept a data frame or tibble as their first argument and r
 
 # **select()**
 
-`select()` is the one of the dplyr functions you can use for subsetting. `select()` lets you extract a subset of **columns** from a data frame. 
+`select()` is one of the dplyr functions you can use for subsetting. `select()` lets you extract a subset of **columns** from a data frame. 
 
 Columns may be specified using indices, names, or using string patterns with the assistance of a few [tidyselect helper functions](https://www.rdocumentation.org/packages/dplyr/versions/0.5.0/topics/select_helpers) such as `contains()`, `starts_with()`, and `ends_with()`.
 
@@ -65,7 +65,7 @@ df <- starwars #assign the star wars data frame (imported when dplyr is loaded) 
 
 glimpse(df)
 
-#in base R, you would extract columns using either [, "names"] or [["name]], or $name
+#in base R, you would extract columns using either [, "name"] or [["name"]], or $name
 df[, "name"] #[] returns another data frame
 
 head(df[["name"]]) #[[]] returns a 1 dimensional vector. head() just shows the 1st 6 values
@@ -282,8 +282,9 @@ df2 <- select(df, name, height, mass) #extract columns of interest
 df3 <- mutate(df2,
        height_in_m  = height/100, #convert height from cm to m, store in new column "height_in_m"
        bmi = mass/(height_in_m^2), #add a column called bmi for the calculated body mass index of each character
-       bmi = round(bmi, 1)) #round it to one significant digit/decimal place & assign back to the same name
+       bmi = signif(bmi, 1)) #round it to one significant digit/decimal place & assign back to the same name.
 df3
+
 # assigning a modified variable to the same name overwrites/modifies the column
 
 # note in the above mutate statement I created a new variable then used it in the same function call. 
@@ -296,7 +297,7 @@ df2$height_in_m <- df2$height/100
 
 df2$bmi <- df2$mass/(df2$height_in_m^2)
 
-df2$bmi <- round(df2$bmi, 1)
+df2$bmi <- signif(df2$bmi, 1)
   
 all.equal(df2, df3)
 
@@ -311,7 +312,7 @@ all.equal(df2, df3)
 transmute(df2,
        height_in_m  = height/100, #convert height from cm to m, store in new column "height_in_m"
        bmi = mass/(height_in_m^2), #add a column called bmi for the calculated body mass index of each character
-       bmi = round(bmi, 1))
+       bmi = signif(bmi, 1))
 
 
 ```
@@ -329,7 +330,7 @@ A common use of mutate (or transmute) is to encode a new variable (or overwrite 
 
 if_else(df$height > 180, #part 1. logical test
         "tall", #part 2. value if TRUE
-        "short") #part 1. value if FALSE (should be same classs as the value if TRUE)
+        "short") #part 3. value if FALSE (should be same class as the value if TRUE)
 
 # use mutate to add it to an existing data frame
 
@@ -474,10 +475,12 @@ class(ungrouped_data)
 
 # Chaining Functions with the **pipe operator (%>%)**
 
-Thanks to the [magrittr](https://github.com/tidyverse/magrittr) package, you can use the pipe operator, "%>%", which allows you to apply a series of functions to an object using easily readable code without requiring you to save intermediate objects. 
+Thanks to the [magrittr](https://github.com/tidyverse/magrittr) package, you can use the pipe operator, "%>%", which allows you to apply a series of functions to an object using easily readable code without requiring you to save intermediate objects.
+
 Note that you don't have to load the magrittr package in a separate call to the library() function since the pipe operator is imported from magrittr automatically when you load the dplyr package.
 
 The pipe operator takes the object on the left and passes it to the first argument of the function to the right. Functions in dplyr and other tidyverse packages take data as the 1st argument. Those function which output the same type of object that they accept as inputs (i.e. the data argument) can be chained using the "%>%" quite easily.  
+
 For example,
 
 ```{r, eval = T, cache = TRUE}
@@ -545,6 +548,20 @@ identical(sorted_mass_by_sw_species_chained, sorted_mass_by_sw_species_unchained
 # note: the keyboard shortcut for %>% is ctrl + shift + M (at least on Windows machines)
 
 ```
+
+We've seen that the default behaviour of `%>%` is to pass the output of the left hand side (LHS) to the 1st argument of the right hand side (RHS), i.e.
+
+`x %>% f(y)` is equivalent to `f(x, y)`
+
+This is great if you're working with tidyverse functions that accept a data frame as the 1st argument, but what if you want to pass the LHS output to another argument or position in the function on the RHS (e.g. functions with data arguments in other positions)? 
+
+`%>%` enables you to do this by automatically assigning the LHS output to the special value "`.`". To change the argument you want to assign the LHS output to, you just have to set that argument to "`.`", e.g.
+
+`x %>% f(y)` is equivalent to `x %>% f(., y)` and
+
+`y %>% f(x, .)` is equivalent to `f(x, y)` and
+
+`z %>% f(x, y, .)` is equivalent to `f(x, y, z)`
 
 
 # Navigation
