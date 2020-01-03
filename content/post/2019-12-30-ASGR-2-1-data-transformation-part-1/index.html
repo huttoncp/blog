@@ -63,7 +63,7 @@ output:
 </div>
 <div id="select" class="section level1">
 <h1><span class="header-section-number">3</span> <strong>select()</strong></h1>
-<p><code>select()</code> is the one of the dplyr functions you can use for subsetting. <code>select()</code> lets you extract a subset of <strong>columns</strong> from a data frame.</p>
+<p><code>select()</code> is one of the dplyr functions you can use for subsetting. <code>select()</code> lets you extract a subset of <strong>columns</strong> from a data frame.</p>
 <p>Columns may be specified using indices, names, or using string patterns with the assistance of a few <a href="https://www.rdocumentation.org/packages/dplyr/versions/0.5.0/topics/select_helpers">tidyselect helper functions</a> such as <code>contains()</code>, <code>starts_with()</code>, and <code>ends_with()</code>.</p>
 <pre class="r"><code>library(dplyr) #load the dplyr package with the library function.
 #the dplyr package will be used throughout this tutorial so make sure it is
@@ -89,7 +89,7 @@ glimpse(df)</code></pre>
 ## $ films      &lt;list&gt; [&lt;&quot;Revenge of the Sith&quot;, &quot;Return of the Jedi&quot;, &quot;The Emp...
 ## $ vehicles   &lt;list&gt; [&lt;&quot;Snowspeeder&quot;, &quot;Imperial Speeder Bike&quot;&gt;, &lt;&gt;, &lt;&gt;, &lt;&gt;, ...
 ## $ starships  &lt;list&gt; [&lt;&quot;X-wing&quot;, &quot;Imperial shuttle&quot;&gt;, &lt;&gt;, &lt;&gt;, &quot;TIE Advanced ...</code></pre>
-<pre class="r"><code>#in base R, you would extract columns using either [, &quot;names&quot;] or [[&quot;name]], or $name
+<pre class="r"><code>#in base R, you would extract columns using either [, &quot;name&quot;] or [[&quot;name&quot;]], or $name
 df[, &quot;name&quot;] #[] returns another data frame</code></pre>
 <pre><code>## # A tibble: 87 x 1
 ##    name              
@@ -575,21 +575,21 @@ df2 &lt;- select(df, name, height, mass) #extract columns of interest
 df3 &lt;- mutate(df2,
        height_in_m  = height/100, #convert height from cm to m, store in new column &quot;height_in_m&quot;
        bmi = mass/(height_in_m^2), #add a column called bmi for the calculated body mass index of each character
-       bmi = round(bmi, 1)) #round it to one significant digit/decimal place &amp; assign back to the same name
+       bmi = signif(bmi, 1)) #round it to one significant digit/decimal place &amp; assign back to the same name.
 df3</code></pre>
 <pre><code>## # A tibble: 87 x 5
 ##    name               height  mass height_in_m   bmi
 ##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;
-##  1 Luke Skywalker        172    77        1.72  26  
-##  2 C-3PO                 167    75        1.67  26.9
-##  3 R2-D2                  96    32        0.96  34.7
-##  4 Darth Vader           202   136        2.02  33.3
-##  5 Leia Organa           150    49        1.5   21.8
-##  6 Owen Lars             178   120        1.78  37.9
-##  7 Beru Whitesun lars    165    75        1.65  27.5
-##  8 R5-D4                  97    32        0.97  34  
-##  9 Biggs Darklighter     183    84        1.83  25.1
-## 10 Obi-Wan Kenobi        182    77        1.82  23.2
+##  1 Luke Skywalker        172    77        1.72    30
+##  2 C-3PO                 167    75        1.67    30
+##  3 R2-D2                  96    32        0.96    30
+##  4 Darth Vader           202   136        2.02    30
+##  5 Leia Organa           150    49        1.5     20
+##  6 Owen Lars             178   120        1.78    40
+##  7 Beru Whitesun lars    165    75        1.65    30
+##  8 R5-D4                  97    32        0.97    30
+##  9 Biggs Darklighter     183    84        1.83    30
+## 10 Obi-Wan Kenobi        182    77        1.82    20
 ## # ... with 77 more rows</code></pre>
 <pre class="r"><code># assigning a modified variable to the same name overwrites/modifies the column
 
@@ -603,7 +603,7 @@ df2$height_in_m &lt;- df2$height/100
 
 df2$bmi &lt;- df2$mass/(df2$height_in_m^2)
 
-df2$bmi &lt;- round(df2$bmi, 1)
+df2$bmi &lt;- signif(df2$bmi, 1)
   
 all.equal(df2, df3)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
@@ -618,20 +618,20 @@ all.equal(df2, df3)</code></pre>
 transmute(df2,
        height_in_m  = height/100, #convert height from cm to m, store in new column &quot;height_in_m&quot;
        bmi = mass/(height_in_m^2), #add a column called bmi for the calculated body mass index of each character
-       bmi = round(bmi, 1))</code></pre>
+       bmi = signif(bmi, 1))</code></pre>
 <pre><code>## # A tibble: 87 x 2
 ##    height_in_m   bmi
 ##          &lt;dbl&gt; &lt;dbl&gt;
-##  1        1.72  26  
-##  2        1.67  26.9
-##  3        0.96  34.7
-##  4        2.02  33.3
-##  5        1.5   21.8
-##  6        1.78  37.9
-##  7        1.65  27.5
-##  8        0.97  34  
-##  9        1.83  25.1
-## 10        1.82  23.2
+##  1        1.72    30
+##  2        1.67    30
+##  3        0.96    30
+##  4        2.02    30
+##  5        1.5     20
+##  6        1.78    40
+##  7        1.65    30
+##  8        0.97    30
+##  9        1.83    30
+## 10        1.82    20
 ## # ... with 77 more rows</code></pre>
 <div id="recoding-or-creating-indicator-variables-using-if_else-case_when-or-recode" class="section level2">
 <h2><span class="header-section-number">5.1</span> Recoding or Creating Indicator Variables using <strong>if_else()</strong>, <strong>case_when()</strong>, or <strong>recode()</strong></h2>
@@ -642,7 +642,7 @@ transmute(df2,
 
 if_else(df$height &gt; 180, #part 1. logical test
         &quot;tall&quot;, #part 2. value if TRUE
-        &quot;short&quot;) #part 1. value if FALSE (should be same classs as the value if TRUE)</code></pre>
+        &quot;short&quot;) #part 3. value if FALSE (should be same class as the value if TRUE)</code></pre>
 <pre><code>##  [1] &quot;short&quot; &quot;short&quot; &quot;short&quot; &quot;tall&quot;  &quot;short&quot; &quot;short&quot; &quot;short&quot; &quot;short&quot; &quot;tall&quot; 
 ## [10] &quot;tall&quot;  &quot;tall&quot;  &quot;short&quot; &quot;tall&quot;  &quot;short&quot; &quot;short&quot; &quot;short&quot; &quot;short&quot; &quot;short&quot;
 ## [19] &quot;short&quot; &quot;short&quot; &quot;tall&quot;  &quot;tall&quot;  &quot;tall&quot;  &quot;short&quot; &quot;short&quot; &quot;short&quot; &quot;short&quot;
@@ -893,10 +893,10 @@ class(ungrouped_data)</code></pre>
 </div>
 <div id="chaining-functions-with-the-pipe-operator" class="section level1">
 <h1><span class="header-section-number">8</span> Chaining Functions with the <strong>pipe operator (%&gt;%)</strong></h1>
-<p>Thanks to the <a href="https://github.com/tidyverse/magrittr">magrittr</a> package, you can use the pipe operator, “%&gt;%”, which allows you to apply a series of functions to an object using easily readable code without requiring you to save intermediate objects.
-Note that you don’t have to load the magrittr package in a separate call to the library() function since the pipe operator is imported from magrittr automatically when you load the dplyr package.</p>
-<p>The pipe operator takes the object on the left and passes it to the first argument of the function to the right. Functions in dplyr and other tidyverse packages take data as the 1st argument. Those function which output the same type of object that they accept as inputs (i.e. the data argument) can be chained using the “%&gt;%” quite easily.<br />
-For example,</p>
+<p>Thanks to the <a href="https://github.com/tidyverse/magrittr">magrittr</a> package, you can use the pipe operator, “%&gt;%”, which allows you to apply a series of functions to an object using easily readable code without requiring you to save intermediate objects.</p>
+<p>Note that you don’t have to load the magrittr package in a separate call to the library() function since the pipe operator is imported from magrittr automatically when you load the dplyr package.</p>
+<p>The pipe operator takes the object on the left and passes it to the first argument of the function to the right. Functions in dplyr and other tidyverse packages take data as the 1st argument. Those function which output the same type of object that they accept as inputs (i.e. the data argument) can be chained using the “%&gt;%” quite easily.</p>
+<p>For example,</p>
 <pre class="r"><code># %&gt;% lets you turn this nested code (evaluated from the inside out)... 
 
 arrange(summarize(group_by(select(starwars, species, mass), species), 
@@ -997,6 +997,13 @@ rm(mass_by_sw_species)
 identical(sorted_mass_by_sw_species_chained, sorted_mass_by_sw_species_unchained) #the output is the same</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code># note: the keyboard shortcut for %&gt;% is ctrl + shift + M (at least on Windows machines)</code></pre>
+<p>We’ve seen that the default behaviour of <code>%&gt;%</code> is to pass the output of the left hand side (LHS) to the 1st argument of the right hand side (RHS), i.e.</p>
+<p><code>x %&gt;% f(y)</code> is equivalent to <code>f(x, y)</code></p>
+<p>This is great if you’re working with tidyverse functions that accept a data frame as the 1st argument, but what if you want to pass the LHS output to another argument or position in the function on the RHS (e.g. functions with data arguments in other positions)?</p>
+<p><code>%&gt;%</code> enables you to do this by automatically assigning the LHS output to the special value “<code>.</code>”. To change the argument you want to assign the LHS output to, you just have to set that argument to “<code>.</code>”, e.g.</p>
+<p><code>x %&gt;% f(y)</code> is equivalent to <code>x %&gt;% f(., y)</code> and</p>
+<p><code>y %&gt;% f(x, .)</code> is equivalent to <code>f(x, y)</code> and</p>
+<p><code>z %&gt;% f(x, y, .)</code> is equivalent to <code>f(x, y, z)</code></p>
 </div>
 <div id="navigation" class="section level1">
 <h1><span class="header-section-number">9</span> Navigation</h1>
