@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
-    <lastBuildDate>Mon, 30 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Jan 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>R</title>
       <link>/tags/r/</link>
-      <pubDate>Mon, 30 Dec 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 25 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>/tags/r/</guid>
       <description></description>
@@ -24,9 +24,63 @@
     <item>
       <title>R Basics</title>
       <link>/tags/r-basics/</link>
-      <pubDate>Mon, 30 Dec 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 25 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>/tags/r-basics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cognitive function</title>
+      <link>/tags/cognitive-function/</link>
+      <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/cognitive-function/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>concussion</title>
+      <link>/tags/concussion/</link>
+      <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/concussion/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>human studies</title>
+      <link>/tags/human-studies/</link>
+      <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/human-studies/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>machine learning</title>
+      <link>/tags/machine-learning/</link>
+      <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/machine-learning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>neuropsychology</title>
+      <link>/tags/neuropsychology/</link>
+      <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/neuropsychology/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>traumatic brain injury</title>
+      <link>/tags/traumatic-brain-injury/</link>
+      <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/traumatic-brain-injury/</guid>
       <description></description>
     </item>
     
@@ -63,15 +117,6 @@
       <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/behaviour/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>concussion</title>
-      <link>/tags/concussion/</link>
-      <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/concussion/</guid>
       <description></description>
     </item>
     

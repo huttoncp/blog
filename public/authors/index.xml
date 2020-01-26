@@ -7,24 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
-    <lastBuildDate>Tue, 06 Aug 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Jan 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/authors/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Bettio, L.</title>
-      <link>/authors/bettio-l./</link>
-      <pubDate>Tue, 06 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/authors/bettio-l./</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Christie, B.R.</title>
       <link>/authors/christie-b.r./</link>
-      <pubDate>Tue, 06 Aug 2019 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>/authors/christie-b.r./</guid>
       <description></description>
@@ -33,9 +24,45 @@
     <item>
       <title>Hutton, C.P.</title>
       <link>/authors/hutton-c.p./</link>
-      <pubDate>Tue, 06 Aug 2019 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>/authors/hutton-c.p./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Lysenko-Martin, M.R.</title>
+      <link>/authors/lysenko-martin-m.r./</link>
+      <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/lysenko-martin-m.r./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Snowden, T.</title>
+      <link>/authors/snowden-t./</link>
+      <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/snowden-t./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sparks, T.</title>
+      <link>/authors/sparks-t./</link>
+      <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/sparks-t./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Bettio, L.</title>
+      <link>/authors/bettio-l./</link>
+      <pubDate>Tue, 06 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/bettio-l./</guid>
       <description></description>
     </item>
     

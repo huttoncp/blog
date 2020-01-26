@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
-    <lastBuildDate>Mon, 30 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Jan 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/data-cleaning-and-transformation/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A Scientist&#39;s Guide to R: Step 2.1 Data Transformation - part 2</title>
+      <link>/post/2020-01-05-asgr-2-1-data-transformation-part-2/</link>
+      <pubDate>Sat, 25 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020-01-05-asgr-2-1-data-transformation-part-2/</guid>
+      <description>1 TL;DR2 Introduction2.1 “long” data, “wide” data, and “tidy” data3 pivot_longer()4 pivot_wider()5 unite()6 separate()7 Navigation8 Notes1 TL;DRIn the 5th post of the Scientist’s Guide to R series we explore using the tidyr package to reshape data. You’ll learn all about splitting and combining columns and how to do wide to long or long to wide transformations.</description>
+    </item>
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 2.1. Data Transformation - Part 1</title>

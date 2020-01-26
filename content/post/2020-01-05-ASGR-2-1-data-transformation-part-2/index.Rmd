@@ -1,0 +1,589 @@
+---
+title: 'A Scientist''s Guide to R: Step 2.1 Data Transformation - part 2'
+author: 'Craig Hutton'
+date: '2020-01-25'
+slug: 
+categories:
+  - R
+  - Reproducible Research
+  - Data Cleaning and Transformation
+tags:
+  - R
+  - R basics
+header:
+  image: ''
+  caption: ''
+  focal_point: ''
+output:
+  blogdown::html_page:
+    number_sections: true
+    toc: yes
+---
+
+
+# **TL;DR**
+
+In the 5th post of the [Scientist's Guide to R series](https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/) we explore using the [tidyr](https://tidyr.tidyverse.org/) package to reshape data. You'll learn all about splitting and combining columns and how to do wide to long or long to wide transformations. 
+
+# **Introduction**
+
+In the 5th post of the [Scientist's Guide to R series](https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/) we explore using the [tidyr](https://tidyr.tidyverse.org/) package to reshape data. As you'll see, this is really helpful if you are working with repeated-measures data, which is pretty common these days.
+
+Specifically, we will be learning how to use 4 core functions of the [tidyr](https://tidyr.tidyverse.org/) package to:
+
+1. Perform "wide-to-long" transformations using [pivot_longer()](https://tidyr.tidyverse.org/reference/pivot_longer.html), converting multiple columns of the same measure into a single value column and associated key column.
+
+2. Spread a pair of value and key columns across multiple columns, AKA "long-to-wide" transformations, using [pivot_wider()](https://tidyr.tidyverse.org/reference/pivot_wider.html).
+
+3. Combine multiple columns into a single column using [unite()](https://tidyr.tidyverse.org/reference/unite.html).
+
+4. Perform the reverse operation to [separate()](https://tidyr.tidyverse.org/reference/separate.html) a complex column into multiple simple columns.
+
+Additional relevant functions that build on this foundation will also be covered where appropriate. If some of these terms don't mean very much to you now don't worry. Hopefully they will by the time you're done reading this post!
+
+In this post I will assume you know how to use the pipe operator (`%>%`), which I covered [here](https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#chaining-functions-with-the-pipe-operator).
+
+Getting repeated-measures data ready for analysis will be no trouble at all once you've mastered these functions.
+
+The examples below will make use of 2 datasets provided by R packages: the gapminder life expectancy data from the [gapminder](https://www.rdocumentation.org/packages/gapminder/versions/0.3.0) package and the OBrienKaiser data from the carData package. Since carData is automatically also loaded with the [car](https://cran.r-project.org/web/packages/car/index.html) package which we will be using later in the series for regression diagnostics (car = **c**ompanion to **a**pplied **r**egression), we'll import the OBrienKaiser data indirectly via the car package. 
+
+These 2 datasets were chosen because they both contain repeated measurements. One, gapminder, is by default in the so-called "long" form. While the other, OBrienKaiser, is by default in the so-called "wide" form.
+
+Recall that we load a package using the `library()` function, which imports any data structures and functions from the package and makes them available for use in the current R session.
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+library(gapminder) #load the gapminder package which mostly just contains the gapminder dataset
+
+library(car) #load the car package with the associated OBrienKaiser data
+
+```
+
+Naturally the 1st thing you should do after importing any data is to examine its structure using either `str()` or `dplyr::glimpse()`, so that's what we'll do next. Data from packages also usually comes with helpful documentation you can view using ?data_object_name.
+
+```{r, eval = T, cache = TRUE}
+#since I prefer to use glimpse() over str() we'll also load the tidyverse
+#package collection (glimpse is included with both tibble and dplyr) which also
+#loads the tidyr package we will need later anyways. 
+#For now this gives us access to both the pipe operator and the glimpse function.
+
+library(tidyverse)
+
+gapminder %>% glimpse
+
+OBrienKaiser %>% glimpse
+
+```
+
+When working with data from an add-on package it is often also a good idea to work on a copy of it rather than overwriting/modifying it under the original name. Using a copy for experimental tranformations is recommended in general in case the transformation doesn't go quite as planned and you want to change it or recover the original data. To recover data provided in a package if you have accidentally modified it you'd have to remove the object from the [global environment](https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/#the-global-environment) (deleting your custom copy of it but not the original version in the package) using the rm() function... which can be a bit confusing. Best to just work on a copy with a clearly different name. 
+
+The same recommendation applies to naming things in general. Try to use names that aren't already assigned to other objects or functions. If you're not sure if a name is in use or not, try to print it (just the name, enclosed in print() if you want) or look-up documentation for it with ?object or help(object).
+
+```{r, eval = T, cache = TRUE}
+#we'll save a copy of the gapminder data to gap_df (short for gapminder_dataframe)
+gap_df <- gapminder
+
+ob_df <- OBrienKaiser
+
+#now we can do whatever we want to gap_df or ob_df without affecting gapminder or OBrienKaiser
+
+#For the next section it helps to focus on just the names of the variables in each of these data frames
+names(gap_df)
+
+names(ob_df)
+```
+
+If you haven't see either of these datasets before I recommend reviewing the documentation for them, using:
+
+```{r, eval = F, cache = TRUE}
+
+?gapminder 
+
+#and
+
+?OBrienKaiser
+
+```
+
+Before reading on, try to answer the question: What is the main difference between the variable naming styles used by the authors of these two datasets?
+
+## **"long"** data, **"wide"** data, and **"tidy"** data
+
+From the glimpses we requested, we can see that the gapminder data contains 1,704 observations (rows) and 6 variables (columns), while the OBrienKaiser data has only 16 rows but 17 columns. Related to the question I posed above, note that gapminder has unique names for each variable and that most of the columns in OBrienKaiser have generic names with a string.number format. Why is this? 
+
+gapminder is an example of **"long"** data because each row represents a unique observation and each column represents a unique variable. This is the form that data needs to be in to do most statistical analyses and generate visualizations in R. Because each unique variable is a single column, each column has a unique name.
+
+OBrienKaiser is an example of **"wide"** data because each row represents a unique case or individual and all measures for these individuals are spread across multiple columns. Because several of the variables are spread across multiple columns, these have more generic names.
+
+This is the form that data typically needs to be in to do statstical analyses in other programs like SPSS, so you'll encounter it often if you're importing data directly from SPSS or working on Excel files produced by people who primarily work in SPSS or just Excel itself. 
+
+The term **"tidy"** data refers to the long form arrangement of data with the additional criterion that each type of observational unit is in a single table rather than being split across multiple tables. Data cleaning and "tidy-ness" are so germane to real world data analysis and data science that the tidyverse was named after them. If you want to conduct an analysis using data that are spread across multiple data frames or tables, my next blog post will show you how to combine them using a set of functions called joins.
+
+It won't always be so obvious, but now you know that even the names of a data frame's columns can tell you quite a bit about its structure.
+
+
+# **pivot_longer()**
+
+To make data longer so that we have all values of the same measure in a single column we can use the aptly named **pivot_longer()**, which is a newer version of the tidyr **gather()** function. Arguments we need to specify are:
+
+  1. **data** (or we can pipe the data in using the pipe operator)
+    
+  2. **cols**: the distributed columns we want to combine
+    
+  3. **names_to**: string name to use for the new character vector that keeps track
+  of which columns the values originally came from, sometimes this is called the
+  "key" column. Values of the "names_to" are by default the names of the
+  combined columns
+    
+  4. **values_to**: string name to use for the new column that will contain all of
+  the combined values
+
+For example, this is how you could combine all of the distributed measurement columns from the ob_df data frame into a single tidy key-value column pair. 
+
+```{r, eval = T, cache = TRUE}
+#first we'll add a column to keep track of the subject ID since the OBrienKaiser
+#data doesn't already have one. you could do this either using dplyr's mutate() function,
+#or using the shortcut function rowid_to_column, from the tidyverse package "tibble"
+
+ob_df_v2 <- ob_df %>% 
+  rowid_to_column("subject_id") #subject ID column values take on the row ID values
+#by default this adds the column to the left side of the data frame (in the 1st position)
+
+#alternative using mutate
+ob_df_v2b <- ob_df %>% 
+  mutate(subject_id = c(1:nrow(ob_df))) %>% #same end result
+  # subject id becomes the numbers: [1 to the number of total rows]. 
+  # By default, this adds the column to the end, so we will rearrange it using
+  # select() with tidyselect helper everything()
+  select(subject_id, everything()) #this selects the new subject_id column, then everything else
+
+identical(ob_df_v2, ob_df_v2b) #check if the objects are identical
+
+#in this case both methods are equivalent so rowid_to_column() is preferred, but
+#if you want to assign something else as subject ids, then mutate() would be
+#better. Rearranging with select() is optional of course. I typically prefer to
+#work with subject ID in the 1st position though
+
+# next we make the data longer using pivot_longer()
+
+ob_long <- pivot_longer(data = ob_df_v2, 
+             cols = pre.1:fup.5, 
+             names_to = "session",
+             values_to = "score"
+             )
+
+ob_long %>% glimpse 
+
+#now we have a total of 256 observations for our 16 subjects/cases, score
+#measurements are all in a single column that we've called "score", and the data
+#collection session is coded using the session variable (the values of which
+#used to be the names of the original columns).
+
+```
+
+As you can see, pooling a single measure is pretty easy, but what if we want to assign multiple sets of measures to different columns, like the pre, post, and fup components of the ob_df_v2 data frame (e.g. if these represented different types of measurements on distinct scales like height, weight, and temperature). This requires an extra step and adjusting our arguments a bit, but **pivot_longer()** makes this pretty easy as well. 
+
+The main requirements are:
+
+  1. A consistent and unique string pattern that can be used to determine
+  which columns of values belong together and what to use as the values of the key colunn
+    
+  2. using the special <span style="color:green">".value"</span> string as part of the **names_to** argument and
+  the names_sep argument instead of using **values_to**
+
+*In the lucky event that your column names already have a consistent pattern in them, then you can just make use of that pattern and skip to step 2.* Otherwise it may be a good idea to create one using either the `dplyr::rename()` function (if you only have to modify a few names), or using some string manipulation functions from the [stringr](https://stringr.tidyverse.org/) tidyverse package. This section will serve as a preview of the sort of monotony that stringr and regular expressions can free you from, which will be expanded upon in a future post covering stringr. 
+
+Applied to our ob_df_v2 dataset:
+
+```{r, eval = T, cache = TRUE}
+# step 1. consistent pattern across the set of value columns ----
+ 
+names(ob_df_v2)
+
+# Looking at the names again, we have a mere period "." as a consistent pattern.
+# while you could use this to flag the columns you want to pivot, something to
+# consider is that "." is also a special character used in regular expressions
+# (a string pattern matching system) to represent "any character", so we would
+# have to preface it with one or more of another special character combination,
+# in this case "\\", to "escape it" for string pattern matching functions to
+# interpret it as a literal "." instead of "any character". This is usually done
+# as part of a regular expression made up of combinations of special characters.
+
+# Don't worry if this strange business of escaping characters and regular
+# expressions seems confusing at this point, we'll learn about it in much more
+# detail in a later post.
+
+# For now, you could subset the data and rename the columns, e.g.
+
+ob_df_v2a <- ob_df_v2 %>%
+  rename(pretest1 = pre.1, #rename("new_name" = "old_name")
+         pretest2 = pre.2,
+         pretest3 = pre.3,
+         pretest4 = pre.4,
+         pretest5 = pre.5,
+         posttest1 = post.1, 
+         posttest2 = post.2,
+         posttest3 = post.3,
+         posttest4 = post.4,
+         posttest5 = post.5,
+         fuptest1 = fup.1,
+         fuptest2 = fup.2,
+         fuptest3 = fup.3,
+         fuptest4 = fup.4,
+         fuptest5 = fup.5)
+
+ob_df_v2a
+
+# However, I'm sure you'll appreciate how tedious this could get for more than a
+# handful of columns. A better solution is to use a combination of the names()
+# and stringr::str_replace_all() functions
+
+ob_df_v2b <- ob_df_v2 #create a copy (optional)
+
+names(ob_df_v2b) <- str_replace_all( #use stringr::str_replace_all() to replace the names
+                                    
+                                    names(ob_df_v2b), #character vector to replace matching values in
+                                    
+                                    "pre.", #string component pattern to be matched
+                                    
+                                    #here the "." doesn't matter because I've also
+                                    #specified the rest of the start of the
+                                    #string up to the "."
+                                    
+                                    "pretest" #string to replace it with
+                                    ) 
+
+names(ob_df_v2b) <- str_replace_all(names(ob_df_v2b), "post.", "posttest")
+
+names(ob_df_v2b) <- str_replace_all(names(ob_df_v2b), "fup.", "fuptest") 
+
+identical(ob_df_v2a, ob_df_v2b)
+
+#a bit better... but still inefficient. The obvious third option is to just
+#escape the "." using "\\.":
+
+ob_df_v2c <- ob_df_v2 
+names(ob_df_v2c) <- str_replace_all(names(ob_df_v2), 
+                                    "\\.", #anything with a name that contains a period
+                                    "test")
+
+identical(ob_df_v2a, ob_df_v2c)
+
+# Fortunately pivot_longer() incorporates the same string matching/detection
+# behaviour of str_replace_all(), so you can actually just pass "\\." directly
+# to the cols and names_sep arguments, as in the 2nd and 3rd examples for step 2
+# below...
+
+# step 2. use a string patten to pivot columns ----
+
+#with one of the renamed versions of ob_df_v2
+ob_long2 <- ob_df_v2c %>%
+  pivot_longer(cols = contains("test"), #select columns with names containing a pattern
+               
+               names_to = c(".value", 
+                            #special string that tells pivot_longer to use names
+                            #on each side of the separator pattern
+
+                            "session"), #name of the key column to use for the names
+               
+               names_sep = "test" #separator to use
+               )
+
+ob_long2
+
+#directly with a regular expression using the matches() tidyselect helper function
+ob_long3 <- ob_df_v2 %>%
+  pivot_longer(cols = matches("\\."), #select columns with names matching a regular expression pattern
+               names_to = c(".value", "session"), #special ".value" indictor and name of the key column to use for the names
+               names_sep = "\\.") #separator to use
+               
+
+ob_long3
+
+identical(ob_long2, ob_long3)
+
+
+#directly using the even easier contains() tidyselect helper function that
+#absolves you of the need to worry about special characters/regular expressions
+
+ob_long4 <- ob_df_v2 %>%
+  pivot_longer(cols = contains("."), #select columns with names containing a literal string pattern
+               
+               names_to = c(".value", "session"), #special ".value" indictor and name of the key column to use for the names
+               
+               names_sep = "\\." #separator to use. 
+               #names_sep unfortunately requires the escaping of special
+               #characters if you want them matched literally. Unfortunately
+               #contains() doesnt work in the names_sep argument.
+               )
+
+identical(ob_long3, ob_long4)
+
+```
+
+Now you know something about making data longer as well as few helpful bits about using string patterns to change variable names. 
+
+The preceeding use case represented a situation when you have multiple value columns that you want to aggregate separately, yielding one value column for each separate set. This could occur if data on multiple measures (e.g. height & weight) were collected from the same subjects on multiple occassions. An alternative situation you might encounter (albeit probably less often) occurs when the values of a single measure of interest are spread across numerous columns with complex names consisting of components that specify the measurement group in combination. The simplest example of this might be something like a column naming format for daily temperature values of "d2019-01-23", "d2019-02-01", etc., being used to represent dates and you are interested in splitting the key column into its year, month, and day components (yyyy-mm-dd) and putting the values all in a single "temperature" column.
+
+Doing this with `pivot_longer()` requires making use of the `names_pattern` argument (instead of `names_sep`) with a more complex regular expression that determines where to break up all of the name component. This is accomplished by enclosing each component with parentheses, e.g. 
+
+`names_pattern = "(component_1)(component_2)(component_3)"`
+
+To demonstrate this one we'll use the WHO tuberculosis report data from the tidyr package to replicate the example of this use case from the `pivot_longer()` documentation, with minor modifications to simplify it a bit.  This dataset is automatically imported when the tidyr package is loaded so you can use it by calling the name "who"
+
+```{r, eval = T, cache = TRUE}
+
+#?who #uncomment and run this to check the documentation for the who dataset
+
+names(who) #check the names of the columns
+
+```
+
+Note from the documentation that many of the columns have a name with 3 components: 2 separated by an underscore and an "m" or "f" male/female indicator. These components represent three different variables that collectively specify the type of case and the values of these columns are all counts of tuberculosis cases. According to the documentation for the who data, the newrel* columns are part of this scheme as well, but they only have a single underscore.
+
+
+```{r, eval = T, cache = TRUE}
+# we can standardize the newrel* column names to match the structure of the
+# other new* columns using str_replace_all() to simplify subsequent pattern
+# matching in pivot_longer()
+
+who2 <- who
+
+names(who2) <- str_replace_all(names(who2), "newrel", "new_rel")
+
+
+who_long <- who2 %>% pivot_longer(
+  
+  cols = new_sp_m014:new_rel_f65,
+  
+  names_to = c("diagnosis", "gender", "age"),
+  
+  names_pattern = "new_(.*)_(.)(.*)", 
+  # pattern to be matched in this case is 
+  # "new_(component 1)_(component2[m/f])_(component3)", 
+  # where component 1 is everything between the 1st and 2nd underscore,
+  # component 2 is the lowercase letter "m" or "f", and component 3 is
+  # everything after component 2.
+  # 
+  # note: "*" is used to represent the repetition of the preceeding chraracter
+  # (in this case "." for "any character") any number of times in a regular
+  # expresion
+  
+  values_to = "count")
+
+who_long %>% 
+  arrange(desc(count)) # arrange by count in descending order
+
+# now all of the values (i.e. counts) are in a single column and our distinct
+# grouping variables are specified using a tidy set of 3 simple key columns
+# instead of one complicated one
+
+# see the documentation for the who data if you're wondering why some values of
+# age are so high
+```
+
+# **pivot_wider()**
+
+**pivot_wider()** makes a data frame wider by spliting one or more value columns into a larger number of value columns, with names assigned according to the levels of key columns specified using the `names_from` argument. Here we'll use it to make the gapminder data wider by putting the annual life expectancy column, "lifeExp" into separate columns for each year (named using the values of the key column "year").
+
+Arguments to specify for the simple case of spreading a single key-value column pair are:
+
+  1. **data**
+    
+  2. **id_cols**: the columns that together uniquely identify each observation. by
+  default this is all columns 
+    
+  3. **names_from**: the key column(s) to pull the names from for the new set of
+  replacement columns
+    
+  4. **values_from**: the value column(s) to pull values from for the new set of
+  replacement columns
+
+
+You might want to do this as a temporary transformation to facilitate the construction of new variables derived from a combination of the more widely distributed value columns that result from the application of `pivot_wider()` with `mutate()`, or if you plan to export the data in wide from to share with someone working in other statistical software programs which require wide data.
+
+```{r, eval = T, cache = TRUE}
+
+gap_df %>% 
+    pivot_wider(id_cols = c(country, continent),  
+                names_from = year, values_from = lifeExp)
+
+
+#now all the lifeExp values for each year are in separate columns
+
+```
+
+We can also reverse the first ob_df_v2 lengthening transformation we did by using the `names_sep` argument again. However, you should be aware that `names_sep` behaves differently for `pivot_wider()` than it did for `pivot_longer()`. Specifically, since we're adding "." to the names in `pivot_wider()` instead of searching for it (as we were in `pivot_longer()`), the `names_sep` argument text is read literally for `pivot_wider()` rather than read like a regular expression for pattern matching like it was with `pivor_longer()`. In most cases you can use the general rules: 
+
+  <span style="color:green">adding/inserting text = "literal text"</span> where
+  you don't need to worry about special characters
+  
+  <span style="color:green">pattern searching/matching = "regular
+  expresison"</span> where you do need to worry about special characters
+  
+Some functions behave differently, but we'll reserve that discussion for another post.
+
+```{r, eval = T, cache = TRUE}
+
+ob_long %>% glimpse
+
+ob_wide_again <- pivot_wider(data = ob_long, 
+                             names_from = "session",
+                             values_from = "score",
+                             names_sep = ".")
+                            
+
+ob_wide_again %>% glimpse
+
+all.equal(ob_df_v2, ob_wide_again, check.attributes = F) 
+# In case you're wondering why I didn't use identical()... all.equal with
+# check.atributes = F checks equality of the contents but not attributes of the
+# objects. In this case ob_df_v2 is not a tibble (it's just a data frame) but
+# ob_wide_again is a tibble and a data frame, so the "class" attributes of the
+# objects are different, but the contents are the same.
+
+```
+
+...or the 2nd transformation with multiple distinct value columns... just specify them all as a character vector in the values_from argument
+
+```{r, eval = T, cache = TRUE}
+
+ob_long2 %>% glimpse
+
+ob_wide_again2 <- ob_long2 %>% 
+  pivot_wider(names_from = "session",
+              values_from = c("pre", "post", "fup"),
+              names_sep = ".")
+
+all.equal(ob_df_v2, ob_wide_again2, check.attributes = F)
+
+
+```
+
+...or the who2 dataset lengthening transformation by passing a vector with the key column names to the `names_from` argument and the original starting "new_" portion to the `names_prefix` argument
+
+```{r, eval = T, cache = TRUE}
+
+who_long %>% glimpse
+
+who2_wide_again <- who_long %>% 
+  pivot_wider(names_from = c("diagnosis", "gender", "age"),
+              values_from = c("count"),
+              names_prefix = "new_",
+              names_sep = c("_")
+              )
+
+#remove the extra underscore that was not present between the 2nd and 3rd
+#components of the original names
+
+names(who2_wide_again) <- str_replace_all(names(who2_wide_again), "m_", "m")
+names(who2_wide_again) <- str_replace_all(names(who2_wide_again), "f_", "f")
+
+all.equal(who2, who2_wide_again, check.attributes = F)
+
+```
+
+Next we move on to `unite()` and `separate()` which are specialized `tidyr` functions for selectively reshaping sets of columns without altering the rest of the manipulated data frame.
+
+# **unite()**
+
+`unite()` allows you to merge 2 or more columns into a single column without changing the length of the data frame. You typically specify the following arguments:
+
+  1. **data**
+    
+  2. **col**: the name of the new column containing the values of the merged columns
+    
+  3. **...** : a selection of columns to unite, or if unspecified, all columns will
+  be united. Follows similar rules to the ... argument of the select() function.
+    
+  4. **sep**: string to use to demarcate the component values of the united column
+    
+  5. **remove**: set this to FALSE if you want to retain the original columns, leave
+  it as the default value of TRUE if you want to drop them.
+
+For example, we could combine the country and continent columns of the gapminder data frame copy gap_df:
+
+```{r, eval = T, cache = TRUE}
+#drop the original columns
+united_gap <- gap_df %>% 
+  unite(col = "country_continent",
+        country, continent,
+        sep = ";") #the default separator is "_"
+united_gap
+
+#keep them
+gap_df %>% 
+  unite(col = "country_continent",
+        country, continent,
+        sep = ";",
+        remove = FALSE) 
+```
+
+
+# **separate()**
+
+`separate()` does the opposite of `unite()`; it splits the values of a column and distributes them across multiple columns based on a separator string pattern. It also does not affect the length of the data frame. Arguments you'll use most often are:
+
+  1. **data**
+    
+  2. **col**: the name of the column you want to separate into pieces
+    
+  3. **into**: a vector of names for the new columns. `NA` can be used to omit component columns
+    
+  4. **sep**: the string pattern to use to determine where to split the values.
+    `sep` also accepts an integer for position-based splitting
+  
+  5. **remove**: drops the original complex column
+    
+  6. **convert**: if TRUE, re-evaluates and assigns appropriate classes to the new
+    columns based on the type of their contents after splitting has occurred.
+
+Here we'll use `separate()` to reverse what we just did with `unite()`
+
+```{r, eval = T, cache = TRUE}
+
+gap_df_separated <- united_gap %>% 
+  separate(col = "country_continent",
+           into = c("country", "continent"),
+           sep = ";") %>% 
+  #one thing separate() won't do is convert strings to factors for you (the
+  #original variables were factors), so we'll take of that using dplyr::mutate()
+  mutate(country = as.factor(country), 
+         continent = as.factor(continent))
+
+gap_df_separated
+
+identical(gap_df, gap_df_separated)
+
+#keep the complex column
+
+united_gap %>% 
+  separate(col = "country_continent",
+           into = c("country", "continent"),
+           sep = ";",
+           remove = FALSE) 
+
+#drop one of the new columns using NA
+
+united_gap %>% 
+  separate(col = "country_continent",
+           into = c("country", NA),
+           sep = ";") 
+
+
+```
+
+
+Now just practice these operations a few times with your own data and reshaping data to make it *tidyr* (pun intended) should be a breeze! 
+
+# Navigation
+
+Click [here](https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/) to go back to the previous post. A link to the next one (data transformation - part 3 - joining data with dplyr) will be added as soon as I have time to write it.
+
+# Notes
+
+  * You can learn more about tidy data [here](https://r4ds.had.co.nz/tidy-data.html) and  [here](https://www.jstatsoft.org/article/view/v059i10).
+    
+  * If you want to get head start on learning about regular expressions and string manipulation, check [this](https://stringr.tidyverse.org/articles/regular-expressions.html) out.
+
+
+Thank you for visiting my blog. I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.
