@@ -18,25 +18,37 @@ subtitle = ""
   icon_pack = "fas"
   name = "Scientific Research"
   description = "10+ years experience"
+
+[[feature]]
+  icon = "user-tie"
+  icon_pack = "fas"
+  name = "Project Management"
+  description = "7 years experience"
+  
+[[feature]]
+  icon = "user-graduate"
+  icon_pack = "fas"
+  name = "Teaching"
+  description = "6 years experience"
   
 [[feature]]
   icon = "chart-line"
   icon_pack = "fas"
-  name = "Statistical Data Analysis"
+  name = "Applied Statistics"
   description = "8 years experience" 
   
 [[feature]]
   icon = "r-project"
   icon_pack = "fab"
   name = "R"
-  description = "6 years experience"
+  description = "7 years experience"
   
 [[feature]]
   icon = "network-wired"
   icon_pack = "fas"
   name = "Machine Learning"
-  description = "3 years experience"
-  
+  description = "4 years experience"
+
 [[feature]]
   icon = "chart-bar"
   icon_pack = "fas"
@@ -44,16 +56,16 @@ subtitle = ""
   description = "3 years experience"
 
 [[feature]]
-  icon = "user-tie"
-  icon_pack = "fas"
-  name = "Project Management"
-  description = "6 years experience"
-  
+  icon = "python"
+  icon_pack = "fab"
+  name = "Python"
+  description = "1 year experience"
+
 [[feature]]
-  icon = "user-graduate"
+  icon = "laptop-code"
   icon_pack = "fas"
-  name = "Teaching"
-  description = "5.5 years experience"
+  name = "Software Development"
+  description = "9 months experience"
 
 [[feature]]
   icon = "table"
@@ -71,6 +83,6 @@ subtitle = ""
   icon = "file-powerpoint"
   icon_pack = "far"
   name = "Microsoft PowerPoint"
-  description = "9 years experience"
+  description = "10 years experience"
 
 +++
