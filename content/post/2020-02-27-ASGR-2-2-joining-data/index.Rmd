@@ -23,7 +23,7 @@ output:
 
 # **TL;DR**
 
-Out in the real world you may often find yourself working with data from multiple sources.  It will probably be stored in separate files and you'll need to combine them prior before you can attempt to answer any of your research questions. This post will show you how you can combine data frames using another set of [dplyr](https://dplyr.tidyverse.org/reference/join.htm) functions called **joins**.
+Out in the real world you may often find yourself working with data from multiple sources.  It will probably be stored in separate files and you'll need to combine them before you can attempt to answer any of your research questions. This post will show you how you can combine data frames using another set of [dplyr](https://dplyr.tidyverse.org/reference/join.htm) functions called **joins**.
 
 
 # **Introduction**
