@@ -954,7 +954,7 @@
 <li>Statistical modelling, hypothesis testing, and machine learning with R &amp; SAS.</li>
 <li>In partnership with the BC Centre for Disease Control, I am leading a team of 4 researchers seeking to use unsupervised machine learning and statistical models to identify determinants of overdose risk among British Columbians struggling with opioid addiction.</li>
 <li>Using time-series regression models to evaluate the public service utilization and economic impacts of social assistance policies in collaboration with other policy analysts, economists, and administrators.</li>
-<li>Developing an R package to make data analysis easier and more accessible to scientific researchers.</li>
+<li>Developing an R package, <a href="https://github.com/bcgov/elucidate">&ldquo;elucidate&rdquo;</a>, to make data analysis easier for scientific researchers.</li>
 <li>Querying, modifying, and constructing relational databases using SQL and Git Bash.</li>
 <li>Cleaning, transforming, and processing high dimensional data (millions of rows) to facilitate reproducible analysis.</li>
 </ul></div>
@@ -1225,6 +1225,102 @@
 
     
 
+    
+      
+        
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+<div class="card-simple" itemscope itemtype="http://schema.org/BlogPosting">
+
+  
+    
+
+
+
+<meta content="2020-03-29 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2020-03-29 00:00:00 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>Mar 29, 2020</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    21 min read
+  </span>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <a href="/post/2020-02-27-asgr-2-2-joining-data/#disqus_thread"></a>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder"></i>
+    <a href="/categories/r/">R</a>, <a href="/categories/reproducible-research/">Reproducible Research</a>, <a href="/categories/data-cleaning-and-transformation/">Data Cleaning and Transformation</a></span>
+  
+
+  
+
+</div>
+
+  
+
+  
+  
+  
+  
+  <a href="/post/2020-02-27-asgr-2-2-joining-data/">
+      <img src="/post/2020-02-27-asgr-2-2-joining-data/featured_hu3922ef13c9d2627cf512baf19fc48074_35544_918x517_fill_q90_lanczos_smart1_2.png" class="article-banner" itemprop="image" alt="">
+  </a>
+  
+
+  <h3 class="article-title mb-1 mt-3" itemprop="name">
+    <a href="/post/2020-02-27-asgr-2-2-joining-data/" itemprop="url">A Scientist&#39;s Guide to R: Step 2.2 - Joining Data with dplyr</a>
+  </h3>
+
+  
+  <div class="article-style" itemprop="articleBody">
+    1 TL;DR2 Introduction2.1 setup3 left_join()4 right_join()5 full_join()6 inner_join()7 semi_join()8 anti_join()9 binding data frames using bind_rows() or bind_cols()9.1 add_row()10 joining 3 or more data frames11 merge()12 Navigation13 Notes1 TL;DROut in the real world you may often find yourself working with data from multiple sources. It will probably be stored in separate files, perhaps on a remote server, and you’ll need to combine them prior before you can attempt to answer any of your research questions.
+  </div>
+  
+
+  
+
+</div>
+
+      
     
       
         
@@ -2473,7 +2569,7 @@ As someone who has spent many years analyzing data using a variety of technologi
           
           
           
-          <a href="/tags/behaviour/" style="font-size:2.115299544597441rem">behaviour</a>
+          <a href="/tags/behaviour/" style="font-size:2.011104436167275rem">behaviour</a>
         
           
           
@@ -2483,12 +2579,12 @@ As someone who has spent many years analyzing data using a variety of technologi
           
           
           
-          <a href="/tags/concussion/" style="font-size:1.4576497722987207rem">concussion</a>
+          <a href="/tags/concussion/" style="font-size:1.4055522180836377rem">concussion</a>
         
           
           
           
-          <a href="/tags/data-analysis/" style="font-size:1.4576497722987207rem">Data Analysis</a>
+          <a href="/tags/data-analysis/" style="font-size:1.4055522180836377rem">Data Analysis</a>
         
           
           
@@ -2508,12 +2604,12 @@ As someone who has spent many years analyzing data using a variety of technologi
           
           
           
-          <a href="/tags/dietary-supplements/" style="font-size:1.4576497722987207rem">dietary supplements</a>
+          <a href="/tags/dietary-supplements/" style="font-size:1.4055522180836377rem">dietary supplements</a>
         
           
           
           
-          <a href="/tags/exercise/" style="font-size:1.4576497722987207rem">exercise</a>
+          <a href="/tags/exercise/" style="font-size:1.4055522180836377rem">exercise</a>
         
           
           
@@ -2583,12 +2679,12 @@ As someone who has spent many years analyzing data using a variety of technologi
           
           
           
-          <a href="/tags/r/" style="font-size:2.3270154828966763rem">R</a>
+          <a href="/tags/r/" style="font-size:2.365329775974723rem">R</a>
         
           
           
           
-          <a href="/tags/r-basics/" style="font-size:2.3270154828966763rem">R Basics</a>
+          <a href="/tags/r-basics/" style="font-size:2.365329775974723rem">R Basics</a>
         
           
           
@@ -2598,7 +2694,7 @@ As someone who has spent many years analyzing data using a variety of technologi
           
           
           
-          <a href="/tags/stress/" style="font-size:1.4576497722987207rem">stress</a>
+          <a href="/tags/stress/" style="font-size:1.4055522180836377rem">stress</a>
         
           
           

@@ -1,0 +1,419 @@
+---
+title: 'A Scientist''s Guide to R: Step 2.2 - Joining Data with dplyr'
+author: 'Craig Hutton'
+date: '2020-03-29'
+slug: 
+categories:
+  - R
+  - Reproducible Research
+  - Data Cleaning and Transformation
+tags:
+  - R
+  - R basics
+header:
+  image: ''
+  caption: ''
+  focal_point: ''
+output:
+  blogdown::html_page:
+    number_sections: true
+    toc: yes
+---
+
+
+# **TL;DR**
+
+Out in the real world you may often find yourself working with data from multiple sources.  It will probably be stored in separate files, perhaps on a remote server, and you'll need to combine them prior before you can attempt to answer any of your research questions. This post will show you how you can combine data frames using another set of [dplyr](https://dplyr.tidyverse.org/reference/join.htm) functions called **joins**.
+
+
+# **Introduction**
+
+The 6th post of the [Scientist's Guide to R series](https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/) is all about using joins to combine data. While tidy data organized nicely into a single `.csv` or `.xlsx` spreadsheet may be provided to you in science courses, in the real world you'll often collect data from multiple sources often only containing one or two similar "key" columns (like subject id #) and have to combine pieces of them to do anything interesting. This type of data is called **relational data**, since the datasets are *related* through common key column(s). [relational databases](https://www.ibm.com/cloud/learn/relational-databases) are how most data are stored in modern non-academic organizations.
+
+Fortunately, a package we're already familiar with from a couple of posts ago, [dplyr](https://dplyr.tidyverse.org/), also has a set of functions for combining data with functions called [**"joins"**](https://dplyr.tidyverse.org/reference/join.htm). For this post we will cover the 6 most common joins:
+
+1. `left_join(x, y)` which combines all columns in data frame `x` with those in data frame `y` but only retains rows from `x`.
+
+2. `right_join(x, y)` also keeps all columns but operates in the opposite direction, returning only rows from `y`.  
+
+3. `full_join(x, y)` combines all columns of x with all columns of y and retains all rows from both data frames.
+
+4. `inner_join(x, y)` combines all columns present in either `x` or `y` but only retains rows that are present in both data frames.
+
+5. `semi_join(x, y)` returns the columns from `x` only and *retains* rows of `x` that *are also* present in `y`
+
+6. `anti_join(x, y)` returns the columns from `x` only and *retains* rows of `x` that *are not* present in `y`.
+
+A nice design feature of these functions is that their names and behaviour were [inspired](https://r4ds.had.co.nz/relational-data.html) by analogous functions for joining data in the ubiquitous database management programming language ["Stuctured Query Language" (SQL)](https://en.wikipedia.org/wiki/SQL). Learning dplyr therefore also makes SQL easier to learn in the future, which will be helpful if you ever want to work with data for a [living](https://livebook.manning.com/book/build-your-career-in-data-science/chapter-1/32). 
+
+In case you find yourself working in an environment where only base R is available, we'll also cover how to join data the base R function [merge()](https://stat.ethz.ch/R-manual/R-devel/library/base/html/merge.html).
+
+Aside from specifying the data frames to be joined, one other thing we need to do is specify the **key column(s)** to be used for aligning the rows prior to joining the data. 
+
+Key columns are specified with the `by` argument, e.g. `inner_join(x, y, by = "subject_id")` adds columns of `y` to `x` for all rows where the values of the "subject_id" column (present in each data frame) match. If the name of the key column differs between the data frames, e.g. "subject_id" in `x` and "subj_id" in `y`, then you have to specify both names using `by = c("subject_id" = "subj_id")` so that the functions know which columns to compare.
+
+A nice feature of the `*_join()` functions is that if you don't specify the `by` argument they will assume that columns with the same names across `x` and `y` are key columns. This is very convenient when the columns with the same names in fact contain the same type of values.
+
+
+## setup
+
+To demonstrate the use of the join functions, I'll prepare a example of relational data using the [gapminder](https://cran.r-project.org/web/packages/gapminder/gapminder.pdf) dataset for the year 2007 aggregated to the continent level. In this representation of the data, the life expectancy, population, and gdpPercap are stored in separate data frames (called `life_df`, `pop_df`, and `gdp_df` respectively). This sort of arrangement is closer to what you might encouter if the gapminder data were stored in a relational database.
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+library(gapminder) #contains the gapminder data
+
+library(dplyr) #functions for manipulating and joining data
+
+life_df <- gapminder %>%
+  filter(year >= 1997 & year <= 2007) %>%
+  group_by(continent, year) %>% 
+  summarise(mean_life_expectancy = mean(lifeExp, na.rm = T)) %>% 
+  filter(continent != "Asia") %>% ungroup()
+
+pop_df <- gapminder %>% 
+  filter(year >= 1997 & year <= 2007) %>%
+  group_by(continent, year) %>% 
+  summarise(total_population = sum(pop, na.rm = T)) %>% 
+  filter(continent != "Europe") %>%
+  ungroup()
+
+
+gdp_df <- gapminder %>% 
+  filter(year == 1997 | year == 2007) %>%
+  group_by(continent, year) %>% 
+  summarise(total_gdpPercap = sum(gdpPercap, na.rm = T)) %>% 
+  ungroup()
+
+```
+
+Recall that we can print view the structure of each data frame using the glimpse function from dplyr
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+life_df %>% glimpse()
+
+pop_df %>% glimpse()
+
+gdp_df %>% glimpse()
+
+```
+
+or print them to the console using the names
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+life_df
+
+pop_df 
+
+gdp_df 
+
+```
+
+From these printouts we can tell that each data frame only has values for some of the continents and/or some of the years that are present in the full gapminder data. I've structured them this way so that it is easier to see how they are joined, as you'll soon find out. 
+
+# **left_join()**
+
+If we wanted to add the population data for each continent that appears in the life expectancy data frame, we could use `left_join()` and the key columns `continent` and `year`.
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+
+#all columns in x will be returned and 
+#all columns of y will be returned 
+#for rows in the key column that have values in y that match those in x
+
+left_join(x = life_df, 
+          y = pop_df, 
+          by = c("continent", "year"))
+
+# if the key columns have different names, you can tell the join function which
+# columns to use with the equality operator
+
+#1st I'll just rename the continent column for pedagogical purposes
+life_df_renamed <- rename(life_df, 
+                          cont = continent)
+
+names(life_df_renamed)
+
+left_join(x = life_df_renamed, 
+          y = pop_df, 
+          #since the continent column is now called "cont" in life_df, 
+          #we have to tell left_join which columns to match on.
+          #You'll get an error if you try by = c("continent", "year") this time
+          by = c("cont" = "continent",
+                 "year"))
+
+
+```
+
+Note that the total_population column from `pop_df` has been joined to `life_df` based on matching values in the key columns that appear in both data frames. Since we used a **left join** and Europe is listed as a continent in `life_df`, the row for it is returned in the joined data frame. However, because there are no population values for Europe in `pop_df`, these rows are filled with `NA`s under the total_population column.   
+
+
+# **right_join()**
+
+A **right join** is basically the same thing as a left_join but in the other direction, where the 1st data frame (x) is joined to the 2nd one (y), so if we wanted to add life expectancy and GDP per capita data we could either use: 
+
+i) a `right_join()` with `life_df` on the *left* side and `gdp_df` on the *right* side, or 
+
+ii) a `left_join()` with `gdp_df` on the *left* side and `life_df` on the *right* side
+
+... and get the same result with only the columns arranged differently...
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+#Also, since the key columns have the same names in each data frame we don't have to specify them
+#we can also pipe in the 1st dataframe using the pipe operator (`%>%`)
+
+rj <- life_df %>% right_join(gdp_df) 
+
+rj
+
+lj <- gdp_df %>% left_join(life_df)
+
+identical(rj, lj)
+
+identical(rj, select(lj, 1, 2, 4, 3))
+
+```
+
+This time there are missing values for Asia's mean life expectancy because Asia does not appear in the continent column of life_df (but it does appear in gdp_df), and no rows for the year 2002 because 2002 does not appear in the "year" key column of gdp_df.
+
+
+# **full_join()**
+
+After aligning rows by matches in the key column(s), a **full join** retains all rows that appear in `x` or `y`
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+life_df %>% 
+  full_join(gdp_df) %>% 
+  arrange(year, continent) #sort by year then by continent
+
+```
+
+The output now includes rows for the year 2002, which were present in `life_df` but not in `gdp_df`. It also includes rows for `Asia`, which are present in `gdp_df` but are missing from `life_df`. As you can see, a full join retains all of the data, filling in missing values where necessary.
+
+# **inner_join()**
+
+Often you may only want to work with rows which have matching entries in both data sources. In this case you could use `inner_join()`, which returns all rows in both `x` and `y` but only rows with that appear in the key columns of both data frames.
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+life_df %>% 
+  inner_join(gdp_df)
+
+```
+
+This time we only get data for 1997 and 2007 even though `life_df` has values for 2002 because `gdp_df` did not contain any data for 2002. We also don't get any data for Asia, which was present in `gdp_df`, because there was no data for Asia in `life_df`.
+
+
+# **semi_join()**
+
+So far we've been filterting rows based on matches in the key columns but extacting all columns from both data frames. The other two main dplyr join functions are available for situations where you only want to keep the columns of one data frame (`x`). 
+
+`semi_join(x, y)` filters the rows of `x` to retain only those that also appear in `y`
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+life_df %>% 
+  semi_join(pop_df)
+```
+
+
+This time only get the columns from life_df and we've dropped rows for Europe because Europe only appears under the conitnent key column for life_df and not pop_df. 
+
+
+# **anti_join()**
+
+In contrast to **semi joins**, **anti joins** return the rows `x` that do **not** appear in `y`. 
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+life_df %>% 
+  anti_join(pop_df)
+```
+
+As you can see, anti joins can be very useful if you want to know which rows are excluded due to mismatches in the key columns. Checking for consistencies and inconsistencies between data sources is an important part of the data cleaning process and can often help to uncover data entry or coding errors that should be fixed prior to conducting any analyses.
+
+# binding data frames using **bind_rows()** or **bind_cols()**
+
+If you have two data frames with the same columns, you can combine their rows using `dplyr::bind_rows()` or `rbind()`. You could use this to rearrange the rows of a the life_df data frame for example
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+rbind1 <- bind_rows(life_df[1:3,], #first take rows 1-3 of life_df
+          life_df[7:12,], #then add the 7th-12th rows below those
+          life_df[4:6,]) #then add the 4th-6th rows below that
+
+rbind1 
+
+#in base R, the rbind() function pretty much does the same thing
+
+rbind2 <- rbind(life_df[1:3,], #first take rows 1-3 of life_df
+          life_df[7:12,], #then add the 7th-12th rows below those
+          life_df[4:6,]) #then add the 4th-6th rows below that
+
+identical(rbind1, rbind2)
+
+```
+
+In practice, the most common reason to use bind_rows or rbind would be to add data for new cases to a data frame. e.g. say we decided to add the gapminder life expectancy data for Asia to life_df:
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+#first get the data for asia from the original gapminder dataset
+asia_life_exp <- gapminder %>%
+  filter(continent == "Asia",
+         between(year, 1997, 2007)) %>% #between is a shortcut for (column >= value & column <= value) 
+  group_by(continent, year) %>% 
+  summarise(mean_life_expectancy = mean(lifeExp, na.rm = T))
+
+#then add it to the top of life_df
+bind_rows(asia_life_exp, life_df) #or rbind(asia_life_exp, life_df)
+
+```
+
+If we instead had two data frames with the same cases/rows but different columns, we could combine them using `dplyr::bind_cols()` or `cbind()`. Using `cbind()` is one way that you can extract a subset columns and rearrange them if dplyr::select() is not available. 
+
+*Note that no key columns are checked for matching values so you need to be sure that the rows are arranged in the same order for each portion of the dataframe before binding the columns together.*
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+bind_cols(gapminder[, 1:3], gapminder[, 5:6], gapminder[, 4]) %>% 
+  head() #just print the top 6 rows
+
+identical(bind_cols(gapminder[, 1:3], gapminder[, 5:6], gapminder[, 4]),
+          as_tibble(cbind(gapminder[, 1:3], gapminder[, 5:6], gapminder[, 4]))) #the main difference is that bind_rows returns a tibble
+
+```
+
+`cbind()` (or the df$var syntax) is also a way to add multiple derived columns to a dataset if `dplyr::mutate()` is not available to you
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+
+#convert pop to millions
+pop_in_millions <- gapminder$pop/1e6 
+
+#round life exp
+rounded_lifeExp <- round(gapminder$lifeExp, 0)
+
+#add them to specifc positions in the gapminder data using cbind()
+
+cbind(gapminder[,1:4], 
+      rounded_lifeExp, #insert rounded_lifeExp right after lifeExp, which is the 4th column
+      gapminder[, 5], #5th column is pop
+      pop_in_millions, #insert pop_in_millions after the raw population values
+      gapminder[, 6]) %>% #last column was the 6th one in the original data
+      head() #just print the top 6 rows
+
+
+#or gapminder$pop_in_millions <- gapminder$pop/1e6
+#and gapminder$rounded_lifeExp <- round(gapminder$lifeExp, 0)
+#if you don't mind modifying the original data frame that is,,,
+
+#or course, columns and rows of a single dataframe or matrix can be rearranged
+#or duplicated in base R but just using the special `[]` operator that works for
+#data frames and matrices
+
+gapminder[, c(1:3, 6, 5)] #rearrange & subset columns
+
+gapminder[c(21:30, 1:10), ] #rearrange & subset rows
+
+```
+
+## **add_row()**
+
+If you only wanted to add a single row to a data frame, you can use `tibble::add_row()` and (recall that the tibble package is also part of the tidyverse). Lets say (hypothetically of course) we found out that the mean life expectancy for countries in Africa had gone up to 56 for the year 2012. We could add this row as follows:
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+updated_life_df <- life_df %>% 
+  tibble::add_row(continent = "Africa", year = 2012, mean_life_expectancy = 56) %>%  #specify values to be added using column = value syntax
+  arrange(continent, year)
+
+updated_life_df #now the value we added appears in the printout of the data frame
+```
+
+# joining 3 or more data frames
+
+Joining 3 or more data frames is also pretty easy using dplyr, just pipe the output of a join into another join. This is incredibly simple if they all have key columns with the same names. For example, if I wanted to combine `life_df`, `pop_df` and `gdp_df` and keep rows present in any of them, all I have to do is:
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+combined_data <- life_df %>% 
+  full_join(pop_df) %>% #life_df is inserted as the 1st argument i.e. data frame "x" of the full_join
+  full_join(gdp_df) #the output of the previous join is passed to the first argument of the second full_join
+
+combined_data #now it's all together, using what could be condensed into a single line of code
+
+# Alternatively, I could use full_join(life_df, pop_df) %>% full_join(gdp_df)
+
+# or full_join(full_join(life_df, pop_df), gdp_df)
+
+#This is another example of how nested function calls can be easier to read when
+#written in series with the pipe operator (`%>%`)
+
+```
+
+# **merge()**
+
+If you find yourself having to combine relational data but are working on a computer that only has base R and no admin priviledges to enable you to install dplyr, have no fear! You can use the `merge()` function from base R to perform **left joins**, **right joins**, **inner joins**, and **full joins**. 
+
+In addition to the `x` and `y` arguments that need to be used to specify the data frames to be joined and the `by` argument that indicates which key columns to use, the type of join is determined via the `all.x` and `all.y` arguments
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+# inner join/merge
+
+ij_merge <- merge(life_df, pop_df,
+            all.x = F, all.y = F) #the default merge/join is an inner join, in which all.x and all.y are both FALSE
+
+ij_dplyr <- inner_join(life_df, pop_df) %>% 
+  as.data.frame() #removes the tibble class which the merge result doesn't have
+
+all.equal(ij_merge, ij_dplyr)
+
+#full join/merge
+fj_merge <- merge(life_df, pop_df,
+            all.x = T, all.y = T) #set (all.x = T and all.y = T) or (all = T), to perform a full join
+
+fj_dplyr <- full_join(life_df, pop_df) %>% 
+  as.data.frame() %>%
+  arrange(continent)
+
+all.equal(fj_merge, fj_dplyr)
+
+#for a left join, all.x should be set to TRUE and all.y to FALSE
+lj_merge <- merge(life_df, pop_df,
+            all.x = T, all.y = F) 
+
+lj_dplyr <- left_join(life_df, pop_df) %>% as.data.frame()
+
+all.equal(lj_merge, lj_dplyr)
+
+
+#for a right join, all.x should be set to FALSE and all.y to TRUE
+rj_merge <- merge(life_df, pop_df,
+            all.x = F, all.y = T) 
+
+rj_dplyr <- right_join(life_df, pop_df) %>% as.data.frame()
+
+all.equal(rj_merge, rj_dplyr)
+
+
+
+```
+
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+
+
+```
+
+
+Why bother with dplyr joins if merge() can do so much? Simply because the dplyr code is easier to read and the dplyr functions are faster. Unfortunately, merge also can't handle semi joins or anti joins, so you'd have to do a bit more work to achieve the same results without dplyr.
+
+
+
+
+
+If you've followed along, congratulations! You now know how the basics of combining data frames in with dplyr joins and base R. Just practice these operations a few times on your own and joins will seem trivial!
+
+# Navigation
+
+Click [here](https://craig.rbind.io/post/2020-01-25-asgr-2-1-data-transformation-part-2/) to go back to the previous post on reshaping data with tidyr. A link to the next one will be added as soon as I have time to write it.
+
+# Notes
+
+  * You can learn more about joins and working with relational data and some (less commonly needed) *set operation functions* in `R` [here](https://r4ds.had.co.nz/relational-data.html) and `SQL` [here](https://www.w3schools.com/sql/default.asp). 
+
+  * The author of dplyr, [Hadley Wickham](http://hadley.nz/), also wrote the **dbplyr** package, which translates dplyr to SQL for you so you can actually query databases directly using dplyr code or even view the [SQL code translations](https://dbplyr.tidyverse.org/articles/sql-translation.html). You can learn more about dbplyr [here](https://dbplyr.tidyverse.org/). The code translation is really helpful if you're trying to learn SQL. 
+
+Thank you for visiting my blog. I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.

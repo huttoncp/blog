@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
-    <lastBuildDate>Sat, 25 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A Scientist&#39;s Guide to R: Step 2.2 - Joining Data with dplyr</title>
+      <link>/post/2020-02-27-asgr-2-2-joining-data/</link>
+      <pubDate>Sun, 29 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020-02-27-asgr-2-2-joining-data/</guid>
+      <description>1 TL;DR2 Introduction2.1 setup3 left_join()4 right_join()5 full_join()6 inner_join()7 semi_join()8 anti_join()9 binding data frames using bind_rows() or bind_cols()9.1 add_row()10 joining 3 or more data frames11 merge()12 Navigation13 Notes1 TL;DROut in the real world you may often find yourself working with data from multiple sources. It will probably be stored in separate files, perhaps on a remote server, and you’ll need to combine them prior before you can attempt to answer any of your research questions.</description>
+    </item>
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 2.1 Data Transformation - part 2</title>
