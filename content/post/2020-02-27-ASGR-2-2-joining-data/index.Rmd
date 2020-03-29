@@ -23,12 +23,12 @@ output:
 
 # **TL;DR**
 
-Out in the real world you may often find yourself working with data from multiple sources.  It will probably be stored in separate files, perhaps on a remote server, and you'll need to combine them prior before you can attempt to answer any of your research questions. This post will show you how you can combine data frames using another set of [dplyr](https://dplyr.tidyverse.org/reference/join.htm) functions called **joins**.
+Out in the real world you may often find yourself working with data from multiple sources.  It will probably be stored in separate files and you'll need to combine them prior before you can attempt to answer any of your research questions. This post will show you how you can combine data frames using another set of [dplyr](https://dplyr.tidyverse.org/reference/join.htm) functions called **joins**.
 
 
 # **Introduction**
 
-The 6th post of the [Scientist's Guide to R series](https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/) is all about using joins to combine data. While tidy data organized nicely into a single `.csv` or `.xlsx` spreadsheet may be provided to you in science courses, in the real world you'll often collect data from multiple sources often only containing one or two similar "key" columns (like subject id #) and have to combine pieces of them to do anything interesting. This type of data is called **relational data**, since the datasets are *related* through common key column(s). [relational databases](https://www.ibm.com/cloud/learn/relational-databases) are how most data are stored in modern non-academic organizations.
+The 6th post of the [Scientist's Guide to R series](https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/) is all about using joins to combine data. While tidy data organized nicely into a single `.csv` or `.xlsx` spreadsheet may be provided to you in courses, in the real world you'll often collect data from multiple sources often only containing one or two similar "key" columns (like subject id #) and have to combine pieces of them to do anything interesting. This type of data is called **relational data**, since the datasets are *related* through common key column(s). [relational databases](https://www.ibm.com/cloud/learn/relational-databases) are how most data are stored in modern non-academic organizations.
 
 Fortunately, a package we're already familiar with from a couple of posts ago, [dplyr](https://dplyr.tidyverse.org/), also has a set of functions for combining data with functions called [**"joins"**](https://dplyr.tidyverse.org/reference/join.htm). For this post we will cover the 6 most common joins:
 
@@ -99,7 +99,7 @@ gdp_df %>% glimpse()
 
 or print them to the console using the names
 
-```{r, eval = T, cache = TRUE, message = FALSE}
+```{r eval=T, message=FALSE, cache=TRUE, paged.print=FALSE}
 life_df
 
 pop_df 
@@ -391,17 +391,7 @@ all.equal(rj_merge, rj_dplyr)
 
 ```
 
-
-```{r, eval = T, cache = TRUE, message = FALSE}
-
-
-```
-
-
 Why bother with dplyr joins if merge() can do so much? Simply because the dplyr code is easier to read and the dplyr functions are faster. Unfortunately, merge also can't handle semi joins or anti joins, so you'd have to do a bit more work to achieve the same results without dplyr.
-
-
-
 
 
 If you've followed along, congratulations! You now know how the basics of combining data frames in with dplyr joins and base R. Just practice these operations a few times on your own and joins will seem trivial!

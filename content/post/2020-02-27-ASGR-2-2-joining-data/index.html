@@ -45,11 +45,11 @@ output:
 
 <div id="tldr" class="section level1">
 <h1><span class="header-section-number">1</span> <strong>TL;DR</strong></h1>
-<p>Out in the real world you may often find yourself working with data from multiple sources. It will probably be stored in separate files, perhaps on a remote server, and you’ll need to combine them prior before you can attempt to answer any of your research questions. This post will show you how you can combine data frames using another set of <a href="https://dplyr.tidyverse.org/reference/join.htm">dplyr</a> functions called <strong>joins</strong>.</p>
+<p>Out in the real world you may often find yourself working with data from multiple sources. It will probably be stored in separate files and you’ll need to combine them prior before you can attempt to answer any of your research questions. This post will show you how you can combine data frames using another set of <a href="https://dplyr.tidyverse.org/reference/join.htm">dplyr</a> functions called <strong>joins</strong>.</p>
 </div>
 <div id="introduction" class="section level1">
 <h1><span class="header-section-number">2</span> <strong>Introduction</strong></h1>
-<p>The 6th post of the <a href="https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/">Scientist’s Guide to R series</a> is all about using joins to combine data. While tidy data organized nicely into a single <code>.csv</code> or <code>.xlsx</code> spreadsheet may be provided to you in science courses, in the real world you’ll often collect data from multiple sources often only containing one or two similar “key” columns (like subject id #) and have to combine pieces of them to do anything interesting. This type of data is called <strong>relational data</strong>, since the datasets are <em>related</em> through common key column(s). <a href="https://www.ibm.com/cloud/learn/relational-databases">relational databases</a> are how most data are stored in modern non-academic organizations.</p>
+<p>The 6th post of the <a href="https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/">Scientist’s Guide to R series</a> is all about using joins to combine data. While tidy data organized nicely into a single <code>.csv</code> or <code>.xlsx</code> spreadsheet may be provided to you in courses, in the real world you’ll often collect data from multiple sources often only containing one or two similar “key” columns (like subject id #) and have to combine pieces of them to do anything interesting. This type of data is called <strong>relational data</strong>, since the datasets are <em>related</em> through common key column(s). <a href="https://www.ibm.com/cloud/learn/relational-databases">relational databases</a> are how most data are stored in modern non-academic organizations.</p>
 <p>Fortunately, a package we’re already familiar with from a couple of posts ago, <a href="https://dplyr.tidyverse.org/">dplyr</a>, also has a set of functions for combining data with functions called <a href="https://dplyr.tidyverse.org/reference/join.htm"><strong>“joins”</strong></a>. For this post we will cover the 6 most common joins:</p>
 <ol style="list-style-type: decimal">
 <li><p><code>left_join(x, y)</code> which combines all columns in data frame <code>x</code> with those in data frame <code>y</code> but only retains rows from <code>x</code>.</p></li>
@@ -111,29 +111,51 @@ gdp_df &lt;- gapminder %&gt;%
 ## $ total_gdpPercap &lt;dbl&gt; 123695.50, 160629.70, 222232.52, 275075.79, 324525....</code></pre>
 <p>or print them to the console using the names</p>
 <pre class="r"><code>life_df</code></pre>
-<pre><code>## # A tibble: 4 x 2
-##   continent mean_life_expectancy
-##   &lt;fct&gt;                    &lt;dbl&gt;
-## 1 Africa                    54.8
-## 2 Asia                      70.7
-## 3 Europe                    77.6
-## 4 Oceania                   80.7</code></pre>
+<pre><code>## # A tibble: 12 x 3
+##    continent  year mean_life_expectancy
+##    &lt;fct&gt;     &lt;int&gt;                &lt;dbl&gt;
+##  1 Africa     1997                 53.6
+##  2 Africa     2002                 53.3
+##  3 Africa     2007                 54.8
+##  4 Americas   1997                 71.2
+##  5 Americas   2002                 72.4
+##  6 Americas   2007                 73.6
+##  7 Europe     1997                 75.5
+##  8 Europe     2002                 76.7
+##  9 Europe     2007                 77.6
+## 10 Oceania    1997                 78.2
+## 11 Oceania    2002                 79.7
+## 12 Oceania    2007                 80.7</code></pre>
 <pre class="r"><code>pop_df </code></pre>
-<pre><code>## # A tibble: 4 x 2
-##   continent total_population
-##   &lt;fct&gt;                &lt;dbl&gt;
-## 1 Africa           929539692
-## 2 Americas         898871184
-## 3 Asia            3811953827
-## 4 Oceania           24549947</code></pre>
+<pre><code>## # A tibble: 12 x 3
+##    continent  year total_population
+##    &lt;fct&gt;     &lt;int&gt;            &lt;dbl&gt;
+##  1 Africa     1997        743832984
+##  2 Africa     2002        833723916
+##  3 Africa     2007        929539692
+##  4 Americas   1997        796900410
+##  5 Americas   2002        849772762
+##  6 Americas   2007        898871184
+##  7 Asia       1997       3383285500
+##  8 Asia       2002       3601802203
+##  9 Asia       2007       3811953827
+## 10 Oceania    1997         22241430
+## 11 Oceania    2002         23454829
+## 12 Oceania    2007         24549947</code></pre>
 <pre class="r"><code>gdp_df </code></pre>
-<pre><code>## # A tibble: 4 x 2
-##   continent total_gdpPercap
-##   &lt;fct&gt;               &lt;dbl&gt;
-## 1 Americas          275076.
-## 2 Asia              411610.
-## 3 Europe            751634.
-## 4 Oceania            59620.</code></pre>
+<pre><code>## # A tibble: 10 x 3
+##    continent  year total_gdpPercap
+##    &lt;fct&gt;     &lt;int&gt;           &lt;dbl&gt;
+##  1 Africa     1997         123695.
+##  2 Africa     2007         160630.
+##  3 Americas   1997         222233.
+##  4 Americas   2007         275076.
+##  5 Asia       1997         324525.
+##  6 Asia       2007         411610.
+##  7 Europe     1997         572303.
+##  8 Europe     2007         751634.
+##  9 Oceania    1997          48048.
+## 10 Oceania    2007          59620.</code></pre>
 <p>From these printouts we can tell that each data frame only has values for some of the continents and/or some of the years that are present in the full gapminder data. I’ve structured them this way so that it is easier to see how they are joined, as you’ll soon find out.</p>
 </div>
 </div>
