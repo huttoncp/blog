@@ -14,11 +14,11 @@
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 2.2 - Joining Data with dplyr</title>
-      <link>/post/2020-02-27-asgr-2-2-joining-data/</link>
+      <link>/post/2020-03-29-asgr-2-2-joining-data/</link>
       <pubDate>Sun, 29 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/2020-02-27-asgr-2-2-joining-data/</guid>
-      <description>1 TL;DR2 Introduction2.1 setup3 left_join()4 right_join()5 full_join()6 inner_join()7 semi_join()8 anti_join()9 binding data frames using bind_rows() or bind_cols()9.1 add_row()10 joining 3 or more data frames11 merge()12 Navigation13 Notes1 TL;DROut in the real world you may often find yourself working with data from multiple sources. It will probably be stored in separate files and you’ll need to combine them prior before you can attempt to answer any of your research questions.</description>
+      <guid>/post/2020-03-29-asgr-2-2-joining-data/</guid>
+      <description>1 TL;DR2 Introduction2.1 setup3 left_join()4 right_join()5 full_join()6 inner_join()7 semi_join()8 anti_join()9 building data frames using bind_rows() or bind_cols()9.1 add_row()10 joining 3 or more data frames11 merge()12 Navigation13 Notes1 TL;DROut in the real world you may often find yourself working with data from multiple sources. It will probably be stored in separate files and you’ll need to combine them before you can attempt to answer any of your research questions.</description>
     </item>
     
     <item>

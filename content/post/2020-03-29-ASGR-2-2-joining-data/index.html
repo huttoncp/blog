@@ -33,7 +33,7 @@ output:
 <li><a href="#inner_join"><span class="toc-section-number">6</span> <strong>inner_join()</strong></a></li>
 <li><a href="#semi_join"><span class="toc-section-number">7</span> <strong>semi_join()</strong></a></li>
 <li><a href="#anti_join"><span class="toc-section-number">8</span> <strong>anti_join()</strong></a></li>
-<li><a href="#binding-data-frames-using-bind_rows-or-bind_cols"><span class="toc-section-number">9</span> binding data frames using <strong>bind_rows()</strong> or <strong>bind_cols()</strong></a><ul>
+<li><a href="#building-data-frames-using-bind_rows-or-bind_cols"><span class="toc-section-number">9</span> building data frames using <strong>bind_rows()</strong> or <strong>bind_cols()</strong></a><ul>
 <li><a href="#add_row"><span class="toc-section-number">9.1</span> <strong>add_row()</strong></a></li>
 </ul></li>
 <li><a href="#joining-3-or-more-data-frames"><span class="toc-section-number">10</span> joining 3 or more data frames</a></li>
@@ -45,11 +45,11 @@ output:
 
 <div id="tldr" class="section level1">
 <h1><span class="header-section-number">1</span> <strong>TL;DR</strong></h1>
-<p>Out in the real world you may often find yourself working with data from multiple sources. It will probably be stored in separate files and you’ll need to combine them prior before you can attempt to answer any of your research questions. This post will show you how you can combine data frames using another set of <a href="https://dplyr.tidyverse.org/reference/join.htm">dplyr</a> functions called <strong>joins</strong>.</p>
+<p>Out in the real world you may often find yourself working with data from multiple sources. It will probably be stored in separate files and you’ll need to combine them before you can attempt to answer any of your research questions. This post will show you how you can combine data frames using another set of <a href="https://dplyr.tidyverse.org/reference/join.htm">dplyr</a> functions called <strong>joins</strong>.</p>
 </div>
 <div id="introduction" class="section level1">
 <h1><span class="header-section-number">2</span> <strong>Introduction</strong></h1>
-<p>The 6th post of the <a href="https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/">Scientist’s Guide to R series</a> is all about using joins to combine data. While tidy data organized nicely into a single <code>.csv</code> or <code>.xlsx</code> spreadsheet may be provided to you in courses, in the real world you’ll often collect data from multiple sources often only containing one or two similar “key” columns (like subject id #) and have to combine pieces of them to do anything interesting. This type of data is called <strong>relational data</strong>, since the datasets are <em>related</em> through common key column(s). <a href="https://www.ibm.com/cloud/learn/relational-databases">relational databases</a> are how most data are stored in modern non-academic organizations.</p>
+<p>The 6th post of the <a href="https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/">Scientist’s Guide to R series</a> is all about using joins to combine data. While tidy data organized nicely into a single <code>.csv</code> or <code>.xlsx</code> spreadsheet may be provided to you in courses, in the real world you’ll often collect data from multiple sources often only containing one or two similar “key” columns (like subject ID #) and have to combine pieces of them to do anything interesting. This type of data is called <strong>relational data</strong>, since the datasets are <em>related</em> through common key column(s). <a href="https://www.ibm.com/cloud/learn/relational-databases">Relational databases</a> are how most data are stored in modern non-academic organizations.</p>
 <p>Fortunately, a package we’re already familiar with from a couple of posts ago, <a href="https://dplyr.tidyverse.org/">dplyr</a>, also has a set of functions for combining data with functions called <a href="https://dplyr.tidyverse.org/reference/join.htm"><strong>“joins”</strong></a>. For this post we will cover the 6 most common joins:</p>
 <ol style="list-style-type: decimal">
 <li><p><code>left_join(x, y)</code> which combines all columns in data frame <code>x</code> with those in data frame <code>y</code> but only retains rows from <code>x</code>.</p></li>
@@ -276,10 +276,15 @@ identical(rj, lj)</code></pre>
 ## 13 Europe     2007                 77.6         751634.
 ## 14 Oceania    2007                 80.7          59620.</code></pre>
 <p>The output now includes rows for the year 2002, which were present in <code>life_df</code> but not in <code>gdp_df</code>. It also includes rows for <code>Asia</code>, which are present in <code>gdp_df</code> but are missing from <code>life_df</code>. As you can see, a full join retains all of the data, filling in missing values where necessary.</p>
+<p>Left joins, right joins, and full joins are also collectively referred to as <em>outer joins</em> because they retain the observations from at least one of the joined tables. This excellent set of diagrams from <a href="https://r4ds.had.co.nz/">R for Data Science (R4DS)</a> can help you build an intuitive sense of how these outer joins work:</p>
+<div class="figure">
+<img src="https://d33wubrfki0l68.cloudfront.net/9c12ca9e12ed26a7c5d2aa08e36d2ac4fb593f1e/79980/diagrams/join-outer.png" alt="source: https://r4ds.had.co.nz/relational-data.html" />
+<p class="caption">source: <a href="https://r4ds.had.co.nz/relational-data.html" class="uri">https://r4ds.had.co.nz/relational-data.html</a></p>
+</div>
 </div>
 <div id="inner_join" class="section level1">
 <h1><span class="header-section-number">6</span> <strong>inner_join()</strong></h1>
-<p>Often you may only want to work with rows which have matching entries in both data sources. In this case you could use <code>inner_join()</code>, which returns all rows in both <code>x</code> and <code>y</code> but only rows with that appear in the key columns of both data frames.</p>
+<p>Often you may only want to work with rows which have matching entries in both data sources. Since only some rows are retained, we’re no longer dealing with an outer join. In this case you could use <code>inner_join()</code>, which returns all rows in both <code>x</code> and <code>y</code> but only rows with that appear in the key columns of both data frames.</p>
 <pre class="r"><code>life_df %&gt;% 
   inner_join(gdp_df)</code></pre>
 <pre><code>## # A tibble: 8 x 4
@@ -294,6 +299,11 @@ identical(rj, lj)</code></pre>
 ## 7 Oceania    1997                 78.2          48048.
 ## 8 Oceania    2007                 80.7          59620.</code></pre>
 <p>This time we only get data for 1997 and 2007 even though <code>life_df</code> has values for 2002 because <code>gdp_df</code> did not contain any data for 2002. We also don’t get any data for Asia, which was present in <code>gdp_df</code>, because there was no data for Asia in <code>life_df</code>.</p>
+<p>This diagram from <a href="https://r4ds.had.co.nz/">R4DS</a> shows you another example of how an inner join works:</p>
+<div class="figure">
+<img src="https://d33wubrfki0l68.cloudfront.net/3abea0b730526c3f053a3838953c35a0ccbe8980/7f29b/diagrams/join-inner.png" alt="source: https://r4ds.had.co.nz/relational-data.html" />
+<p class="caption">source: <a href="https://r4ds.had.co.nz/relational-data.html" class="uri">https://r4ds.had.co.nz/relational-data.html</a></p>
+</div>
 </div>
 <div id="semi_join" class="section level1">
 <h1><span class="header-section-number">7</span> <strong>semi_join()</strong></h1>
@@ -314,6 +324,11 @@ identical(rj, lj)</code></pre>
 ## 8 Oceania    2002                 79.7
 ## 9 Oceania    2007                 80.7</code></pre>
 <p>This time only get the columns from life_df and we’ve dropped rows for Europe because Europe only appears under the conitnent key column for life_df and not pop_df.</p>
+<p>Here is the <a href="https://r4ds.had.co.nz/">R4DS</a> semi-join diagram showing that only columns and rows from table 1 are retained as a second example:</p>
+<div class="figure">
+<img src="https://d33wubrfki0l68.cloudfront.net/028065a7f353a932d70d2dfc82bc5c5966f768ad/85a30/diagrams/join-semi.png" alt="source: https://r4ds.had.co.nz/relational-data.html" />
+<p class="caption">source: <a href="https://r4ds.had.co.nz/relational-data.html" class="uri">https://r4ds.had.co.nz/relational-data.html</a></p>
+</div>
 </div>
 <div id="anti_join" class="section level1">
 <h1><span class="header-section-number">8</span> <strong>anti_join()</strong></h1>
@@ -327,39 +342,15 @@ identical(rj, lj)</code></pre>
 ## 2 Europe     2002                 76.7
 ## 3 Europe     2007                 77.6</code></pre>
 <p>As you can see, anti joins can be very useful if you want to know which rows are excluded due to mismatches in the key columns. Checking for consistencies and inconsistencies between data sources is an important part of the data cleaning process and can often help to uncover data entry or coding errors that should be fixed prior to conducting any analyses.</p>
+<p><a href="https://r4ds.had.co.nz/">R4DS</a> diagram showing how the anti-join works:</p>
+<div class="figure">
+<img src="https://d33wubrfki0l68.cloudfront.net/f29a85efd53a079cc84c14ba4ba6894e238c3759/c1408/diagrams/join-anti.png" alt="source: https://r4ds.had.co.nz/relational-data.html" />
+<p class="caption">source: <a href="https://r4ds.had.co.nz/relational-data.html" class="uri">https://r4ds.had.co.nz/relational-data.html</a></p>
 </div>
-<div id="binding-data-frames-using-bind_rows-or-bind_cols" class="section level1">
-<h1><span class="header-section-number">9</span> binding data frames using <strong>bind_rows()</strong> or <strong>bind_cols()</strong></h1>
-<p>If you have two data frames with the same columns, you can combine their rows using <code>dplyr::bind_rows()</code> or <code>rbind()</code>. You could use this to rearrange the rows of a the life_df data frame for example</p>
-<pre class="r"><code>rbind1 &lt;- bind_rows(life_df[1:3,], #first take rows 1-3 of life_df
-          life_df[7:12,], #then add the 7th-12th rows below those
-          life_df[4:6,]) #then add the 4th-6th rows below that
-
-rbind1 </code></pre>
-<pre><code>## # A tibble: 12 x 3
-##    continent  year mean_life_expectancy
-##    &lt;fct&gt;     &lt;int&gt;                &lt;dbl&gt;
-##  1 Africa     1997                 53.6
-##  2 Africa     2002                 53.3
-##  3 Africa     2007                 54.8
-##  4 Europe     1997                 75.5
-##  5 Europe     2002                 76.7
-##  6 Europe     2007                 77.6
-##  7 Oceania    1997                 78.2
-##  8 Oceania    2002                 79.7
-##  9 Oceania    2007                 80.7
-## 10 Americas   1997                 71.2
-## 11 Americas   2002                 72.4
-## 12 Americas   2007                 73.6</code></pre>
-<pre class="r"><code>#in base R, the rbind() function pretty much does the same thing
-
-rbind2 &lt;- rbind(life_df[1:3,], #first take rows 1-3 of life_df
-          life_df[7:12,], #then add the 7th-12th rows below those
-          life_df[4:6,]) #then add the 4th-6th rows below that
-
-identical(rbind1, rbind2)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<p>In practice, the most common reason to use bind_rows or rbind would be to add data for new cases to a data frame. e.g. say we decided to add the gapminder life expectancy data for Asia to life_df:</p>
+</div>
+<div id="building-data-frames-using-bind_rows-or-bind_cols" class="section level1">
+<h1><span class="header-section-number">9</span> building data frames using <strong>bind_rows()</strong> or <strong>bind_cols()</strong></h1>
+<p>If you have two data frames with the same columns, you can combine their rows using <code>dplyr::bind_rows()</code> or <code>rbind()</code>. <code>rbind()</code> is best suited for rowwise combinations of vectors or matrices, while <code>bind_rows()</code> is better for combining data frames. In my experience, the most common reason to use either would be to add data for new cases to a data frame, so I will only demonstrate <code>bind_rows()</code> here. For example, say we decided to add the gapminder life expectancy data for Asia to life_df:</p>
 <pre class="r"><code>#first get the data for asia from the original gapminder dataset
 asia_life_exp &lt;- gapminder %&gt;%
   filter(continent == &quot;Asia&quot;,
@@ -368,7 +359,7 @@ asia_life_exp &lt;- gapminder %&gt;%
   summarise(mean_life_expectancy = mean(lifeExp, na.rm = T))
 
 #then add it to the top of life_df
-bind_rows(asia_life_exp, life_df) #or rbind(asia_life_exp, life_df)</code></pre>
+bind_rows(asia_life_exp, life_df) </code></pre>
 <pre><code>## # A tibble: 15 x 3
 ## # Groups:   continent [5]
 ##    continent  year mean_life_expectancy
@@ -388,101 +379,35 @@ bind_rows(asia_life_exp, life_df) #or rbind(asia_life_exp, life_df)</code></pre>
 ## 13 Oceania    1997                 78.2
 ## 14 Oceania    2002                 79.7
 ## 15 Oceania    2007                 80.7</code></pre>
-<p>If we instead had two data frames with the same cases/rows but different columns, we could combine them using <code>dplyr::bind_cols()</code> or <code>cbind()</code>. Using <code>cbind()</code> is one way that you can extract a subset columns and rearrange them if dplyr::select() is not available.</p>
-<p><em>Note that no key columns are checked for matching values so you need to be sure that the rows are arranged in the same order for each portion of the dataframe before binding the columns together.</em></p>
-<pre class="r"><code>bind_cols(gapminder[, 1:3], gapminder[, 5:6], gapminder[, 4]) %&gt;% 
-  head() #just print the top 6 rows</code></pre>
-<pre><code>## # A tibble: 6 x 6
-##   country     continent  year      pop gdpPercap lifeExp
-##   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;    &lt;int&gt;     &lt;dbl&gt;   &lt;dbl&gt;
-## 1 Afghanistan Asia       1952  8425333      779.    28.8
-## 2 Afghanistan Asia       1957  9240934      821.    30.3
-## 3 Afghanistan Asia       1962 10267083      853.    32.0
-## 4 Afghanistan Asia       1967 11537966      836.    34.0
-## 5 Afghanistan Asia       1972 13079460      740.    36.1
-## 6 Afghanistan Asia       1977 14880372      786.    38.4</code></pre>
-<pre class="r"><code>identical(bind_cols(gapminder[, 1:3], gapminder[, 5:6], gapminder[, 4]),
-          as_tibble(cbind(gapminder[, 1:3], gapminder[, 5:6], gapminder[, 4]))) #the main difference is that bind_rows returns a tibble</code></pre>
+<p>If we instead had two data frames with the same cases/rows but different columns (and no common key columns to enable the use of joins), we could combine them using <code>dplyr::bind_cols()</code> or <code>cbind()</code>. Again, <code>bind_cols()</code> is preferred over <code>cbind()</code> for combining data frames by column. However, if you’re only adding a few columns, <code>dplyr::mutate()</code> or a <code>"df$newcol &lt;- newcol"</code> statement per column to add would also work.</p>
+<p>For example, if we were provided with each column of the gapminder dataframe as separate vectors (each with values in identical order), without any common key columns among any of the fragments, we could reconstruct the orginal gapminder data frame using <code>bind_cols()</code>, e.g.:</p>
+<pre class="r"><code>ctry &lt;- gapminder$country
+
+ctin &lt;- gapminder$continent
+
+yr &lt;-  gapminder$year
+
+le &lt;- gapminder$lifeExp
+
+pop &lt;- gapminder$pop
+
+gdp &lt;- gapminder$gdpPercap
+
+bound_gap &lt;- bind_cols(&quot;country&quot; = ctry, #add names using &quot;name&quot; = vector syntax
+                       &quot;continent&quot; = ctin, 
+                       &quot;year&quot; = yr, &quot;lifeExp&quot; = le, 
+                       &quot;pop&quot; = pop, 
+                       &quot;gdpPercap&quot; = gdp)
+
+identical(gapminder, bound_gap)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p><code>cbind()</code> (or the df$var syntax) is also a way to add multiple derived columns to a dataset if <code>dplyr::mutate()</code> is not available to you</p>
-<pre class="r"><code>#convert pop to millions
-pop_in_millions &lt;- gapminder$pop/1e6 
-
-#round life exp
-rounded_lifeExp &lt;- round(gapminder$lifeExp, 0)
-
-#add them to specifc positions in the gapminder data using cbind()
-
-cbind(gapminder[,1:4], 
-      rounded_lifeExp, #insert rounded_lifeExp right after lifeExp, which is the 4th column
-      gapminder[, 5], #5th column is pop
-      pop_in_millions, #insert pop_in_millions after the raw population values
-      gapminder[, 6]) %&gt;% #last column was the 6th one in the original data
-      head() #just print the top 6 rows</code></pre>
-<pre><code>##       country continent year lifeExp rounded_lifeExp      pop pop_in_millions
-## 1 Afghanistan      Asia 1952  28.801              29  8425333        8.425333
-## 2 Afghanistan      Asia 1957  30.332              30  9240934        9.240934
-## 3 Afghanistan      Asia 1962  31.997              32 10267083       10.267083
-## 4 Afghanistan      Asia 1967  34.020              34 11537966       11.537966
-## 5 Afghanistan      Asia 1972  36.088              36 13079460       13.079460
-## 6 Afghanistan      Asia 1977  38.438              38 14880372       14.880372
-##   gdpPercap
-## 1  779.4453
-## 2  820.8530
-## 3  853.1007
-## 4  836.1971
-## 5  739.9811
-## 6  786.1134</code></pre>
-<pre class="r"><code>#or gapminder$pop_in_millions &lt;- gapminder$pop/1e6
-#and gapminder$rounded_lifeExp &lt;- round(gapminder$lifeExp, 0)
-#if you don&#39;t mind modifying the original data frame that is,,,
-
-#or course, columns and rows of a single dataframe or matrix can be rearranged
-#or duplicated in base R but just using the special `[]` operator that works for
-#data frames and matrices
-
-gapminder[, c(1:3, 6, 5)] #rearrange &amp; subset columns</code></pre>
-<pre><code>## # A tibble: 1,704 x 5
-##    country     continent  year gdpPercap      pop
-##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
-##  1 Afghanistan Asia       1952      779.  8425333
-##  2 Afghanistan Asia       1957      821.  9240934
-##  3 Afghanistan Asia       1962      853. 10267083
-##  4 Afghanistan Asia       1967      836. 11537966
-##  5 Afghanistan Asia       1972      740. 13079460
-##  6 Afghanistan Asia       1977      786. 14880372
-##  7 Afghanistan Asia       1982      978. 12881816
-##  8 Afghanistan Asia       1987      852. 13867957
-##  9 Afghanistan Asia       1992      649. 16317921
-## 10 Afghanistan Asia       1997      635. 22227415
-## # ... with 1,694 more rows</code></pre>
-<pre class="r"><code>gapminder[c(21:30, 1:10), ] #rearrange &amp; subset rows</code></pre>
-<pre><code>## # A tibble: 20 x 6
-##    country     continent  year lifeExp      pop gdpPercap
-##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
-##  1 Albania     Europe     1992    71.6  3326498     2497.
-##  2 Albania     Europe     1997    73.0  3428038     3193.
-##  3 Albania     Europe     2002    75.7  3508512     4604.
-##  4 Albania     Europe     2007    76.4  3600523     5937.
-##  5 Algeria     Africa     1952    43.1  9279525     2449.
-##  6 Algeria     Africa     1957    45.7 10270856     3014.
-##  7 Algeria     Africa     1962    48.3 11000948     2551.
-##  8 Algeria     Africa     1967    51.4 12760499     3247.
-##  9 Algeria     Africa     1972    54.5 14760787     4183.
-## 10 Algeria     Africa     1977    58.0 17152804     4910.
-## 11 Afghanistan Asia       1952    28.8  8425333      779.
-## 12 Afghanistan Asia       1957    30.3  9240934      821.
-## 13 Afghanistan Asia       1962    32.0 10267083      853.
-## 14 Afghanistan Asia       1967    34.0 11537966      836.
-## 15 Afghanistan Asia       1972    36.1 13079460      740.
-## 16 Afghanistan Asia       1977    38.4 14880372      786.
-## 17 Afghanistan Asia       1982    39.9 12881816      978.
-## 18 Afghanistan Asia       1987    40.8 13867957      852.
-## 19 Afghanistan Asia       1992    41.7 16317921      649.
-## 20 Afghanistan Asia       1997    41.8 22227415      635.</code></pre>
+<pre class="r"><code>#the main difference between cbind() and bind_rows() is that bind_rows returns a
+#tibble</code></pre>
+<p>When considering the use of <code>rbind()</code>/<code>bind_rows()</code> or <code>cbind()</code>/<code>bind_cols()</code> <strong>you must keep in mind that because no key columns are checked for matching values you need to be sure that the columns (when binding rows) or rows (when binding columns) are arranged in exactly the same order</strong> for each portion of the dataframe before binding the pieces together. This approach can be very error prone, particularly in cases where data cleaning or analysis is being done collaboratively.</p>
+<p>For this reason <strong>I strongly recommend that you</strong> make use of key columns and <strong>combine data using joins whenever possible</strong>.</p>
 <div id="add_row" class="section level2">
 <h2><span class="header-section-number">9.1</span> <strong>add_row()</strong></h2>
-<p>If you only wanted to add a single row to a data frame, you can use <code>tibble::add_row()</code> and (recall that the tibble package is also part of the tidyverse). Lets say (hypothetically of course) we found out that the mean life expectancy for countries in Africa had gone up to 56 for the year 2012. We could add this row as follows:</p>
+<p>If you only wanted to add a single row to a data frame, you can use <code>tibble::add_row()</code> and (recall that the tibble package is also part of the <a href="https://www.tidyverse.org/">tidyverse</a>). Let’s say (hypothetically of course) we found out that the mean life expectancy for countries in Africa had gone up to 56 for the year 2012. We could add this row as follows:</p>
 <pre class="r"><code>updated_life_df &lt;- life_df %&gt;% 
   tibble::add_row(continent = &quot;Africa&quot;, year = 2012, mean_life_expectancy = 56) %&gt;%  #specify values to be added using column = value syntax
   arrange(continent, year)
@@ -534,14 +459,12 @@ combined_data #now it&#39;s all together, using what could be condensed into a s
 ## 15 Asia       2007                 NA         3811953827         411610.</code></pre>
 <pre class="r"><code># Alternatively, I could use full_join(life_df, pop_df) %&gt;% full_join(gdp_df)
 
-# or full_join(full_join(life_df, pop_df), gdp_df)
-
-#This is another example of how nested function calls can be easier to read when
-#written in series with the pipe operator (`%&gt;%`)</code></pre>
+# or full_join(full_join(life_df, pop_df), gdp_df)</code></pre>
+<p>This is another example of how nested function calls can be easier to read when written in series with the pipe operator (<code>%&gt;%</code>), which I covered in more detail <a href="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#chaining-functions-with-the-pipe-operator">here</a>.</p>
 </div>
 <div id="merge" class="section level1">
 <h1><span class="header-section-number">11</span> <strong>merge()</strong></h1>
-<p>If you find yourself having to combine relational data but are working on a computer that only has base R and no admin priviledges to enable you to install dplyr, have no fear! You can use the <code>merge()</code> function from base R to perform <strong>left joins</strong>, <strong>right joins</strong>, <strong>inner joins</strong>, and <strong>full joins</strong>.</p>
+<p>In the very unlikely event that you find yourself having to combine relational data but are working on a computer that only has base R and no admin priviledges to enable you to install dplyr, have no fear! You can use the <code>merge()</code> function from base R to perform <strong>left joins</strong>, <strong>right joins</strong>, <strong>inner joins</strong>, and <strong>full joins</strong>.</p>
 <p>In addition to the <code>x</code> and <code>y</code> arguments that need to be used to specify the data frames to be joined and the <code>by</code> argument that indicates which key columns to use, the type of join is determined via the <code>all.x</code> and <code>all.y</code> arguments</p>
 <pre class="r"><code># inner join/merge
 
@@ -579,7 +502,7 @@ rj_dplyr &lt;- right_join(life_df, pop_df) %&gt;% as.data.frame()
 
 all.equal(rj_merge, rj_dplyr)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>Why bother with dplyr joins if merge() can do so much? Simply because the dplyr code is easier to read and the dplyr functions are faster. Unfortunately, merge also can’t handle semi joins or anti joins, so you’d have to do a bit more work to achieve the same results without dplyr.</p>
+<p>Why bother with dplyr joins if <code>merge()</code> can do so much? Simply because the dplyr code is easier to read and the dplyr functions are faster. Unfortunately, merge also can’t handle semi joins or anti joins, so you’d have to do a bit more work to achieve the same results without dplyr.</p>
 <p>If you’ve followed along, congratulations! You now know how the basics of combining data frames in with dplyr joins and base R. Just practice these operations a few times on your own and joins will seem trivial!</p>
 </div>
 <div id="navigation" class="section level1">
@@ -589,7 +512,8 @@ all.equal(rj_merge, rj_dplyr)</code></pre>
 <div id="notes" class="section level1">
 <h1><span class="header-section-number">13</span> Notes</h1>
 <ul>
-<li><p>You can learn more about joins and working with relational data and some (less commonly needed) <em>set operation functions</em> in <code>R</code> <a href="https://r4ds.had.co.nz/relational-data.html">here</a> and <code>SQL</code> <a href="https://www.w3schools.com/sql/default.asp">here</a>.</p></li>
+<li><p>You can learn more about joins, working with relational data, and the <em>set operation functions</em> in <code>R</code> <a href="https://r4ds.had.co.nz/relational-data.html">here</a>.</p></li>
+<li><p>You can learn more about <code>SQL</code> <a href="https://www.w3schools.com/sql/default.asp">here</a>.</p></li>
 <li><p>The author of dplyr, <a href="http://hadley.nz/">Hadley Wickham</a>, also wrote the <strong>dbplyr</strong> package, which translates dplyr to SQL for you so you can actually query databases directly using dplyr code or even view the <a href="https://dbplyr.tidyverse.org/articles/sql-translation.html">SQL code translations</a>. You can learn more about dbplyr <a href="https://dbplyr.tidyverse.org/">here</a>. The code translation is really helpful if you’re trying to learn SQL.</p></li>
 </ul>
 <p>Thank you for visiting my blog. I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.</p>
