@@ -46,7 +46,7 @@ Fortunately, a package we're already familiar with from a couple of posts ago, [
 
 A nice design feature of these functions is that their names and behaviour were [inspired](https://r4ds.had.co.nz/relational-data.html) by analogous functions for joining data in the ubiquitous database management programming language ["Stuctured Query Language" (SQL)](https://en.wikipedia.org/wiki/SQL). Learning dplyr therefore also makes SQL easier to learn in the future, which will be helpful if you ever want to work with data for a [living](https://livebook.manning.com/book/build-your-career-in-data-science/chapter-1/32). 
 
-In case you find yourself working in an environment where only base R is available, we'll also cover how to join data the base R function [merge()](https://stat.ethz.ch/R-manual/R-devel/library/base/html/merge.html).
+In case you find yourself working in an environment where only base R is available, we'll also cover how to join data using the base R function [merge()](https://stat.ethz.ch/R-manual/R-devel/library/base/html/merge.html).
 
 Aside from specifying the data frames to be joined, one other thing we need to do is specify the **key column(s)** to be used for aligning the rows prior to joining the data. 
 
@@ -57,7 +57,7 @@ A nice feature of the `*_join()` functions is that if you don't specify the `by`
 
 ## setup
 
-To demonstrate the use of the join functions, I'll prepare a example of relational data using the [gapminder](https://cran.r-project.org/web/packages/gapminder/gapminder.pdf) dataset for the year 2007 aggregated to the continent level. In this representation of the data, the life expectancy, population, and gdpPercap are stored in separate data frames (called `life_df`, `pop_df`, and `gdp_df` respectively). This sort of arrangement is closer to what you might encouter if the gapminder data were stored in a relational database.
+To demonstrate the use of the join functions, I'll prepare an example of relational data using the [gapminder](https://cran.r-project.org/web/packages/gapminder/gapminder.pdf) dataset for the year 2007 aggregated to the continent level. In this representation of the data, the life expectancy, population, and gdpPercap are stored in separate data frames (called `life_df`, `pop_df`, and `gdp_df` respectively). This sort of arrangement is closer to what you might encouter if the gapminder data were stored in a relational database.
 
 ```{r, eval = T, cache = TRUE, message = FALSE}
 library(gapminder) #contains the gapminder data
@@ -86,7 +86,7 @@ gdp_df <- gapminder %>%
 
 ```
 
-Recall that we can print view the structure of each data frame using the glimpse function from dplyr
+Recall that we can print a view of the structure of each data frame using the glimpse function from dplyr
 
 ```{r, eval = T, cache = TRUE, message = FALSE}
 life_df %>% glimpse()
@@ -223,7 +223,7 @@ life_df %>%
 ```
 
 
-This time only get the columns from life_df and we've dropped rows for Europe because Europe only appears under the conitnent key column for life_df and not pop_df. 
+This time we only get the columns from life_df and we've dropped rows for Europe because Europe only appears under the continent key column for life_df and not pop_df. 
 
 Here is the [R4DS](https://r4ds.had.co.nz/) semi-join diagram showing that only columns and rows from table 1 are retained as a second example:
 
