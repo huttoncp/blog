@@ -52,3 +52,15 @@ from = "https://craighutton.netlify.com*"
 to = "https://craig.rbind.io/:splat"
 status = 301
 force = true
+
+[[redirects]]
+from = "http://craighutton.netlify.app*"
+to = "https://craig.rbind.io/:splat"
+status = 301
+force = true
+
+[[redirects]]
+from = "https://craighutton.netlify.app*"
+to = "https://craig.rbind.io/:splat"
+status = 301
+force = true
