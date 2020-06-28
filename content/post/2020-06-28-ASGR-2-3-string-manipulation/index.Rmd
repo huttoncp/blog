@@ -116,7 +116,7 @@ Parentheses can be used to specify the order of evaluation (as for mathematical 
 
 **Escaping characters**
 
-What if you want to search for a literal "." or "$" rather than use the special regexp characters for "any character" or "the end of a string". This can be accomplished by *escaping* the character, which simply means putting one or more backslashes "\\" in front of it. So to search for a literal period, ".", you could use "\\\\." 
+What if you want to search for a literal "." or "$" rather than use the special regexp characters for "any character" or "the end of a string". This can be accomplished by *escaping* the character, which simply means putting one or more backslashes "\\" in front of it^[This applies to escaping characters in R. Escaping characters and building regex statements in other languages may require slightly different syntax]. So to search for a literal period, ".", you could use "\\\\." 
 
 Aside from the characters above, most of the rest of a regexp will consist of the literal text you want to match. For example, the regexp "`^[Ss]un.*`" when applied to a string vector of the days of the week, would match entries for "Sunday" or "sunday" since these entries start with (^) an "S" or an "s", followed by the literal characters "un", then any character (".") repeated any number of times (asterisk).
 
@@ -133,13 +133,16 @@ We'll start exploring the uses of some of these special characters with some bas
 `str_detect()` finds matches for a regexp and returns a logical vector that is **TRUE** for matching entries, and **FALSE** for non-matching entries.
 
 ```{r, eval = T, cache = TRUE, message = FALSE}
-days <- rep(c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"), 10) #1st we'll construct a vector of weekdays, repeated 10 times
+#1st we'll construct a vector of weekdays, repeated 10 times
+days <- rep(c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"), 3) 
 
-#note that stringr also has a function called str_dup() which can be used to replicate/duplicate string values.
+#note that stringr also has a function called str_dup() which can be used to
+#replicate/duplicate string values.
 
 str_detect(days, "^[Ss]un.*") #every 7th entry is a match
 
-#in this case, since Su appears uniquely for the Sunday entries, we could also just use "Su" for the regexp
+#in this case, since Su appears uniquely for the Sunday entries, we could also
+#just use "Su" for the regexp
 
 identical(str_detect(days, "Su"), str_detect(days, "^[Ss]un.*"))
 
@@ -158,7 +161,8 @@ days %>% str_detect("Su", negate = T) #find non-matches instead of matches
 `str_which()` returns the indices of matches for a regexp and returns a numeric vector, i.e. it tells you *which* entries are matches.
 
 ```{r, eval = T, cache = TRUE, message = FALSE}
-days %>% str_which("^M") #indices of matching entries, in this case starting with a capital "M" (for "Monday")
+days %>% 
+  str_which("^M") #indices of matching entries, in this case starting with a capital "M" (for "Monday")
 
 days %>% str_which("^M", negate = T) #indices of non-matching entries
 
@@ -241,8 +245,6 @@ gapminder %>%
   unique() %>%  
   str_subset("^[AC].*a$") %>% 
   identical(subsetted_country_names)
-
-
 ```
 
 You may recall that this behaviour is similar to the `matches()` "tidy-select" helper function that you can use to `select()` columns with dplyr (which was loaded as one of the tidyverse packages). For example,
@@ -310,8 +312,8 @@ str_extract(x, "[:alpha:]*")
 #str_extract_all() returns both names (all matches), but gives you a list
 #(simplify = FALSE, the default) or matrix (simplify = TRUE)
 str_extract_all(x, "[:alpha:]{2,}", simplify = TRUE) 
-#here I used the {2, } quantifier for "2 or more" because the * quantifier returns a bunch of empty
-#strings as well.
+#here I used the {2, } quantifier for "2 or more" because the * quantifier
+#returns a bunch of empty strings as well.
 
 #alternatively, we could just pass a more complex regex to the pattern argument
 #of str_extract() to look for the 1st set of letters and 2nd set of letters with
@@ -409,7 +411,9 @@ str_pad(string = names(gapminder),
 str_trunc(string = names(gapminder), 
         width = 7, #the maximum width to allow for strings
         side= "right",
-        ellipsis = "...") #entries which have been truncated will show this to indicate that something has been removed
+        #entries which have been truncated will show this to indicate that
+        #something has been removed
+        ellipsis = "...") 
 
 ```
 
@@ -529,9 +533,8 @@ gapminder[, str_which(gap_names, "p$")] %>% names() #columns with names that end
 While it's unlikley that you would ever do this in practice given that `dplyr::select()` makes it a bit easier, the same logic can be used for subsetting rows using regexps, which is something that `dplyr::filter()` doesn't do on its own.
 
 ```{r, eval = T, cache = TRUE, message = FALSE}
-
-CI_rows <- str_which(gapminder$country, "Canada|Italy") #get the indices of the rows with data for Canada or (|) Italy
-
+#get the indices of the rows with data for Canada or (|) Italy
+CI_rows <- str_which(gapminder$country, "Canada|Italy") 
 CI_rows %>% head() #view the 1st 6
 
 gapminder[CI_rows, ] %>% head

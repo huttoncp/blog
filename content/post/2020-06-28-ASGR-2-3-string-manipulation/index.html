@@ -98,7 +98,7 @@ output:
 <p><strong>Capturing pattern groups</strong></p>
 <p>Parentheses can be used to specify the order of evaluation (as for mathematical expressions) and to <em>capture</em> groups or components of regexps. After defining pattern groups this way, you can refer to the groups using “\\n”, where n is the group number, assigned to groups in the regexp in order from left to right. The most common reason you would want to do this is to replace patterns using <code>str_replace()</code> or <code>str_replace_all()</code>, as will be demonstrated below in the section on mutating strings.</p>
 <p><strong>Escaping characters</strong></p>
-<p>What if you want to search for a literal “.” or “$” rather than use the special regexp characters for “any character” or “the end of a string”. This can be accomplished by <em>escaping</em> the character, which simply means putting one or more backslashes “\” in front of it. So to search for a literal period, “.”, you could use “\\.”</p>
+<p>What if you want to search for a literal “.” or “$” rather than use the special regexp characters for “any character” or “the end of a string”. This can be accomplished by <em>escaping</em> the character, which simply means putting one or more backslashes “\” in front of it<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. So to search for a literal period, “.”, you could use “\\.”</p>
 <p>Aside from the characters above, most of the rest of a regexp will consist of the literal text you want to match. For example, the regexp “<code>^[Ss]un.*</code>” when applied to a string vector of the days of the week, would match entries for “Sunday” or “sunday” since these entries start with (^) an “S” or an “s”, followed by the literal characters “un”, then any character (“.”) repeated any number of times (asterisk).</p>
 </div>
 <div id="detecting-pattern-matches-with-str_detect-str_which-str_count-and-str_locate." class="section level1">
@@ -107,18 +107,17 @@ output:
 <pre class="r"><code>library(tidyverse) #note: stringr is installed and loaded with the tidyverse</code></pre>
 <p>We’ll start exploring the uses of some of these special characters with some basic regexps by submitting them to the pattern arguments (2nd argument) of <code>str_detect()</code>, <code>str_which()</code>, <code>str_count()</code>, and <code>str_locate()</code></p>
 <p><code>str_detect()</code> finds matches for a regexp and returns a logical vector that is <strong>TRUE</strong> for matching entries, and <strong>FALSE</strong> for non-matching entries.</p>
-<pre class="r"><code>days &lt;- rep(c(&quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;, &quot;Thursday&quot;, &quot;Friday&quot;, &quot;Saturday&quot;, &quot;Sunday&quot;), 10) #1st we&#39;ll construct a vector of weekdays, repeated 10 times
+<pre class="r"><code>#1st we&#39;ll construct a vector of weekdays, repeated 10 times
+days &lt;- rep(c(&quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;, &quot;Thursday&quot;, &quot;Friday&quot;, &quot;Saturday&quot;, &quot;Sunday&quot;), 3) 
 
-#note that stringr also has a function called str_dup() which can be used to replicate/duplicate string values.
+#note that stringr also has a function called str_dup() which can be used to
+#replicate/duplicate string values.
 
 str_detect(days, &quot;^[Ss]un.*&quot;) #every 7th entry is a match</code></pre>
 <pre><code>##  [1] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
-## [13] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
-## [25] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
-## [37] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
-## [49]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
-## [61] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE</code></pre>
-<pre class="r"><code>#in this case, since Su appears uniquely for the Sunday entries, we could also just use &quot;Su&quot; for the regexp
+## [13] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE</code></pre>
+<pre class="r"><code>#in this case, since Su appears uniquely for the Sunday entries, we could also
+#just use &quot;Su&quot; for the regexp
 
 identical(str_detect(days, &quot;Su&quot;), str_detect(days, &quot;^[Ss]un.*&quot;))</code></pre>
 <pre><code>## [1] TRUE</code></pre>
@@ -132,18 +131,13 @@ identical(grepl(&quot;Su&quot;, days), str_detect(days, &quot;Su&quot;))</code><
 
 days %&gt;% str_detect(&quot;Su&quot;, negate = T) #find non-matches instead of matches</code></pre>
 <pre><code>##  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [13]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
-## [25]  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE
-## [37]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [49] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE
-## [61]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE</code></pre>
+## [13]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE</code></pre>
 <p><code>str_which()</code> returns the indices of matches for a regexp and returns a numeric vector, i.e. it tells you <em>which</em> entries are matches.</p>
-<pre class="r"><code>days %&gt;% str_which(&quot;^M&quot;) #indices of matching entries, in this case starting with a capital &quot;M&quot; (for &quot;Monday&quot;)</code></pre>
-<pre><code>##  [1]  1  8 15 22 29 36 43 50 57 64</code></pre>
+<pre class="r"><code>days %&gt;% 
+  str_which(&quot;^M&quot;) #indices of matching entries, in this case starting with a capital &quot;M&quot; (for &quot;Monday&quot;)</code></pre>
+<pre><code>## [1]  1  8 15</code></pre>
 <pre class="r"><code>days %&gt;% str_which(&quot;^M&quot;, negate = T) #indices of non-matching entries</code></pre>
-<pre><code>##  [1]  2  3  4  5  6  7  9 10 11 12 13 14 16 17 18 19 20 21 23 24 25 26 27 28 30
-## [26] 31 32 33 34 35 37 38 39 40 41 42 44 45 46 47 48 49 51 52 53 54 55 56 58 59
-## [51] 60 61 62 63 65 66 67 68 69 70</code></pre>
+<pre><code>##  [1]  2  3  4  5  6  7  9 10 11 12 13 14 16 17 18 19 20 21</code></pre>
 <pre class="r"><code>#if there were non-day values in our weekday vector, we could use either of
 #these functions to identify the unusual values, e.g.
 
@@ -154,18 +148,18 @@ days[sample(1:70, 10)] &lt;- &quot;day off&quot;
 
 #find the indices of the entries which do not end in &quot;day&quot;, i.e. the indices of the days off
 days %&gt;% str_which(&quot;day$&quot;, negate = T)</code></pre>
-<pre><code>##  [1]  2 12 15 18 27 36 41 58 67 70</code></pre>
+<pre><code>##  [1] 13 15 18 23 26 38 46 52 57 60</code></pre>
 <pre class="r"><code>#as you can see, this is useful for checking for unusual values which may be
 #data entry/coding errors.
 
 #example of the &quot;or&quot; operator in a regular expression
 
 str_which(days, &quot;(Monday|Tuesday)&quot;) #indices for entries containing either &quot;Monday&quot; or &quot;Tuesday&quot;</code></pre>
-<pre><code>##  [1]  1  8  9 16 22 23 29 30 37 43 44 50 51 57 64 65</code></pre>
+<pre><code>## [1]  1  2  8  9 16</code></pre>
 <pre class="r"><code>#which entries contain an empty space (the &quot;day off&quot; ones)?
 
 str_which(days, &quot;[:space:]{1}&quot;) #match entries containing a single {1} space [:space:]</code></pre>
-<pre><code>##  [1]  2 12 15 18 27 36 41 58 67 70</code></pre>
+<pre><code>##  [1] 13 15 18 23 26 38 46 52 57 60</code></pre>
 <p><code>str_locate()</code> or <code>str_locate_all()</code> tell you the character positions the pattern characters are found in. I haven’t needed to use them so far.</p>
 <pre class="r"><code>days %&gt;% 
   str_locate(&quot;day&quot;) %&gt;% #this tells us the starting and ending positions of the pattern &quot;day&quot;
@@ -202,7 +196,7 @@ gapminder %&gt;% glimpse() #show the structure of a data frame using dplyr::glim
 ## $ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 4...
 ## $ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372,...
 ## $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.113...</code></pre>
-<p>One of the first things we learned about was how to use “patterns” with numeric vectors via base R <a href="https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/#logical-operators">logical comparison operators</a> like <code>&gt;</code>, <code>&lt;</code>, <code>&lt;=</code>, or <code>&gt;=</code>. The <code>str_subset()</code>, <code>str_sub()</code>, <code>str_match()</code>, &amp; <code>str_extract()</code> from <code>stringr</code> help us subset strings<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>One of the first things we learned about was how to use “patterns” with numeric vectors via base R <a href="https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/#logical-operators">logical comparison operators</a> like <code>&gt;</code>, <code>&lt;</code>, <code>&lt;=</code>, or <code>&gt;=</code>. The <code>str_subset()</code>, <code>str_sub()</code>, <code>str_match()</code>, &amp; <code>str_extract()</code> from <code>stringr</code> help us subset strings<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 <p><code>str_subset()</code> returns all values in a vector which match a pattern. We could use it to figure out which countries in the gapminder data begin with an A or C and also end with an A or C.</p>
 <pre class="r"><code>subsetted_country_names &lt;- gapminder$country %&gt;% 
   unique() %&gt;% #just get the unique() values to drop duplicates for a vector
@@ -279,8 +273,8 @@ str_extract_all(x, &quot;[:alpha:]{2,}&quot;, simplify = TRUE) </code></pre>
 ## [2,] &quot;Emily&quot;   &quot;Robins&quot;  
 ## [3,] &quot;Roger&quot;   &quot;Smith&quot;   
 ## [4,] &quot;Lindsay&quot; &quot;Richards&quot;</code></pre>
-<pre class="r"><code>#here I used the {2, } quantifier for &quot;2 or more&quot; because the * quantifier returns a bunch of empty
-#strings as well.
+<pre class="r"><code>#here I used the {2, } quantifier for &quot;2 or more&quot; because the * quantifier
+#returns a bunch of empty strings as well.
 
 #alternatively, we could just pass a more complex regex to the pattern argument
 #of str_extract() to look for the 1st set of letters and 2nd set of letters with
@@ -356,7 +350,9 @@ paste0(&quot;today is &quot;, y)</code></pre>
 <pre class="r"><code>str_trunc(string = names(gapminder), 
         width = 7, #the maximum width to allow for strings
         side= &quot;right&quot;,
-        ellipsis = &quot;...&quot;) #entries which have been truncated will show this to indicate that something has been removed</code></pre>
+        #entries which have been truncated will show this to indicate that
+        #something has been removed
+        ellipsis = &quot;...&quot;) </code></pre>
 <pre><code>## [1] &quot;country&quot; &quot;cont...&quot; &quot;year&quot;    &quot;lifeExp&quot; &quot;pop&quot;     &quot;gdpP...&quot;</code></pre>
 <p><code>str_trim()</code> removes empty spaces on the ends of a string</p>
 <pre class="r"><code>#add some whitespace
@@ -452,8 +448,8 @@ gapminder[, str_detect(gap_names, &quot;^c&quot;)] %&gt;% names() #columns with 
 <pre class="r"><code>gapminder[, str_which(gap_names, &quot;p$&quot;)] %&gt;% names() #columns with names that end ($) in p</code></pre>
 <pre><code>## [1] &quot;lifeExp&quot;   &quot;pop&quot;       &quot;gdpPercap&quot;</code></pre>
 <p>While it’s unlikley that you would ever do this in practice given that <code>dplyr::select()</code> makes it a bit easier, the same logic can be used for subsetting rows using regexps, which is something that <code>dplyr::filter()</code> doesn’t do on its own.</p>
-<pre class="r"><code>CI_rows &lt;- str_which(gapminder$country, &quot;Canada|Italy&quot;) #get the indices of the rows with data for Canada or (|) Italy
-
+<pre class="r"><code>#get the indices of the rows with data for Canada or (|) Italy
+CI_rows &lt;- str_which(gapminder$country, &quot;Canada|Italy&quot;) 
 CI_rows %&gt;% head() #view the 1st 6</code></pre>
 <pre><code>## [1] 241 242 243 244 245 246</code></pre>
 <pre class="r"><code>gapminder[CI_rows, ] %&gt;% head</code></pre>
@@ -504,6 +500,7 @@ identical(
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>or any other type of vector if we convert it to a character class temporarily<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>This applies to escaping characters in R. Escaping characters and building regex statements in other languages may require slightly different syntax<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>or any other type of vector if we convert it to a character class temporarily<a href="#fnref2" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
