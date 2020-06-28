@@ -108,7 +108,8 @@ output:
 <p>We’ll start exploring the uses of some of these special characters with some basic regexps by submitting them to the pattern arguments (2nd argument) of <code>str_detect()</code>, <code>str_which()</code>, <code>str_count()</code>, and <code>str_locate()</code></p>
 <p><code>str_detect()</code> finds matches for a regexp and returns a logical vector that is <strong>TRUE</strong> for matching entries, and <strong>FALSE</strong> for non-matching entries.</p>
 <pre class="r"><code>#1st we&#39;ll construct a vector of weekdays, repeated 10 times
-days &lt;- rep(c(&quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;, &quot;Thursday&quot;, &quot;Friday&quot;, &quot;Saturday&quot;, &quot;Sunday&quot;), 3) 
+days &lt;- rep(c(&quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;, 
+              &quot;Thursday&quot;, &quot;Friday&quot;, &quot;Saturday&quot;, &quot;Sunday&quot;), 3) 
 
 #note that stringr also has a function called str_dup() which can be used to
 #replicate/duplicate string values.
@@ -134,7 +135,8 @@ days %&gt;% str_detect(&quot;Su&quot;, negate = T) #find non-matches instead of 
 ## [13]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE</code></pre>
 <p><code>str_which()</code> returns the indices of matches for a regexp and returns a numeric vector, i.e. it tells you <em>which</em> entries are matches.</p>
 <pre class="r"><code>days %&gt;% 
-  str_which(&quot;^M&quot;) #indices of matching entries, in this case starting with a capital &quot;M&quot; (for &quot;Monday&quot;)</code></pre>
+  #indices of matching entries, in this case starting with a capital &quot;M&quot; (for &quot;Monday&quot;)
+  str_which(&quot;^M&quot;) </code></pre>
 <pre><code>## [1]  1  8 15</code></pre>
 <pre class="r"><code>days %&gt;% str_which(&quot;^M&quot;, negate = T) #indices of non-matching entries</code></pre>
 <pre><code>##  [1]  2  3  4  5  6  7  9 10 11 12 13 14 16 17 18 19 20 21</code></pre>
@@ -148,18 +150,18 @@ days[sample(1:70, 10)] &lt;- &quot;day off&quot;
 
 #find the indices of the entries which do not end in &quot;day&quot;, i.e. the indices of the days off
 days %&gt;% str_which(&quot;day$&quot;, negate = T)</code></pre>
-<pre><code>##  [1] 13 15 18 23 26 38 46 52 57 60</code></pre>
+<pre><code>##  [1]  7 10 16 20 21 31 41 46 61 67</code></pre>
 <pre class="r"><code>#as you can see, this is useful for checking for unusual values which may be
 #data entry/coding errors.
 
 #example of the &quot;or&quot; operator in a regular expression
 
 str_which(days, &quot;(Monday|Tuesday)&quot;) #indices for entries containing either &quot;Monday&quot; or &quot;Tuesday&quot;</code></pre>
-<pre><code>## [1]  1  2  8  9 16</code></pre>
+<pre><code>## [1]  1  2  8  9 15</code></pre>
 <pre class="r"><code>#which entries contain an empty space (the &quot;day off&quot; ones)?
 
 str_which(days, &quot;[:space:]{1}&quot;) #match entries containing a single {1} space [:space:]</code></pre>
-<pre><code>##  [1] 13 15 18 23 26 38 46 52 57 60</code></pre>
+<pre><code>##  [1]  7 10 16 20 21 31 41 46 61 67</code></pre>
 <p><code>str_locate()</code> or <code>str_locate_all()</code> tell you the character positions the pattern characters are found in. I haven’t needed to use them so far.</p>
 <pre class="r"><code>days %&gt;% 
   str_locate(&quot;day&quot;) %&gt;% #this tells us the starting and ending positions of the pattern &quot;day&quot;

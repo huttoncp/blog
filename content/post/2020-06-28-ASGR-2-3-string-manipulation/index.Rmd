@@ -134,7 +134,8 @@ We'll start exploring the uses of some of these special characters with some bas
 
 ```{r, eval = T, cache = TRUE, message = FALSE}
 #1st we'll construct a vector of weekdays, repeated 10 times
-days <- rep(c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"), 3) 
+days <- rep(c("Monday", "Tuesday", "Wednesday", 
+              "Thursday", "Friday", "Saturday", "Sunday"), 3) 
 
 #note that stringr also has a function called str_dup() which can be used to
 #replicate/duplicate string values.
@@ -162,7 +163,8 @@ days %>% str_detect("Su", negate = T) #find non-matches instead of matches
 
 ```{r, eval = T, cache = TRUE, message = FALSE}
 days %>% 
-  str_which("^M") #indices of matching entries, in this case starting with a capital "M" (for "Monday")
+  #indices of matching entries, in this case starting with a capital "M" (for "Monday")
+  str_which("^M") 
 
 days %>% str_which("^M", negate = T) #indices of non-matching entries
 
