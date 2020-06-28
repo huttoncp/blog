@@ -382,7 +382,7 @@ If you've followed along, congratulations! You now know how the basics of combin
 
 # Navigation
 
-Click [here](https://craig.rbind.io/post/2020-01-25-asgr-2-1-data-transformation-part-2/) to go back to the previous post on reshaping data with tidyr. A link to the next one will be added as soon as I have time to write it.
+Click [here](https://craig.rbind.io/post/2020-01-25-asgr-2-1-data-transformation-part-2/) to go back to the previous post on reshaping data with tidyr or [here](https://craig.rbind.io/post/2020-06-28-asgr-2-3-string-manipulation/)) to go to the next post on string manipulation with stringr.
 
 # Notes
 

@@ -60,13 +60,13 @@ output:
 <li><p><code>anti_join(x, y)</code> returns the columns from <code>x</code> only and <em>retains</em> rows of <code>x</code> that <em>are not</em> present in <code>y</code>.</p></li>
 </ol>
 <p>A nice design feature of these functions is that their names and behaviour were <a href="https://r4ds.had.co.nz/relational-data.html">inspired</a> by analogous functions for joining data in the ubiquitous database management programming language <a href="https://en.wikipedia.org/wiki/SQL">“Stuctured Query Language” (SQL)</a>. Learning dplyr therefore also makes SQL easier to learn in the future, which will be helpful if you ever want to work with data for a <a href="https://livebook.manning.com/book/build-your-career-in-data-science/chapter-1/32">living</a>.</p>
-<p>In case you find yourself working in an environment where only base R is available, we’ll also cover how to join data the base R function <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/merge.html">merge()</a>.</p>
+<p>In case you find yourself working in an environment where only base R is available, we’ll also cover how to join data using the base R function <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/merge.html">merge()</a>.</p>
 <p>Aside from specifying the data frames to be joined, one other thing we need to do is specify the <strong>key column(s)</strong> to be used for aligning the rows prior to joining the data.</p>
 <p>Key columns are specified with the <code>by</code> argument, e.g. <code>inner_join(x, y, by = "subject_id")</code> adds columns of <code>y</code> to <code>x</code> for all rows where the values of the “subject_id” column (present in each data frame) match. If the name of the key column differs between the data frames, e.g. “subject_id” in <code>x</code> and “subj_id” in <code>y</code>, then you have to specify both names using <code>by = c("subject_id" = "subj_id")</code> so that the functions know which columns to compare.</p>
 <p>A nice feature of the <code>*_join()</code> functions is that if you don’t specify the <code>by</code> argument they will assume that columns with the same names across <code>x</code> and <code>y</code> are key columns. This is very convenient when the columns with the same names in fact contain the same type of values.</p>
 <div id="setup" class="section level2">
 <h2><span class="header-section-number">2.1</span> setup</h2>
-<p>To demonstrate the use of the join functions, I’ll prepare a example of relational data using the <a href="https://cran.r-project.org/web/packages/gapminder/gapminder.pdf">gapminder</a> dataset for the year 2007 aggregated to the continent level. In this representation of the data, the life expectancy, population, and gdpPercap are stored in separate data frames (called <code>life_df</code>, <code>pop_df</code>, and <code>gdp_df</code> respectively). This sort of arrangement is closer to what you might encouter if the gapminder data were stored in a relational database.</p>
+<p>To demonstrate the use of the join functions, I’ll prepare an example of relational data using the <a href="https://cran.r-project.org/web/packages/gapminder/gapminder.pdf">gapminder</a> dataset for the year 2007 aggregated to the continent level. In this representation of the data, the life expectancy, population, and gdpPercap are stored in separate data frames (called <code>life_df</code>, <code>pop_df</code>, and <code>gdp_df</code> respectively). This sort of arrangement is closer to what you might encouter if the gapminder data were stored in a relational database.</p>
 <pre class="r"><code>library(gapminder) #contains the gapminder data
 
 library(dplyr) #functions for manipulating and joining data
@@ -90,7 +90,7 @@ gdp_df &lt;- gapminder %&gt;%
   group_by(continent, year) %&gt;% 
   summarise(total_gdpPercap = sum(gdpPercap, na.rm = T)) %&gt;% 
   ungroup()</code></pre>
-<p>Recall that we can print view the structure of each data frame using the glimpse function from dplyr</p>
+<p>Recall that we can print a view of the structure of each data frame using the glimpse function from dplyr</p>
 <pre class="r"><code>life_df %&gt;% glimpse()</code></pre>
 <pre><code>## Observations: 12
 ## Variables: 3
@@ -323,7 +323,7 @@ identical(rj, lj)</code></pre>
 ## 7 Oceania    1997                 78.2
 ## 8 Oceania    2002                 79.7
 ## 9 Oceania    2007                 80.7</code></pre>
-<p>This time only get the columns from life_df and we’ve dropped rows for Europe because Europe only appears under the conitnent key column for life_df and not pop_df.</p>
+<p>This time we only get the columns from life_df and we’ve dropped rows for Europe because Europe only appears under the continent key column for life_df and not pop_df.</p>
 <p>Here is the <a href="https://r4ds.had.co.nz/">R4DS</a> semi-join diagram showing that only columns and rows from table 1 are retained as a second example:</p>
 <div class="figure">
 <img src="https://d33wubrfki0l68.cloudfront.net/028065a7f353a932d70d2dfc82bc5c5966f768ad/85a30/diagrams/join-semi.png" alt="source: https://r4ds.had.co.nz/relational-data.html" />
@@ -507,7 +507,7 @@ all.equal(rj_merge, rj_dplyr)</code></pre>
 </div>
 <div id="navigation" class="section level1">
 <h1><span class="header-section-number">12</span> Navigation</h1>
-<p>Click <a href="https://craig.rbind.io/post/2020-01-25-asgr-2-1-data-transformation-part-2/">here</a> to go back to the previous post on reshaping data with tidyr. A link to the next one will be added as soon as I have time to write it.</p>
+<p>Click <a href="https://craig.rbind.io/post/2020-01-25-asgr-2-1-data-transformation-part-2/">here</a> to go back to the previous post on reshaping data with tidyr or <a href="https://craig.rbind.io/post/2020-06-28-asgr-2-3-string-manipulation/">here</a>) to go to the next post on string manipulation with stringr.</p>
 </div>
 <div id="notes" class="section level1">
 <h1><span class="header-section-number">13</span> Notes</h1>

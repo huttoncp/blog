@@ -19,21 +19,39 @@ date_format = "Jan 2006"
 #   Begin/end multi-line descriptions with 3 quotes `"""`.
 
 [[experience]]
-  title = "Data Science Fellow"
-  company = "Office of the Chief Information Officer, Ministry of Citizen's Services, Province of British Columbia"
-  company_url = "https://www2.gov.bc.ca/gov/content/governments/organizational-structure/ministries-organizations/central-government-agencies/office-of-the-chief-information-officer"
+  title = "Data Scientist"
+  company = "Research Branch, Ministry of Social Development & Poverty Reduction, Province of British Columbia"
+  company_url = "https://www2.gov.bc.ca/gov/content/governments/organizational-structure/ministries-organizations/ministries/social-development-poverty-reduction"
   location = "Victoria, BC, Canada"
-  date_start = "2019-05-27"
+  date_start = "2020-04-27"
   date_end = ""
   description = """
   Responsibilites:
   
   * Statistical modelling, hypothesis testing, and machine learning with R & SAS.
+  * Studying the recent history of government service utilization in the Downtown Eastside neighbourhood of Vancouver to characterize (mental) health, socioeconomic, and demographic relationships with poverty and homelessness. You can learn more about this data innovation program project [here](https://www2.gov.bc.ca/gov/content/data/about-data-management/data-innovation-program/projects). 
   * In partnership with the BC Centre for Disease Control, I am leading a team of 4 researchers seeking to use unsupervised machine learning and statistical models to identify determinants of overdose risk among British Columbians struggling with opioid addiction.
-  * Using time-series regression models to evaluate the public service utilization and economic impacts of social assistance policies in collaboration with other policy analysts, economists, and administrators.
+  *	Advising executives on the use of quantitative methods to address strategic knowledge gaps.
   * Developing an R package, ["elucidate"](https://github.com/bcgov/elucidate), to make data analysis easier for scientific researchers.
   * Querying, modifying, and constructing relational databases using SQL and Git Bash. 
   * Cleaning, transforming, and processing high dimensional data (millions of rows) to facilitate reproducible analysis.
+  """
+  
+[[experience]]
+  title = "Data Science Fellow"
+  company = "Office of the Chief Information Officer, Ministry of Citizen's Services, Province of British Columbia"
+  company_url = "https://www2.gov.bc.ca/gov/content/governments/organizational-structure/ministries-organizations/central-government-agencies/office-of-the-chief-information-officer"
+  location = "Victoria, BC, Canada"
+  date_start = "2019-05-27"
+  date_end = "2020-04-24"
+  description = """
+  Responsibilites:
+  
+  *	Applied time-series regression models to simultaneously evaluate the effects of multiple social assistance policies and economic recessions on social assistance program utilization and estimate the costs of service delivery.
+  *	Designed and began to conduct a team research project examining the government service utilization history of Vancouver. 
+  *	Created an R package, ["elucidate"](https://github.com/bcgov/elucidate), to make exploratory data analysis easier for researchers.
+  * Queried, modified, and constructed relational database tables using SQL and Git Bash. 
+  * Cleaned, transformed, and processed high dimensional data (millions of rows) to facilitate reproducible analysis in secure analytics environments.
   """
   
 [[experience]]

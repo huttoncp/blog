@@ -1,0 +1,580 @@
+---
+title: 'A Scientist''s Guide to R: Step 2.3 - string manipulation and regex'
+author: 'Craig Hutton'
+date: '2020-06-28'
+slug: 
+categories:
+  - R
+  - Reproducible Research
+  - Data Cleaning and Transformation
+tags:
+  - R
+  - R basics
+header:
+  image: ''
+  caption: ''
+  focal_point: ''
+output:
+  blogdown::html_page:
+    number_sections: true
+    toc: yes
+---
+
+
+# **TL;DR**
+
+Being able to work with character strings is an essential skill in data analysis and science.  In this post we'll learn a few of the ways in which the [stringr](https://stringr.tidyverse.org/index.html) package and regular expressions (AKA "regex" or "regexps") makes working with strings in R considerably easier. 
+
+# **Introduction**
+
+The 7th post of the [Scientist's Guide to R series](https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/) is all about showing you how to work with strings in R, using the intuitive [stringr](https://stringr.tidyverse.org/index.html) package from the [tidyverse](https://www.tidyverse.org/).  You'll also learn about regular expressions, which allow you to use concisely specified patterns to search, subset, and modify strings. This is quite a large topic, so for this post I'll focus on some of the more common operations that I've had to use in my work as an academic researcher and data scientist. Usually, this means working with strings vectors that are columns in data frames or the names of the columns in a data frame (which you may recall we can get with the base R `names()` function). Specifically, we'll consider: 
+
+* What regular expressions are and how to use them.
+
+* Detecting, locating, and counting pattern matches with `str_detect()`, `str_which()`, `str_locate()`, & `str_count()`.
+
+* Subset strings with `str_subset()`, `str_sub()`, & `str_extract()`.
+
+* Combining and splitting strings using `str_c()`, `str_flatten()`, `str_split()`, & `str_glue()`.
+
+* Manage lengths of strings with `str_length()`, `str_pad()`, `str_trunc()`, & `str_trim()`.
+
+* Mutate strings using `str_sub()`, `str_replace()`, & `str_remove()`.
+
+* Alter the case of strings with `str_to_lower()`, `str_to_upper()`, & `str_to_title()`.
+
+
+Note: as usual, at this point in the blog series I'll assume you're familiar with the pipe operator (`%>%`). To refresh your memory or if you're reading about the pipe operator for the 1st time, see [this section](https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#chaining-functions-with-the-pipe-operator) of an earlier post.
+
+# **Regular expressions**
+
+Regular expressions, or "regexps" for short, are a powerful way to work with patterns in strings. Becoming familiar with regexps is well worth the effort in the time they will save you. Regex allows you to match patterns in strings using a set of special characters that tell regexps-supported functions in R how to concisely describe the pattern in question. You can learn more about regular expressions [here](https://www.regular-expressions.info/), [here](https://bookdown.org/rdpeng/rprogdatascience/regular-expressions.html), and [here](https://en.wikipedia.org/wiki/Regular_expression). I won't be using all of these in the subsequent demonstrations of the [stringr](https://stringr.tidyverse.org/) functions (to keep things simple), but listing the majority of the available options will be useful as future reference for us to use in constructing regexps.
+
+In this post we'll focus on some of the most common special chararcters you'll need, specifically (`special character` = definition):
+
+**Basics**: 
+
+  - `^` = start of a string
+
+  - `$` = end of a string
+  
+  - `.` = any character
+  
+  - `[:digit:]` = any digit (use an extra set of square brackets for base R functions that accept regexps)
+  
+  - `[:alpha:]` = any letter
+  
+  - `[:alnum:]` = letters and/or numbers
+  
+  - `[:punct:]` = punctuation characters
+  
+  - `[:graph:]` = letters, numbers, and punctuation characters
+
+  - `[:lower:]` = lowercase letters only
+  
+  - `[:upper:]` = uppercase letters only
+  
+  - `[:space:]` = empty spaces
+  
+  - `[:blank:]` = empty spaces or tabs
+  
+**Quantifiers** These are useful when you want to match a pattern a specific number of times (based on the preceding character in the regexp):
+
+  - `*` = matches the preceding character any number of times
+  
+  - `+` = matches the preceding character once
+  
+  - `?` = matches the predecing character at most once (i.e. optionally)
+  
+  - `{n}` = matches the preceding character exactly **n** times
+  
+  - `{n, }` = **n** or more times
+  
+  - `{n, m}` = between **n** & **m** times
+
+**Alternatives & look-arounds** are useful for matching patterns more flexibly:
+
+  - `|` = or (just like the base R logical operator), e.g. the regexp "apples|oranges" would look for apples or oranges
+  
+  - `[abc]` = one of **a**, **b**, or **c** (or whatever else you put within the **[ ]**)
+  
+  - `[t-z]` = a letter from **t** to **z**   
+  
+  - `[^abc]` = anything other than **a**, **b**, or **c**
+  
+  - `(?=)` = look ahead, e.g. `i(?=e)` = **i** when it comes before **e**
+  
+  - `(?!)` = negative look ahead, e.g. `i(?!e)` **i** when it comes before something that isn't **e**
+  
+  - `(?<)` = look behind, e.g. `(?<=e)i` = **i** when it follows **e**
+  
+  - `(?<!)` = negative look behind, e.g. `(?<!e)i` = **i** when it does not follow **e**
+  
+**Capturing pattern groups**
+
+Parentheses can be used to specify the order of evaluation (as for mathematical expressions) and to *caputure* groups or components of regexps. After defining pattern groups this way, you can refer to the groups using "\\\\n", where n is the group number, assigned to groups in the regexp in order from left to right. The most common reason you would want to do this is to replace patterns using `str_replace()` or `str_replace_all()`, as will be demonstrated below in the section on mutating strings.
+
+**Escaping characters**
+
+What if you want to search for a literal "." or "$" rather than use the special regexp characters for "any character" or "the end of a string". This can be accomplished by *escaping* the character, which simply means putting one or more backslashes "\\" in front of it. So to search for a literal period, ".", you could use "\\\\." 
+
+Aside from the characters above, most of the rest of a regexp will consist of the literal text you want to match. For example, the regexp "`^[Ss]un.*`" when applied to a string vector of the days of the week, would match entries for "Sunday" or "sunday" since these entries start with (^) an "S" or an "s", followed by the literal characters "un", then any character (".") repeated any number of times (asterisk).
+
+# **Detecting pattern matches** with `str_detect()`, `str_which()`, `str_count()`, and `str_locate()`.
+
+To use any of the stringr functions, we 1st need to load the stringr package via the `library()` function
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+library(tidyverse) #note: stringr is installed and loaded with the tidyverse
+```
+
+We'll start exploring the uses of some of these special characters with some basic regexps by submitting them to the pattern arguments (2nd argument) of `str_detect()`, `str_which()`, `str_count()`, and `str_locate()`
+
+`str_detect()` finds matches for a regexp and returns a logical vector that is **TRUE** for matching entries, and **FALSE** for non-matching entries.
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+days <- rep(c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"), 10) #1st we'll construct a vector of weekdays, repeated 10 times
+
+#note that stringr also has a function called str_dup() which can be used to replicate/duplicate string values.
+
+str_detect(days, "^[Ss]un.*") #every 7th entry is a match
+
+#in this case, since Su appears uniquely for the Sunday entries, we could also just use "Su" for the regexp
+
+identical(str_detect(days, "Su"), str_detect(days, "^[Ss]un.*"))
+
+#str_detect() is the tidyverse equivalent to the grepl() function in base R
+identical(grepl("Su", days), str_detect(days, "Su"))
+
+#the main advantages of str_detect() are that the string is the 1st argument
+#(i.e. it is pipe friendly), and there many of the stringr functions also have a
+#"negate" option which allows you to look for non-matching entries instead of
+#matching entries, e.g.
+
+days %>% str_detect("Su", negate = T) #find non-matches instead of matches
+
+```
+
+`str_which()` returns the indices of matches for a regexp and returns a numeric vector, i.e. it tells you *which* entries are matches.
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+days %>% str_which("^M") #indices of matching entries, in this case starting with a capital "M" (for "Monday")
+
+days %>% str_which("^M", negate = T) #indices of non-matching entries
+
+#if there were non-day values in our weekday vector, we could use either of
+#these functions to identify the unusual values, e.g.
+
+#replace 10 randomly selected values with a non-weekday entry, like a "day off"
+#of work... which can happen irregularly if you're a grad student ;) lol
+
+days[sample(1:70, 10)] <- "day off" 
+
+#find the indices of the entries which do not end in "day", i.e. the indices of the days off
+days %>% str_which("day$", negate = T)
+
+#as you can see, this is useful for checking for unusual values which may be
+#data entry/coding errors.
+
+#example of the "or" operator in a regular expression
+
+str_which(days, "(Monday|Tuesday)") #indices for entries containing either "Monday" or "Tuesday"
+
+#which entries contain an empty space (the "day off" ones)?
+
+str_which(days, "[:space:]{1}") #match entries containing a single {1} space [:space:]
+```
+
+
+`str_locate()` or `str_locate_all()` tell you the character positions the pattern characters are found in. I haven't needed to use them so far.
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+days %>% 
+  str_locate("day") %>% #this tells us the starting and ending positions of the pattern "day"
+  head() #only print the 1st 6 rows of the output
+
+#if someone else provided us with the days vector and expected it to only
+#contain entries for days of the week, all of these values should have start
+#values greater than 1.
+
+#str_locate() will return the starting and stopping positions of the FIRST match
+#only, if you want the positions of all matches, use str_locate_all() instead.
+```
+
+`str_count()` tells you how many times a pattern appears in each entry of a string/character vector. This might be most useful for checking for unexpected duplications of values when cleaning data or for extracting data from unstructured text (e.g. quantifying the number of times a specific keyword appears in an interview transcript). 
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+days %>% str_count("e") #number of times the letter "e" appears in each entry
+```
+
+# **Subsetting strings & data frames** with `str_subset()`, `str_sub()`, `str_match()`, & `str_extract()`.
+
+For the remainer of this post we'll work with the gapminder data, which you may recall from eariler posts contains data on life expectancy, population, and GDP per capita for 142 countries.
+
+```{r, eval = T, cache=TRUE}
+library(gapminder) #load the gapminder package containing the gapminder data
+
+gapminder %>% glimpse() #show the structure of a data frame using dplyr::glimpse()
+```
+
+
+One of the first things we learned about was how to use "patterns" with numeric vectors via base R [logical comparison operators](https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/#logical-operators) like `>`, `<`, `<=`, or `>=`. The `str_subset()`, `str_sub()`, `str_match()`, & `str_extract()` from `stringr` help us subset strings^[or any other type of vector if we convert it to a character class temporarily]
+
+
+`str_subset()` returns all values in a vector which match a pattern. We could use it to figure out which countries in the gapminder data begin with an A or C and also end with an A or C. 
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+
+subsetted_country_names <- gapminder$country %>% 
+  unique() %>% #just get the unique() values to drop duplicates for a vector
+  str_subset("^[AC].*a$") 
+#above pattern = starts with (^) an A or C ([AC]), then anything (.) repeated
+#any number of times (*), then a lower case "a" at the end ($).
+
+subsetted_country_names %>% head()
+
+#A tidyverse-only alternative to the $ symbol for "pulling" a variable from a
+#data frame is the pull() function
+
+gapminder %>% 
+  pull(country) %>% 
+  unique() %>%  
+  str_subset("^[AC].*a$") %>% 
+  identical(subsetted_country_names)
+
+
+```
+
+You may recall that this behaviour is similar to the `matches()` "tidy-select" helper function that you can use to `select()` columns with dplyr (which was loaded as one of the tidyverse packages). For example,
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+
+gap_c_cols <- gapminder %>% select(matches("^c"))
+
+gap_c_cols %>% 
+  head() #only print the 1st 6 rows
+```
+
+is equivalent to
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+
+c_names <- gapminder %>% names() %>% str_subset("^c")
+
+all.equal(
+  #recall that we can subset columns with a character vector of names
+  gapminder[, c_names],  
+          gap_c_cols  #compare to the select(matches()) version
+  )
+
+#more on stringr for subsetting data frames later...
+```
+
+While, I don't expect anyone to use `str_subset()` and `[]` instead of `dplyr::select()` & `tidyselect::matches()`, the take home message here is that the fact that the column names of a data frame are a also a string vector means that you can use stringr functions to work with them.
+
+`str_sub()` extracts parts of strings based on their position with the start and end arguments
+```{r, eval = T, cache = TRUE, message = FALSE}
+gap_names <- gapminder %>% names
+
+gap_names %>% str_sub(start = 1, end = 6) #return the 1st 6 characters of each column name
+
+gap_names %>% str_sub(start = -3, end = -1) #return the last 3 characters of each column name
+
+```
+
+
+`str_extract()` is useful is you want to extract just the part of the string matching the specified regex instead of the entire entry as would be returned by `str_subset()`. For example, if you some data on names and phone numbers in the same column, you might want to extract just the phone number or name portions.
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+x <- c("Bob: 250-999-8888", "Emily: 416-908-2004", "Roger: 204-192-9879", "Lindsay: 250-209-3047")
+
+#extract just the phone numbers using a regex that detects 3 numbers followed by
+#a dash, then 3 numbers, another dash, then 4 numbers
+str_extract(x, "[:digit:]{3}-[:digit:]{3}-[:digit:]{4}") 
+
+#extract just the names with a regex that matches a sequence of letters "[:alpha:]"
+#of arbitrary length "*"
+str_extract(x, "[:alpha:]*") 
+
+```
+
+It is worth mentioning that within each entry of the string vector `str_extract()` will pull the first set of values matching the specified pattern, so in the example above, if we had first and last names separated by a space, we would only get the 1st one with the `[:alpha:]*` pattern I used. To extract all matches, we could use `str_extract_all()` instead.
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+x <- c("Bob Jones: 250-999-8888", "Emily Robins: 416-908-2004", 
+       "Roger Smith: 204-192-9879", "Lindsay Richards: 250-209-3047")
+
+#only returns the 1st name (the 1st match)
+str_extract(x, "[:alpha:]*") 
+
+#str_extract_all() returns both names (all matches), but gives you a list
+#(simplify = FALSE, the default) or matrix (simplify = TRUE)
+str_extract_all(x, "[:alpha:]{2,}", simplify = TRUE) 
+#here I used the {2, } quantifier for "2 or more" because the * quantifier returns a bunch of empty
+#strings as well.
+
+#alternatively, we could just pass a more complex regex to the pattern argument
+#of str_extract() to look for the 1st set of letters and 2nd set of letters with
+#a space between them
+
+str_extract(x, "[:alpha:]* [:alpha:]*")
+
+#of course that will only work if the names are formatted consitently, e.g. no
+#commas between names
+
+```
+
+# **Combining and splitting strings** using `str_c()`, `str_flatten()`,  `str_split()`, & `str_glue()`.
+
+`str_c()` is very useful if you want to combine multiple strings or other vectors into a single character vector on an element-wise basis. I often use this to add an indicator string to the names of a data frame before joining it to another one to make it easy to keep track of which columns came from which data frame.
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+nms <- names(gapminder) #store the original names
+
+nms <- str_c(names(gapminder), "_gap") #add _gap to the end of each column name
+
+nms
+
+#in contrast, the c() operator from base R, would not do the combination on an
+#elementwise basis and just adds "_gap" as a separate entry at the end of the
+#names vector
+
+names(gapminder) %>% c("_gap")
+
+
+```
+
+
+`str_flatten()` collapses a string vector into a single string (i.e. a character vector of length 1)
+```{r, eval = T, cache = TRUE, message = FALSE}
+str_flatten(c("a_3", "d_54"), #vector to collapse
+            collapse =  " ") #character(s) to insert between each piece
+```
+
+
+`str_split()` splits a string into a list or matrix of pieces based on a supplied pattern
+```{r eval=T, message=FALSE, cache=TRUE}
+str_split(c("a_3", "d_54"), pattern = "_") #pattern to use for splitting. returns a list.
+
+str_split(c("a_3", "d_54"), pattern = "_", simplify = TRUE) #returns a matrix
+```
+
+`str_glue()` is a convenience wrapper for the [glue::glue()](https://github.com/tidyverse/glue) function, which allows you to interpolate strings and values that have been assigned to names in R. To insert a value, you simply wrap it in `{}`:
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+y <- Sys.Date() #store the current date
+str_glue("today is {y}")
+
+
+nm <- "Craig"
+str_glue("Hi, my name is {nm}")
+
+a <- 5
+str_glue("a = {a}")
+
+#the base R equivalent is the paste0 function, which requires separating the
+#text and values with commas. This still accomplishes the same thing, but the
+#code doesn't look quite as nice.
+paste0("today is ", y)
+
+```
+
+
+# **Manage the lenghts of strings** using `str_length()`, `str_pad()`, `str_trunc()`, & `str_trim()`
+
+`str_length()` tells you how how many characters are in each entry of a character vector
+```{r, eval = T, cache = TRUE, message = FALSE}
+
+names(gapminder)
+
+str_length(names(gapminder))
+
+```
+
+
+`str_pad()` standardizes the length of strings in a character vector by padding it on the left or right ends with a specified character (by default, a space)
+```{r, eval = T, cache = TRUE, message = FALSE}
+
+str_pad(string = names(gapminder), 
+        width = 9, #the minimum width of the string to fill/pad positions up to
+        side = "both", #the side to insert the extra characters on (left, right, or both)
+        pad = "_") #single character to use for padding 
+
+```
+
+
+
+`str_trunc()` standardizes string lengths in the opposite direction, by controlling the maximum width and truncating strings longer which are longer than this
+```{r, eval = T, cache = TRUE, message = FALSE}
+str_trunc(string = names(gapminder), 
+        width = 7, #the maximum width to allow for strings
+        side= "right",
+        ellipsis = "...") #entries which have been truncated will show this to indicate that something has been removed
+
+```
+
+`str_trim()` removes empty spaces on the ends of a string
+```{r, eval = T, cache = TRUE, message = FALSE}
+
+#add some whitespace
+padded_names <- names(gapminder) %>% str_pad(12, "both")
+
+padded_names
+
+#remove it
+str_trim(padded_names)
+
+```
+
+
+# **Mutating strings** with `str_sub()`, `str_replace()`, `str_replace_all()`, `str_remove()`, & `str_remove_all()`
+
+`str_sub()` can also be used to replace values based on position when combined with the assignment operator (`<-`) 
+```{r, eval = T, cache = TRUE, message = FALSE}
+gap_names <- gapminder %>% names
+
+str_sub(gap_names, end = 1) <- "X_" #replace the 1st character with "X_"
+
+gap_names  
+
+#the main downside to this is that it modifies the original string vector, so
+#you would need to recreate it if you make a mistake
+
+gap_names <- gapminder %>% names #recreate the original gap_names vector
+
+```
+
+
+To modify a copy instead, you can use `str_replace()` or `str_replace_all()`. `str_replace()` replaces the 1st match in each entry of the string vector, while `str_repalce_all()` replaces all matches. I almost always use `str_replace_all()` instead of `str_replace()`.
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+gap_names <- gapminder %>% names
+
+str_replace(gap_names, 
+            pattern = "^.{3}", #match the 1st 3 characters of each string in the vector
+            replacement = "X_") #replace them with with "X_"
+
+gap_names  #original names vector is unaffected
+
+countries <- unique(gapminder$country)
+
+#replace all lower case a's with A's flanked by "_" to make it obvious what has changed
+str_replace(countries, 
+            pattern = "a", 
+            replacement = "_A_") %>%   #replace them with with "_A_"
+  head()
+
+#replace all lower case e's with E's
+countries <- str_replace_all(countries, 
+            pattern = "e", 
+            replacement = "E")  #replace them with with "E"
+
+countries %>% head()
+
+#to delete part of a string, you can just set the replacement value to ""
+underscores_removed <- str_replace_all(countries, 
+            pattern = "_", 
+            replacement = "") %>% head() #replace them with "", effectively deleting them
+underscores_removed 
+
+
+#a shortcut for this use of str_replace() or str_replace_all() to delete regexp
+#matches are the str_remove() & str_remove_all()
+str_remove_all(countries, "_") %>% 
+  head() %>% 
+  identical(underscores_removed)
+
+```
+
+# You can **modify the case of a string** using `str_to_lower()`, `str_to_upper()`, `str_to_title()`, & `str_to_sentence()`
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+str_to_lower("AFTER such a long HIKE in the sun, the BEER was very refreshing")
+
+str_to_upper("after such a long hike in the sun, the beer was very refreshing")
+
+str_to_title("after such a long hike in the sun, the beer was very refreshing")
+
+str_to_sentence("after such a long hike in the sun, the beer was very refreshing")
+
+```
+
+
+
+# Example application: Using `str_detect()` or `str_which()` to subset with data frames
+
+We saw one example of this earlier, but here are a few more. You can use these functions for subsetting because they return logical vectors or vectors of indices.
+
+Recall from a prior post that we can subset [columns](https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#select) or [rows](https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#filter) using vectors of indices or logical (TRUE/FALSE) values.
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+names(gapminder)
+
+gapminder[, c(1, 4, 6)] %>% names() #columns 1, 4, 6
+
+gapminder[, c(TRUE, FALSE, TRUE, FALSE, FALSE, FALSE)] %>% names() #columns 1 & 3
+
+```
+
+We can take advantage of this to select columns using a regexp via the `str_detect()` or `str_which()` functions
+```{r, eval = T, cache = TRUE, message = FALSE}
+
+gap_names <- names(gapminder)
+
+gapminder[, str_detect(gap_names, "^c")] %>% names() #columns with names starting with (^) a c
+
+gapminder[, str_which(gap_names, "p$")] %>% names() #columns with names that end ($) in p
+```
+
+While it's unlikley that you would ever do this in practice given that `dplyr::select()` makes it a bit easier, the same logic can be used for subsetting rows using regexps, which is something that `dplyr::filter()` doesn't do on its own.
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+
+CI_rows <- str_which(gapminder$country, "Canada|Italy") #get the indices of the rows with data for Canada or (|) Italy
+
+CI_rows %>% head() #view the 1st 6
+
+gapminder[CI_rows, ] %>% head
+
+#str_detect() yields the same results
+identical(gapminder[str_detect(gapminder$country, "Canada|Italy"), ],
+          gapminder[str_which(gapminder$country, "Canada|Italy"), ]
+          )
+          
+
+
+#or if you prefer dplyr::filter() to the square bracket notation, use
+#str_detect(), an advantage of this is that when working within filter you don't
+#need to use the dataframe$variable syntax since it knows to look for the
+#variable in the data frame you've piped in (gapminder)
+
+identical(
+  #str_detect() combined with dplyr::filter()
+  gapminder %>% 
+    filter(str_detect(country, "Canada|Italy")),
+  #str_detect() with [] from base R
+  gapminder[str_detect(gapminder$country, "Canada|Italy"), ]
+  )
+
+```
+
+You can see from these examples that **stringr** functions alone can do some of the same things that **dplyr** functions can, as well as building upon the functionality of some dplyr functions like **filter()**.
+
+Congrats! If you've made it here working with strings just got a whole lot easier for you...
+
+# Navigation
+
+Click [here](https://craig.rbind.io/post/2020-03-29-asgr-2-2-joining-data/) to go back to the previous post on joining data with dplyr. A link to the next one will be added as soon as I have time to write it.
+
+# Notes
+
+  * If you want to up your string manipulation game even more, you can learn more from the strings chapter of R 4 data science [here](https://r4ds.had.co.nz/strings.html) or the stringr package documentation on [CRAN](https://cloud.r-project.org/web/packages/stringr/stringr.pdf), and some base R string processing functions [here](https://stringr.tidyverse.org/articles/from-base.html).
+  
+  * Data scientist & skilled R developer [Garrick Aden-Buie](https://www.garrickadenbuie.com/) has also built an [Addin for R studio, via the regexplain package](https://www.garrickadenbuie.com/project/regexplain/) that can make it easier to work with regexps, which you may find helpful. 
+  
+  * While it is a good idea to develop some direct knowledge of regexps for simple cases like the ones we've explored here, the [rebus](https://github.com/richierocks/rebus) and/or [Regularity](https://github.com/martineastwood/Regularity) packages can make building complex regexps quite a bit easier and I recommend checking them out if you'll be working with a lot of unstructured text in your research. 
+
+  * This isn't something you'll need to use often, but you can remove special characters from a string using the `iconv()` function from base R.
+
+
+Thank you for visiting my blog. I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.

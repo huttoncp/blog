@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
-    <lastBuildDate>Sun, 29 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/data-cleaning-and-transformation/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A Scientist&#39;s Guide to R: Step 2.3 - string manipulation and regex</title>
+      <link>/post/2020-06-28-asgr-2-3-string-manipulation/</link>
+      <pubDate>Sun, 28 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020-06-28-asgr-2-3-string-manipulation/</guid>
+      <description>1 TL;DR2 Introduction3 Regular expressions4 Detecting pattern matches with str_detect(), str_which(), str_count(), and str_locate().5 Subsetting strings &amp;amp; data frames with str_subset(), str_sub(), str_match(), &amp;amp; str_extract().6 Combining and splitting strings using str_c(), str_flatten(), str_split(), &amp;amp; str_glue().7 Manage the lenghts of strings using str_length(), str_pad(), str_trunc(), &amp;amp; str_trim()8 Mutating strings with str_sub(), str_replace(), str_replace_all(), str_remove(), &amp;amp; str_remove_all()9 You can modify the case of a string using str_to_lower(), str_to_upper(), str_to_title(), &amp;amp; str_to_sentence()10 Example application: Using str_detect() or str_which() to subset with data frames11 Navigation12 Notes1 TL;DRBeing able to work with character strings is an essential skill in data analysis and science.</description>
+    </item>
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 2.2 - Joining Data with dplyr</title>

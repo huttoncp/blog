@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.3.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Dr. Craig P. Hutton">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="1 TL;DR2 Introduction3 Regular expressions4 Detecting pattern matches with str_detect(), str_which(), str_count(), and str_locate().5 Subsetting strings &amp; data frames with str_subset(), str_sub(), str_match(), &amp; str_extract().6 Combining and splitting strings using str_c(), str_flatten(), str_split(), &amp; str_glue().7 Manage the lenghts of strings using str_length(), str_pad(), str_trunc(), &amp; str_trim()8 Mutating strings with str_sub(), str_replace(), str_replace_all(), str_remove(), &amp; str_remove_all()9 You can modify the case of a string using str_to_lower(), str_to_upper(), str_to_title(), &amp; str_to_sentence()10 Example application: Using str_detect() or str_which() to subset with data frames11 Navigation12 Notes1 TL;DRBeing able to work with character strings is an essential skill in data analysis and science.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/2020-05-17-asgr-2-3-string-manipulation/">
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:400,400italic,700|Roboto+Mono">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.min.dd3b7994ab53a1ddaf2421ab58c1587f.css">
+
+  
+
+  
+  
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-140167948-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('require', 'eventTracker');
+      ga('require', 'outboundLinkTracker');
+      ga('require', 'urlChangeTracker');
+      ga('send', 'pageview');
+    </script>
+    <script async src="//www.google-analytics.com/analytics.js"></script>
+    
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
+    
+  
+  
+
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/2020-05-17-asgr-2-3-string-manipulation/">
+
+  
+  
+  
+  
+    
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@huttoncp">
+  <meta property="twitter:creator" content="@huttoncp">
+  
+  <meta property="og:site_name" content="Craig Hutton, PhD">
+  <meta property="og:url" content="/post/2020-05-17-asgr-2-3-string-manipulation/">
+  <meta property="og:title" content="A Scientist&#39;s Guide to R: Step 2.3 - string manipulation and regex | Craig Hutton, PhD">
+  <meta property="og:description" content="1 TL;DR2 Introduction3 Regular expressions4 Detecting pattern matches with str_detect(), str_which(), str_count(), and str_locate().5 Subsetting strings &amp; data frames with str_subset(), str_sub(), str_match(), &amp; str_extract().6 Combining and splitting strings using str_c(), str_flatten(), str_split(), &amp; str_glue().7 Manage the lenghts of strings using str_length(), str_pad(), str_trunc(), &amp; str_trim()8 Mutating strings with str_sub(), str_replace(), str_replace_all(), str_remove(), &amp; str_remove_all()9 You can modify the case of a string using str_to_lower(), str_to_upper(), str_to_title(), &amp; str_to_sentence()10 Example application: Using str_detect() or str_which() to subset with data frames11 Navigation12 Notes1 TL;DRBeing able to work with character strings is an essential skill in data analysis and science."><meta property="og:image" content="/post/2020-05-17-asgr-2-3-string-manipulation/featured.png">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2020-06-28T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2020-06-28T00:00:00&#43;00:00">
+  
+
+  
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+<script>
+  window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#2962ff",
+          "text": "#fff"
+        },
+        "button": {
+          "background": "#fff",
+          "text": "#2962ff"
+        }
+      },
+      "theme": "classic",
+      "content": {
+        "message": "This website uses cookies to ensure you get the best experience on our website.",
+        "dismiss": "Got it!",
+        "link": "Learn more",
+        "href": "/privacy/"
+      }
+    })});
+</script>
+
+
+  
+
+  <title>A Scientist&#39;s Guide to R: Step 2.3 - string manipulation and regex | Craig Hutton, PhD</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#TableOfContents" data-offset="71" >
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" role="textbox" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/"><img src="/img/Picture1.png" alt="Craig Hutton, PhD"></a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav mr-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#skills">
+            
+            <span>Skills</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#experience">
+            
+            <span>Experience</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publications">
+            
+            <span>Publications</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#accomplishments">
+            
+            <span>Awards</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+      
+      </ul>
+      <ul class="navbar-nav ml-auto">
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="article-header d-xl-none">
+  <div class="featured-image" style="background-image: url('/post/2020-05-17-asgr-2-3-string-manipulation/featured_hu3922ef13c9d2627cf512baf19fc48074_35544_800x0_resize_lanczos_2.png');"></div>
+  
+</div>
+
+
+<div class="container-fluid split-header d-none d-xl-block">
+  <div class="row">
+    <div class="col-6">
+      <div class="split-header-content">
+        <h1 itemprop="name">A Scientist&#39;s Guide to R: Step 2.3 - string manipulation and regex</h1>
+
+        
+
+        
+
+
+
+<meta content="2020-06-28 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2020-06-28 00:00:00 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>Jun 28, 2020</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    22 min read
+  </span>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <a href="/post/2020-05-17-asgr-2-3-string-manipulation/#disqus_thread"></a>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder"></i>
+    <a href="/categories/r/">R</a>, <a href="/categories/reproducible-research/">Reproducible Research</a>, <a href="/categories/data-cleaning-and-transformation/">Data Cleaning and Transformation</a></span>
+  
+
+  
+
+</div>
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=A%20Scientist%27s%20Guide%20to%20R%3a%20Step%202.3%20-%20string%20manipulation%20and%20regex&amp;url=%2fpost%2f2020-05-17-asgr-2-3-string-manipulation%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2f2020-05-17-asgr-2-3-string-manipulation%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2f2020-05-17-asgr-2-3-string-manipulation%2f&amp;title=A%20Scientist%27s%20Guide%20to%20R%3a%20Step%202.3%20-%20string%20manipulation%20and%20regex"
+         target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2f2020-05-17-asgr-2-3-string-manipulation%2f&amp;title=A%20Scientist%27s%20Guide%20to%20R%3a%20Step%202.3%20-%20string%20manipulation%20and%20regex"
+         target="_blank" rel="noopener">
+        <i class="fab fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=A%20Scientist%27s%20Guide%20to%20R%3a%20Step%202.3%20-%20string%20manipulation%20and%20regex&amp;body=%2fpost%2f2020-05-17-asgr-2-3-string-manipulation%2f">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="split-header-image">
+        <img src="/post/2020-05-17-asgr-2-3-string-manipulation/featured_hu3922ef13c9d2627cf512baf19fc48074_35544_680x500_fill_q90_lanczos_smart1_2.png" itemprop="image" alt="">
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="article-container d-xl-none">
+  <h1 itemprop="name">A Scientist&#39;s Guide to R: Step 2.3 - string manipulation and regex</h1>
+
+  
+
+  
+
+
+
+<meta content="2020-06-28 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2020-06-28 00:00:00 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>Jun 28, 2020</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    22 min read
+  </span>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <a href="/post/2020-05-17-asgr-2-3-string-manipulation/#disqus_thread"></a>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder"></i>
+    <a href="/categories/r/">R</a>, <a href="/categories/reproducible-research/">Reproducible Research</a>, <a href="/categories/data-cleaning-and-transformation/">Data Cleaning and Transformation</a></span>
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=&amp;url="
+         target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u="
+         target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=&amp;title="
+         target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=&amp;title="
+         target="_blank" rel="noopener">
+        <i class="fab fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=&amp;body=">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+<div id="TOC">
+<ul>
+<li><a href="#tldr"><span class="toc-section-number">1</span> <strong>TL;DR</strong></a></li>
+<li><a href="#introduction"><span class="toc-section-number">2</span> <strong>Introduction</strong></a></li>
+<li><a href="#regular-expressions"><span class="toc-section-number">3</span> <strong>Regular expressions</strong></a></li>
+<li><a href="#detecting-pattern-matches-with-str_detect-str_which-str_count-and-str_locate."><span class="toc-section-number">4</span> <strong>Detecting pattern matches</strong> with <code>str_detect()</code>, <code>str_which()</code>, <code>str_count()</code>, and <code>str_locate()</code>.</a></li>
+<li><a href="#subsetting-strings-data-frames-with-str_subset-str_sub-str_match-str_extract."><span class="toc-section-number">5</span> <strong>Subsetting strings &amp; data frames</strong> with <code>str_subset()</code>, <code>str_sub()</code>, <code>str_match()</code>, &amp; <code>str_extract()</code>.</a></li>
+<li><a href="#combining-and-splitting-strings-using-str_c-str_flatten-str_split-str_glue."><span class="toc-section-number">6</span> <strong>Combining and splitting strings</strong> using <code>str_c()</code>, <code>str_flatten()</code>, <code>str_split()</code>, &amp; <code>str_glue()</code>.</a></li>
+<li><a href="#manage-the-lenghts-of-strings-using-str_length-str_pad-str_trunc-str_trim"><span class="toc-section-number">7</span> <strong>Manage the lenghts of strings</strong> using <code>str_length()</code>, <code>str_pad()</code>, <code>str_trunc()</code>, &amp; <code>str_trim()</code></a></li>
+<li><a href="#mutating-strings-with-str_sub-str_replace-str_replace_all-str_remove-str_remove_all"><span class="toc-section-number">8</span> <strong>Mutating strings</strong> with <code>str_sub()</code>, <code>str_replace()</code>, <code>str_replace_all()</code>, <code>str_remove()</code>, &amp; <code>str_remove_all()</code></a></li>
+<li><a href="#you-can-modify-the-case-of-a-string-using-str_to_lower-str_to_upper-str_to_title-str_to_sentence"><span class="toc-section-number">9</span> You can <strong>modify the case of a string</strong> using <code>str_to_lower()</code>, <code>str_to_upper()</code>, <code>str_to_title()</code>, &amp; <code>str_to_sentence()</code></a></li>
+<li><a href="#example-application-using-str_detect-or-str_which-to-subset-with-data-frames"><span class="toc-section-number">10</span> Example application: Using <code>str_detect()</code> or <code>str_which()</code> to subset with data frames</a></li>
+<li><a href="#navigation"><span class="toc-section-number">11</span> Navigation</a></li>
+<li><a href="#notes"><span class="toc-section-number">12</span> Notes</a></li>
+</ul>
+</div>
+
+<div id="tldr" class="section level1">
+<h1><span class="header-section-number">1</span> <strong>TL;DR</strong></h1>
+<p>Being able to work with character strings is an essential skill in data analysis and science. In this post we’ll learn a few of the ways in which the <a href="https://stringr.tidyverse.org/index.html">stringr</a> package and regular expressions (AKA “regex” or “regexps”) makes working with strings in R considerably easier.</p>
+</div>
+<div id="introduction" class="section level1">
+<h1><span class="header-section-number">2</span> <strong>Introduction</strong></h1>
+<p>The 7th post of the <a href="https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/">Scientist’s Guide to R series</a> is all about showing you how to work with strings in R, using the intuitive <a href="https://stringr.tidyverse.org/index.html">stringr</a> package from the <a href="https://www.tidyverse.org/">tidyverse</a>. You’ll also learn about regular expressions, which allow you to use concisely specified patterns to search, subset, and modify strings. This is quite a large topic, so for this post I’ll focus on some of the more common operations that I’ve had to use in my work as an academic researcher and data scientist. Usually, this means working with strings vectors that are columns in data frames or the names of the columns in a data frame (which you may recall we can get with the base R <code>names()</code> function). Specifically, we’ll consider:</p>
+<ul>
+<li><p>What regular expressions are and how to use them.</p></li>
+<li><p>Detecting, locating, and counting pattern matches with <code>str_detect()</code>, <code>str_which()</code>, <code>str_locate()</code>, &amp; <code>str_count()</code>.</p></li>
+<li><p>Subset strings with <code>str_subset()</code>, <code>str_sub()</code>, &amp; <code>str_extract()</code>.</p></li>
+<li><p>Combining and splitting strings using <code>str_c()</code>, <code>str_flatten()</code>, <code>str_split()</code>, &amp; <code>str_glue()</code>.</p></li>
+<li><p>Manage lengths of strings with <code>str_length()</code>, <code>str_pad()</code>, <code>str_trunc()</code>, &amp; <code>str_trim()</code>.</p></li>
+<li><p>Mutate strings using <code>str_sub()</code>, <code>str_replace()</code>, &amp; <code>str_remove()</code>.</p></li>
+<li><p>Alter the case of strings with <code>str_to_lower()</code>, <code>str_to_upper()</code>, &amp; <code>str_to_title()</code>.</p></li>
+</ul>
+<p>Note: as usual, at this point in the blog series I’ll assume you’re familiar with the pipe operator (<code>%&gt;%</code>). To refresh your memory or if you’re reading about the pipe operator for the 1st time, see <a href="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#chaining-functions-with-the-pipe-operator">this section</a> of an earlier post.</p>
+</div>
+<div id="regular-expressions" class="section level1">
+<h1><span class="header-section-number">3</span> <strong>Regular expressions</strong></h1>
+<p>Regular expressions, or “regexps” for short, are a powerful way to work with patterns in strings. Becoming familiar with regexps is well worth the effort in the time they will save you. Regex allows you to match patterns in strings using a set of special characters that tell regexps-supported functions in R how to concisely describe the pattern in question. You can learn more about regular expressions <a href="https://www.regular-expressions.info/">here</a>, <a href="https://bookdown.org/rdpeng/rprogdatascience/regular-expressions.html">here</a>, and <a href="https://en.wikipedia.org/wiki/Regular_expression">here</a>. I won’t be using all of these in the subsequent demonstrations of the <a href="https://stringr.tidyverse.org/">stringr</a> functions (to keep things simple), but listing the majority of the available options will be useful as future reference for us to use in constructing regexps.</p>
+<p>In this post we’ll focus on some of the most common special chararcters you’ll need, specifically (<code>special character</code> = definition):</p>
+<p><strong>Basics</strong>:</p>
+<ul>
+<li><p><code>^</code> = start of a string</p></li>
+<li><p><code>$</code> = end of a string</p></li>
+<li><p><code>.</code> = any character</p></li>
+<li><p><code>[:digit:]</code> = any digit (use an extra set of square brackets for base R functions that accept regexps)</p></li>
+<li><p><code>[:alpha:]</code> = any letter</p></li>
+<li><p><code>[:alnum:]</code> = letters and/or numbers</p></li>
+<li><p><code>[:punct:]</code> = punctuation characters</p></li>
+<li><p><code>[:graph:]</code> = letters, numbers, and punctuation characters</p></li>
+<li><p><code>[:lower:]</code> = lowercase letters only</p></li>
+<li><p><code>[:upper:]</code> = uppercase letters only</p></li>
+<li><p><code>[:space:]</code> = empty spaces</p></li>
+<li><p><code>[:blank:]</code> = empty spaces or tabs</p></li>
+</ul>
+<p><strong>Quantifiers</strong> These are useful when you want to match a pattern a specific number of times (based on the preceding character in the regexp):</p>
+<ul>
+<li><p><code>*</code> = matches the preceding character any number of times</p></li>
+<li><p><code>+</code> = matches the preceding character once</p></li>
+<li><p><code>?</code> = matches the predecing character at most once (i.e. optionally)</p></li>
+<li><p><code>{n}</code> = matches the preceding character exactly <strong>n</strong> times</p></li>
+<li><p><code>{n, }</code> = <strong>n</strong> or more times</p></li>
+<li><p><code>{n, m}</code> = between <strong>n</strong> &amp; <strong>m</strong> times</p></li>
+</ul>
+<p><strong>Alternatives &amp; look-arounds</strong> are useful for matching patterns more flexibly:</p>
+<ul>
+<li><p><code>|</code> = or (just like the base R logical operator), e.g. the regexp “apples|oranges” would look for apples or oranges</p></li>
+<li><p><code>[abc]</code> = one of <strong>a</strong>, <strong>b</strong>, or <strong>c</strong> (or whatever else you put within the <strong>[ ]</strong>)</p></li>
+<li><p><code>[t-z]</code> = a letter from <strong>t</strong> to <strong>z</strong></p></li>
+<li><p><code>[^abc]</code> = anything other than <strong>a</strong>, <strong>b</strong>, or <strong>c</strong></p></li>
+<li><p><code>(?=)</code> = look ahead, e.g. <code>i(?=e)</code> = <strong>i</strong> when it comes before <strong>e</strong></p></li>
+<li><p><code>(?!)</code> = negative look ahead, e.g. <code>i(?!e)</code> <strong>i</strong> when it comes before something that isn’t <strong>e</strong></p></li>
+<li><p><code>(?&lt;)</code> = look behind, e.g. <code>(?&lt;=e)i</code> = <strong>i</strong> when it follows <strong>e</strong></p></li>
+<li><p><code>(?&lt;!)</code> = negative look behind, e.g. <code>(?&lt;!e)i</code> = <strong>i</strong> when it does not follow <strong>e</strong></p></li>
+</ul>
+<p><strong>Capturing pattern groups</strong></p>
+<p>Parentheses can be used to specify the order of evaluation (as for mathematical expressions) and to <em>caputure</em> groups or components of regexps. After defining pattern groups this way, you can refer to the groups using “\\n”, where n is the group number, assigned to groups in the regexp in order from left to right. The most common reason you would want to do this is to replace patterns using <code>str_replace()</code> or <code>str_replace_all()</code>, as will be demonstrated below in the section on mutating strings.</p>
+<p><strong>Escaping characters</strong></p>
+<p>What if you want to search for a literal “.” or “$” rather than use the special regexp characters for “any character” or “the end of a string”. This can be accomplished by <em>escaping</em> the character, which simply means putting one or more backslashes “\” in front of it. So to search for a literal period, “.”, you could use “\\.”</p>
+<p>Aside from the characters above, most of the rest of a regexp will consist of the literal text you want to match. For example, the regexp “<code>^[Ss]un.*</code>” when applied to a string vector of the days of the week, would match entries for “Sunday” or “sunday” since these entries start with (^) an “S” or an “s”, followed by the literal characters “un”, then any character (“.”) repeated any number of times (asterisk).</p>
+</div>
+<div id="detecting-pattern-matches-with-str_detect-str_which-str_count-and-str_locate." class="section level1">
+<h1><span class="header-section-number">4</span> <strong>Detecting pattern matches</strong> with <code>str_detect()</code>, <code>str_which()</code>, <code>str_count()</code>, and <code>str_locate()</code>.</h1>
+<p>To use any of the stringr functions, we 1st need to load the stringr package via the <code>library()</code> function</p>
+<pre class="r"><code>library(tidyverse) #note: stringr is installed and loaded with the tidyverse</code></pre>
+<p>We’ll start exploring the uses of some of these special characters with some basic regexps by submitting them to the pattern arguments (2nd argument) of <code>str_detect()</code>, <code>str_which()</code>, <code>str_count()</code>, and <code>str_locate()</code></p>
+<p><code>str_detect()</code> finds matches for a regexp and returns a logical vector that is <strong>TRUE</strong> for matching entries, and <strong>FALSE</strong> for non-matching entries.</p>
+<pre class="r"><code>days &lt;- rep(c(&quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;, &quot;Thursday&quot;, &quot;Friday&quot;, &quot;Saturday&quot;, &quot;Sunday&quot;), 10) #1st we&#39;ll construct a vector of weekdays, repeated 10 times
+
+#note that stringr also has a function called str_dup() which can be used to replicate/duplicate string values.
+
+str_detect(days, &quot;^[Ss]un.*&quot;) #every 7th entry is a match</code></pre>
+<pre><code>##  [1] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+## [13] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+## [25] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+## [37] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+## [49]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+## [61] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE</code></pre>
+<pre class="r"><code>#in this case, since Su appears uniquely for the Sunday entries, we could also just use &quot;Su&quot; for the regexp
+
+identical(str_detect(days, &quot;Su&quot;), str_detect(days, &quot;^[Ss]un.*&quot;))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>#str_detect() is the tidyverse equivalent to the grepl() function in base R
+identical(grepl(&quot;Su&quot;, days), str_detect(days, &quot;Su&quot;))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>#the main advantages of str_detect() are that the string is the 1st argument
+#(i.e. it is pipe friendly), and there many of the stringr functions also have a
+#&quot;negate&quot; option which allows you to look for non-matching entries instead of
+#matching entries, e.g.
+
+days %&gt;% str_detect(&quot;Su&quot;, negate = T) #find non-matches instead of matches</code></pre>
+<pre><code>##  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [13]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
+## [25]  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE
+## [37]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [49] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE
+## [61]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE</code></pre>
+<p><code>str_which()</code> returns the indices of matches for a regexp and returns a numeric vector, i.e. it tells you <em>which</em> entries are matches.</p>
+<pre class="r"><code>days %&gt;% str_which(&quot;^M&quot;) #indices of matching entries, in this case starting with a capital &quot;M&quot; (for &quot;Monday&quot;)</code></pre>
+<pre><code>##  [1]  1  8 15 22 29 36 43 50 57 64</code></pre>
+<pre class="r"><code>days %&gt;% str_which(&quot;^M&quot;, negate = T) #indices of non-matching entries</code></pre>
+<pre><code>##  [1]  2  3  4  5  6  7  9 10 11 12 13 14 16 17 18 19 20 21 23 24 25 26 27 28 30
+## [26] 31 32 33 34 35 37 38 39 40 41 42 44 45 46 47 48 49 51 52 53 54 55 56 58 59
+## [51] 60 61 62 63 65 66 67 68 69 70</code></pre>
+<pre class="r"><code>#if there were non-day values in our weekday vector, we could use either of
+#these functions to identify the unusual values, e.g.
+
+#replace 10 randomly selected values with a non-weekday entry, like a &quot;day off&quot;
+#of work... which can happen irregularly if you&#39;re a grad student ;) lol
+
+days[sample(1:70, 10)] &lt;- &quot;day off&quot; 
+
+#find the indices of the entries which do not end in &quot;day&quot;, i.e. the indices of the days off
+days %&gt;% str_which(&quot;day$&quot;, negate = T)</code></pre>
+<pre><code>##  [1]  1 33 40 41 44 50 52 53 58 70</code></pre>
+<pre class="r"><code>#as you can see, this is useful for checking for unusual values which may be
+#data entry/coding errors.
+
+#example of the &quot;or&quot; operator in a regular expression
+
+str_which(days, &quot;(Monday|Tuesday)&quot;) #indices for entries containing either &quot;Monday&quot; or &quot;Tuesday&quot;</code></pre>
+<pre><code>##  [1]  2  8  9 15 16 22 23 29 30 36 37 43 51 57 64 65</code></pre>
+<pre class="r"><code>#which entries contain an empty space (the &quot;day off&quot; ones)?
+
+str_which(days, &quot;[:space:]{1}&quot;) #match entries containing a single {1} space [:space:]</code></pre>
+<pre><code>##  [1]  1 33 40 41 44 50 52 53 58 70</code></pre>
+<p><code>str_locate()</code> or <code>str_locate_all()</code> tell you the character positions the pattern characters are found in. I haven’t needed to use them so far.</p>
+<pre class="r"><code>days %&gt;% 
+  str_locate(&quot;day&quot;) %&gt;% #this tells us the starting and ending positions of the pattern &quot;day&quot;
+  head() #only print the 1st 6 rows of the output</code></pre>
+<pre><code>##      start end
+## [1,]     1   3
+## [2,]     5   7
+## [3,]     7   9
+## [4,]     6   8
+## [5,]     4   6
+## [6,]     6   8</code></pre>
+<pre class="r"><code>#if someone else provided us with the days vector and expected it to only
+#contain entries for days of the week, all of these values should have start
+#values greater than 1.
+
+#str_locate() will return the starting and stopping positions of the FIRST match
+#only, if you want the positions of all matches, use str_locate_all() instead.</code></pre>
+<p><code>str_count()</code> tells you how many times a pattern appears in each entry of a string/character vector. This might be most useful for checking for unexpected duplications of values when cleaning data or for extracting data from unstructured text (e.g. quantifying the number of times a specific keyword appears in an interview transcript).</p>
+<pre class="r"><code>days %&gt;% str_count(&quot;e&quot;) #number of times the letter &quot;e&quot; appears in each entry</code></pre>
+<pre><code>##  [1] 0 1 2 0 0 0 0 0 1 2 0 0 0 0 0 1 2 0 0 0 0 0 1 2 0 0 0 0 0 1 2 0 0 0 0 0 1 2
+## [39] 0 0 0 0 0 0 2 0 0 0 0 0 1 0 0 0 0 0 0 0 2 0 0 0 0 0 1 2 0 0 0 0</code></pre>
+</div>
+<div id="subsetting-strings-data-frames-with-str_subset-str_sub-str_match-str_extract." class="section level1">
+<h1><span class="header-section-number">5</span> <strong>Subsetting strings &amp; data frames</strong> with <code>str_subset()</code>, <code>str_sub()</code>, <code>str_match()</code>, &amp; <code>str_extract()</code>.</h1>
+<p>For the remainer of this post we’ll work with the gapminder data, which you may recall from eariler posts contains data on life expectancy, population, and GDP per capita for 142 countries.</p>
+<pre class="r"><code>library(gapminder) #load the gapminder package containing the gapminder data
+
+gapminder %&gt;% glimpse() #show the structure of a data frame using dplyr::glimpse()</code></pre>
+<pre><code>## Rows: 1,704
+## Columns: 6
+## $ country   &lt;fct&gt; Afghanistan, Afghanistan, Afghanistan, Afghanistan, Afgha...
+## $ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asi...
+## $ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 199...
+## $ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 4...
+## $ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372,...
+## $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.113...</code></pre>
+<p>One of the first things we learned about was how to use “patterns” with numeric vectors via base R <a href="https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/#logical-operators">logical comparison operators</a> like <code>&gt;</code>, <code>&lt;</code>, <code>&lt;=</code>, or <code>&gt;=</code>. The <code>str_subset()</code>, <code>str_sub()</code>, <code>str_match()</code>, &amp; <code>str_extract()</code> from <code>stringr</code> help us subset strings<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p><code>str_subset()</code> returns all values in a vector which match a pattern. We could use it to figure out which countries in the gapminder data begin with an A or C and also end with an A or C.</p>
+<pre class="r"><code>subsetted_country_names &lt;- gapminder$country %&gt;% 
+  unique() %&gt;% #just get the unique() values to drop duplicates for a vector
+  str_subset(&quot;^[AC].*a$&quot;) 
+#above pattern = starts with (^) an A or C ([AC]), then anything (.) repeated
+#any number of times (*), then a lower case &quot;a&quot; at the end ($).
+
+subsetted_country_names %&gt;% head()</code></pre>
+<pre><code>## [1] &quot;Albania&quot;   &quot;Algeria&quot;   &quot;Angola&quot;    &quot;Argentina&quot; &quot;Australia&quot; &quot;Austria&quot;</code></pre>
+<pre class="r"><code>#A tidyverse-only alternative to the $ symbol for &quot;pulling&quot; a variable from a
+#data frame is the pull() function
+
+gapminder %&gt;% 
+  pull(country) %&gt;% 
+  unique() %&gt;%  
+  str_subset(&quot;^[AC].*a$&quot;) %&gt;% 
+  identical(subsetted_country_names)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>You may recall that this behaviour is similar to the <code>matches()</code> “tidy-select” helper function that you can use to <code>select()</code> columns with dplyr (which was loaded as one of the tidyverse packages). For example,</p>
+<pre class="r"><code>gap_c_cols &lt;- gapminder %&gt;% select(matches(&quot;^c&quot;))
+
+gap_c_cols %&gt;% 
+  head() #only print the 1st 6 rows</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   country     continent
+##   &lt;fct&gt;       &lt;fct&gt;    
+## 1 Afghanistan Asia     
+## 2 Afghanistan Asia     
+## 3 Afghanistan Asia     
+## 4 Afghanistan Asia     
+## 5 Afghanistan Asia     
+## 6 Afghanistan Asia</code></pre>
+<p>is equivalent to</p>
+<pre class="r"><code>c_names &lt;- gapminder %&gt;% names() %&gt;% str_subset(&quot;^c&quot;)
+
+all.equal(
+  #recall that we can subset columns with a character vector of names
+  gapminder[, c_names],  
+          gap_c_cols  #compare to the select(matches()) version
+  )</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>#more on stringr for subsetting data frames later...</code></pre>
+<p>While, I don’t expect anyone to use <code>str_subset()</code> and <code>[]</code> instead of <code>dplyr::select()</code> &amp; <code>tidyselect::matches()</code>, the take home message here is that the fact that the column names of a data frame are a also a string vector means that you can use stringr functions to work with them.</p>
+<p><code>str_sub()</code> extracts parts of strings based on their position with the start and end arguments</p>
+<pre class="r"><code>gap_names &lt;- gapminder %&gt;% names
+
+gap_names %&gt;% str_sub(start = 1, end = 6) #return the 1st 6 characters of each column name</code></pre>
+<pre><code>## [1] &quot;countr&quot; &quot;contin&quot; &quot;year&quot;   &quot;lifeEx&quot; &quot;pop&quot;    &quot;gdpPer&quot;</code></pre>
+<pre class="r"><code>gap_names %&gt;% str_sub(start = -3, end = -1) #return the last 3 characters of each column name</code></pre>
+<pre><code>## [1] &quot;try&quot; &quot;ent&quot; &quot;ear&quot; &quot;Exp&quot; &quot;pop&quot; &quot;cap&quot;</code></pre>
+<p><code>str_extract()</code> is useful is you want to extract just the part of the string matching the specified regex instead of the entire entry as would be returned by <code>str_subset()</code>. For example, if you some data on names and phone numbers in the same column, you might want to extract just the phone number or name portions.</p>
+<pre class="r"><code>x &lt;- c(&quot;Bob: 250-999-8888&quot;, &quot;Emily: 416-908-2004&quot;, &quot;Roger: 204-192-9879&quot;, &quot;Lindsay: 250-209-3047&quot;)
+
+#extract just the phone numbers using a regex that detects 3 numbers followed by
+#a dash, then 3 numbers, another dash, then 4 numbers
+str_extract(x, &quot;[:digit:]{3}-[:digit:]{3}-[:digit:]{4}&quot;) </code></pre>
+<pre><code>## [1] &quot;250-999-8888&quot; &quot;416-908-2004&quot; &quot;204-192-9879&quot; &quot;250-209-3047&quot;</code></pre>
+<pre class="r"><code>#extract just the names with a regex that matches a sequence of letters &quot;[:alpha:]&quot;
+#of arbitrary length &quot;*&quot;
+str_extract(x, &quot;[:alpha:]*&quot;) </code></pre>
+<pre><code>## [1] &quot;Bob&quot;     &quot;Emily&quot;   &quot;Roger&quot;   &quot;Lindsay&quot;</code></pre>
+<p>It is worth mentioning that within each entry of the string vector <code>str_extract()</code> will pull the first set of values matching the specified pattern, so in the example above, if we had first and last names separated by a space, we would only get the 1st one with the <code>[:alpha:]*</code> pattern I used. To extract all matches, we could use <code>str_extract_all()</code> instead.</p>
+<pre class="r"><code>x &lt;- c(&quot;Bob Jones: 250-999-8888&quot;, &quot;Emily Robins: 416-908-2004&quot;, 
+       &quot;Roger Smith: 204-192-9879&quot;, &quot;Lindsay Richards: 250-209-3047&quot;)
+
+#only returns the 1st name (the 1st match)
+str_extract(x, &quot;[:alpha:]*&quot;) </code></pre>
+<pre><code>## [1] &quot;Bob&quot;     &quot;Emily&quot;   &quot;Roger&quot;   &quot;Lindsay&quot;</code></pre>
+<pre class="r"><code>#str_extract_all() returns both names (all matches), but gives you a list
+#(simplify = FALSE, the default) or matrix (simplify = TRUE)
+str_extract_all(x, &quot;[:alpha:]{2,}&quot;, simplify = TRUE) </code></pre>
+<pre><code>##      [,1]      [,2]      
+## [1,] &quot;Bob&quot;     &quot;Jones&quot;   
+## [2,] &quot;Emily&quot;   &quot;Robins&quot;  
+## [3,] &quot;Roger&quot;   &quot;Smith&quot;   
+## [4,] &quot;Lindsay&quot; &quot;Richards&quot;</code></pre>
+<pre class="r"><code>#here I used the {2, } quantifier for &quot;2 or more&quot; because the * quantifier returns a bunch of empty
+#strings as well.
+
+#alternatively, we could just pass a more complex regex to the pattern argument
+#of str_extract() to look for the 1st set of letters and 2nd set of letters with
+#a space between them
+
+str_extract(x, &quot;[:alpha:]* [:alpha:]*&quot;)</code></pre>
+<pre><code>## [1] &quot;Bob Jones&quot;        &quot;Emily Robins&quot;     &quot;Roger Smith&quot;      &quot;Lindsay Richards&quot;</code></pre>
+<pre class="r"><code>#of course that will only work if the names are formatted consitently, e.g. no
+#commas between names</code></pre>
+</div>
+<div id="combining-and-splitting-strings-using-str_c-str_flatten-str_split-str_glue." class="section level1">
+<h1><span class="header-section-number">6</span> <strong>Combining and splitting strings</strong> using <code>str_c()</code>, <code>str_flatten()</code>, <code>str_split()</code>, &amp; <code>str_glue()</code>.</h1>
+<p><code>str_c()</code> is very useful if you want to combine multiple strings or other vectors into a single character vector on an element-wise basis. I often use this to add an indicator string to the names of a data frame before joining it to another one to make it easy to keep track of which columns came from which data frame.</p>
+<pre class="r"><code>nms &lt;- names(gapminder) #store the original names
+
+nms &lt;- str_c(names(gapminder), &quot;_gap&quot;) #add _gap to the end of each column name
+
+nms</code></pre>
+<pre><code>## [1] &quot;country_gap&quot;   &quot;continent_gap&quot; &quot;year_gap&quot;      &quot;lifeExp_gap&quot;  
+## [5] &quot;pop_gap&quot;       &quot;gdpPercap_gap&quot;</code></pre>
+<pre class="r"><code>#in contrast, the c() operator from base R, would not do the combination on an
+#elementwise basis and just adds &quot;_gap&quot; as a separate entry at the end of the
+#names vector
+
+names(gapminder) %&gt;% c(&quot;_gap&quot;)</code></pre>
+<pre><code>## [1] &quot;country&quot;   &quot;continent&quot; &quot;year&quot;      &quot;lifeExp&quot;   &quot;pop&quot;       &quot;gdpPercap&quot;
+## [7] &quot;_gap&quot;</code></pre>
+<p><code>str_flatten()</code> collapses a string vector into a single string (i.e. a character vector of length 1)</p>
+<pre class="r"><code>str_flatten(c(&quot;a_3&quot;, &quot;d_54&quot;), #vector to collapse
+            collapse =  &quot; &quot;) #character(s) to insert between each piece</code></pre>
+<pre><code>## [1] &quot;a_3 d_54&quot;</code></pre>
+<p><code>str_split()</code> splits a string into a list or matrix of pieces based on a supplied pattern</p>
+<pre class="r"><code>str_split(c(&quot;a_3&quot;, &quot;d_54&quot;), pattern = &quot;_&quot;) #pattern to use for splitting. returns a list.</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;a&quot; &quot;3&quot;
+## 
+## [[2]]
+## [1] &quot;d&quot;  &quot;54&quot;</code></pre>
+<pre class="r"><code>str_split(c(&quot;a_3&quot;, &quot;d_54&quot;), pattern = &quot;_&quot;, simplify = TRUE) #returns a matrix</code></pre>
+<pre><code>##      [,1] [,2]
+## [1,] &quot;a&quot;  &quot;3&quot; 
+## [2,] &quot;d&quot;  &quot;54&quot;</code></pre>
+<p><code>str_glue()</code> is a convenience wrapper for the <a href="https://github.com/tidyverse/glue">glue::glue()</a> function, which allows you to interpolate strings and values that have been assigned to names in R. To insert a value, you simply wrap it in <code>{}</code>:</p>
+<pre class="r"><code>y &lt;- Sys.Date() #store the current date
+str_glue(&quot;today is {y}&quot;)</code></pre>
+<pre><code>## today is 2020-06-28</code></pre>
+<pre class="r"><code>nm &lt;- &quot;Craig&quot;
+str_glue(&quot;Hi, my name is {nm}&quot;)</code></pre>
+<pre><code>## Hi, my name is Craig</code></pre>
+<pre class="r"><code>a &lt;- 5
+str_glue(&quot;a = {a}&quot;)</code></pre>
+<pre><code>## a = 5</code></pre>
+<pre class="r"><code>#the base R equivalent is the paste0 function, which requires separating the
+#text and values with commas. This still accomplishes the same thing, but the
+#code doesn&#39;t look quite as nice.
+paste0(&quot;today is &quot;, y)</code></pre>
+<pre><code>## [1] &quot;today is 2020-06-28&quot;</code></pre>
+</div>
+<div id="manage-the-lenghts-of-strings-using-str_length-str_pad-str_trunc-str_trim" class="section level1">
+<h1><span class="header-section-number">7</span> <strong>Manage the lenghts of strings</strong> using <code>str_length()</code>, <code>str_pad()</code>, <code>str_trunc()</code>, &amp; <code>str_trim()</code></h1>
+<p><code>str_length()</code> tells you how how many characters are in each entry of a character vector</p>
+<pre class="r"><code>names(gapminder)</code></pre>
+<pre><code>## [1] &quot;country&quot;   &quot;continent&quot; &quot;year&quot;      &quot;lifeExp&quot;   &quot;pop&quot;       &quot;gdpPercap&quot;</code></pre>
+<pre class="r"><code>str_length(names(gapminder))</code></pre>
+<pre><code>## [1] 7 9 4 7 3 9</code></pre>
+<p><code>str_pad()</code> standardizes the length of strings in a character vector by padding it on the left or right ends with a specified character (by default, a space)</p>
+<pre class="r"><code>str_pad(string = names(gapminder), 
+        width = 9, #the minimum width of the string to fill/pad positions up to
+        side = &quot;both&quot;, #the side to insert the extra characters on (left, right, or both)
+        pad = &quot;_&quot;) #single character to use for padding </code></pre>
+<pre><code>## [1] &quot;_country_&quot; &quot;continent&quot; &quot;__year___&quot; &quot;_lifeExp_&quot; &quot;___pop___&quot; &quot;gdpPercap&quot;</code></pre>
+<p><code>str_trunc()</code> standardizes string lengths in the opposite direction, by controlling the maximum width and truncating strings longer which are longer than this</p>
+<pre class="r"><code>str_trunc(string = names(gapminder), 
+        width = 7, #the maximum width to allow for strings
+        side= &quot;right&quot;,
+        ellipsis = &quot;...&quot;) #entries which have been truncated will show this to indicate that something has been removed</code></pre>
+<pre><code>## [1] &quot;country&quot; &quot;cont...&quot; &quot;year&quot;    &quot;lifeExp&quot; &quot;pop&quot;     &quot;gdpP...&quot;</code></pre>
+<p><code>str_trim()</code> removes empty spaces on the ends of a string</p>
+<pre class="r"><code>#add some whitespace
+padded_names &lt;- names(gapminder) %&gt;% str_pad(12, &quot;both&quot;)
+
+padded_names</code></pre>
+<pre><code>## [1] &quot;  country   &quot; &quot; continent  &quot; &quot;    year    &quot; &quot;  lifeExp   &quot; &quot;    pop     &quot;
+## [6] &quot; gdpPercap  &quot;</code></pre>
+<pre class="r"><code>#remove it
+str_trim(padded_names)</code></pre>
+<pre><code>## [1] &quot;country&quot;   &quot;continent&quot; &quot;year&quot;      &quot;lifeExp&quot;   &quot;pop&quot;       &quot;gdpPercap&quot;</code></pre>
+</div>
+<div id="mutating-strings-with-str_sub-str_replace-str_replace_all-str_remove-str_remove_all" class="section level1">
+<h1><span class="header-section-number">8</span> <strong>Mutating strings</strong> with <code>str_sub()</code>, <code>str_replace()</code>, <code>str_replace_all()</code>, <code>str_remove()</code>, &amp; <code>str_remove_all()</code></h1>
+<p><code>str_sub()</code> can also be used to replace values based on position when combined with the assignment operator (<code>&lt;-</code>)</p>
+<pre class="r"><code>gap_names &lt;- gapminder %&gt;% names
+
+str_sub(gap_names, end = 1) &lt;- &quot;X_&quot; #replace the 1st character with &quot;X_&quot;
+
+gap_names  </code></pre>
+<pre><code>## [1] &quot;X_ountry&quot;   &quot;X_ontinent&quot; &quot;X_ear&quot;      &quot;X_ifeExp&quot;   &quot;X_op&quot;      
+## [6] &quot;X_dpPercap&quot;</code></pre>
+<pre class="r"><code>#the main downside to this is that it modifies the original string vector, so
+#you would need to recreate it if you make a mistake
+
+gap_names &lt;- gapminder %&gt;% names #recreate the original gap_names vector</code></pre>
+<p>To modify a copy instead, you can use <code>str_replace()</code> or <code>str_replace_all()</code>. <code>str_replace()</code> replaces the 1st match in each entry of the string vector, while <code>str_repalce_all()</code> replaces all matches. I almost always use <code>str_replace_all()</code> instead of <code>str_replace()</code>.</p>
+<pre class="r"><code>gap_names &lt;- gapminder %&gt;% names
+
+str_replace(gap_names, 
+            pattern = &quot;^.{3}&quot;, #match the 1st 3 characters of each string in the vector
+            replacement = &quot;X_&quot;) #replace them with with &quot;X_&quot;</code></pre>
+<pre><code>## [1] &quot;X_ntry&quot;   &quot;X_tinent&quot; &quot;X_r&quot;      &quot;X_eExp&quot;   &quot;X_&quot;       &quot;X_Percap&quot;</code></pre>
+<pre class="r"><code>gap_names  #original names vector is unaffected</code></pre>
+<pre><code>## [1] &quot;country&quot;   &quot;continent&quot; &quot;year&quot;      &quot;lifeExp&quot;   &quot;pop&quot;       &quot;gdpPercap&quot;</code></pre>
+<pre class="r"><code>countries &lt;- unique(gapminder$country)
+
+#replace all lower case a&#39;s with A&#39;s flanked by &quot;_&quot; to make it obvious what has changed
+str_replace(countries, 
+            pattern = &quot;a&quot;, 
+            replacement = &quot;_A_&quot;) %&gt;%   #replace them with with &quot;_A_&quot;
+  head()</code></pre>
+<pre><code>## [1] &quot;Afgh_A_nistan&quot; &quot;Alb_A_nia&quot;     &quot;Algeri_A_&quot;     &quot;Angol_A_&quot;     
+## [5] &quot;Argentin_A_&quot;   &quot;Austr_A_lia&quot;</code></pre>
+<pre class="r"><code>#replace all lower case e&#39;s with E&#39;s
+countries &lt;- str_replace_all(countries, 
+            pattern = &quot;e&quot;, 
+            replacement = &quot;E&quot;)  #replace them with with &quot;E&quot;
+
+countries %&gt;% head()</code></pre>
+<pre><code>## [1] &quot;Afghanistan&quot; &quot;Albania&quot;     &quot;AlgEria&quot;     &quot;Angola&quot;      &quot;ArgEntina&quot;  
+## [6] &quot;Australia&quot;</code></pre>
+<pre class="r"><code>#to delete part of a string, you can just set the replacement value to &quot;&quot;
+underscores_removed &lt;- str_replace_all(countries, 
+            pattern = &quot;_&quot;, 
+            replacement = &quot;&quot;) %&gt;% head() #replace them with &quot;&quot;, effectively deleting them
+underscores_removed </code></pre>
+<pre><code>## [1] &quot;Afghanistan&quot; &quot;Albania&quot;     &quot;AlgEria&quot;     &quot;Angola&quot;      &quot;ArgEntina&quot;  
+## [6] &quot;Australia&quot;</code></pre>
+<pre class="r"><code>#a shortcut for this use of str_replace() or str_replace_all() to delete regexp
+#matches are the str_remove() &amp; str_remove_all()
+str_remove_all(countries, &quot;_&quot;) %&gt;% 
+  head() %&gt;% 
+  identical(underscores_removed)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="you-can-modify-the-case-of-a-string-using-str_to_lower-str_to_upper-str_to_title-str_to_sentence" class="section level1">
+<h1><span class="header-section-number">9</span> You can <strong>modify the case of a string</strong> using <code>str_to_lower()</code>, <code>str_to_upper()</code>, <code>str_to_title()</code>, &amp; <code>str_to_sentence()</code></h1>
+<pre class="r"><code>str_to_lower(&quot;AFTER such a long HIKE in the sun, the BEER was very refreshing&quot;)</code></pre>
+<pre><code>## [1] &quot;after such a long hike in the sun, the beer was very refreshing&quot;</code></pre>
+<pre class="r"><code>str_to_upper(&quot;after such a long hike in the sun, the beer was very refreshing&quot;)</code></pre>
+<pre><code>## [1] &quot;AFTER SUCH A LONG HIKE IN THE SUN, THE BEER WAS VERY REFRESHING&quot;</code></pre>
+<pre class="r"><code>str_to_title(&quot;after such a long hike in the sun, the beer was very refreshing&quot;)</code></pre>
+<pre><code>## [1] &quot;After Such A Long Hike In The Sun, The Beer Was Very Refreshing&quot;</code></pre>
+<pre class="r"><code>str_to_sentence(&quot;after such a long hike in the sun, the beer was very refreshing&quot;)</code></pre>
+<pre><code>## [1] &quot;After such a long hike in the sun, the beer was very refreshing&quot;</code></pre>
+</div>
+<div id="example-application-using-str_detect-or-str_which-to-subset-with-data-frames" class="section level1">
+<h1><span class="header-section-number">10</span> Example application: Using <code>str_detect()</code> or <code>str_which()</code> to subset with data frames</h1>
+<p>We saw one example of this earlier, but here are a few more. You can use these functions for subsetting because they return logical vectors or vectors of indices.</p>
+<p>Recall from a prior post that we can subset <a href="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#select">columns</a> or <a href="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#filter">rows</a> using vectors of indices or logical (TRUE/FALSE) values.</p>
+<pre class="r"><code>names(gapminder)</code></pre>
+<pre><code>## [1] &quot;country&quot;   &quot;continent&quot; &quot;year&quot;      &quot;lifeExp&quot;   &quot;pop&quot;       &quot;gdpPercap&quot;</code></pre>
+<pre class="r"><code>gapminder[, c(1, 4, 6)] %&gt;% names() #columns 1, 4, 6</code></pre>
+<pre><code>## [1] &quot;country&quot;   &quot;lifeExp&quot;   &quot;gdpPercap&quot;</code></pre>
+<pre class="r"><code>gapminder[, c(TRUE, FALSE, TRUE, FALSE, FALSE, FALSE)] %&gt;% names() #columns 1 &amp; 3</code></pre>
+<pre><code>## [1] &quot;country&quot; &quot;year&quot;</code></pre>
+<p>We can take advantage of this to select columns using a regexp via the <code>str_detect()</code> or <code>str_which()</code> functions</p>
+<pre class="r"><code>gap_names &lt;- names(gapminder)
+
+gapminder[, str_detect(gap_names, &quot;^c&quot;)] %&gt;% names() #columns with names starting with (^) a c</code></pre>
+<pre><code>## [1] &quot;country&quot;   &quot;continent&quot;</code></pre>
+<pre class="r"><code>gapminder[, str_which(gap_names, &quot;p$&quot;)] %&gt;% names() #columns with names that end ($) in p</code></pre>
+<pre><code>## [1] &quot;lifeExp&quot;   &quot;pop&quot;       &quot;gdpPercap&quot;</code></pre>
+<p>While it’s unlikley that you would ever do this in practice given that <code>dplyr::select()</code> makes it a bit easier, the same logic can be used for subsetting rows using regexps, which is something that <code>dplyr::filter()</code> doesn’t do on its own.</p>
+<pre class="r"><code>CI_rows &lt;- str_which(gapminder$country, &quot;Canada|Italy&quot;) #get the indices of the rows with data for Canada or (|) Italy
+
+CI_rows %&gt;% head() #view the 1st 6</code></pre>
+<pre><code>## [1] 241 242 243 244 245 246</code></pre>
+<pre class="r"><code>gapminder[CI_rows, ] %&gt;% head</code></pre>
+<pre><code>## # A tibble: 6 x 6
+##   country continent  year lifeExp      pop gdpPercap
+##   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+## 1 Canada  Americas   1952    68.8 14785584    11367.
+## 2 Canada  Americas   1957    70.0 17010154    12490.
+## 3 Canada  Americas   1962    71.3 18985849    13462.
+## 4 Canada  Americas   1967    72.1 20819767    16077.
+## 5 Canada  Americas   1972    72.9 22284500    18971.
+## 6 Canada  Americas   1977    74.2 23796400    22091.</code></pre>
+<pre class="r"><code>#str_detect() yields the same results
+identical(gapminder[str_detect(gapminder$country, &quot;Canada|Italy&quot;), ],
+          gapminder[str_which(gapminder$country, &quot;Canada|Italy&quot;), ]
+          )</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>#or if you prefer dplyr::filter() to the square bracket notation, use
+#str_detect(), an advantage of this is that when working within filter you don&#39;t
+#need to use the dataframe$variable syntax since it knows to look for the
+#variable in the data frame you&#39;ve piped in (gapminder)
+
+identical(
+  #str_detect() combined with dplyr::filter()
+  gapminder %&gt;% 
+    filter(str_detect(country, &quot;Canada|Italy&quot;)),
+  #str_detect() with [] from base R
+  gapminder[str_detect(gapminder$country, &quot;Canada|Italy&quot;), ]
+  )</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>You can see from these examples that <strong>stringr</strong> functions alone can do some of the same things that <strong>dplyr</strong> functions can, as well as building upon the functionality of some dplyr functions like <strong>filter()</strong>.</p>
+<p>Congrats! If you’ve made it here working with strings just got a whole lot easier for you…</p>
+</div>
+<div id="navigation" class="section level1">
+<h1><span class="header-section-number">11</span> Navigation</h1>
+<p>Click <a href="https://craig.rbind.io/post/2020-03-29-asgr-2-2-joining-data/">here</a> to go back to the previous post on joining data with dplyr. A link to the next one will be added as soon as I have time to write it.</p>
+</div>
+<div id="notes" class="section level1">
+<h1><span class="header-section-number">12</span> Notes</h1>
+<ul>
+<li><p>If you want to up your string manipulation game even more, you can learn more from the strings chapter of R 4 data science <a href="https://r4ds.had.co.nz/strings.html">here</a> or the stringr package documentation on <a href="https://cloud.r-project.org/web/packages/stringr/stringr.pdf">CRAN</a>, and some base R string processing functions <a href="https://stringr.tidyverse.org/articles/from-base.html">here</a>.</p></li>
+<li><p>Data scientist &amp; skilled R developer <a href="https://www.garrickadenbuie.com/">Garrick Aden-Buie</a> has also built an <a href="https://www.garrickadenbuie.com/project/regexplain/">Addin for R studio, via the regexplain package</a> that can make it easier to work with regexps, which you may find helpful.</p></li>
+<li><p>While it is a good idea to develop some direct knowledge of regexps for simple cases like the ones we’ve explored here, the <a href="https://github.com/richierocks/rebus">rebus</a> and/or <a href="https://github.com/martineastwood/Regularity">Regularity</a> packages can make building complex regexps quite a bit easier and I recommend checking them out if you’ll be working with a lot of unstructured text in your research.</p></li>
+<li><p>This isn’t something you’ll need to use often, but you can remove special characters from a string using the <code>iconv()</code> function from base R.</p></li>
+</ul>
+<p>Thank you for visiting my blog. I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>or any other type of vector if we convert it to a character class temporarily<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+
+    </div>
+
+    
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/r/">R</a>
+  
+  <a class="badge badge-light" href="/tags/r-basics/">R basics</a>
+  
+</div>
+
+
+
+    
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <div class="media author-card" itemscope itemtype="http://schema.org/Person">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu379968d4a591158aefc150dd1b891ba0_3685589_250x250_fill_q90_lanczos_center.jpg" itemprop="image" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title" itemprop="name"><a href="/authors/admin/">Dr. Craig P. Hutton</a></h5>
+      <h6 class="card-subtitle">Data Scientist | Behavioural Neuroscientist</h6>
+      
+      <ul class="network-icon" aria-hidden="true">
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="/#contact" >
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://twitter.com/huttoncp" target="_blank" rel="noopener">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://scholar.google.ca/citations?user=bMNjAzkAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+              <i class="ai ai-google-scholar"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://github.com/huttoncp" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+      <div class="article-widget">
+        <div class="hr-light"></div>
+        <h3>Related</h3>
+        <ul>
+          
+          <li><a href="/post/2020-03-29-asgr-2-2-joining-data/">A Scientist&#39;s Guide to R: Step 2.2 - Joining Data with dplyr</a></li>
+          
+          <li><a href="/post/2020-01-25-asgr-2-1-data-transformation-part-2/">A Scientist&#39;s Guide to R: Step 2.1 Data Transformation - part 2</a></li>
+          
+          <li><a href="/post/2019-12-30-asgr-2-1-data-transformation-part-1/">A Scientist&#39;s Guide to R: Step 2.1. Data Transformation - Part 1</a></li>
+          
+          <li><a href="/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/">A Scientist&#39;s Guide to R: Step 2.0. Basic Operations &amp; Data Structures</a></li>
+          
+          <li><a href="/post/2019-06-22-asgr-1-getting-data-into-r/">A Scientist&#39;s Guide to R: Step 1. Getting Data into R</a></li>
+          
+        </ul>
+      </div>
+      
+    
+
+    
+
+    <div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://craig-rbind-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  </div>
+</article>
+
+<div class="container">
+  <footer class="site-footer">
+  
+  <p class="powered-by">
+    <a href="/privacy/">Privacy Policy</a>
+  </p>
+  
+
+  <p class="powered-by">
+    Copyright © 2020 by Craig P. Hutton &middot; 
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+</div>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+      
+
+      
+      
+    
+
+    
+    
+
+    
+    
+    
+    <script id="dsq-count-scr" src="//craig-rbind-io.disqus.com/count.js" async></script>
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.ee8463f2a394889d45e169a983fe913d.js"></script>
+
+  </body>
+</html>
+

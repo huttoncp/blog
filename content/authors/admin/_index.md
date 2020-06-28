@@ -23,8 +23,8 @@ academic interests:
 
 name: Dr. Craig P. Hutton
 organizations:
-- name: Office of the Chief Information Officer, Ministry of Citizens' Services, Province of British Columbia
-  url: "https://www2.gov.bc.ca/gov/content/governments/organizational-structure/ministries-organizations/central-government-agencies/office-of-the-chief-information-officer"
+- name: Ministry of Social Development & Poverty Reduction, Province of British Columbia
+  url: "https://www2.gov.bc.ca/gov/content/governments/organizational-structure/ministries-organizations/ministries/social-development-poverty-reduction"
 - name: Data Science Studio, Institute on Aging & Lifelong Health, University of Victoria
   url: "https://dss-ialh.rbind.io"
 - name: Christie Lab, Division of Medical Sciences, University of Victoria
@@ -52,6 +52,6 @@ user_groups:
 
 I am a scientist working within the domains of machine learning and mental health. My diverse background in behavioural neuroscience, applied statistics, and epidemiology leads me to apply a multidisciplinary and creative approach to doing research. I deeply enjoy solving complex problems and exploring new ideas.
 
-I’ve worked both as an independent contributor and as a leader of teams of up to 10. In my current role as a Data Science Fellow with the Province of British Columbia I primarily work in R and SQL.
+I’ve worked both as an independent contributor and as a leader of teams of up to 10. In my current role as a Data Scientist with the Province of British Columbia I primarily work in R and SQL.
 
-In my free time I enjoy coding, reading, biking, hiking, playing guitar, listening to live music, and visiting with friends and family.
+In my free time I enjoy coding, gaming, reading, biking, hiking, playing guitar, listening to live music, and visiting with friends and family.
