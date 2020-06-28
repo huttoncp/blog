@@ -112,7 +112,7 @@ In this post we'll focus on some of the most common special chararcters you'll n
   
 **Capturing pattern groups**
 
-Parentheses can be used to specify the order of evaluation (as for mathematical expressions) and to *caputure* groups or components of regexps. After defining pattern groups this way, you can refer to the groups using "\\\\n", where n is the group number, assigned to groups in the regexp in order from left to right. The most common reason you would want to do this is to replace patterns using `str_replace()` or `str_replace_all()`, as will be demonstrated below in the section on mutating strings.
+Parentheses can be used to specify the order of evaluation (as for mathematical expressions) and to *capture* groups or components of regexps. After defining pattern groups this way, you can refer to the groups using "\\\\n", where n is the group number, assigned to groups in the regexp in order from left to right. The most common reason you would want to do this is to replace patterns using `str_replace()` or `str_replace_all()`, as will be demonstrated below in the section on mutating strings.
 
 **Escaping characters**
 
@@ -209,7 +209,7 @@ days %>% str_count("e") #number of times the letter "e" appears in each entry
 
 # **Subsetting strings & data frames** with `str_subset()`, `str_sub()`, `str_match()`, & `str_extract()`.
 
-For the remainer of this post we'll work with the gapminder data, which you may recall from eariler posts contains data on life expectancy, population, and GDP per capita for 142 countries.
+For the remainer of this post we'll work with the gapminder data, which you may recall from earlier posts contains data on life expectancy, population, and GDP per capita for 142 countries.
 
 ```{r, eval = T, cache=TRUE}
 library(gapminder) #load the gapminder package containing the gapminder data
@@ -270,7 +270,7 @@ all.equal(
 #more on stringr for subsetting data frames later...
 ```
 
-While, I don't expect anyone to use `str_subset()` and `[]` instead of `dplyr::select()` & `tidyselect::matches()`, the take home message here is that the fact that the column names of a data frame are a also a string vector means that you can use stringr functions to work with them.
+While, I don't expect anyone to use `str_subset()` and `[]` instead of `dplyr::select()` & `tidyselect::matches()`, the take home message here is that the fact that the column names of a data frame are also a string vector means that you can use stringr functions to work with them.
 
 `str_sub()` extracts parts of strings based on their position with the start and end arguments
 ```{r, eval = T, cache = TRUE, message = FALSE}
@@ -283,7 +283,7 @@ gap_names %>% str_sub(start = -3, end = -1) #return the last 3 characters of eac
 ```
 
 
-`str_extract()` is useful is you want to extract just the part of the string matching the specified regex instead of the entire entry as would be returned by `str_subset()`. For example, if you some data on names and phone numbers in the same column, you might want to extract just the phone number or name portions.
+`str_extract()` is useful if you want to extract just the part of the string matching the specified regex instead of the entire entry as would be returned by `str_subset()`. For example, if you have some data on names and phone numbers in the same column, you might want to extract just the phone number or name portions.
 
 ```{r, eval = T, cache = TRUE, message = FALSE}
 x <- c("Bob: 250-999-8888", "Emily: 416-908-2004", "Roger: 204-192-9879", "Lindsay: 250-209-3047")
@@ -380,9 +380,9 @@ paste0("today is ", y)
 ```
 
 
-# **Manage the lenghts of strings** using `str_length()`, `str_pad()`, `str_trunc()`, & `str_trim()`
+# **Manage the lengths of strings** using `str_length()`, `str_pad()`, `str_trunc()`, & `str_trim()`
 
-`str_length()` tells you how how many characters are in each entry of a character vector
+`str_length()` tells you how many characters are in each entry of a character vector
 ```{r, eval = T, cache = TRUE, message = FALSE}
 
 names(gapminder)

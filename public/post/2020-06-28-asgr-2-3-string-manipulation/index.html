@@ -27,7 +27,7 @@
   
     
   
-  <meta name="description" content="1 TL;DR2 Introduction3 Regular expressions4 Detecting pattern matches with str_detect(), str_which(), str_count(), and str_locate().5 Subsetting strings &amp; data frames with str_subset(), str_sub(), str_match(), &amp; str_extract().6 Combining and splitting strings using str_c(), str_flatten(), str_split(), &amp; str_glue().7 Manage the lenghts of strings using str_length(), str_pad(), str_trunc(), &amp; str_trim()8 Mutating strings with str_sub(), str_replace(), str_replace_all(), str_remove(), &amp; str_remove_all()9 You can modify the case of a string using str_to_lower(), str_to_upper(), str_to_title(), &amp; str_to_sentence()10 Example application: Using str_detect() or str_which() to subset with data frames11 Navigation12 Notes1 TL;DRBeing able to work with character strings is an essential skill in data analysis and science.">
+  <meta name="description" content="1 TL;DR2 Introduction3 Regular expressions4 Detecting pattern matches with str_detect(), str_which(), str_count(), and str_locate().5 Subsetting strings &amp; data frames with str_subset(), str_sub(), str_match(), &amp; str_extract().6 Combining and splitting strings using str_c(), str_flatten(), str_split(), &amp; str_glue().7 Manage the lengths of strings using str_length(), str_pad(), str_trunc(), &amp; str_trim()8 Mutating strings with str_sub(), str_replace(), str_replace_all(), str_remove(), &amp; str_remove_all()9 You can modify the case of a string using str_to_lower(), str_to_upper(), str_to_title(), &amp; str_to_sentence()10 Example application: Using str_detect() or str_which() to subset with data frames11 Navigation12 Notes1 TL;DRBeing able to work with character strings is an essential skill in data analysis and science.">
 
   
   <link rel="alternate" hreflang="en-us" href="/post/2020-06-28-asgr-2-3-string-manipulation/">
@@ -135,7 +135,7 @@
   <meta property="og:site_name" content="Craig Hutton, PhD">
   <meta property="og:url" content="/post/2020-06-28-asgr-2-3-string-manipulation/">
   <meta property="og:title" content="A Scientist&#39;s Guide to R: Step 2.3 - string manipulation and regex | Craig Hutton, PhD">
-  <meta property="og:description" content="1 TL;DR2 Introduction3 Regular expressions4 Detecting pattern matches with str_detect(), str_which(), str_count(), and str_locate().5 Subsetting strings &amp; data frames with str_subset(), str_sub(), str_match(), &amp; str_extract().6 Combining and splitting strings using str_c(), str_flatten(), str_split(), &amp; str_glue().7 Manage the lenghts of strings using str_length(), str_pad(), str_trunc(), &amp; str_trim()8 Mutating strings with str_sub(), str_replace(), str_replace_all(), str_remove(), &amp; str_remove_all()9 You can modify the case of a string using str_to_lower(), str_to_upper(), str_to_title(), &amp; str_to_sentence()10 Example application: Using str_detect() or str_which() to subset with data frames11 Navigation12 Notes1 TL;DRBeing able to work with character strings is an essential skill in data analysis and science."><meta property="og:image" content="/post/2020-06-28-asgr-2-3-string-manipulation/featured.png">
+  <meta property="og:description" content="1 TL;DR2 Introduction3 Regular expressions4 Detecting pattern matches with str_detect(), str_which(), str_count(), and str_locate().5 Subsetting strings &amp; data frames with str_subset(), str_sub(), str_match(), &amp; str_extract().6 Combining and splitting strings using str_c(), str_flatten(), str_split(), &amp; str_glue().7 Manage the lengths of strings using str_length(), str_pad(), str_trunc(), &amp; str_trim()8 Mutating strings with str_sub(), str_replace(), str_replace_all(), str_remove(), &amp; str_remove_all()9 You can modify the case of a string using str_to_lower(), str_to_upper(), str_to_title(), &amp; str_to_sentence()10 Example application: Using str_detect() or str_which() to subset with data frames11 Navigation12 Notes1 TL;DRBeing able to work with character strings is an essential skill in data analysis and science."><meta property="og:image" content="/post/2020-06-28-asgr-2-3-string-manipulation/featured.png">
   <meta property="og:locale" content="en-us">
   
   <meta property="article:published_time" content="2020-06-28T00:00:00&#43;00:00">
@@ -765,7 +765,7 @@
 <li><a href="#detecting-pattern-matches-with-str_detect-str_which-str_count-and-str_locate."><span class="toc-section-number">4</span> <strong>Detecting pattern matches</strong> with <code>str_detect()</code>, <code>str_which()</code>, <code>str_count()</code>, and <code>str_locate()</code>.</a></li>
 <li><a href="#subsetting-strings-data-frames-with-str_subset-str_sub-str_match-str_extract."><span class="toc-section-number">5</span> <strong>Subsetting strings &amp; data frames</strong> with <code>str_subset()</code>, <code>str_sub()</code>, <code>str_match()</code>, &amp; <code>str_extract()</code>.</a></li>
 <li><a href="#combining-and-splitting-strings-using-str_c-str_flatten-str_split-str_glue."><span class="toc-section-number">6</span> <strong>Combining and splitting strings</strong> using <code>str_c()</code>, <code>str_flatten()</code>, <code>str_split()</code>, &amp; <code>str_glue()</code>.</a></li>
-<li><a href="#manage-the-lenghts-of-strings-using-str_length-str_pad-str_trunc-str_trim"><span class="toc-section-number">7</span> <strong>Manage the lenghts of strings</strong> using <code>str_length()</code>, <code>str_pad()</code>, <code>str_trunc()</code>, &amp; <code>str_trim()</code></a></li>
+<li><a href="#manage-the-lengths-of-strings-using-str_length-str_pad-str_trunc-str_trim"><span class="toc-section-number">7</span> <strong>Manage the lengths of strings</strong> using <code>str_length()</code>, <code>str_pad()</code>, <code>str_trunc()</code>, &amp; <code>str_trim()</code></a></li>
 <li><a href="#mutating-strings-with-str_sub-str_replace-str_replace_all-str_remove-str_remove_all"><span class="toc-section-number">8</span> <strong>Mutating strings</strong> with <code>str_sub()</code>, <code>str_replace()</code>, <code>str_replace_all()</code>, <code>str_remove()</code>, &amp; <code>str_remove_all()</code></a></li>
 <li><a href="#you-can-modify-the-case-of-a-string-using-str_to_lower-str_to_upper-str_to_title-str_to_sentence"><span class="toc-section-number">9</span> You can <strong>modify the case of a string</strong> using <code>str_to_lower()</code>, <code>str_to_upper()</code>, <code>str_to_title()</code>, &amp; <code>str_to_sentence()</code></a></li>
 <li><a href="#example-application-using-str_detect-or-str_which-to-subset-with-data-frames"><span class="toc-section-number">10</span> Example application: Using <code>str_detect()</code> or <code>str_which()</code> to subset with data frames</a></li>
@@ -832,7 +832,7 @@
 <li><p><code>(?&lt;!)</code> = negative look behind, e.g. <code>(?&lt;!e)i</code> = <strong>i</strong> when it does not follow <strong>e</strong></p></li>
 </ul>
 <p><strong>Capturing pattern groups</strong></p>
-<p>Parentheses can be used to specify the order of evaluation (as for mathematical expressions) and to <em>caputure</em> groups or components of regexps. After defining pattern groups this way, you can refer to the groups using “\\n”, where n is the group number, assigned to groups in the regexp in order from left to right. The most common reason you would want to do this is to replace patterns using <code>str_replace()</code> or <code>str_replace_all()</code>, as will be demonstrated below in the section on mutating strings.</p>
+<p>Parentheses can be used to specify the order of evaluation (as for mathematical expressions) and to <em>capture</em> groups or components of regexps. After defining pattern groups this way, you can refer to the groups using “\\n”, where n is the group number, assigned to groups in the regexp in order from left to right. The most common reason you would want to do this is to replace patterns using <code>str_replace()</code> or <code>str_replace_all()</code>, as will be demonstrated below in the section on mutating strings.</p>
 <p><strong>Escaping characters</strong></p>
 <p>What if you want to search for a literal “.” or “$” rather than use the special regexp characters for “any character” or “the end of a string”. This can be accomplished by <em>escaping</em> the character, which simply means putting one or more backslashes “\” in front of it. So to search for a literal period, “.”, you could use “\\.”</p>
 <p>Aside from the characters above, most of the rest of a regexp will consist of the literal text you want to match. For example, the regexp “<code>^[Ss]un.*</code>” when applied to a string vector of the days of the week, would match entries for “Sunday” or “sunday” since these entries start with (^) an “S” or an “s”, followed by the literal characters “un”, then any character (“.”) repeated any number of times (asterisk).</p>
@@ -890,25 +890,25 @@ days[sample(1:70, 10)] &lt;- &quot;day off&quot;
 
 #find the indices of the entries which do not end in &quot;day&quot;, i.e. the indices of the days off
 days %&gt;% str_which(&quot;day$&quot;, negate = T)</code></pre>
-<pre><code>##  [1]  1 33 40 41 44 50 52 53 58 70</code></pre>
+<pre><code>##  [1]  2 12 15 18 27 36 41 58 67 70</code></pre>
 <pre class="r"><code>#as you can see, this is useful for checking for unusual values which may be
 #data entry/coding errors.
 
 #example of the &quot;or&quot; operator in a regular expression
 
 str_which(days, &quot;(Monday|Tuesday)&quot;) #indices for entries containing either &quot;Monday&quot; or &quot;Tuesday&quot;</code></pre>
-<pre><code>##  [1]  2  8  9 15 16 22 23 29 30 36 37 43 51 57 64 65</code></pre>
+<pre><code>##  [1]  1  8  9 16 22 23 29 30 37 43 44 50 51 57 64 65</code></pre>
 <pre class="r"><code>#which entries contain an empty space (the &quot;day off&quot; ones)?
 
 str_which(days, &quot;[:space:]{1}&quot;) #match entries containing a single {1} space [:space:]</code></pre>
-<pre><code>##  [1]  1 33 40 41 44 50 52 53 58 70</code></pre>
+<pre><code>##  [1]  2 12 15 18 27 36 41 58 67 70</code></pre>
 <p><code>str_locate()</code> or <code>str_locate_all()</code> tell you the character positions the pattern characters are found in. I haven’t needed to use them so far.</p>
 <pre class="r"><code>days %&gt;% 
   str_locate(&quot;day&quot;) %&gt;% #this tells us the starting and ending positions of the pattern &quot;day&quot;
   head() #only print the 1st 6 rows of the output</code></pre>
 <pre><code>##      start end
-## [1,]     1   3
-## [2,]     5   7
+## [1,]     4   6
+## [2,]     1   3
 ## [3,]     7   9
 ## [4,]     6   8
 ## [5,]     4   6
@@ -921,12 +921,12 @@ str_which(days, &quot;[:space:]{1}&quot;) #match entries containing a single {1}
 #only, if you want the positions of all matches, use str_locate_all() instead.</code></pre>
 <p><code>str_count()</code> tells you how many times a pattern appears in each entry of a string/character vector. This might be most useful for checking for unexpected duplications of values when cleaning data or for extracting data from unstructured text (e.g. quantifying the number of times a specific keyword appears in an interview transcript).</p>
 <pre class="r"><code>days %&gt;% str_count(&quot;e&quot;) #number of times the letter &quot;e&quot; appears in each entry</code></pre>
-<pre><code>##  [1] 0 1 2 0 0 0 0 0 1 2 0 0 0 0 0 1 2 0 0 0 0 0 1 2 0 0 0 0 0 1 2 0 0 0 0 0 1 2
-## [39] 0 0 0 0 0 0 2 0 0 0 0 0 1 0 0 0 0 0 0 0 2 0 0 0 0 0 1 2 0 0 0 0</code></pre>
+<pre><code>##  [1] 0 0 2 0 0 0 0 0 1 2 0 0 0 0 0 1 2 0 0 0 0 0 1 2 0 0 0 0 0 1 2 0 0 0 0 0 1 2
+## [39] 0 0 0 0 0 1 2 0 0 0 0 0 1 2 0 0 0 0 0 0 2 0 0 0 0 0 1 2 0 0 0 0</code></pre>
 </div>
 <div id="subsetting-strings-data-frames-with-str_subset-str_sub-str_match-str_extract." class="section level1">
 <h1><span class="header-section-number">5</span> <strong>Subsetting strings &amp; data frames</strong> with <code>str_subset()</code>, <code>str_sub()</code>, <code>str_match()</code>, &amp; <code>str_extract()</code>.</h1>
-<p>For the remainer of this post we’ll work with the gapminder data, which you may recall from eariler posts contains data on life expectancy, population, and GDP per capita for 142 countries.</p>
+<p>For the remainer of this post we’ll work with the gapminder data, which you may recall from earlier posts contains data on life expectancy, population, and GDP per capita for 142 countries.</p>
 <pre class="r"><code>library(gapminder) #load the gapminder package containing the gapminder data
 
 gapminder %&gt;% glimpse() #show the structure of a data frame using dplyr::glimpse()</code></pre>
@@ -981,7 +981,7 @@ all.equal(
   )</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>#more on stringr for subsetting data frames later...</code></pre>
-<p>While, I don’t expect anyone to use <code>str_subset()</code> and <code>[]</code> instead of <code>dplyr::select()</code> &amp; <code>tidyselect::matches()</code>, the take home message here is that the fact that the column names of a data frame are a also a string vector means that you can use stringr functions to work with them.</p>
+<p>While, I don’t expect anyone to use <code>str_subset()</code> and <code>[]</code> instead of <code>dplyr::select()</code> &amp; <code>tidyselect::matches()</code>, the take home message here is that the fact that the column names of a data frame are also a string vector means that you can use stringr functions to work with them.</p>
 <p><code>str_sub()</code> extracts parts of strings based on their position with the start and end arguments</p>
 <pre class="r"><code>gap_names &lt;- gapminder %&gt;% names
 
@@ -989,7 +989,7 @@ gap_names %&gt;% str_sub(start = 1, end = 6) #return the 1st 6 characters of eac
 <pre><code>## [1] &quot;countr&quot; &quot;contin&quot; &quot;year&quot;   &quot;lifeEx&quot; &quot;pop&quot;    &quot;gdpPer&quot;</code></pre>
 <pre class="r"><code>gap_names %&gt;% str_sub(start = -3, end = -1) #return the last 3 characters of each column name</code></pre>
 <pre><code>## [1] &quot;try&quot; &quot;ent&quot; &quot;ear&quot; &quot;Exp&quot; &quot;pop&quot; &quot;cap&quot;</code></pre>
-<p><code>str_extract()</code> is useful is you want to extract just the part of the string matching the specified regex instead of the entire entry as would be returned by <code>str_subset()</code>. For example, if you some data on names and phone numbers in the same column, you might want to extract just the phone number or name portions.</p>
+<p><code>str_extract()</code> is useful if you want to extract just the part of the string matching the specified regex instead of the entire entry as would be returned by <code>str_subset()</code>. For example, if you have some data on names and phone numbers in the same column, you might want to extract just the phone number or name portions.</p>
 <pre class="r"><code>x &lt;- c(&quot;Bob: 250-999-8888&quot;, &quot;Emily: 416-908-2004&quot;, &quot;Roger: 204-192-9879&quot;, &quot;Lindsay: 250-209-3047&quot;)
 
 #extract just the phone numbers using a regex that detects 3 numbers followed by
@@ -1075,9 +1075,9 @@ str_glue(&quot;a = {a}&quot;)</code></pre>
 paste0(&quot;today is &quot;, y)</code></pre>
 <pre><code>## [1] &quot;today is 2020-06-28&quot;</code></pre>
 </div>
-<div id="manage-the-lenghts-of-strings-using-str_length-str_pad-str_trunc-str_trim" class="section level1">
-<h1><span class="header-section-number">7</span> <strong>Manage the lenghts of strings</strong> using <code>str_length()</code>, <code>str_pad()</code>, <code>str_trunc()</code>, &amp; <code>str_trim()</code></h1>
-<p><code>str_length()</code> tells you how how many characters are in each entry of a character vector</p>
+<div id="manage-the-lengths-of-strings-using-str_length-str_pad-str_trunc-str_trim" class="section level1">
+<h1><span class="header-section-number">7</span> <strong>Manage the lengths of strings</strong> using <code>str_length()</code>, <code>str_pad()</code>, <code>str_trunc()</code>, &amp; <code>str_trim()</code></h1>
+<p><code>str_length()</code> tells you how many characters are in each entry of a character vector</p>
 <pre class="r"><code>names(gapminder)</code></pre>
 <pre><code>## [1] &quot;country&quot;   &quot;continent&quot; &quot;year&quot;      &quot;lifeExp&quot;   &quot;pop&quot;       &quot;gdpPercap&quot;</code></pre>
 <pre class="r"><code>str_length(names(gapminder))</code></pre>
