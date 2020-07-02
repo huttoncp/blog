@@ -5,7 +5,7 @@ headless = true  # This file represents a page section.
 active = true  # Activate this widget? true/false
 weight = 70  # Order that this section will appear.
 
-title = "Certificates and Awards"
+title = "Awards"
 subtitle = ""
 
 # Date format
@@ -18,35 +18,35 @@ date_format = "Jan 2006"
 #   Leave other parameters empty if not required.
 #   Begin/end multi-line descriptions with 3 quotes `"""`.
 
-[[item]]
-  organization = "DataCamp"
-  organization_url = "https://www.datacamp.com"
-  title = "Machine Learning Scientist with R"
-  url = "https://www.datacamp.com/tracks/machine-learning-scientist-with-r"
-  certificate_url = "https://www.datacamp.com/statement-of-accomplishment/track/eb8c0847a4091a6d8c0ce253439fa01ed212d164"
-  date_start = "2019-11-26"
-  date_end = ""
-  description = ""
+# [[item]]
+#   organization = "DataCamp"
+#   organization_url = "https://www.datacamp.com"
+#   title = "Machine Learning Scientist with R"
+#   url = "https://www.datacamp.com/tracks/machine-learning-scientist-with-r"
+#   certificate_url = "https://www.datacamp.com/statement-of-accomplishment/track/eb8c0847a4091a6d8c0ce253439fa01ed212d164"
+#   date_start = "2019-11-26"
+#   date_end = ""
+#   description = ""
 
-[[item]]
-  organization = "DataCamp"
-  organization_url = "https://www.datacamp.com"
-  title = "SQL Fundamentals"
-  url = "https://www.datacamp.com/tracks/sql-fundamentals?version=1"
-  certificate_url = "https://www.datacamp.com/statement-of-accomplishment/track/287af4ae37b84a3c601e51fb3ba2b786d7fbdaaa"
-  date_start = "2019-06-17"
-  date_end = ""
-  description = ""
+# [[item]]
+#   organization = "DataCamp"
+#   organization_url = "https://www.datacamp.com"
+#   title = "SQL Fundamentals"
+#   url = "https://www.datacamp.com/tracks/sql-fundamentals?version=1"
+#   certificate_url = "https://www.datacamp.com/statement-of-accomplishment/track/287af4ae37b84a3c601e51fb3ba2b786d7fbdaaa"
+#   date_start = "2019-06-17"
+#   date_end = ""
+#   description = ""
 
-[[item]]
-  organization = "DataCamp"
-  organization_url = "https://www.datacamp.com"
-  title = "Data Scientist with R"
-  url = "https://www.datacamp.com/tracks/data-scientist-with-r"
-  certificate_url = "https://www.datacamp.com/statement-of-accomplishment/track/d93f99689712277406ce586742bfdc4eca60ba7b"
-  date_start = "2019-01-21"
-  date_end = ""
-  description = ""
+# [[item]]
+#   organization = "DataCamp"
+#   organization_url = "https://www.datacamp.com"
+#   title = "Data Scientist with R"
+#   url = "https://www.datacamp.com/tracks/data-scientist-with-r"
+#   certificate_url = "https://www.datacamp.com/statement-of-accomplishment/track/d93f99689712277406ce586742bfdc4eca60ba7b"
+#   date_start = "2019-01-21"
+#   date_end = ""
+#   description = ""
 
 [[item]]
   organization = "Ontario Ministry of Advanced Education and Skills Development"
