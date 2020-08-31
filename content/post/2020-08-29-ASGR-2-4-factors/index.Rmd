@@ -338,7 +338,7 @@ Click [here](https://craig.rbind.io/post/2020-06-28-asgr-2-3-string-manipulation
 
 # Notes
 
-  * To learn more about factors and dates in R see [this chapter](https://r4ds.had.co.nz/factors.html) and [this chapter](https://r4ds.had.co.nz/dates-and-times.html) of [R 4 Data Science](https://r4ds.had.co.nz/).
+  * To learn more about factors and dates in R see [this chapter](https://r4ds.had.co.nz/factors.html) of [R 4 Data Science](https://r4ds.had.co.nz/).
   
   * A further bonus of the forcats functions like `fct_reorder()` is that you can give them a character vector instead of a factor as input they will automatically convert that character vector into a factor for you (However, unlike the stringr functions, this doesn't work for other vector types like numeric/integer vectors). 
 
