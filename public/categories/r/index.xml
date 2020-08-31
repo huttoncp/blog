@@ -7,10 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
-    <lastBuildDate>Sun, 28 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 27 Sep 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A Scientist&#39;s Guide to R: Step 2.5 - dates &amp; times</title>
+      <link>/post/2020-09-27-asgr-2-5-dates/</link>
+      <pubDate>Sun, 27 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020-09-27-asgr-2-5-dates/</guid>
+      <description>1 TL;DR2 Introduction2.1 load packages3 date/time basics4 which day is it?5 reading dates6 time zones7 month names8 extracting datetime components9 days in a month10 custom date formats11 date calculations12 correcting excel date-to-numeric conversions13 lubridate for planning a behavioural neuroscience experiment14 Navigation15 Notes1 TL;DRDatetimes are the last type of data you’ll encounter on a fairly regular basis.</description>
+    </item>
+    
+    <item>
+      <title>A Scientist&#39;s Guide to R: Step 2.4 - forcats for factors</title>
+      <link>/post/2020-08-29-asgr-2-4-factors/</link>
+      <pubDate>Sat, 29 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020-08-29-asgr-2-4-factors/</guid>
+      <description>1 TL;DR2 Introduction2.1 load packages2.2 import data3 Factor basics4 factors and data visualization5 factors and modelling6 Navigation7 Notes1 TL;DRFactors are one of the two remaining types of data you’ll encounter on a fairly regular basis. This post will show you how to use the forcats tidyverse package in R so you’ll know how to handle factors when you encounter them.</description>
+    </item>
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 2.3 - string manipulation and regex</title>

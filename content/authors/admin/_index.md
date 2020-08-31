@@ -27,8 +27,6 @@ organizations:
   url: "https://www2.gov.bc.ca/gov/content/governments/organizational-structure/ministries-organizations/ministries/social-development-poverty-reduction"
 - name: Data Science Studio, Institute on Aging & Lifelong Health, University of Victoria
   url: "https://dss-ialh.rbind.io"
-- name: Christie Lab, Division of Medical Sciences, University of Victoria
-  url: "https://www.uvic.ca/medsci/people/post-docs/index.php"
 
 role: Data Scientist | Behavioural Neuroscientist
 social:

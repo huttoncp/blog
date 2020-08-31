@@ -1,0 +1,345 @@
+---
+title: 'A Scientist''s Guide to R: Step 2.4 - forcats for factors'
+author: 'Craig Hutton'
+date: '2020-08-29'
+slug: 
+categories:
+  - R
+  - Reproducible Research
+  - Data Cleaning and Transformation
+tags:
+  - R
+  - R basics
+header:
+  image: ''
+  caption: ''
+  focal_point: ''
+output:
+  blogdown::html_page:
+    number_sections: true
+    toc: yes
+---
+
+
+# **TL;DR**
+
+Factors are one of the two remaining types of data you'll encounter on a fairly regular basis. This post will show you how to use the [forcats](https://forcats.tidyverse.org/) tidyverse package in R so you'll know how to handle factors when you encounter them. 
+
+![image source: https://www.shutterstock.com/](data:image/jpeg;base64,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)
+
+# **Introduction**
+
+The 8th post of the [Scientist's Guide to R series](https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/) covers how to work with factors in R and how the [forcats](https://forcats.tidyverse.org/) package can simplify the process. 
+
+*N.B.* if anything I'm covering seems strange/confusing to you and you're jumping into the series now, there's a good chance I covered it in an earlier post and you can probably find the relevant section pretty quickly with the search bar that can be accessed via the magnifying glass icon at the top right corner of the page. 
+
+## load packages
+
+As usual, we'll start by [loading the packages](https://craig.rbind.io/post/2019-06-22-asgr-1-getting-data-into-r/#installing-and-loading-r-packages) we'll need. 
+
+```{r, eval = T, cache = TRUE, message = FALSE, warning=FALSE}
+library(tidyverse) #note: forcats is installed and loaded with the tidyverse
+
+```
+
+
+## import data
+
+For this post we'll work with the gapminder data one last time so we can focus on applying new methods to data that we're already familiar with. I promise we will use something different the next time we need to import data. 
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+#in this case we import the data by loading the gapminder package
+library(gapminder) 
+```
+
+A glimpse of the structure of the gapminder data using dplyr's [glimpse()](https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/#functions-for-describing-the-structural-information-of-data-objects) function (loaded with the tidyverse) shows us that there are columns for the country and continent that are already both factors.
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+gapminder %>% glimpse() #%>% is the pipe operator (covered in an earlier post)
+```
+
+
+# **Factor basics**
+
+Factors were briefly introduced in an [earlier post](https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/#factors) as modifications of character or numeric vectors which enables them to be used as categorical variables AKA nominal variables. Categorical variables take on a few discrete values or levels, e.g. biological sex (levels = Male & Female), or continent (levels = Asia, Africa, North America, South America, Antarctica, Europe, & Australia/Oceania). If you're doing experimental work, you'll need to use a factor to represent the variable encoding your experimental conditions or treatment groups.
+
+Recall that a factor can be defined in R using the base R `factor()` function,
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+y <- rep(c("a", "b", "o"), 10) #a vector of the letters a, b, & c repeated 10x as an example 
+
+fruit_category <- factor(x = y, #vector you wish to use to define as a factor 
+                         #what are the unique values/levels of the factor 
+                         levels = c("a", "b", "o"), 
+                         #use the labels arg to change the labels of the factor
+                         #levels
+                         labels = c("Apples", "Bananas", "Oranges"),
+                         #if you want the factor to be ordered set this to TRUE
+                         #(i.e. for an ordinal variable)
+                         ordered = FALSE) 
+
+fruit_category #prints the values of the factor and tells you what the levels of it are
+
+#N.B. if you don't care about the order of factor levels and are happy with the
+#labels, you could instead convert a numeric or character vector to a factor
+#using as.factor()
+
+```
+
+To check the levels of a factor without printing out its values at the same time we can use the base R `levels()` function (similar to the base R `unique()` function for other vector types)
+```{r, eval = T, cache = TRUE, message = FALSE}
+levels(fruit_category)
+
+#this is more useful for the gapminder factors since we didn't define those
+gapminder$continent %>% levels()
+
+gapminder$country %>% levels() %>% head(10) #show the 1st 10 levels
+
+```
+
+You'll primarily end up using factors in 2 circumstances: when fitting statistical models and plotting data. Although we won't go into data visualization and modelling in too much detail until later in the series, we'll get our toes wet here to spice things up a bit.
+
+# **factors and data visualization**
+
+Ignoring the temporal nature of the data for now, let's say we were interested in looking at the median life expectancy of each continent to see if there were any differences between them.
+
+This can be done most easily using a non-parametric box-and-whisker plot, which shows the 25th percentile and 75th percentile as the bottom and top of the box, the median (i.e. 50th percentile) as a line inside the box, then whiskers extending above and below the box for more extreme values^[whiskers are plotted at 1.5x the interquartile range from the top & bottom lines of the box or the maximum/minimum value if no values are above/below that 1.5*IQR threshold] and circles for points beyond the whisker thresholds that may be outliers.
+
+We can generate a box plot in R using the base R `boxplot()` function. In case you're wondering, we *will* cover visualization techniques with the popular ggplot2 package in a future post.
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+#base R boxplot
+boxplot(lifeExp ~ continent, #formula syntax of the form y-variable ~ x-variable
+        data = gapminder)
+```
+
+
+That's great, but what if we wanted to reorder the levels of the factor so that the Americas appear first? We could redefine the continent factor using the `factor()` function, or we could use `fct_relevel()` from the forcats package (in conjunction with [dplyr::mutate()](https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#mutate)).
+
+
+```{r, eval = T, cache = TRUE, message = F}
+#if we use factor() we need to specify all levels again
+p1a <- gapminder %>%
+  #first modify the column using dplyr::mutate(), which was loaded with
+  #library(tidyverse)
+  mutate(continent = factor(continent, 
+                            levels = c("Americas", "Africa", "Asia", "Europe", "Oceania")) 
+  ) %>%
+  #recall that "." is used to specify which argument the output from whatever
+  #was before the %>% (pipe operator) should be passed to
+  boxplot(lifeExp ~ continent, data = .) 
+
+#for fct_relevel you only need to mention the levels you want to rearrange
+p1b <- gapminder %>%
+  mutate(continent = fct_relevel(continent, "Americas") 
+         #by default levels you mention move to the front
+  ) %>%
+  boxplot(lifeExp ~ continent, data = .) 
+
+identical(p1a, p1b)
+#both options have the same effect on the plot
+
+
+#if we wanted to move the data for the Americas to the end, we could use the
+#"after" argument
+gapminder %>%
+  mutate(continent = fct_relevel(continent, "Americas",
+                                 after = Inf) 
+         #here the special character set "Inf" specifies the end
+         ) %>%
+  boxplot(lifeExp ~ continent, data = .) 
+
+#or to the 4th position
+gapminder %>%
+  mutate(continent = fct_relevel(continent, "Americas",
+                                 after = 3) 
+         ) %>%
+  boxplot(lifeExp ~ continent, data = .) 
+
+
+```
+
+In addition to manually reordering the levels of a factor using `fct_relevel()`, you can reorder a factor based on another variable with `fct_reorder()`, e.g. if you want them to appear in order of ascending life expectancy:
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+gapminder %>%
+  mutate(continent = fct_reorder(continent, lifeExp) 
+         ) %>%
+  boxplot(lifeExp ~ continent, data = .) 
+
+#to sort in descending order add .desc = TRUE in the fct_reorder call.
+gapminder %>%
+  mutate(continent = fct_reorder(continent, lifeExp, 
+                                 .desc = TRUE)  
+         ) %>%
+  boxplot(lifeExp ~ continent, data = .) 
+
+```
+
+A way to remember the difference between `fct_relevel()` and `fct_reorder()` is that `fct_relevel()` allows you *manually* specify the *levels* of a factor, while `fct_reorder()` lets you re-*order* a factor based on the *order* of another variable.
+
+To modify the values of a factor you can use either the labels argument of the base R `factor()` function and (again) have to specify all values and labels, which can become tedious really fast, or you can just `forcats::fct_recode()`. For example, let's say we wanted to change continent values of "Oceania" to "Australia":
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+#base R's factor()
+gapminder %>%
+  mutate(continent = factor(continent,  
+                            #all existing unique values/levels you want to use
+                            #need to be specified
+                            levels = c("Africa", "Americas", "Asia", "Europe", "Oceania"),
+                            #one label per level needs to be specified, in the
+                            #same order as the levels
+                            labels = c("Africa", "Americas", "Asia", "Europe", "Australia"))
+         ) %>%
+  boxplot(lifeExp ~ continent, data = .) 
+
+#using forcats::fct_recode()
+gapminder %>%
+  mutate(continent = fct_recode(continent,
+                                #only the value(s) you want to recode need to be
+                                #specified
+                                "Australia" = "Oceania") #"new value" = "old value"
+         ) %>%
+  boxplot(lifeExp ~ continent, data = .) 
+```
+
+Forcats also makes it easy to aggregate levels using `fct_recode()`, `fct_collapse()`, or `fct_lump_*()`. The main difference is that `fct_recode()` is for manually recoding of categories, while `fct_lump_*()` will combine categories based on a criterion like those with counts less than a specified threshold. 
+
+For example, if we wanted to view the combined data for Europe and Asia under the label "Eurasia", we could do so using `fct_recode()` or a shortcut function called `fct_collapse()`:
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+gapminder %>%
+  mutate(continent = fct_recode(continent,
+                                #use the same label for more than one value to
+                                #aggregate
+                                "Eurasia" = "Europe",
+                                "Eurasia" = "Asia") 
+         ) %>%
+  boxplot(lifeExp ~ continent, data = .) 
+
+#a shortcut for this use of fct_recode() is fct_collapse()
+gapminder %>%
+  mutate(continent = fct_collapse(continent,
+                                "Eurasia" = c("Europe", "Asia")) 
+         ) %>%
+  boxplot(lifeExp ~ continent, data = .) 
+
+
+```
+
+Or if we wanted to aggregate the data for the continents other than the top 2 most common values we could use `fct_lump_n()`:
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+gapminder %>%
+  mutate(continent = fct_lump_n(continent, 
+                                #the n argument determines the number of levels to
+                                #retain (in order of descending frequency of
+                                #appearance)
+                                n = 2,
+                                #the other_level argument is used to set the label
+                                #for the new category representing the former
+                                #uncommon categories
+                                other_level = "Other" #default label is "Other"
+  )  
+  ) %>%
+  boxplot(lifeExp ~ continent, data = .) 
+
+#or to lump together categories appearing less than a minimum number of times,
+#use fct_lump_min()
+
+gapminder %>%
+  mutate(continent = fct_lump_min(continent, 
+                                  #the min argument defines the minimum
+                                  #frequency threshold for a category to avoid
+                                  #being lumped together. For this demo we'll
+                                  #use the mean count of each continent using
+                                  #the mean() and table() functions and lump
+                                  #together continents appearing less often than
+                                  #that
+                                  min = mean(table(gapminder$continent)))    
+  ) %>%
+  boxplot(lifeExp ~ continent, data = .) 
+
+
+```
+
+There are a few other `fct_lump_*` variants that you can learn about in the `fct_lump()` documentation. 
+
+To drop unused levels of a factor you can use `fct_drop()`. If we filter the gapminder data to drop records for Africa, we might be surprised to see that `levels(gapminder$continent)` still lists Africa as one of the levels for the continent factor (despite the fact that there are no longer any records for it). In this case, the factor retains the original level coding but one of the levels is no longer represented in the data. To remove that unused level we can use `fct_drop()`:
+
+```{r, cache = TRUE, message = FALSE}
+#save this subset as a new object so we don't overwrite the original data frame
+gap2 <- gapminder %>% 
+  filter(continent != "Africa")
+
+gap2$continent %>% levels()
+
+#check the counts of each level
+gap2$continent %>% table() #no records for Africa, as expected!
+
+#what's worse, Africa still shows up (without any data) when we try to graph
+#life expectancy as a function of continent
+boxplot(lifeExp ~ continent, gap2)
+
+#drop the unused level
+gap2 <- gap2 %>% 
+  mutate(continent = fct_drop(continent))
+
+gap2$continent %>% levels()
+
+#now we don't have to worry about it anymore
+```
+
+# **factors and modelling**
+
+To see how factor levels affect modelling, lets fit a basic linear regression model to see if life expectancy is differs between continents using the base R `lm()` & `summary()` functions.
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+#fit the model
+linear_regression_model <- lm(lifeExp ~ continent, 
+                              #dependent variable ~ independent variable(s)
+                              #AKA response ~ predictor(s)
+                              data = gapminder)
+
+#print the model results summary using the summary() function
+summary(linear_regression_model)
+
+```
+
+Ignoring most of the output for now (which will be covered in detail in a future post on modelling in R), we can see a set of t-tests for each level of the continent factor except for Africa. This is because when an lm() object is passed to the summary() function, R evaluates linear regression predictor variables that are factors by comparing each category to a baseline/reference category, which happens to be "Africa" in this case. If the assumptions of the linear regression model are valid, this output tells us if the life expectancy (what we've specified as the dependent variable) of each non-African continent is statistically equivalent or not (b/c in frequentist stats we're evaluating a null hypothesis of equivalence) compared to the life expectancy of Africa. 
+
+What if you wanted to compare each continent to the Americas instead? Just relevel the continent factor and make Americas the first level.
+
+```{r, eval = T, cache = TRUE, message = FALSE}
+#fit the model
+linear_regression_model <- lm(lifeExp ~ continent, 
+                              data = gapminder %>% 
+                                mutate(continent = 
+                                         fct_relevel(continent,
+                                                     #make Americas the new "reference" level
+                                                     "Americas"))
+                              )
+
+#print the model results summary using the summary() function
+summary(linear_regression_model)
+```
+
+Now the life expectancy of each non-American continent is being compared to the life expectancy of the Americas.
+
+BTW, in case you were wondering, we will cover how to get the usual ANOVA outputs for linear models that you may be more accustomed to seeing in a later post.
+
+Now you know the basics of the forcats package which should help you work with factors in R. Here's another cute cat picture for making it to the end...
+
+![image source: https://www.boredpanda.com/](https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQZ3_yoCc--6SFjIfacmHvYGVLsuHujAIOoVg&usqp=CAU)
+
+# Navigation
+
+Click [here](https://craig.rbind.io/post/2020-06-28-asgr-2-3-string-manipulation/) to go back to the previous post on strings and regular expressions. A link to the next one on working with dates & times in R will be added as soon as I have time to write it.
+
+# Notes
+
+  * To learn more about factors and dates in R see [this chapter](https://r4ds.had.co.nz/factors.html) and [this chapter](https://r4ds.had.co.nz/dates-and-times.html) of [R 4 Data Science](https://r4ds.had.co.nz/).
+  
+  * A further bonus of the forcats functions like `fct_reorder()` is that you can give them a character vector instead of a factor as input they will automatically convert that character vector into a factor for you (However, unlike the stringr functions, this doesn't work for other vector types like numeric/integer vectors). 
+
+Thank you for visiting my blog. I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.
