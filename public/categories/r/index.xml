@@ -7,18 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
-    <lastBuildDate>Sun, 27 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Oct 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 2.5 - dates &amp; times</title>
-      <link>/post/2020-09-27-asgr-2-5-dates/</link>
-      <pubDate>Sun, 27 Sep 2020 00:00:00 +0000</pubDate>
+      <link>/post/2020-10-10-asgr-2-5-dates/</link>
+      <pubDate>Sat, 10 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/2020-09-27-asgr-2-5-dates/</guid>
-      <description>1 TL;DR2 Introduction2.1 load packages3 date/time basics4 which day is it?5 reading dates6 time zones7 month names8 extracting datetime components9 days in a month10 custom date formats11 date calculations12 correcting excel date-to-numeric conversions13 lubridate for planning a behavioural neuroscience experiment14 Navigation15 Notes1 TL;DRDatetimes are the last type of data you’ll encounter on a fairly regular basis.</description>
+      <guid>/post/2020-10-10-asgr-2-5-dates/</guid>
+      <description>1 TL;DR2 Introduction2.1 load packages3 date/time basics4 which day is it?5 reading dates6 time zones7 month names8 extracting datetime components9 days in a month10 custom date formats11 date calculations11.1 correcting excel date-to-numeric conversions12 planning a behavioural neuroscience experiment12.1 turning the planning script into a function13 Navigation14 Notes1 TL;DRDates/times are the last type of data you’ll probably work with on a fairly regular basis.</description>
     </item>
     
     <item>

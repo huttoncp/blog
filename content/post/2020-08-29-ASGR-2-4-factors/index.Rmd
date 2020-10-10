@@ -334,7 +334,7 @@ Now you know the basics of the forcats package which should help you work with f
 
 # Navigation
 
-Click [here](https://craig.rbind.io/post/2020-06-28-asgr-2-3-string-manipulation/) to go back to the previous post on strings and regular expressions. A link to the next one on working with dates & times in R will be added as soon as I have time to write it.
+Click [here](https://craig.rbind.io/post/2020-06-28-asgr-2-3-string-manipulation/) to go back to the previous post on strings and regular expressions, or [here](https://craig.rbind.io/post/2020-10-10-ASGR-2-5-dates) to advance to the next one on working with dates & times in R will be added as soon as I have time to write it.
 
 # Notes
 
