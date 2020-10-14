@@ -213,7 +213,7 @@ This diagram from [R4DS](https://r4ds.had.co.nz/) shows you another example of h
 
 # **semi_join()**
 
-So far we've been filterting rows based on matches in the key columns but extacting all columns from both data frames. The other two main dplyr join functions are available for situations where you only want to keep the columns of one data frame (`x`). 
+So far we've been filtering rows based on matches in the key columns but extacting all columns from both data frames. The other two main dplyr join functions are available for situations where you only want to keep the columns of one data frame (`x`). 
 
 `semi_join(x, y)` filters the rows of `x` to retain only those that also appear in `y`
 
