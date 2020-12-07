@@ -7,24 +7,51 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
-    <lastBuildDate>Sat, 10 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 Nov 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Data Cleaning and Transformation</title>
-      <link>/categories/data-cleaning-and-transformation/</link>
-      <pubDate>Sat, 10 Oct 2020 00:00:00 +0000</pubDate>
+      <title>data exploration</title>
+      <link>/categories/data-exploration/</link>
+      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>/categories/data-cleaning-and-transformation/</guid>
+      <guid>/categories/data-exploration/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>data interrogation</title>
+      <link>/categories/data-interrogation/</link>
+      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/data-interrogation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>data visualisation</title>
+      <link>/categories/data-visualisation/</link>
+      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/data-visualisation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>descriptive statistics</title>
+      <link>/categories/descriptive-statistics/</link>
+      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/descriptive-statistics/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R</title>
       <link>/categories/r/</link>
-      <pubDate>Sat, 10 Oct 2020 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
       
       <guid>/categories/r/</guid>
       <description></description>
@@ -33,9 +60,18 @@
     <item>
       <title>Reproducible Research</title>
       <link>/categories/reproducible-research/</link>
-      <pubDate>Sat, 10 Oct 2020 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
       
       <guid>/categories/reproducible-research/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Data Cleaning and Transformation</title>
+      <link>/categories/data-cleaning-and-transformation/</link>
+      <pubDate>Sat, 10 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/data-cleaning-and-transformation/</guid>
       <description></description>
     </item>
     

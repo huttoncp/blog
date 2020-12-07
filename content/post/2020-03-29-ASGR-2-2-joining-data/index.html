@@ -278,7 +278,7 @@ identical(rj, lj)</code></pre>
 <p>The output now includes rows for the year 2002, which were present in <code>life_df</code> but not in <code>gdp_df</code>. It also includes rows for <code>Asia</code>, which are present in <code>gdp_df</code> but are missing from <code>life_df</code>. As you can see, a full join retains all of the data, filling in missing values where necessary.</p>
 <p>Left joins, right joins, and full joins are also collectively referred to as <em>outer joins</em> because they retain the observations from at least one of the joined tables. This excellent set of diagrams from <a href="https://r4ds.had.co.nz/">R for Data Science (R4DS)</a> can help you build an intuitive sense of how these outer joins work:</p>
 <div class="figure">
-<img src="https://d33wubrfki0l68.cloudfront.net/9c12ca9e12ed26a7c5d2aa08e36d2ac4fb593f1e/79980/diagrams/join-outer.png" alt="source: https://r4ds.had.co.nz/relational-data.html" />
+<img src="https://d33wubrfki0l68.cloudfront.net/9c12ca9e12ed26a7c5d2aa08e36d2ac4fb593f1e/79980/diagrams/join-outer.png" alt="" />
 <p class="caption">source: <a href="https://r4ds.had.co.nz/relational-data.html" class="uri">https://r4ds.had.co.nz/relational-data.html</a></p>
 </div>
 </div>
@@ -301,13 +301,13 @@ identical(rj, lj)</code></pre>
 <p>This time we only get data for 1997 and 2007 even though <code>life_df</code> has values for 2002 because <code>gdp_df</code> did not contain any data for 2002. We also don’t get any data for Asia, which was present in <code>gdp_df</code>, because there was no data for Asia in <code>life_df</code>.</p>
 <p>This diagram from <a href="https://r4ds.had.co.nz/">R4DS</a> shows you another example of how an inner join works:</p>
 <div class="figure">
-<img src="https://d33wubrfki0l68.cloudfront.net/3abea0b730526c3f053a3838953c35a0ccbe8980/7f29b/diagrams/join-inner.png" alt="source: https://r4ds.had.co.nz/relational-data.html" />
+<img src="https://d33wubrfki0l68.cloudfront.net/3abea0b730526c3f053a3838953c35a0ccbe8980/7f29b/diagrams/join-inner.png" alt="" />
 <p class="caption">source: <a href="https://r4ds.had.co.nz/relational-data.html" class="uri">https://r4ds.had.co.nz/relational-data.html</a></p>
 </div>
 </div>
 <div id="semi_join" class="section level1">
 <h1><span class="header-section-number">7</span> <strong>semi_join()</strong></h1>
-<p>So far we’ve been filterting rows based on matches in the key columns but extacting all columns from both data frames. The other two main dplyr join functions are available for situations where you only want to keep the columns of one data frame (<code>x</code>).</p>
+<p>So far we’ve been filtering rows based on matches in the key columns but extacting all columns from both data frames. The other two main dplyr join functions are available for situations where you only want to keep the columns of one data frame (<code>x</code>).</p>
 <p><code>semi_join(x, y)</code> filters the rows of <code>x</code> to retain only those that also appear in <code>y</code></p>
 <pre class="r"><code>life_df %&gt;% 
   semi_join(pop_df)</code></pre>
@@ -326,7 +326,7 @@ identical(rj, lj)</code></pre>
 <p>This time we only get the columns from life_df and we’ve dropped rows for Europe because Europe only appears under the continent key column for life_df and not pop_df.</p>
 <p>Here is the <a href="https://r4ds.had.co.nz/">R4DS</a> semi-join diagram showing that only columns and rows from table 1 are retained as a second example:</p>
 <div class="figure">
-<img src="https://d33wubrfki0l68.cloudfront.net/028065a7f353a932d70d2dfc82bc5c5966f768ad/85a30/diagrams/join-semi.png" alt="source: https://r4ds.had.co.nz/relational-data.html" />
+<img src="https://d33wubrfki0l68.cloudfront.net/028065a7f353a932d70d2dfc82bc5c5966f768ad/85a30/diagrams/join-semi.png" alt="" />
 <p class="caption">source: <a href="https://r4ds.had.co.nz/relational-data.html" class="uri">https://r4ds.had.co.nz/relational-data.html</a></p>
 </div>
 </div>
@@ -344,7 +344,7 @@ identical(rj, lj)</code></pre>
 <p>As you can see, anti joins can be very useful if you want to know which rows are excluded due to mismatches in the key columns. Checking for consistencies and inconsistencies between data sources is an important part of the data cleaning process and can often help to uncover data entry or coding errors that should be fixed prior to conducting any analyses.</p>
 <p><a href="https://r4ds.had.co.nz/">R4DS</a> diagram showing how the anti-join works:</p>
 <div class="figure">
-<img src="https://d33wubrfki0l68.cloudfront.net/f29a85efd53a079cc84c14ba4ba6894e238c3759/c1408/diagrams/join-anti.png" alt="source: https://r4ds.had.co.nz/relational-data.html" />
+<img src="https://d33wubrfki0l68.cloudfront.net/f29a85efd53a079cc84c14ba4ba6894e238c3759/c1408/diagrams/join-anti.png" alt="" />
 <p class="caption">source: <a href="https://r4ds.had.co.nz/relational-data.html" class="uri">https://r4ds.had.co.nz/relational-data.html</a></p>
 </div>
 </div>

@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
-    <lastBuildDate>Sat, 10 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 Nov 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A Scientist&#39;s Guide to R: Step 3.0 - exploring data with elucidate</title>
+      <link>/post/2020-11-17-asgr-3-0-exploring-data-with-elucidate/</link>
+      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020-11-17-asgr-3-0-exploring-data-with-elucidate/</guid>
+      <description>1 TL;DR2 Introduction3 Installation &amp;amp; setup4 interrogating data4.1 checking for row copies()4.2 count()-ing unique values4.3 describe()-ing missingness &amp;amp; extreme values5 descriptives5.1 describe() a vector5.2 grouped descriptions5.3 describe_all() columns in a data frame5.4 confidence intervals6 to see, look6.1 Anscombe’s lesson: numeric descriptions can be misleading6.2 plot_*-ting data with elucidate7 interacting with data representations8 fix ’er up9 performance evaluations9.</description>
+    </item>
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 2.5 - dates &amp; times</title>

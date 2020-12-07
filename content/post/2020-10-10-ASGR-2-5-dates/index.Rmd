@@ -766,7 +766,7 @@ Now you've learned a bit about how R programming can help you automate the proce
 
 # Navigation
 
-Click [here](https://craig.rbind.io/post/2020-08-29-asgr-2-4-factors/) to go back to the previous post on factors. A link to the next one will be added as soon as I have time to write it.
+Click [here](https://craig.rbind.io/post/2020-08-29-asgr-2-4-factors/) to go back to the previous post on factors, or [here](https://craig.rbind.io/post/2020-11-17-asgr-3-0-exploring-data-with-elucidate/) to advance to the next one on exploratory data analysis with the `elucidate` package.
 
 # Notes
   

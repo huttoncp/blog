@@ -33,47 +33,72 @@
   </url>
   
   <url>
+    <loc>/post/2020-11-17-asgr-3-0-exploring-data-with-elucidate/</loc>
+    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/</loc>
+    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/data-exploration/</loc>
+    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/data-interrogation/</loc>
+    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/data-visualisation/</loc>
+    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/descriptive-statistics/</loc>
+    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/r/</loc>
+    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/r/</loc>
+    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/r-basics/</loc>
+    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/reproducible-research/</loc>
+    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/post/2020-10-10-asgr-2-5-dates/</loc>
     <lastmod>2020-10-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/</loc>
-    <lastmod>2020-10-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/categories/data-cleaning-and-transformation/</loc>
-    <lastmod>2020-10-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
-    <lastmod>2020-10-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/r/</loc>
-    <lastmod>2020-10-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/r/</loc>
-    <lastmod>2020-10-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/r-basics/</loc>
-    <lastmod>2020-10-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/reproducible-research/</loc>
-    <lastmod>2020-10-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
     <lastmod>2020-10-10T00:00:00+00:00</lastmod>
   </url>
   

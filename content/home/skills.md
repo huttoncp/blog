@@ -17,72 +17,55 @@ subtitle = ""
   icon = "brain"
   icon_pack = "fas"
   name = "Scientific Research"
-  description = "11 years of experience"
 
 [[feature]]
   icon = "chart-line"
   icon_pack = "fas"
   name = "Applied Statistics"
-  description = "9 years of experience" 
+
+[[feature]]
+  icon = "connectdevelop"
+  icon_pack = "fab"
+  name = "Machine Learning"
   
 [[feature]]
   icon = "user-tie"
   icon_pack = "fas"
   name = "Project Management"
-  description = "7 years of experience"
   
 [[feature]]
   icon = "user-graduate"
   icon_pack = "fas"
   name = "Teaching"
-  description = "6 years of experience"
   
 [[feature]]
   icon = "r-project"
   icon_pack = "fab"
   name = "R"
-  description = "7 years of experience"
   
 [[feature]]
-  icon = "network-wired"
-  icon_pack = "fas"
-  name = "Machine Learning"
-  description = "4 years of experience"
+  icon = "python"
+  icon_pack = "fab"
+  name = "Python"
 
 [[feature]]
   icon = "chart-bar"
   icon_pack = "fas"
   name = "SPSS"
-  description = "3 years of experience"
-
+  
 [[feature]]
-  icon = "python"
-  icon_pack = "fab"
-  name = "Python"
-  description = "1 year of experience"
+  icon = "project-diagram"
+  icon_pack = "fas"
+  name = "SAS"  
 
 [[feature]]
   icon = "laptop-code"
   icon_pack = "fas"
   name = "Software Development"
-  description = "9 months of experience"
 
 [[feature]]
   icon = "table"
   icon_pack = "fas"
-  name = "Microsoft Excel"
-  description = "15 years of experience"
-  
-[[feature]]
-  icon = "file-word"
-  icon_pack = "far"
-  name = "Microsoft Word"
-  description = "15 years of experience"
-  
-[[feature]]
-  icon = "file-powerpoint"
-  icon_pack = "far"
-  name = "Microsoft PowerPoint"
-  description = "14 years of experience"
+  name = "Microsoft Office"
 
 +++
