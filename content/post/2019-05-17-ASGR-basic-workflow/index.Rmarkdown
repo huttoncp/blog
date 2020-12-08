@@ -49,7 +49,7 @@ Now that we know why you should use R, what are the main steps of analyzing data
   * **0.[Install and load necessary packages](https://craig.rbind.io/post/2019-06-22-asgr-1-getting-data-into-r/#installing-and-loading-r-packages) (e.g. tidyverse)**
   * **1. [Import the data](https://craig.rbind.io/post/2019-06-22-asgr-1-getting-data-into-r/#how-to-get-your-data-into-r).**
   * **2. [Clean/Transform the data](https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/).** This part usually takes longer than the analysis, but may not be necessary if you've entered the data yourself.
-  * **3. Explore the data** using descriptive summary statistics and visualizations.
+  * **3. [Explore](https://craig.rbind.io/post/2020-12-07-asgr-3-0-exploring-data-with-elucidate/) the data** using descriptive summary statistics and visualizations.
   * **4. Resolve structural issues.** If any issues are detected in step 3, go back to step 2 and resolve them, restructuring data as needed.
   * **5. Model:** Fit an appropriate statistical model & check model assumptions (e.g. normality). Use a different model/test if assumptions are violated (e.g. a permutation test). Conduct follow-up or *post-hoc* tests if desired.
   * **6. Analyze and Interpret** the results using appropriate graphics (e.g. tables/figures) and text summaries. These can easily be used as a foundation for building presentation slides or the results section of a manuscript.
