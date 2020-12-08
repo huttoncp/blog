@@ -115,14 +115,15 @@ pdata_resampled %>%
   glimpse() #glimpse() again to show all output columns
 ```
 
-You can see that the default version of `copies()` simply returns the input data with the addition of two columns called "copy_number" (which copy the rows is if multiple copies were detected) and "n_copies" (total number of row copies detected).
+You can see that the default version of `copies()` simply returns the input data with the addition of two columns called "copy_number" (which copy the rows is if multiple copies were detected) and "n_copies" (total number of row copies detected)^[The "copy_number" column is only provided for the default filter = "all" version of `copies()`, since this is when knowing the specific copy number is most useful (i.e. to facilitate subsequent [subsetting](https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#filter)). Following similar logic, the "n_copies" column is only provided when the filter argument is set to "all" or "dupes" because the other options ("first", "last", and "unique") drop all rows with more than one copy, meaning that the "n_copies" column would contain only values of 1.]. 
 
-In this case, I've resampled the same data quite a lot, so there are multiple copies of all original rows. `copies()` will also preserve the original ordering of the rows unless you ask it to sort the output by the number of copies^[The sorting occurs in descending order.].  You do so by setting the **sort_by_copies** argument to `TRUE`. If you also only want to see duplicated rows, you can set the **filter** argument to **"dupes"**^[If you only want the truly unique/non-duplicated rows instead use `copies(data, filter = "unique")`].
+In this case, I've resampled the same data quite a lot, so there are multiple copies of all original rows. `copies()` will also preserve the original ordering of the rows unless you ask it to sort the output by the number of copies^[The sorting occurs in descending order.].  You do so by setting the **sort_by_copies** argument to `TRUE`. If you also only want to see duplicated rows, you can set the **filter** argument to **"dupes"**^[If you only want the truly unique/non-duplicated rows instead use `copies(data, filter = "unique")`].  
 
 ```{r, cache = T}
 pdata_resampled %>% 
   copies(filter = "dupes", sort_by_copies = TRUE)
 ```
+
 As the message informed us, by default `copies()` will check for duplicates based on all columns unless you specify columns to condition the search upon. This is done by simply listing the *unquoted* names of the columns. E.g. to check for copies based on just the "id" and "d" (date) columns. This time we'll use the original version of `pdata`, to see if each combination of the id and d columns do in fact represents distinct observations...
 
 ```{r, cache = T}
@@ -331,7 +332,7 @@ Note that if only one description variable class is requested, you'll get a data
 
 ## confidence intervals
 
-Confidence intervals are a topic that students (and some seasoned researchers) tend to struggle with, so I'll cover it here in more detail. In [frequentist inference](https://seeing-theory.brown.edu/frequentist-inference/index.html), a [confidence interval (CI)](https://rpsychologist.com/d3/ci/) provides an estimate of the possible values a statistic (AKA "parameter"), such as the mean, could take in the population based on the distribution of values in the observed sample data. It is basically an educated guess about what the population value for the parameter is, based on the observed evidence.  Naturally, the more observations you have to work with, the more precise your estimates will be. More concretely, an observed 95% CI for a mean of 1-5 suggests that there is a 95% probability that the true population mean is somewhere between 1 and 5. 
+Confidence intervals are a topic that students (and some seasoned researchers) tend to struggle with, so I'll cover it here in more detail. In [frequentist inference](https://seeing-theory.brown.edu/frequentist-inference/index.html), a [confidence interval (CI)](https://rpsychologist.com/d3/ci/) provides an estimate of the possible values a statistic (AKA "parameter"), such as the mean, could take in the population based on the distribution of values in the observed sample data. It is basically an educated guess about what the population value for the parameter is, based on the observed evidence.  Naturally, the more observations you have to work with, the more precise your estimates will be. More concretely, an observed 95% CI for a mean of 1-5 has a 95% probability of containing the true population mean. 
 
 Bootstrapping^[Efron, B., & Tibshirani, R. J. (1994). *An introduction to the bootstrap*. CRC press.] is a computational procedure to estimate the sampling distribution for the statistic of interest by sampling from the observed data with replacement and calculating the statistic for each sample. This process is repeated thousands of times, and the observed probability distribution of (re-)sampled statistics is used to define confidence limits for plausible values of the statistic in the underlying population. CIs are difficult to derive analytically for statistics other than the mean, but modern computers make it no trouble at all to use bootstrapping to estimate them.
 
@@ -354,7 +355,8 @@ To get a CI for another statistic, you set the "stat" argument to the unquoted n
 pdata %>% 
   describe_ci(y1, stat = median)
 ```
-The CIs for summary statistics other than the mean are obtained using bootstrapping via the [boot](https://cran.r-project.org/web/packages/boot/boot.pdf) package that is installed with R. You can modify some key bootstrapping parameters, like the number of replicates or the type of CIs to return, via some additional arguments. Like `describe()`, `describe_ci()` also accepts any number of unquoted variable names to use as grouping variables via `...`.
+
+The CIs for summary statistics other than the mean are obtained using bootstrapping via the [boot](https://cran.r-project.org/web/packages/boot/boot.pdf) package that is installed with R. You can modify some key bootstrapping parameters, like the number of replicates or the type of CIs to return, via some additional arguments. Like `describe()`, `describe_ci()` also accepts any number of unquoted variable names to use as grouping variables via `...`. You can also try to speed things up with parallel processing if you have multiple cores on your machine^[Parallelisation for bootstrapping with the `elucidate::*_ci` functions uses the "snow" (multi-session) method for Windows machines (as the only option available) and the faster "multicore" (forking) method for non-Windows machines. The `describe_ci()` function checks which OS you are using and chooses the correct one for you via the underlying `boot::boot()` function's "parallel" argument. See the `?boot()` documentation for additional details.]. 
 
 ```{r, cache = T}
 pdata %>% 
