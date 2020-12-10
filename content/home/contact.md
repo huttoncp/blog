@@ -9,30 +9,12 @@ title = "Contact"
 subtitle = ""
 
 # Automatically link email and phone?
-autolink = true
+autolink = false
 
 # Email form provider
 #   0: Disable email form
 #   1: Netlify (requires that the site is hosted by Netlify)
 #   2: formspree.io
-email_form = 0
+email_form = 1
 
 +++
-
-<form
-  action="https://formspree.io/f/craig.hutton@gmail.com"
-  method="POST">
-  <label>
-    Your email:
-    <input type="text" name="_replyto">
-  </label>
-  <label>
-    Your message:
-    <textarea name="message"></textarea>
-  </label>
-
-  <!-- your other form fields go here -->
-
-  <button type="submit">Send</button>
-</form>
-
