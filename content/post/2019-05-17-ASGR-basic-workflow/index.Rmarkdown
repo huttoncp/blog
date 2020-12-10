@@ -1,18 +1,18 @@
 ---
 title: 'A Scientist''s Guide to R: Introduction and Basic Workflow'
-author: 'Craig Hutton'
+author: "Craig Hutton"
 date: '2019-05-17'
-slug: 
+slug: null
 categories:
-  - R
-  - Data Analysis
-  - Statistics
-  - Reproducible Research
+- R
+- Data Analysis
+- Statistics
+- Reproducible Research
 tags:
-  - R
-  - R Basics
-  - Data Analysis
-  - Statistics
+- R
+- R Basics
+- Data Analysis
+- Statistics
 header:
   image: ''
   caption: ''
@@ -29,10 +29,8 @@ In contrast, R is constantly undergoing development by a large community of stat
 
 **Once you know what you are doing (e.g. from reading these posts), R can arguably be even easier to use than commercial programs**. This is clearly demonstrated by the fact that one can accomplish a great deal with only a few lines of code, e.g. a simple [linear regression](http://www.stat.yale.edu/Courses/1997-98/101/linreg.htm) requires only a single line of code (to be covered in more detail in a future post):
 
-```{r, eval = F}
-
+```
 summary(lm(Y ~ X, data = your_dataset)) 
-
 ```
 
 With this line you ask R for a (regression) summary of a linear model (lm) where Y is a continuous outcome variable, X is a predictor, X and Y are contained in the dataframe "your_dataset", and "~" means "as a function of". You would have to click through seveal menus to obtain the same results in a GUI-based program.

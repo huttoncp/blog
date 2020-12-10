@@ -1,18 +1,18 @@
 ---
 title: 'A Scientist''s Guide to R: Introduction and Basic Workflow'
-author: 'Craig Hutton'
+author: "Craig Hutton"
 date: '2019-05-17'
-slug: 
+slug: null
 categories:
-  - R
-  - Data Analysis
-  - Statistics
-  - Reproducible Research
+- R
+- Data Analysis
+- Statistics
+- Reproducible Research
 tags:
-  - R
-  - R Basics
-  - Data Analysis
-  - Statistics
+- R
+- R Basics
+- Data Analysis
+- Statistics
 header:
   image: ''
   caption: ''
@@ -29,8 +29,7 @@ In contrast, R is constantly undergoing development by a large community of stat
 
 **Once you know what you are doing (e.g. from reading these posts), R can arguably be even easier to use than commercial programs**. This is clearly demonstrated by the fact that one can accomplish a great deal with only a few lines of code, e.g. a simple [linear regression](http://www.stat.yale.edu/Courses/1997-98/101/linreg.htm) requires only a single line of code (to be covered in more detail in a future post):
 
-
-```r
+```
 summary(lm(Y ~ X, data = your_dataset)) 
 ```
 

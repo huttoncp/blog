@@ -19,4 +19,8 @@ email_form = 2
 
 +++
 
- 
+<form action="https://formspree.io/f/craig.hutton@gmail.com" method="POST">
+  <input type="text" name="name">
+  <input type="email" name="_replyto">
+  <input type="submit" value="Send">
+</form>
