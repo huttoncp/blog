@@ -14,7 +14,7 @@ image:
   focal_point: ""
   preview_only: false
 projects: []
-publication: '*Journal of Neurotrauma*, [Epub ahead of print].'
+publication: '*Journal of Neurotrauma*,  36(16), 1777-1787.'
 publication_short:
 publication_types:
 - "2"
