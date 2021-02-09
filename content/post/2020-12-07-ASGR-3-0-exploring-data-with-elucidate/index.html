@@ -24,8 +24,6 @@ output:
   
 ---
 
-<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="index_files/anchor-sections/anchor-sections.js"></script>
 
 <div id="TOC">
 <ul>
@@ -101,15 +99,31 @@ remotes::install_github(&quot;bcgov/elucidate&quot;)
 #installing a package from GitHub, try (re)-installing their CRAN versions (if
 #available) 1st using install.packages().</code></pre>
 <p>Then just load it like any other R package, with the <code>library()</code> function:</p>
-<pre class="r"><code>library(tidyverse) #for comparisons &amp; the glimpse function
+<pre class="r"><code>library(tidyverse) #for comparisons &amp; the glimpse function</code></pre>
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.3.2     v purrr   0.3.4
+## v tibble  3.0.4     v dplyr   1.0.2
+## v tidyr   1.1.2     v stringr 1.4.0
+## v readr   1.4.0     v forcats 0.5.0</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 4.0.3</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(janitor) #for comparisons</code></pre>
+<pre><code>## 
+## Attaching package: &#39;janitor&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     chisq.test, fisher.test</code></pre>
+<pre class="r"><code>library(bench) #for benchmarking
 
-library(janitor) #for comparisons
-
-library(bench) #for benchmarking
-
-library(elucidate)
-
-#also set the random generator seed for reproducibility
+library(elucidate)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;elucidate&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     mode</code></pre>
+<pre class="r"><code>#also set the random generator seed for reproducibility
 set.seed(1234)</code></pre>
 <p>For this post, we’ll use the generated dataset, <code>pdata</code> (short for <em>p</em>ractice <em>data</em>), that is imported with <code>elucidate</code>.</p>
 </div>
@@ -144,18 +158,18 @@ dim(pdata_resampled) </code></pre>
 <pre><code>## No column names specified - using all columns.</code></pre>
 <pre><code>## Rows: 1,000,000
 ## Columns: 12
-## $ id          &lt;int&gt; 538, 493, 683, 32, 192, 150, 525, 950, 143, 922, 421, 8...
-## $ d           &lt;date&gt; 2017-01-01, 2012-01-01, 2019-01-01, 2012-01-01, 2013-0...
-## $ g           &lt;fct&gt; c, d, d, d, c, d, a, d, b, d, c, e, b, e, c, c, a, d, a...
-## $ high_low    &lt;chr&gt; &quot;low&quot;, &quot;low&quot;, &quot;low&quot;, &quot;low&quot;, &quot;low&quot;, &quot;high&quot;, &quot;low&quot;, &quot;high...
-## $ even        &lt;lgl&gt; TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE, FALS...
-## $ y1          &lt;dbl&gt; 261.3699, 142.9283, 215.8662, 157.4569, 155.9329, 105.6...
-## $ y2          &lt;dbl&gt; 93.77677, 99.02914, 96.63750, 79.26261, 96.89765, 117.4...
-## $ x1          &lt;int&gt; 92, 65, 81, 92, 6, 90, 42, 60, 69, 67, 64, 95, 40, 50, ...
-## $ x2          &lt;int&gt; 176, 129, 134, 181, 120, 167, 171, 154, 172, 117, 171, ...
-## $ x3          &lt;int&gt; 206, 234, 279, 277, 204, 260, 273, 207, 288, 235, 217, ...
+## $ id          &lt;int&gt; 452, 16, 162, 86, 269, 196, 623, 885, 934, 948, 146, 36...
+## $ d           &lt;date&gt; 2015-01-01, 2016-01-01, 2015-01-01, 2016-01-01, 2015-0...
+## $ g           &lt;fct&gt; d, b, e, c, a, e, c, d, d, d, b, c, c, a, c, a, c, a, d...
+## $ high_low    &lt;chr&gt; &quot;high&quot;, &quot;high&quot;, &quot;low&quot;, &quot;high&quot;, &quot;high&quot;, &quot;low&quot;, &quot;low&quot;, &quot;l...
+## $ even        &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE, TRUE...
+## $ y1          &lt;dbl&gt; 195.22487, 196.53225, 117.96544, 228.54892, 144.27335, ...
+## $ y2          &lt;dbl&gt; 104.22839, 108.96997, 92.46506, 108.54791, 107.09374, 9...
+## $ x1          &lt;int&gt; 49, 34, 72, 78, 36, 35, 32, 43, 55, 85, 33, 84, 85, 44,...
+## $ x2          &lt;int&gt; 196, 142, 181, 105, 190, 181, 108, 161, 111, 199, 191, ...
+## $ x3          &lt;int&gt; 254, 295, 286, 244, 202, 260, 280, 284, 233, 254, 267, ...
 ## $ copy_number &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1...
-## $ n_copies    &lt;int&gt; 65, 96, 92, 78, 86, 90, 80, 91, 88, 72, 81, 85, 74, 77,...</code></pre>
+## $ n_copies    &lt;int&gt; 77, 72, 82, 88, 98, 105, 76, 69, 78, 87, 92, 80, 85, 85...</code></pre>
 <p>You can see that the default version of <code>copies()</code> simply returns the input data with the addition of two columns called “copy_number” (which copy the rows is if multiple copies were detected) and “n_copies” (total number of row copies detected)<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 <p>In this case, I’ve resampled the same data quite a lot, so there are multiple copies of all original rows. <code>copies()</code> will also preserve the original ordering of the rows unless you ask it to sort the output by the number of copies<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>. You do so by setting the <strong>sort_by_copies</strong> argument to <code>TRUE</code>. If you also only want to see duplicated rows, you can set the <strong>filter</strong> argument to <strong>“dupes”</strong><a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>.</p>
 <pre class="r"><code>pdata_resampled %&gt;% 
@@ -165,16 +179,16 @@ dim(pdata_resampled) </code></pre>
 <pre><code>## # A tibble: 1,000,000 x 11
 ##       id d          g     high_low even     y1    y2    x1    x2    x3 n_copies
 ##    &lt;int&gt; &lt;date&gt;     &lt;fct&gt; &lt;chr&gt;    &lt;lgl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;
-##  1   599 2017-01-01 c     low      FALSE  264.  99.7    76   126   247      121
-##  2   599 2017-01-01 c     low      FALSE  264.  99.7    76   126   247      121
-##  3   599 2017-01-01 c     low      FALSE  264.  99.7    76   126   247      121
-##  4   599 2017-01-01 c     low      FALSE  264.  99.7    76   126   247      121
-##  5   599 2017-01-01 c     low      FALSE  264.  99.7    76   126   247      121
-##  6   599 2017-01-01 c     low      FALSE  264.  99.7    76   126   247      121
-##  7   599 2017-01-01 c     low      FALSE  264.  99.7    76   126   247      121
-##  8   599 2017-01-01 c     low      FALSE  264.  99.7    76   126   247      121
-##  9   599 2017-01-01 c     low      FALSE  264.  99.7    76   126   247      121
-## 10   599 2017-01-01 c     low      FALSE  264.  99.7    76   126   247      121
+##  1   546 2016-01-01 d     high     TRUE   221.  104.    81   122   226      119
+##  2   546 2016-01-01 d     high     TRUE   221.  104.    81   122   226      119
+##  3   558 2016-01-01 e     high     TRUE   149.  107.    63   134   223      119
+##  4   558 2016-01-01 e     high     TRUE   149.  107.    63   134   223      119
+##  5   546 2016-01-01 d     high     TRUE   221.  104.    81   122   226      119
+##  6   546 2016-01-01 d     high     TRUE   221.  104.    81   122   226      119
+##  7   546 2016-01-01 d     high     TRUE   221.  104.    81   122   226      119
+##  8   558 2016-01-01 e     high     TRUE   149.  107.    63   134   223      119
+##  9   558 2016-01-01 e     high     TRUE   149.  107.    63   134   223      119
+## 10   546 2016-01-01 d     high     TRUE   221.  104.    81   122   226      119
 ## # ... with 999,990 more rows</code></pre>
 <p>As the message informed us, by default <code>copies()</code> will check for duplicates based on all columns unless you specify columns to condition the search upon. This is done by simply listing the <em>unquoted</em> names of the columns. E.g. to check for copies based on just the “id” and “d” (date) columns. This time we’ll use the original version of <code>pdata</code>, to see if each combination of the id and d columns do in fact represents distinct observations…</p>
 <pre class="r"><code>pdata %&gt;% 
@@ -225,43 +239,43 @@ pdata_distinct %&gt;% glimpse</code></pre>
 <p>The <code>counts*</code> set of functions helps you quickly check your data for manual entry errors or weird values by providing counts of unique values. In my experience, such errors tend to show up as very rare or common values.</p>
 <p><code>counts()</code> returns the unique values and counts for a vector in the form “value_count”, sorted by decreasing frequency<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>.</p>
 <pre class="r"><code>counts(pdata_resampled$g)</code></pre>
-<pre><code>## [1] &quot;a_216376&quot; &quot;b_205077&quot; &quot;d_198300&quot; &quot;e_195231&quot; &quot;c_185016&quot;</code></pre>
+<pre><code>## [1] &quot;a_216058&quot; &quot;b_205319&quot; &quot;d_197784&quot; &quot;e_196104&quot; &quot;c_184735&quot;</code></pre>
 <pre class="r"><code>#use order = &quot;a&quot; or &quot;i&quot; to sort in ascending/increasing order</code></pre>
 <p><code>counts_all()</code> gives you a list of unique values and their frequency for all columns in a data frame. To avoid printing too much here, we’ll first <a href="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#select">select</a> a few columns to show you what the output looks like.</p>
 <pre class="r"><code>pdata_resampled %&gt;% 
   select(d, high_low, even) %&gt;% 
   counts_all()</code></pre>
 <pre><code>## $d
-##  [1] &quot;2019-01-01_83798&quot; &quot;2015-01-01_83592&quot; &quot;2008-01-01_83530&quot; &quot;2014-01-01_83452&quot;
-##  [5] &quot;2018-01-01_83396&quot; &quot;2013-01-01_83381&quot; &quot;2012-01-01_83308&quot; &quot;2017-01-01_83304&quot;
-##  [9] &quot;2010-01-01_83293&quot; &quot;2009-01-01_83081&quot; &quot;2016-01-01_83057&quot; &quot;2011-01-01_82808&quot;
+##  [1] &quot;2012-01-01_83846&quot; &quot;2015-01-01_83674&quot; &quot;2018-01-01_83667&quot; &quot;2010-01-01_83558&quot;
+##  [5] &quot;2017-01-01_83385&quot; &quot;2019-01-01_83372&quot; &quot;2014-01-01_83335&quot; &quot;2011-01-01_83114&quot;
+##  [9] &quot;2009-01-01_83024&quot; &quot;2008-01-01_83013&quot; &quot;2016-01-01_83009&quot; &quot;2013-01-01_83003&quot;
 ## 
 ## $high_low
-## [1] &quot;high_503773&quot; &quot;low_496227&quot; 
+## [1] &quot;high_504860&quot; &quot;low_495140&quot; 
 ## 
 ## $even
-## [1] &quot;FALSE_500063&quot; &quot;TRUE_499937&quot;</code></pre>
+## [1] &quot;TRUE_500662&quot;  &quot;FALSE_499338&quot;</code></pre>
 <p>For convenience, <code>elucidate</code> also provides shortcut functions <code>counts_tb()</code> and <code>counts_tb_all()</code> that give you the <em>t</em>op and <em>b</em>ottom <strong>“n”</strong> unique values (<strong>“n”</strong> is up to 10 by default) in terms of frequency. Here we’ll just ask for the top 5 and bottom 5 values.</p>
 <pre class="r"><code>pdata_resampled %&gt;% 
   select(d, high_low, even) %&gt;% 
   counts_tb_all(n = 5)</code></pre>
 <pre><code>## $d
 ##        top_v top_n      bot_v bot_n
-## 1 2019-01-01 83798 2011-01-01 82808
-## 2 2015-01-01 83592 2016-01-01 83057
-## 3 2008-01-01 83530 2009-01-01 83081
-## 4 2014-01-01 83452 2010-01-01 83293
-## 5 2018-01-01 83396 2017-01-01 83304
+## 1 2012-01-01 83846 2013-01-01 83003
+## 2 2015-01-01 83674 2016-01-01 83009
+## 3 2018-01-01 83667 2008-01-01 83013
+## 4 2010-01-01 83558 2009-01-01 83024
+## 5 2017-01-01 83385 2011-01-01 83114
 ## 
 ## $high_low
 ##   top_v  top_n bot_v  bot_n
-## 1  high 503773   low 496227
-## 2   low 496227  high 503773
+## 1  high 504860   low 495140
+## 2   low 495140  high 504860
 ## 
 ## $even
 ##   top_v  top_n bot_v  bot_n
-## 1 FALSE 500063  TRUE 499937
-## 2  TRUE 499937 FALSE 500063</code></pre>
+## 1  TRUE 500662 FALSE 499338
+## 2 FALSE 499338  TRUE 500662</code></pre>
 <p>This time we get a list of tibbles instead of a list of vectors, with the top values (“top_v”) and their counts (“top_n”) as a pair of columns, and the bottom values (“bot_v”) beside their counts (“bot_n”). You may have noticed that in cases where there are fewer than “n” unique values, all of them will be shown under each of the <code>top_*</code> and <code>bot_*</code> columns, albeit in opposite orders. As expected, <code>counts_tb()</code> gives you a single tibble showing the top and bottom counts for a single column.</p>
 <p>Using the <code>mark()</code> function from the <code>bench</code> package (i.e. <code>bench::mark()</code>), we can see that these functions run reasonably fast on even 1,000,000 rows of data; under 10 seconds on my laptop (Intel i7-9750H processor <span class="citation">@2.6</span> GHz with 16GB of RAM).</p>
 <pre class="r"><code>mark(
@@ -279,7 +293,7 @@ pdata_distinct %&gt;% glimpse</code></pre>
 <pre><code>## # A tibble: 1 x 1
 ##     median
 ##   &lt;bch:tm&gt;
-## 1    8.77s</code></pre>
+## 1    8.96s</code></pre>
 <p>Now you know how easy it can be to check for data entry errors with the <code>counts*</code> set of <code>elucidate</code> functions.</p>
 <p>The latest version of <code>elucidate</code> also includes a <code>mode()</code><a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> function which returns just the most common value (i.e. the mode) of any vector.</p>
 </div>
@@ -307,7 +321,7 @@ pdata_distinct %&gt;% glimpse</code></pre>
 <p>To get a descriptive summary of a vector you could use the base R <code>summary()</code> function, which is very fast but yields rather limited information. For numeric vectors, <code>summary()</code> will give you the minimum, mean, median, 25th percentile, 75th percentile, and maximum values. It will also tell you how many <code>NA</code>’s there are, but only if some are detected (and not for non-numeric vectors). Alternatively, we can use <code>describe()</code> to get most (or all) of the summary statistics we typically want.<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a></p>
 <pre class="r"><code>pdata_resampled$y1 %&gt;% summary()</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   69.22  120.93  144.81  153.73  181.15  289.24</code></pre>
+##   69.22  120.94  144.75  153.74  181.08  289.24</code></pre>
 <pre class="r"><code>describe(data = pdata_resampled, 
          #if data is a data frame, then you specify the column to describe using
          #the 2nd argument &quot;y&quot;
@@ -315,10 +329,10 @@ pdata_distinct %&gt;% glimpse</code></pre>
          #you can output the results as a data.table instead of a tibble
          #(default is &quot;tibble&quot;) so all output is printed
          output = &quot;dt&quot;)</code></pre>
-<pre><code>##      cases       n na p_na    mean     sd    se     p0     p25     p50     p75
-## 1: 1000000 1000000  0    0 153.731 42.752 0.043 69.224 120.933 144.809 181.146
-##       p100  skew   kurt
-## 1: 289.235 0.737 -0.187</code></pre>
+<pre><code>##      cases       n na p_na    mean     sd    se     p0     p25    p50     p75
+## 1: 1000000 1000000  0    0 153.742 42.734 0.043 69.224 120.942 144.75 181.079
+##       p100 skew   kurt
+## 1: 289.235 0.74 -0.183</code></pre>
 <pre class="r"><code>#equivalently, describe(pdata_resampled$y1, output = &quot;dt&quot;)</code></pre>
 <p>In addition to everything provided by <code>summary()</code>, <code>describe()</code> also gives us the standard deviation, standard error of the mean, and clearer information on the shape of the distribution via skewness = “skew” and (excess-)kurtosis = “kurt”, where values of either <code>&gt; 1</code> or <code>&lt; -1</code> indicate <a href="https://brownmath.com/stat/shape.htm">non-trivial deviations from normality</a>. In such cases you might want to use the median (p50) and as a measure of central tendency rather than the mean, and the interquartile range (p75-p25) as a measure of the spread of values instead of the standard deviation or standard error. You may also want to look at the distribution with one of the <code>plot_*</code> functions covered below. <code>elucicidate</code> also provides convenience wrappers for the <code>skewness()</code> and <code>kurtosis()</code> functions in the <a href="https://www.rdocumentation.org/packages/e1071/versions/1.7-4">e1071</a> (and other) packages if you want just these measures for a numeric vector<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>.</p>
 <p>We also get information on the presence of missing values, as highlighted previously.</p>
@@ -336,11 +350,11 @@ pdata_distinct %&gt;% glimpse</code></pre>
 <pre><code>## # A tibble: 5 x 15
 ##   g      cases      n    na  p_na  mean    sd    se    p0   p25   p50   p75
 ##   &lt;fct&gt;  &lt;int&gt;  &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 c     185016 185016     0     0  177.  57.0 0.132  77.0  127.  165.  232.
-## 2 d     198300 198300     0     0  174.  44.0 0.099  69.2  138.  175.  214.
-## 3 a     216376 216376     0     0  134.  25.8 0.055  75.9  112.  133.  156.
-## 4 b     205077 205077     0     0  152.  37.9 0.084  74.4  118.  147.  188.
-## 5 e     195231 195231     0     0  135.  18.6 0.042  75.1  123.  137.  148.
+## 1 d     197784 197784     0     0  174.  43.8 0.098  69.2  138.  175.  214.
+## 2 b     205319 205319     0     0  152.  37.8 0.083  74.4  118.  146.  188.
+## 3 e     196104 196104     0     0  135.  18.6 0.042  75.1  123.  137.  148.
+## 4 c     184735 184735     0     0  177.  57.0 0.133  77.0  127.  166.  232.
+## 5 a     216058 216058     0     0  134.  25.8 0.055  75.9  112.  133.  156.
 ## # ... with 3 more variables: p100 &lt;dbl&gt;, skew &lt;dbl&gt;, kurt &lt;dbl&gt;</code></pre>
 <pre class="r"><code>#or more compactly: describe(pdata, y1, g)</code></pre>
 <p>It’s really that easy.</p>
@@ -361,32 +375,31 @@ pdata_distinct %&gt;% glimpse</code></pre>
 ## 1 d        1000000 1000000     0     0       12 2008-01-01 2019-01-01
 ## 
 ## $factor
-## # A tibble: 1 x 12
-##   variable  cases      n    na  p_na n_unique ordered v1_n  v2_n  v3_n  v4_n 
-##   &lt;chr&gt;     &lt;int&gt;  &lt;int&gt; &lt;int&gt; &lt;dbl&gt;    &lt;int&gt; &lt;lgl&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
-## 1 g        1.00e6 1.00e6     0     0        5 FALSE   a_21~ b_20~ d_19~ e_19~
-## # ... with 1 more variable: v5_n &lt;chr&gt;
+## # A tibble: 1 x 8
+##   variable   cases      n    na  p_na n_unique ordered counts_tb                
+##   &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;int&gt; &lt;dbl&gt;    &lt;int&gt; &lt;lgl&gt;   &lt;chr&gt;                    
+## 1 g        1000000 1.00e6     0     0        5 FALSE   a_216058, b_205319, ...,~
 ## 
 ## $character
-## # A tibble: 1 x 8
-##   variable   cases       n    na  p_na n_unique v1_n        v2_n      
-##   &lt;chr&gt;      &lt;int&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;    &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;     
-## 1 high_low 1000000 1000000     0     0        2 high_503773 low_496227
+## # A tibble: 1 x 9
+##   variable   cases      n    na  p_na n_unique min_chars max_chars counts_tb    
+##   &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;int&gt; &lt;dbl&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt; &lt;chr&gt;        
+## 1 high_low 1000000 1.00e6     0     0        2         3         4 high_504860,~
 ## 
 ## $logical
-## # A tibble: 1 x 9
-##   variable   cases       n    na  p_na n_TRUE n_FALSE p_TRUE p_FALSE
-##   &lt;chr&gt;      &lt;int&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
-## 1 even     1000000 1000000     0     0 499937  500063    0.5     0.5
+## # A tibble: 1 x 8
+##   variable   cases       n    na  p_na n_TRUE n_FALSE p_TRUE
+##   &lt;chr&gt;      &lt;int&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+## 1 even     1000000 1000000     0     0 500662  499338  0.501
 ## 
 ## $numeric
 ## # A tibble: 2 x 15
 ##   variable  cases      n    na  p_na  mean    sd    se    p0   p25   p50   p75
 ##   &lt;chr&gt;     &lt;int&gt;  &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 y2       1.00e6 1.00e6     0     0 100.   10.1 0.01   60.0  93.3  100.  107.
-## 2 x1       1.00e6 1.00e6     0     0  50.5  28.9 0.029   1    25     50    75 
+## 1 y2       1.00e6 1.00e6     0     0 100.   10.1 0.01   60.0  93.4  100.  107.
+## 2 x1       1.00e6 1.00e6     0     0  50.6  28.9 0.029   1    25     50    76 
 ## # ... with 3 more variables: p100 &lt;dbl&gt;, skew &lt;dbl&gt;, kurt &lt;dbl&gt;</code></pre>
-<p>Despite the number of calculations and operations that need to be performed, <code>describe_all()</code> also runs pretty quickly for this amount of data, taking <em>under a second</em> and using less than 1 GB of RAM to describe 6 columns of various classes with 1,000,000 values each<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>.</p>
+<p>Despite the number of calculations and operations that need to be performed, <code>describe_all()</code> also runs pretty quickly for this amount of data, taking <em>~600 milliseconds</em> and using less than 600 MB of RAM to describe 6 columns of various classes with 1,000,000 values each<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>.</p>
 <pre class="r"><code>mark(
   pdata_resampled %&gt;%
     select(d, g, high_low, even, y2, x1) %&gt;% 
@@ -401,7 +414,7 @@ pdata_distinct %&gt;% glimpse</code></pre>
 <pre><code>## # A tibble: 1 x 2
 ##     median mem_alloc
 ##   &lt;bch:tm&gt; &lt;bch:byt&gt;
-## 1    609ms     711MB</code></pre>
+## 1    605ms     558MB</code></pre>
 <p>Again, you can specify any number of grouping variables as unquoted column names that are present in the input data via the <code>...</code>. You can also selectively describe variables of specific classes using <code>describe_all()</code>’s “class” argument, which accepts a character vector of options:</p>
 <ul>
 <li><strong>“d”</strong>: dates</li>
@@ -417,19 +430,18 @@ pdata_distinct %&gt;% glimpse</code></pre>
   describe_all(g, d, #group by factor variable &quot;g&quot; and date variable &quot;d&quot;
                class = &quot;n&quot;) #only describe numeric variables other than the id column</code></pre>
 <pre><code>## # A tibble: 300 x 17
-## # Groups:   d, g [60]
-##    variable d          g     cases     n    na  p_na  mean    sd    se    p0
-##    &lt;chr&gt;    &lt;date&gt;     &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 x1       2017-01-01 c     15469 15469     0     0  52.0  29.4 0.236     1
-##  2 x1       2012-01-01 d     16411 16411     0     0  48.1  29.1 0.227     2
-##  3 x1       2019-01-01 d     16655 16655     0     0  53.7  29.3 0.227     1
-##  4 x1       2013-01-01 c     15313 15313     0     0  51.6  29.2 0.236     1
-##  5 x1       2008-01-01 d     16657 16657     0     0  50.2  27.4 0.212     1
-##  6 x1       2019-01-01 a     18149 18149     0     0  52.5  27.1 0.201     2
-##  7 x1       2019-01-01 b     17369 17369     0     0  53.7  30.3 0.23      1
-##  8 x1       2018-01-01 d     16367 16367     0     0  50.9  28.9 0.226     1
-##  9 x1       2010-01-01 c     15473 15473     0     0  48.9  28.7 0.231     2
-## 10 x1       2014-01-01 e     16284 16284     0     0  50.9  28.1 0.22      1
+##    g     d          variable cases     n    na  p_na  mean    sd    se    p0
+##    &lt;fct&gt; &lt;date&gt;     &lt;chr&gt;    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 d     2015-01-01 y1       16606 16606     0     0 199.  11.5  0.089 172. 
+##  2 d     2015-01-01 y2       16606 16606     0     0  99.5  9.56 0.074  73.4
+##  3 d     2015-01-01 x1       16606 16606     0     0  54.0 28.4  0.22    1  
+##  4 d     2015-01-01 x2       16606 16606     0     0 151.  26.8  0.208 101  
+##  5 d     2015-01-01 x3       16606 16606     0     0 250.  30.6  0.237 201  
+##  6 b     2016-01-01 y1       17099 17099     0     0 185.  11.1  0.085 150. 
+##  7 b     2016-01-01 y2       17099 17099     0     0 101.  10.2  0.078  74.4
+##  8 b     2016-01-01 x1       17099 17099     0     0  51.4 30.0  0.229   2  
+##  9 b     2016-01-01 x2       17099 17099     0     0 149.  28.9  0.221 101  
+## 10 b     2016-01-01 x3       17099 17099     0     0 253.  29.9  0.228 201  
 ## # ... with 290 more rows, and 6 more variables: p25 &lt;dbl&gt;, p50 &lt;dbl&gt;,
 ## #   p75 &lt;dbl&gt;, p100 &lt;dbl&gt;, skew &lt;dbl&gt;, kurt &lt;dbl&gt;</code></pre>
 <pre class="r"><code>#performance when splitting by 2 variables. 
@@ -443,8 +455,8 @@ mark(
 <pre><code>## # A tibble: 1 x 2
 ##     median mem_alloc
 ##   &lt;bch:tm&gt; &lt;bch:byt&gt;
-## 1    1.98s     1.3GB</code></pre>
-<p>Note that if only one description variable class is requested, you’ll get a data frame back instead of a list of data frames. Moreover, despite having to repeat all calculations across the 5 non-id numeric columns in the 1,000,000 row version of <code>pdata</code> <em>for each of 5 levels of the g factor</em>, we get all of the results in a mere <em>2 seconds</em> using ~1.3GB of RAM!</p>
+## 1    1.58s     994MB</code></pre>
+<p>Note that if only one description variable class is requested, you’ll get a data frame back instead of a list of data frames. Moreover, despite having to repeat all calculations across the 5 non-id numeric columns in the 1,000,000 row version of <code>pdata</code> <em>for each of 5 levels of the g factor</em>, we get all of the results in <em>~1.6 seconds</em> using ~1 GB of RAM!</p>
 </div>
 <div id="confidence-intervals" class="section level2">
 <h2><span class="header-section-number">5.4</span> confidence intervals</h2>
@@ -488,9 +500,9 @@ mark(
 ##   g     lower median upper
 ##   &lt;fct&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
 ## 1 a      130.   133.  134.
-## 2 b      141.   147.  152.
+## 2 b      141.   147.  153.
 ## 3 c      159.   165.  172.
-## 4 d      171.   175.  181.
+## 4 d      170.   175.  181.
 ## 5 e      136.   137.  137.</code></pre>
 <p>It is worth noting that adding more cores doesn’t necessarily mean things will end up finishing sooner, due to the <a href="http://parallelcomp.uw.hu/ch05lev1sec1.html#:~:text=The%20time%20spent%20communicating%20data,serial%20components%20in%20a%20program.">overhead</a> of coordinating operations across cores.</p>
 <p><code>describe_ci_all()</code> gives you confidence intervals for the specified statistic for all numeric columns in the input data frame.</p>
@@ -791,23 +803,23 @@ pdata %&gt;%
 ## $ gear               &lt;chr&gt; &quot;four&quot;, &quot;four&quot;, &quot;four&quot;, &quot;3&quot;, &quot;3&quot;, &quot;3&quot;, &quot;3&quot;, &quot;fou...
 ## $ am                 &lt;dbl&gt; 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
 ## $ notes              &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...</code></pre>
-<pre><code>## Duplicated rows detected! 22 of 44 rows in the input data have multiple copies.</code></pre>
-<pre><code>##   Miles per gallon # of cylinders DISP  hp    wt gear am notes n_copies
-## 1             18.7              8  N/A 175 3.440    3  0    NA        3
-## 2             10.4              8  N/A 215 5.424    3  0    NA        3
-## 3             10.4              8  N/A 215 5.424    3  0    NA        3
-## 4             18.7              8  N/A 175 3.440    3  0    NA        3
-## 5             18.7              8  N/A 175 3.440    3  0    NA        3
-## 6             10.4              8  N/A 215 5.424    3  0    NA        3</code></pre>
+<pre><code>## Duplicated rows detected! 21 of 44 rows in the input data have multiple copies.</code></pre>
+<pre><code>##   Miles per gallon # of cylinders DISP  hp   wt gear am notes n_copies
+## 1             15.0              8  N/A 999 3.57    5  1    NA        4
+## 2             15.0              8  N/A 999 3.57    5  1    NA        4
+## 3             15.0              8  N/A 999 3.57    5  1    NA        4
+## 4             15.0              8  N/A 999 3.57    5  1    NA        4
+## 5             15.5              8  N/A 150 3.52    3  0    NA        3
+## 6             15.5              8  N/A 150 3.52    3  0    NA        3</code></pre>
 <p><code>glimpse()</code> reveals some inconveniently formatted column names, which (in R) shouldn’t contain spaces or begin with non-letter characters. You also want a column to have consistently formatted values, not like the mix of string and numeric values we are seeing under the number of cylinders column. <code>copies(filter = "dupes")</code> also notifies us that 22 of the 44 rows in <code>messy_cars</code> are not unique.</p>
 <pre class="r"><code>counts_tb_all(messy_cars, n = 5)</code></pre>
 <pre><code>## $`Miles per gallon`
 ##   top_v top_n bot_v bot_n
-## 1  10.4     5  13.3     1
-## 2  18.7     3  14.3     1
-## 3  21.4     3  14.7     1
-## 4  22.8     3    15     1
-## 5  30.4     3  15.8     1
+## 1    15     4  13.3     1
+## 2  15.2     3  14.3     1
+## 3  15.5     3  14.7     1
+## 4  19.2     3  15.8     1
+## 5    21     3  16.4     1
 ## 
 ## $`# of cylinders`
 ##   top_v top_n bot_v bot_n
@@ -819,37 +831,37 @@ pdata %&gt;%
 ##   top_v top_n bot_v bot_n
 ## 1   N/A    17   108     1
 ## 2 275.8     4 120.1     1
-## 3 140.8     2 120.3     1
-## 4   160     2   121     1
-## 5 167.6     2   145     1
+## 3   160     3 120.3     1
+## 4 146.7     2   121     1
+## 5 167.6     2 140.8     1
 ## 
 ## $hp
 ##   top_v top_n bot_v bot_n
-## 1   175     5    52     1
-## 2   110     4    62     1
-## 3   180     4    65     1
-## 4    66     3    91     1
-## 5   150     3    93     1
+## 1   110     4   109     1
+## 2   150     4   113     1
+## 3   175     4   205     1
+## 4   180     4   215     1
+## 5   999     4   230     1
 ## 
 ## $wt
 ##   top_v top_n bot_v bot_n
-## 1    -1     6  2.14     1
-## 2  3.44     5   2.2     1
-## 3 5.424     3  2.32     1
-## 4  3.15     2 2.465     1
-## 5 3.215     2  2.62     1
+## 1    -1     5  2.14     1
+## 2  3.57     5  2.32     1
+## 3  3.44     3 2.465     1
+## 4  3.52     3  2.77     1
+## 5   2.2     2  2.78     1
 ## 
 ## $gear
 ##   top_v top_n bot_v bot_n
-## 1     3    24     4     2
-## 2  four    12     5     6
-## 3     5     6  four    12
-## 4     4     2     3    24
+## 1     3    20     4     2
+## 2  four    14     5     8
+## 3     5     8  four    14
+## 4     4     2     3    20
 ## 
 ## $am
 ##   top_v top_n bot_v bot_n
-## 1     0    29     1    15
-## 2     1    15     0    29
+## 1     0    25     1    19
+## 2     1    19     0    25
 ## 
 ## $notes
 ## [1] top_v top_n bot_v bot_n
@@ -858,30 +870,30 @@ pdata %&gt;%
 <pre class="r"><code>describe_all(messy_cars, 
              output = &quot;dt&quot;) #so all output is printed</code></pre>
 <pre><code>## $character
-##          variable cases  n na p_na n_unique   v1_n    v2_n    v3_n  v4_n
-## 1: # of cylinders    44 44  0    0        3   8_21    4_14   six_9  &lt;NA&gt;
-## 2:           DISP    44 44  0    0       18 N/A_17 275.8_4 140.8_2 160_2
-## 3:           gear    44 44  0    0        4   3_24 four_12     5_6   4_2
-##       v5_n
-## 1:    &lt;NA&gt;
-## 2: 167.6_2
-## 3:    &lt;NA&gt;
+##          variable cases  n na p_na n_unique min_chars max_chars
+## 1: # of cylinders    44 44  0    0        3         1         3
+## 2:           DISP    44 44  0    0       18         2         5
+## 3:           gear    44 44  0    0        4         1         4
+##                             counts_tb
+## 1:                  8_21, 4_14, six_9
+## 2: N/A_17, 275.8_4, ..., 79_1, 95.1_1
+## 3:            3_20, four_14, 5_8, 4_2
 ## 
 ## $logical
-##    variable cases n na p_na n_TRUE n_FALSE p_TRUE p_FALSE
-## 1:    notes    44 0 44    1      0       0    NaN     NaN
+##    variable cases n na p_na n_TRUE n_FALSE p_TRUE
+## 1:    notes    44 0 44    1      0       0    NaN
 ## 
 ## $numeric
-##            variable cases  n na p_na    mean      sd     se   p0     p25    p50
-## 1: Miles per gallon    44 44  0    0  19.623   6.115  0.922 10.4  15.425  18.70
-## 2:               hp    44 44  0    0 162.773 140.942 21.248 52.0 103.000 136.50
-## 3:               wt    44 44  0    0   2.965   1.801  0.271 -1.0   2.732   3.44
-## 4:               am    44 44  0    0   0.341   0.479  0.072  0.0   0.000   0.00
-##        p75    p100   skew   kurt
-## 1:  22.800  33.900  0.548 -0.169
-## 2: 180.000 999.000  5.035 29.986
-## 3:   3.742   5.424 -1.196  1.067
-## 4:   1.000   1.000  0.695 -1.591</code></pre>
+##            variable cases  n na p_na    mean      sd     se   p0   p25    p50
+## 1: Miles per gallon    44 44  0    0  20.070   6.169  0.930 10.4 15.20  18.95
+## 2:               hp    44 44  0    0 214.045 257.074 38.755 52.0 96.50 136.50
+## 3:               wt    44 44  0    0   2.907   1.585  0.239 -1.0  2.62   3.44
+## 4:               am    44 44  0    0   0.432   0.501  0.076  0.0  0.00   0.00
+##       p75    p100   skew   kurt
+## 1:  22.80  33.900  0.855  0.006
+## 2: 180.00 999.000  2.707  6.114
+## 3:   3.57   5.424 -1.512  2.195
+## 4:   1.00   1.000  0.285 -2.012</code></pre>
 <p><code>describe_all()</code> reveals two further problems, a maximum value of 999 (likely representing a data entry error or surrogate value for missingness) under the “hp” column and a completely empty “notes” column. These kinds of inconsistencies and errors are common in datasets where multiple individuals have entered the data manually, e.g. into a shared excel file.</p>
 <p>I was the one who messed these data up so I happen to know in this case that “999” and “-1” are erroneous values, but if you see something like this in data that were collected/entered by someone else, you should ask them about it before proceeding.</p>
 <p>Fortunately the problems we’re seeing aren’t tough to deal with (for the most part) with a few <code>elucidate</code> helper functions: <code>copies(filter = "first")</code>, <code>wash_df()</code>, and <code>recode_errors()</code>.</p>
@@ -931,7 +943,7 @@ pdata %&gt;%
 </div>
 <div id="performance-evaluations" class="section level1">
 <h1><span class="header-section-number">9</span> <strong>Performance Evaluations</strong></h1>
-<p>To show you how well <code>elucidate</code> functions perform relative to the closest alternatives, we’ll do a few memory utilization and speed comparisons with <code>bench::mark()</code>. For the sake of brevity, we’ll focus on evaluating two of the most computationally demanding <code>elucidate</code> functions: <code>copies()</code> and <code>describe_all()</code>.</p>
+<p>To show you how well <code>elucidate</code> functions perform relative to the closest alternatives, we’ll do a few memory utilization and speed comparisons with <code>bench::mark()</code>. For the sake of brevity, we’ll focus on evaluating two of the most computationally demanding <code>elucidate</code> functions: <code>copies()</code> and <code>describe_all()</code>. We’ll also increase the number of iterations from 10 to 25 for improved benchmarking reliability.</p>
 <div id="copies-vs-janitorget_dupes" class="section level2">
 <h2><span class="header-section-number">9.1</span> <code>copies()</code> vs <code>janitor::get_dupes()</code></h2>
 <p>First, I’ll apply <code>copies(filter = "dupes")</code> and it’s closest non-elucidate counterpart, <code>janitor::get_dupes()</code>, to <code>pdata_resampled</code> when a couple of search columns are specified and standardize the formatting of the output to show that they yield equivalent results.</p>
@@ -946,7 +958,7 @@ glimpse(a)</code></pre>
 ## Columns: 11
 ## $ d          &lt;date&gt; 2008-01-01, 2008-01-01, 2008-01-01, 2008-01-01, 2008-01...
 ## $ id         &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,...
-## $ dupe_count &lt;dbl&gt; 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, ...
+## $ dupe_count &lt;dbl&gt; 67, 67, 67, 67, 67, 67, 67, 67, 67, 67, 67, 67, 67, 67, ...
 ## $ g          &lt;chr&gt; &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;...
 ## $ high_low   &lt;chr&gt; &quot;high&quot;, &quot;high&quot;, &quot;high&quot;, &quot;high&quot;, &quot;high&quot;, &quot;high&quot;, &quot;high&quot;, ...
 ## $ even       &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, ...
@@ -965,7 +977,7 @@ all.equal(a, b)</code></pre>
 <pre class="r"><code>bm &lt;- bench::mark(
   copies(pdata_resampled, d, filter = &quot;dupes&quot;),
   get_dupes(pdata_resampled, d), 
-  iterations = 10,
+  iterations = 25,
   check = FALSE 
   #we won&#39;t check for equal output structures here so the other formatting
   #steps from before don&#39;t need to be included in the timing
@@ -976,8 +988,8 @@ bm %&gt;%
 <pre><code>## # A tibble: 2 x 3
 ##   expression                                     median mem_alloc
 ##   &lt;bch:expr&gt;                                   &lt;bch:tm&gt; &lt;bch:byt&gt;
-## 1 copies(pdata_resampled, d, filter = &quot;dupes&quot;)   60.3ms     130MB
-## 2 get_dupes(pdata_resampled, d)                 114.5ms     184MB</code></pre>
+## 1 copies(pdata_resampled, d, filter = &quot;dupes&quot;)   55.2ms     130MB
+## 2 get_dupes(pdata_resampled, d)                 104.6ms     184MB</code></pre>
 <pre class="r"><code>plot(bm)</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 <p><code>copies()</code> is almost twice as fast when only checking 1 column. It also uses less memory.</p>
@@ -985,7 +997,7 @@ bm %&gt;%
 <pre class="r"><code>bm2 &lt;- bench::mark(
   copies(pdata_resampled, high_low, g, filter = &quot;dupes&quot;),
   get_dupes(pdata_resampled, high_low, g), 
-  iterations = 10, 
+  iterations = 25, 
   check = FALSE
 )
 
@@ -994,16 +1006,16 @@ bm2 %&gt;%
 <pre><code>## # A tibble: 2 x 3
 ##   expression                                               median mem_alloc
 ##   &lt;bch:expr&gt;                                             &lt;bch:tm&gt; &lt;bch:byt&gt;
-## 1 copies(pdata_resampled, high_low, g, filter = &quot;dupes&quot;)  47.26ms     130MB
+## 1 copies(pdata_resampled, high_low, g, filter = &quot;dupes&quot;)  42.87ms     130MB
 ## 2 get_dupes(pdata_resampled, high_low, g)                   1.12s     184MB</code></pre>
 <pre class="r"><code>plot(bm2)</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
-<p>Now the difference is much more noticeable (&lt; 50 milliseconds vs. &gt; 1 second; over a <em>20-fold</em> speedup in favour of <code>copies()</code>!) and <code>copies()</code> still uses less memory.</p>
+<p>Now the difference is much more noticeable (~43 milliseconds vs. ~1.1 seconds; over a <em>25-fold</em> speedup in favour of <code>copies()</code>!) and <code>copies()</code> still uses less memory.</p>
 <p>What if we condition the search upon all 10 columns (the default behaviour for each function if no variables are specified to base the search on using the <code>...</code> argument)?</p>
 <pre class="r"><code>bm3 &lt;- bench::mark(
   copies(pdata_resampled, filter = &quot;dupes&quot;),
   get_dupes(pdata_resampled), 
-  iterations = 10,
+  iterations = 25,
   check = FALSE
 )
 
@@ -1012,8 +1024,8 @@ bm3 %&gt;%
 <pre><code>## # A tibble: 2 x 3
 ##   expression                                  median mem_alloc
 ##   &lt;bch:expr&gt;                                &lt;bch:tm&gt; &lt;bch:byt&gt;
-## 1 copies(pdata_resampled, filter = &quot;dupes&quot;)  148.7ms     130MB
-## 2 get_dupes(pdata_resampled)                   1.98s     237MB</code></pre>
+## 1 copies(pdata_resampled, filter = &quot;dupes&quot;) 144.17ms     130MB
+## 2 get_dupes(pdata_resampled)                   1.86s     237MB</code></pre>
 <pre class="r"><code>plot(bm3)</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
 <p>Here the speed difference is smaller but <code>copies()</code> is still over an order of magnitude faster. <code>get_dupes()</code> also uses more memory but, surprisingly, <code>copies()</code> doesn’t at all.</p>
@@ -1103,7 +1115,7 @@ bm3 %&gt;%
 <td align="right">1</td>
 <td align="left">2008-01-01</td>
 <td align="left">2019-01-01</td>
-<td align="left">2014-01-01</td>
+<td align="left">2013-01-01</td>
 <td align="right">12</td>
 </tr>
 <tr class="odd">
@@ -1133,7 +1145,7 @@ bm3 %&gt;%
 <td align="right">1</td>
 <td align="left">2008-01-01</td>
 <td align="left">2019-01-01</td>
-<td align="left">2014-01-01</td>
+<td align="left">2013-01-01</td>
 <td align="right">12</td>
 </tr>
 </tbody>
@@ -1157,7 +1169,7 @@ bm3 %&gt;%
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="right">0.50</td>
-<td align="left">FAL: 109233, TRU: 107143</td>
+<td align="left">FAL: 109047, TRU: 107011</td>
 </tr>
 <tr class="even">
 <td align="left">even</td>
@@ -1165,7 +1177,7 @@ bm3 %&gt;%
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="right">0.56</td>
-<td align="left">TRU: 115224, FAL: 89853</td>
+<td align="left">TRU: 115207, FAL: 90112</td>
 </tr>
 <tr class="odd">
 <td align="left">even</td>
@@ -1173,7 +1185,7 @@ bm3 %&gt;%
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="right">0.42</td>
-<td align="left">FAL: 107142, TRU: 77874</td>
+<td align="left">FAL: 106647, TRU: 78088</td>
 </tr>
 <tr class="even">
 <td align="left">even</td>
@@ -1181,15 +1193,15 @@ bm3 %&gt;%
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="right">0.55</td>
-<td align="left">TRU: 109135, FAL: 89165</td>
+<td align="left">TRU: 108896, FAL: 88888</td>
 </tr>
 <tr class="odd">
 <td align="left">even</td>
 <td align="left">e</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="right">0.46</td>
-<td align="left">FAL: 104670, TRU: 90561</td>
+<td align="right">0.47</td>
+<td align="left">FAL: 104644, TRU: 91460</td>
 </tr>
 </tbody>
 </table>
@@ -1217,12 +1229,12 @@ bm3 %&gt;%
 <td align="left">a</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="right">133.99</td>
-<td align="right">25.81</td>
+<td align="right">133.98</td>
+<td align="right">25.75</td>
 <td align="right">75.86</td>
 <td align="right">112.24</td>
-<td align="right">132.53</td>
-<td align="right">156.25</td>
+<td align="right">132.56</td>
+<td align="right">156.23</td>
 <td align="right">202.22</td>
 <td align="left">▂▇▆▆▁</td>
 </tr>
@@ -1231,11 +1243,11 @@ bm3 %&gt;%
 <td align="left">b</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="right">151.66</td>
-<td align="right">37.85</td>
+<td align="right">151.62</td>
+<td align="right">37.83</td>
 <td align="right">74.35</td>
 <td align="right">117.82</td>
-<td align="right">146.71</td>
+<td align="right">145.74</td>
 <td align="right">187.91</td>
 <td align="right">247.29</td>
 <td align="left">▃▇▃▇▁</td>
@@ -1245,11 +1257,11 @@ bm3 %&gt;%
 <td align="left">c</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="right">177.27</td>
-<td align="right">56.97</td>
+<td align="right">177.35</td>
+<td align="right">57.00</td>
 <td align="right">77.02</td>
 <td align="right">126.68</td>
-<td align="right">165.44</td>
+<td align="right">165.83</td>
 <td align="right">232.25</td>
 <td align="right">289.24</td>
 <td align="left">▅▇▃▆▅</td>
@@ -1259,12 +1271,12 @@ bm3 %&gt;%
 <td align="left">d</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="right">174.01</td>
-<td align="right">43.95</td>
+<td align="right">174.25</td>
+<td align="right">43.79</td>
 <td align="right">69.22</td>
-<td align="right">137.71</td>
-<td align="right">175.22</td>
-<td align="right">214.03</td>
+<td align="right">137.83</td>
+<td align="right">175.44</td>
+<td align="right">214.06</td>
 <td align="right">268.21</td>
 <td align="left">▂▆▆▇▂</td>
 </tr>
@@ -1273,12 +1285,12 @@ bm3 %&gt;%
 <td align="left">e</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="right">134.87</td>
+<td align="right">134.81</td>
 <td align="right">18.61</td>
 <td align="right">75.10</td>
 <td align="right">122.66</td>
-<td align="right">136.69</td>
-<td align="right">148.42</td>
+<td align="right">136.63</td>
+<td align="right">148.35</td>
 <td align="right">186.97</td>
 <td align="left">▁▃▇▇▁</td>
 </tr>
@@ -1292,7 +1304,7 @@ bm3 %&gt;%
   #skimr::skim() version
   skimr::skim(group_by(pdata_resampled, g)), 
   
-  iterations = 10,
+  iterations = 25,
   #the output isn&#39;t exactly the same so we disable the check argument
   check = FALSE)</code></pre>
 <pre><code>## Warning: Some expressions had a GC in every iteration; so filtering is disabled.</code></pre>
@@ -1301,18 +1313,18 @@ bm3 %&gt;%
 <pre><code>## # A tibble: 2 x 3
 ##   expression                                  median mem_alloc
 ##   &lt;bch:expr&gt;                                &lt;bch:tm&gt; &lt;bch:byt&gt;
-## 1 describe_all(pdata_resampled, g)             2.07s    1.69GB
-## 2 skimr::skim(group_by(pdata_resampled, g))    2.55s    2.12GB</code></pre>
+## 1 describe_all(pdata_resampled, g)             1.48s    1.27GB
+## 2 skimr::skim(group_by(pdata_resampled, g))    2.26s    2.12GB</code></pre>
 <pre class="r"><code>bm1 %&gt;% plot()</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
 <p>Aesthetically, <code>skim()</code> does give us some nicely formatted &amp; stylish output when used in R markdown <a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a>, but we could achieve something similar by simply passing the outputs of <code>describe*</code> functions to <code>static_to_dynamic()</code>.</p>
-<p>In terms of performance, we can see that <code>describe_all()</code> runs ~20% faster and uses ~26% less memory when a grouping variable with a handful of levels is specified (similar in terms of scale to most experimental designs with a few treatment groups). <code>describe_all()</code> also gives you <em>more</em> information (for numeric variables: se, skew, kurtosis, proportion of values that are missing). <code>skim()</code> does produce in-line mini-histograms for numeric variables, but I find the resolution of these to be too low to be useful and opt to instead rely on a combination of skewness, kurtosis, and dedicated plotting functions.</p>
-<p>I have noticed that <code>skimr::skim()</code> does seem to scale a bit better as the total number of groups used for splitting increases, so you may want to try it if you have multiple grouping variables that with many levels (e.g. postal codes/zip codes). For example, when we ask for a description of <code>pdata_resampled</code> grouped by both “g” and “d” with a total of 60 level combinations, <code>skim()</code> finishes in a median time of ~2.4 seconds vs. ~3.3 seconds for <code>describe_all()</code>, or &gt;35% faster via <code>skim()</code> when describing multiple columns for each of the 60 group combinations. On the other hand, an extra second isn’t terrible considering that you’re still getting more information and using less memory with <code>describe_all()</code>. Something to keep in mind too is that memory efficiency can become more important than speed when you are working with larger datasets of the sort commonly encountered in government or industry (containing many millions of rows).</p>
+<p>In terms of performance, we can see that <code>describe_all()</code> runs ~50% faster and uses ~67% less memory when a grouping variable with a handful of levels is specified (similar in terms of scale to most experimental designs with a few treatment groups). <code>describe_all()</code> also gives you <em>more</em> information (for numeric variables: se, skew, kurtosis, proportion of values that are missing). <code>skim()</code> does produce in-line mini-histograms for numeric variables, but I find the resolution of these to be too low to be useful and opt to instead rely on a combination of skewness, kurtosis, and dedicated plotting functions.</p>
+<p>What about a situation where you want to split the descriptive summary by more than one grouping variable? When we ask for a description of <code>pdata_resampled</code> grouped by both “g” and “d” with a total of 60 level combinations, now the speed gap between <code>skim()</code> and <code>describe_all()</code> has narrowed considerably to ~10% in favour of <code>describe_all()</code>, although the latter is still using 60% less RAM. This result suggests that <code>skim()</code> may scale better in terms of speed for situations when you need to describe a very large number of groups/partitions (e.g. splitting by many geographic areas like the thousands of US zip codes).</p>
 <pre class="r"><code>bm1 &lt;- mark(
   describe_all(pdata_resampled, d, g), 
   skimr::skim(group_by(pdata_resampled, d, g)),
   
-  iterations = 10,
+  iterations = 25,
   check = FALSE) #the output isn&#39;t exactly the same so we disable the check argument</code></pre>
 <pre><code>## Warning: Some expressions had a GC in every iteration; so filtering is disabled.</code></pre>
 <pre class="r"><code>bm1 %&gt;% 
@@ -1320,17 +1332,15 @@ bm3 %&gt;%
 <pre><code>## # A tibble: 2 x 3
 ##   expression                                     median mem_alloc
 ##   &lt;bch:expr&gt;                                   &lt;bch:tm&gt; &lt;bch:byt&gt;
-## 1 describe_all(pdata_resampled, d, g)             3.25s     1.7GB
-## 2 skimr::skim(group_by(pdata_resampled, d, g))    2.41s    1.99GB</code></pre>
+## 1 describe_all(pdata_resampled, d, g)             2.14s    1.24GB
+## 2 skimr::skim(group_by(pdata_resampled, d, g))    2.36s    1.99GB</code></pre>
 <pre class="r"><code>bm1 %&gt;% plot()</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
 <p>What about the non-grouped version that you’ll probably use most often?</p>
 <pre class="r"><code>bm1 &lt;- mark(
   describe_all(pdata_resampled), 
-  
   skimr::skim(pdata_resampled), 
-  
-  iterations = 10,
+  iterations = 25,
   check = FALSE) #the output isn&#39;t exactly the same so we disable the check argument</code></pre>
 <pre><code>## Warning: Some expressions had a GC in every iteration; so filtering is disabled.</code></pre>
 <pre class="r"><code>bm1 %&gt;% 
@@ -1338,11 +1348,11 @@ bm3 %&gt;%
 <pre><code>## # A tibble: 2 x 3
 ##   expression                      median mem_alloc
 ##   &lt;bch:expr&gt;                    &lt;bch:tm&gt; &lt;bch:byt&gt;
-## 1 describe_all(pdata_resampled)    1.57s    1.63GB
-## 2 skimr::skim(pdata_resampled)      2.2s    2.04GB</code></pre>
+## 1 describe_all(pdata_resampled)    1.34s    1.27GB
+## 2 skimr::skim(pdata_resampled)     2.03s    2.04GB</code></pre>
 <pre class="r"><code>bm1 %&gt;% plot()</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
-<p>Here <code>describe_all()</code> clearly comes out on top again, finishing &gt; 35% faster and using ~25% less RAM than <code>skim()</code>.</p>
+<p>Here <code>describe_all()</code> clearly comes out on top again, finishing ~50% faster and using ~60% less RAM than <code>skim()</code>.</p>
 <p>That’s it! Hopefully you’ll find that <code>elucidate</code> makes exploratory data analysis in R a breeze when you try it out for yourself.</p>
 </div>
 </div>

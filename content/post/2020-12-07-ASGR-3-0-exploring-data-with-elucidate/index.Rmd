@@ -216,7 +216,6 @@ The latest version of `elucidate` also includes a `mode()`^[It is worth noting t
 Checking for other anomalies like extreme values (outliers) and missing values can be achieved with `describe()`. To start with, we'll subset the output to just focus on columns relevant these quality indicators.
 
 ```{r, cache = T}
-
 pdata_resampled %>% 
   describe(y1) %>% 
   #desctibe() outputs a tibble, which means we can subsequently manipulate the
@@ -287,7 +286,7 @@ pdata_resampled %>%
   describe_all()
 ```
 
-Despite the number of calculations and operations that need to be performed, `describe_all()` also runs pretty quickly for this amount of data, taking *under a second* and using less than 1 GB of RAM to describe 6 columns of various classes with 1,000,000 values each^[This great performance comes from the wonderful [data.table](https://rdatatable.gitlab.io/data.table/) package doing the bulk of the heavy lifting for us under the hood.].
+Despite the number of calculations and operations that need to be performed, `describe_all()` also runs pretty quickly for this amount of data, taking *~600 milliseconds* and using less than 600 MB of RAM to describe 6 columns of various classes with 1,000,000 values each^[This great performance comes from the wonderful [data.table](https://rdatatable.gitlab.io/data.table/) package doing the bulk of the heavy lifting for us under the hood.].
 
 ```{r, cache = T, message = F}
 mark(
@@ -328,7 +327,7 @@ mark(
   select(median, mem_alloc)
 ```
 
-Note that if only one description variable class is requested, you'll get a data frame back instead of a list of data frames. Moreover, despite having to repeat all calculations across the 5 non-id numeric columns in the 1,000,000 row version of `pdata` *for each of 5 levels of the g factor*, we get all of the results in a mere *2 seconds* using ~1.3GB of RAM!
+Note that if only one description variable class is requested, you'll get a data frame back instead of a list of data frames. Moreover, despite having to repeat all calculations across the 5 non-id numeric columns in the 1,000,000 row version of `pdata` *for each of 5 levels of the g factor*, we get all of the results in *~1.6 seconds* using ~1 GB of RAM!
 
 ## confidence intervals
 
@@ -390,6 +389,7 @@ pdata %>%
   print(n = Inf) #print all rows
 
 ```
+
 This reveals that all groups of the "g" factor in `pdata` probably have similar population mean values and are unlikely to represent statistically different populations in terms of the "x1", "x2", "x3", or "y2" variables (because the 95% CIs for the mean of each group overlap with one another). However, the mean "y1" scores of groups "c" & "d" seem to be higher than the means of groups "a", "b", & "e". These results suggest that "y1" is a useful measure for differentiating between some of the "g" factor groups in `pdata`.
 
 # **To see, look**
@@ -746,11 +746,12 @@ fixed_cars %>%
 select(mtcars, mpg:hp, wt, gear, am) %>% glimpse()
 
 ```
+
 Not bad. Most aspects match the original, with a couple of mismatches in cases where the "errors" I introduced (`N/A`, `-1`, and `999`), and then subsequently deleted (set to `NA`), were meaningful values in the original dataset that I "corrupted" in preparing `messy_cars` for pedagogical purposes. In this case the true data are available to us for comparison so we could restore the correct values from the uncorrupted backup source. However, in real projects you may be less fortunate and find yourself in the position of having to omit^[Other strategies for dealing with missing values will be the topic of a future blog post.] anomalous values because doing so interferes less with your ability to get useful results from the data than leaving them in would. Let this example also serve as a lesson of *how important it is to be careful with your data at all stages, and back it up, starting on day 1 of collection/entry*.
 
 # **Performance Evaluations**
 
-To show you how well `elucidate` functions perform relative to the closest alternatives, we'll do a few memory utilization and speed comparisons with `bench::mark()`. For the sake of brevity, we'll focus on evaluating two of the most computationally demanding `elucidate` functions: `copies()` and `describe_all()`. 
+To show you how well `elucidate` functions perform relative to the closest alternatives, we'll do a few memory utilization and speed comparisons with `bench::mark()`. For the sake of brevity, we'll focus on evaluating two of the most computationally demanding `elucidate` functions: `copies()` and `describe_all()`. We'll also increase the number of iterations from 10 to 25 for improved benchmarking reliability.
 
 ## `copies()` vs `janitor::get_dupes()`
 
@@ -779,7 +780,7 @@ Good, now we can use [bench::mark()](https://github.com/r-lib/bench) to compare 
 bm <- bench::mark(
   copies(pdata_resampled, d, filter = "dupes"),
   get_dupes(pdata_resampled, d), 
-  iterations = 10,
+  iterations = 25,
   check = FALSE 
   #we won't check for equal output structures here so the other formatting
   #steps from before don't need to be included in the timing
@@ -799,7 +800,7 @@ What happens when we try to search for duplicates using more than one column?
 bm2 <- bench::mark(
   copies(pdata_resampled, high_low, g, filter = "dupes"),
   get_dupes(pdata_resampled, high_low, g), 
-  iterations = 10, 
+  iterations = 25, 
   check = FALSE
 )
 
@@ -809,7 +810,7 @@ bm2 %>%
 plot(bm2)
 ```
 
-Now the difference is much more noticeable (< 50 milliseconds vs. > 1 second; over a *20-fold* speedup in favour of `copies()`!) and `copies()` still uses less memory.
+Now the difference is much more noticeable (~43 milliseconds vs. ~1.1 seconds; over a *25-fold* speedup in favour of `copies()`!) and `copies()` still uses less memory.
 
 What if we condition the search upon all 10 columns (the default behaviour for each function if no variables are specified to base the search on using the `...` argument)?
 
@@ -817,7 +818,7 @@ What if we condition the search upon all 10 columns (the default behaviour for e
 bm3 <- bench::mark(
   copies(pdata_resampled, filter = "dupes"),
   get_dupes(pdata_resampled), 
-  iterations = 10,
+  iterations = 25,
   check = FALSE
 )
 
@@ -836,7 +837,6 @@ The only other R function that I'm aware of which is comparable to `describe_all
 I'll start by showing you what the output of `skim()` looks like.
 
 ```{r, cache = TRUE}
-
 pdata_resampled %>%
   select(g, y1, d, even) %>% #just to limit printed output
   group_by(g) %>% 
@@ -853,7 +853,7 @@ bm1 <- mark(
   #skimr::skim() version
   skimr::skim(group_by(pdata_resampled, g)), 
   
-  iterations = 10,
+  iterations = 25,
   #the output isn't exactly the same so we disable the check argument
   check = FALSE)
 
@@ -866,17 +866,16 @@ bm1 %>% plot()
 
 Aesthetically, `skim()` does give us some nicely formatted & stylish output when used in R markdown ^[[R markdown](https://bookdown.org/yihui/blogdown/) is what these blog posts are written in; the `skim()` output looks different when printed from a regular R script.], but we could achieve something similar by simply passing the outputs of `describe*` functions to `static_to_dynamic()`.
 
-In terms of performance, we can see that `describe_all()` runs ~20% faster and uses ~26% less memory when a grouping variable with a handful of levels is specified (similar in terms of scale to most experimental designs with a few treatment groups). `describe_all()` also gives you *more* information (for numeric variables: se, skew, kurtosis, proportion of values that are missing). `skim()` does produce in-line mini-histograms for numeric variables, but I find the resolution of these to be too low to be useful and opt to instead rely on a combination of skewness, kurtosis, and dedicated plotting functions. 
+In terms of performance, we can see that `describe_all()` runs ~50% faster and uses ~67% less memory when a grouping variable with a handful of levels is specified (similar in terms of scale to most experimental designs with a few treatment groups). `describe_all()` also gives you *more* information (for numeric variables: se, skew, kurtosis, proportion of values that are missing). `skim()` does produce in-line mini-histograms for numeric variables, but I find the resolution of these to be too low to be useful and opt to instead rely on a combination of skewness, kurtosis, and dedicated plotting functions. 
 
-I have noticed that `skimr::skim()` does seem to scale a bit better as the total number of groups used for splitting increases, so you may want to try it if you have multiple grouping variables that with many levels (e.g. postal codes/zip codes). For example, when we ask for a description of `pdata_resampled` grouped by both "g" and "d" with a total of 60 level combinations, `skim()` finishes in a median time of ~2.4 seconds vs. ~3.3 seconds for `describe_all()`, or >35% faster via `skim()` when describing multiple columns for each of the 60 group combinations. On the other hand, an extra second isn't terrible considering that you're still getting more information and using less memory with `describe_all()`. Something to keep in mind too is that memory efficiency can become more important than speed when you are working with larger datasets of the sort commonly encountered in government or industry (containing many millions of rows).
+What about a situation where you want to split the descriptive summary by more than one grouping variable? When we ask for a description of `pdata_resampled` grouped by both "g" and "d" with a total of 60 level combinations, now the speed gap between `skim()` and `describe_all()` has narrowed considerably to ~10% in favour of `describe_all()`, although the latter is still using 60% less RAM. This result suggests that `skim()` may scale better in terms of speed for situations when you need to describe a very large number of groups/partitions (e.g. splitting by many geographic areas like the thousands of US zip codes). 
 
 ```{r, cache = TRUE}
-
 bm1 <- mark(
   describe_all(pdata_resampled, d, g), 
   skimr::skim(group_by(pdata_resampled, d, g)),
   
-  iterations = 10,
+  iterations = 25,
   check = FALSE) #the output isn't exactly the same so we disable the check argument
 
 bm1 %>% 
@@ -888,13 +887,10 @@ bm1 %>% plot()
 What about the non-grouped version that you'll probably use most often?
 
 ```{r, cache = TRUE}
-
 bm1 <- mark(
   describe_all(pdata_resampled), 
-  
   skimr::skim(pdata_resampled), 
-  
-  iterations = 10,
+  iterations = 25,
   check = FALSE) #the output isn't exactly the same so we disable the check argument
 
 bm1 %>% 
@@ -904,7 +900,7 @@ bm1 %>% plot()
 
 ```
 
-Here `describe_all()` clearly comes out on top again, finishing > 35% faster and using ~25% less RAM than `skim()`.
+Here `describe_all()` clearly comes out on top again, finishing ~50% faster and using ~60% less RAM than `skim()`.
 
 That's it! Hopefully you'll find that `elucidate` makes exploratory data analysis in R a breeze when you try it out for yourself. 
 
