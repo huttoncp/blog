@@ -319,3 +319,6 @@ Click [here](https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/) to go 
 
 Thank you for reading and I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.
 
+This blog is something I do as a volunteer in my free time. If you've found it helpful and want to give back, [coffee donations](https://www.buymeacoffee.com/huttoncp) would be appreciated. 
+
+<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="huttoncp" data-color="#FF5F5F" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>

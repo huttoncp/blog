@@ -62,12 +62,12 @@ library(gapminder) </code></pre>
 <pre class="r"><code>gapminder %&gt;% glimpse() #%&gt;% is the pipe operator (covered in an earlier post)</code></pre>
 <pre><code>## Rows: 1,704
 ## Columns: 6
-## $ country   &lt;fct&gt; Afghanistan, Afghanistan, Afghanistan, Afghanistan, Afgha...
-## $ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asi...
-## $ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 199...
-## $ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 4...
-## $ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372,...
-## $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.113...</code></pre>
+## $ country   &lt;fct&gt; &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, ~
+## $ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, ~
+## $ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, ~
+## $ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.8~
+## $ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 12~
+## $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134, ~</code></pre>
 </div>
 </div>
 <div id="factor-basics" class="section level1">
@@ -114,7 +114,7 @@ gapminder$continent %&gt;% levels()</code></pre>
 <pre class="r"><code>#base R boxplot
 boxplot(lifeExp ~ continent, #formula syntax of the form y-variable ~ x-variable
         data = gapminder)</code></pre>
-<p><img src="/post/2020-08-29-ASGR-2-4-factors/index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>That’s great, but what if we wanted to reorder the levels of the factor so that the Americas appear first? We could redefine the continent factor using the <code>factor()</code> function, or we could use <code>fct_relevel()</code> from the forcats package (in conjunction with <a href="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#mutate">dplyr::mutate()</a>).</p>
 <pre class="r"><code>#if we use factor() we need to specify all levels again
 p1a &lt;- gapminder %&gt;%
@@ -133,7 +133,7 @@ p1b &lt;- gapminder %&gt;%
          #by default levels you mention move to the front
   ) %&gt;%
   boxplot(lifeExp ~ continent, data = .) </code></pre>
-<p><img src="/post/2020-08-29-ASGR-2-4-factors/index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <pre class="r"><code>identical(p1a, p1b)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>#both options have the same effect on the plot
@@ -147,27 +147,27 @@ gapminder %&gt;%
          #here the special character set &quot;Inf&quot; specifies the end
          ) %&gt;%
   boxplot(lifeExp ~ continent, data = .) </code></pre>
-<p><img src="/post/2020-08-29-ASGR-2-4-factors/index_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
 <pre class="r"><code>#or to the 4th position
 gapminder %&gt;%
   mutate(continent = fct_relevel(continent, &quot;Americas&quot;,
                                  after = 3) 
          ) %&gt;%
   boxplot(lifeExp ~ continent, data = .) </code></pre>
-<p><img src="/post/2020-08-29-ASGR-2-4-factors/index_files/figure-html/unnamed-chunk-7-3.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-7-3.png" width="672" /></p>
 <p>In addition to manually reordering the levels of a factor using <code>fct_relevel()</code>, you can reorder a factor based on another variable with <code>fct_reorder()</code>, e.g. if you want them to appear in order of ascending life expectancy:</p>
 <pre class="r"><code>gapminder %&gt;%
   mutate(continent = fct_reorder(continent, lifeExp) 
          ) %&gt;%
   boxplot(lifeExp ~ continent, data = .) </code></pre>
-<p><img src="/post/2020-08-29-ASGR-2-4-factors/index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <pre class="r"><code>#to sort in descending order add .desc = TRUE in the fct_reorder call.
 gapminder %&gt;%
   mutate(continent = fct_reorder(continent, lifeExp, 
                                  .desc = TRUE)  
          ) %&gt;%
   boxplot(lifeExp ~ continent, data = .) </code></pre>
-<p><img src="/post/2020-08-29-ASGR-2-4-factors/index_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
 <p>A way to remember the difference between <code>fct_relevel()</code> and <code>fct_reorder()</code> is that <code>fct_relevel()</code> allows you <em>manually</em> specify the <em>levels</em> of a factor, while <code>fct_reorder()</code> lets you re-<em>order</em> a factor based on the <em>order</em> of another variable.</p>
 <p>To modify the values of a factor you can use either the labels argument of the base R <code>factor()</code> function and (again) have to specify all values and labels, which can become tedious really fast, or you can just <code>forcats::fct_recode()</code>. For example, let’s say we wanted to change continent values of “Oceania” to “Australia”:</p>
 <pre class="r"><code>#base R&#39;s factor()
@@ -190,7 +190,7 @@ gapminder %&gt;%
                                 &quot;Australia&quot; = &quot;Oceania&quot;) #&quot;new value&quot; = &quot;old value&quot;
          ) %&gt;%
   boxplot(lifeExp ~ continent, data = .) </code></pre>
-<p><img src="/post/2020-08-29-ASGR-2-4-factors/index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>Forcats also makes it easy to aggregate levels using <code>fct_recode()</code>, <code>fct_collapse()</code>, or <code>fct_lump_*()</code>. The main difference is that <code>fct_recode()</code> is for manually recoding of categories, while <code>fct_lump_*()</code> will combine categories based on a criterion like those with counts less than a specified threshold.</p>
 <p>For example, if we wanted to view the combined data for Europe and Asia under the label “Eurasia”, we could do so using <code>fct_recode()</code> or a shortcut function called <code>fct_collapse()</code>:</p>
 <pre class="r"><code>gapminder %&gt;%
@@ -208,7 +208,7 @@ gapminder %&gt;%
                                 &quot;Eurasia&quot; = c(&quot;Europe&quot;, &quot;Asia&quot;)) 
          ) %&gt;%
   boxplot(lifeExp ~ continent, data = .) </code></pre>
-<p><img src="/post/2020-08-29-ASGR-2-4-factors/index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>Or if we wanted to aggregate the data for the continents other than the top 2 most common values we could use <code>fct_lump_n()</code>:</p>
 <pre class="r"><code>gapminder %&gt;%
   mutate(continent = fct_lump_n(continent, 
@@ -223,7 +223,7 @@ gapminder %&gt;%
   )  
   ) %&gt;%
   boxplot(lifeExp ~ continent, data = .) </code></pre>
-<p><img src="/post/2020-08-29-ASGR-2-4-factors/index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <pre class="r"><code>#or to lump together categories appearing less than a minimum number of times,
 #use fct_lump_min()
 
@@ -239,7 +239,7 @@ gapminder %&gt;%
                                   min = mean(table(gapminder$continent)))    
   ) %&gt;%
   boxplot(lifeExp ~ continent, data = .) </code></pre>
-<p><img src="/post/2020-08-29-ASGR-2-4-factors/index_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
 <p>There are a few other <code>fct_lump_*</code> variants that you can learn about in the <code>fct_lump()</code> documentation.</p>
 <p>To drop unused levels of a factor you can use <code>fct_drop()</code>. If we filter the gapminder data to drop records for Africa, we might be surprised to see that <code>levels(gapminder$continent)</code> still lists Africa as one of the levels for the continent factor (despite the fact that there are no longer any records for it). In this case, the factor retains the original level coding but one of the levels is no longer represented in the data. To remove that unused level we can use <code>fct_drop()</code>:</p>
 <pre class="r"><code>#save this subset as a new object so we don&#39;t overwrite the original data frame
@@ -256,7 +256,7 @@ gap2$continent %&gt;% table() #no records for Africa, as expected!</code></pre>
 <pre class="r"><code>#what&#39;s worse, Africa still shows up (without any data) when we try to graph
 #life expectancy as a function of continent
 boxplot(lifeExp ~ continent, gap2)</code></pre>
-<p><img src="/post/2020-08-29-ASGR-2-4-factors/index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <pre class="r"><code>#drop the unused level
 gap2 &lt;- gap2 %&gt;% 
   mutate(continent = fct_drop(continent))
@@ -351,6 +351,8 @@ summary(linear_regression_model)</code></pre>
 <li><p>A further bonus of the forcats functions like <code>fct_reorder()</code> is that you can give them a character vector instead of a factor as input they will automatically convert that character vector into a factor for you (However, unlike the stringr functions, this doesn’t work for other vector types like numeric/integer vectors).</p></li>
 </ul>
 <p>Thank you for visiting my blog. I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.</p>
+<p>This blog is something I do as a volunteer in my free time. If you’ve found it helpful and want to give back, <a href="https://www.buymeacoffee.com/huttoncp">coffee donations</a> would be appreciated.</p>
+<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="huttoncp" data-color="#FF5F5F" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
 </div>
 <div class="footnotes">
 <hr />

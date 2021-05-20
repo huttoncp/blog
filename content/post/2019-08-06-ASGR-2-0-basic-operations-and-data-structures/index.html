@@ -409,7 +409,7 @@ x3 &lt;- c(1:10)
 ## [49,] 49  99
 ## [50,] 50 100</code></pre>
 <pre class="r"><code>class(mat1)</code></pre>
-<pre><code>## [1] &quot;matrix&quot;</code></pre>
+<pre><code>## [1] &quot;matrix&quot; &quot;array&quot;</code></pre>
 <pre class="r"><code>(mat2 &lt;- rbind(x1, x2)) #combined by row</code></pre>
 <pre><code>##    [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
 ## x1    1    2    3    4    5    6    7    8    9    10    11    12    13    14
@@ -424,7 +424,7 @@ x3 &lt;- c(1:10)
 ## x1    39    40    41    42    43    44    45    46    47    48    49    50
 ## x2    89    90    91    92    93    94    95    96    97    98    99   100</code></pre>
 <pre class="r"><code>class(mat2)</code></pre>
-<pre><code>## [1] &quot;matrix&quot;</code></pre>
+<pre><code>## [1] &quot;matrix&quot; &quot;array&quot;</code></pre>
 <pre class="r"><code>#combining vecotrs of unequal length produces NAs for the extra indices of the
 #longer one
 
@@ -503,19 +503,19 @@ t(mat1) #transposition</code></pre>
 x &lt;- cbind(sample(1:6), rep(c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), 2)) #create a 2-column
 
 class(x) #a matrix</code></pre>
-<pre><code>## [1] &quot;matrix&quot;</code></pre>
+<pre><code>## [1] &quot;matrix&quot; &quot;array&quot;</code></pre>
 <pre class="r"><code>#if names are not associated with the columns the variables are labelled using
 #V[index]
 
 df &lt;- as.data.frame(x) 
 df</code></pre>
 <pre><code>##   V1 V2
-## 1  3  a
-## 2  5  b
+## 1  4  a
+## 2  1  b
 ## 3  2  c
-## 4  1  a
-## 5  4  b
-## 6  6  c</code></pre>
+## 4  5  a
+## 5  6  b
+## 6  3  c</code></pre>
 <pre class="r"><code>class(df) #now a data frame</code></pre>
 <pre><code>## [1] &quot;data.frame&quot;</code></pre>
 <pre class="r"><code>df &lt;- as.data.frame(x) 
@@ -524,15 +524,15 @@ names(df) &lt;- c(&quot;var_1&quot;, &quot;var_2&quot;) #change column names usi
 
 str(df)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    6 obs. of  2 variables:
-##  $ var_1: Factor w/ 6 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 3 5 2 1 4 6
-##  $ var_2: Factor w/ 3 levels &quot;a&quot;,&quot;b&quot;,&quot;c&quot;: 1 2 3 1 2 3</code></pre>
+##  $ var_1: chr  &quot;4&quot; &quot;1&quot; &quot;2&quot; &quot;5&quot; ...
+##  $ var_2: chr  &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;a&quot; ...</code></pre>
 <pre class="r"><code>#create the data frame directly and specify names
 df &lt;- data.frame(&quot;var_1&quot; = c(sample(1:6, 6)), 
                  &quot;var_2&quot; = rep(c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), 2)) 
 str(df)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    6 obs. of  2 variables:
-##  $ var_1: int  5 2 3 4 6 1
-##  $ var_2: Factor w/ 3 levels &quot;a&quot;,&quot;b&quot;,&quot;c&quot;: 1 2 3 1 2 3</code></pre>
+##  $ var_1: int  2 1 4 6 5 3
+##  $ var_2: chr  &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;a&quot; ...</code></pre>
 <pre class="r"><code>#if you don&#39;t want strings to be converted to factors automatically, set
 #stringsAsFactors = FALSE
 df &lt;- data.frame(&quot;var_1&quot; = c(sample(1:6, 6)), 
@@ -543,12 +543,14 @@ df &lt;- data.frame(&quot;var_1&quot; = c(sample(1:6, 6)),
 <h2><span class="header-section-number">7.6</span> Tibbles</h2>
 <pre class="r"><code>#load the tidyverse packages, which contain the tibble and as_tibble functions
 library(tidyverse)</code></pre>
-<pre><code>## -- Attaching packages ------------------------------------------------------------------------------------------------------------ tidyverse 1.2.1 --</code></pre>
-<pre><code>## v ggplot2 3.2.1     v purrr   0.3.3
-## v tibble  2.1.3     v dplyr   0.8.3
-## v tidyr   1.0.0     v stringr 1.4.0
-## v readr   1.3.1     v forcats 0.4.0</code></pre>
-<pre><code>## -- Conflicts --------------------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.3.3     v purrr   0.3.4
+## v tibble  3.1.1     v dplyr   1.0.2
+## v tidyr   1.1.2     v stringr 1.4.0
+## v readr   1.4.0     v forcats 0.5.0</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.0.5</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 4.0.5</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>#convert a df or matrix to a tibble using as_tibble()
@@ -560,13 +562,13 @@ tbl1 &lt;- as_tibble(df)
 tbl1 #printout also tells you the dimensions and class of each column</code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   var_1 var_2
-##   &lt;int&gt; &lt;fct&gt;
-## 1     4 a    
+##   &lt;int&gt; &lt;chr&gt;
+## 1     2 a    
 ## 2     6 b    
-## 3     5 c    
-## 4     1 a    
-## 5     3 b    
-## 6     2 c</code></pre>
+## 3     1 c    
+## 4     5 a    
+## 5     4 b    
+## 6     3 c</code></pre>
 <pre class="r"><code>#When creating a tibble, strings are not automatically converted to factors. 
 #This is better from a data manipulation standpoint, which will be covered in a
 #future post on working with strings
@@ -578,11 +580,11 @@ tbl1</code></pre>
 ##   var_1 var_2
 ##   &lt;int&gt; &lt;chr&gt;
 ## 1     6 a    
-## 2     4 b    
-## 3     3 c    
-## 4     1 a    
-## 5     5 b    
-## 6     2 c</code></pre>
+## 2     5 b    
+## 3     1 c    
+## 4     3 a    
+## 5     2 b    
+## 6     4 c</code></pre>
 </div>
 </div>
 <div id="random-numbers-and-sampling" class="section level1">
@@ -591,19 +593,19 @@ tbl1</code></pre>
 
 #obtain a random sample 6 numbers with values ranging between 1 and 40 without replacement
 sample(1:40, 6, replace=F) </code></pre>
-<pre><code>## [1] 25 21 39  2  8 30</code></pre>
+<pre><code>## [1]  6 12 24 15 19 34</code></pre>
 <pre class="r"><code>x &lt;- c(1:30)
 x</code></pre>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
 ## [26] 26 27 28 29 30</code></pre>
 <pre class="r"><code>v &lt;- sample(1:200, 100, replace=T) #sample with replacement, save it in a vector called &quot;v&quot;
 v</code></pre>
-<pre><code>##   [1]  27 121  67  34  68 114  68   6  60  12  77 198 143  42  40  61 138  88
-##  [19] 107 164 186  11 195  32  74 136 149 182  51 101  32  96 194 139 104 166
-##  [37] 137  17  70 196 121  50  95 152  92  51 128 199  19  97 177  33 107   2
-##  [55] 180 154 115  49 173 135  98 160 133 149 157 113  79 105 128  15 171 153
-##  [73]   8  99  30  89  95  84 197  98 193 106 198  76  17  45  14  12   1  88
-##  [91]   9 149  37 125 130  83  31 133  95  59</code></pre>
+<pre><code>##   [1] 132 133  69 141 186 182 189 191 155  35  22  88  36 129  95  87  72 117
+##  [19] 143  35 136 121  51  61 157 152  81  51  78 105  60  37  43 101  22 180
+##  [37] 117  55 176 123  38 107  60 147  72 188  67   4 123  41  36 196  67  27
+##  [55]  14 152 192 182  64 106  60 185 181  16 182 168 105 167 200  18  79 140
+##  [73]  99   6  81 156 185   9  21 158 126  40 184 120  40 160  35 126 159 169
+##  [91] 145  19 166 164   2 168 118 178  29  58</code></pre>
 <pre class="r"><code>set.seed(seed = 934) #sets criteria for random sampling for variable creation if you want it to be repeatable
 
 random.sample &lt;- rnorm(1000, mean = 100, sd = 1) #create a dataset of random, normally distributed data
@@ -635,13 +637,13 @@ df &lt;- as.data.frame(cbind(y, g, z))
 class(df)</code></pre>
 <pre><code>## [1] &quot;data.frame&quot;</code></pre>
 <pre class="r"><code>class(df$y)</code></pre>
-<pre><code>## [1] &quot;factor&quot;</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
 <pre class="r"><code>df$y &lt;- as.numeric(df$y) #convert to numeric
 
 class(df$z) #check the class of variable &quot;Z&quot;</code></pre>
-<pre><code>## [1] &quot;factor&quot;</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
 <pre class="r"><code>class(df$g) #check the class of variable &quot;g&quot;</code></pre>
-<pre><code>## [1] &quot;factor&quot;</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
 </div>
 <div id="functions-for-describing-the-structural-information-of-data-objects" class="section level1">
 <h1><span class="header-section-number">9</span> <strong>Functions for Describing the Structural Information of Data Objects</strong></h1>
@@ -707,10 +709,10 @@ df &lt;- data.frame(&quot;var_1&quot; = c(sample(1:6, 6)),
                  &quot;var_2&quot; = rep(c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), 2)) 
 
 glimpse(df)</code></pre>
-<pre><code>## Observations: 6
-## Variables: 2
+<pre><code>## Rows: 6
+## Columns: 2
 ## $ var_1 &lt;int&gt; 3, 5, 4, 1, 2, 6
-## $ var_2 &lt;fct&gt; a, b, c, a, b, c</code></pre>
+## $ var_2 &lt;chr&gt; &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;</code></pre>
 </div>
 <div id="the-global-environment" class="section level1">
 <h1><span class="header-section-number">10</span> <strong>The Global Environment</strong></h1>
@@ -767,5 +769,7 @@ setwd(&quot;C:/Users/CPH/Documents/&quot;)</code></pre>
 <li>For more details on the data structures and operations introduced in this post, you may find the <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf">official R introductory manual</a> or Michael Crawley’s <a href="https://www.amazon.ca/R-Book-Michael-J-Crawley/dp/0470973927">“The R Book”</a> helpful.</li>
 </ul>
 <p>Thank you for visiting my blog. I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.</p>
+<p>This blog is something I do as a volunteer in my free time. If you’ve found it helpful and want to give back, <a href="https://www.buymeacoffee.com/huttoncp">coffee donations</a> would be appreciated.</p>
+<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="huttoncp" data-color="#FF5F5F" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
 </div>
 </div>

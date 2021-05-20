@@ -906,7 +906,7 @@ That's it! Hopefully you'll find that `elucidate` makes exploratory data analysi
 
 # **Navigation**
 
-Click [here](https://craig.rbind.io/post/2020-10-10-asgr-2-5-dates/) to go back to the previous post on dates and times. A link to the next one, on intermediate data visualisation with the the popular tidyverse package [ggplot2](https://ggplot2.tidyverse.org/), will be added as soon as I have time to write it.
+Click [here](https://craig.rbind.io/post/2020-10-10-asgr-2-5-dates/) to go back to the previous post on dates and times. Click [here](2021-04-25-asgr-3-1-data-visualization/) to go to the next one, on intermediate data visualization with the the popular tidyverse package [ggplot2](https://ggplot2.tidyverse.org/).
 
 # **Notes**
 
@@ -915,3 +915,7 @@ Click [here](https://craig.rbind.io/post/2020-10-10-asgr-2-5-dates/) to go back 
   * There is one other major component of `elucidate` scheduled to be developed starting sometime next quarter, which will facilitate clustering and dimensionality reduction (i.e. unsupervised machine learning), via a `profile*` set of functions. After that component has been successfully integrated we'll try to submit the package to CRAN. I look forward to writing another blog post about those new functions when they're ready :smile:.
 
 Thank you for visiting my blog. I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.
+
+This blog is something I do as a volunteer in my free time. If you've found it helpful and want to give back, [coffee donations](https://www.buymeacoffee.com/huttoncp) would be appreciated. 
+
+<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="huttoncp" data-color="#FF5F5F" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>

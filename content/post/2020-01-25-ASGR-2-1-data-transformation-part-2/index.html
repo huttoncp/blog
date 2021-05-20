@@ -66,30 +66,31 @@ library(car) #load the car package with the associated OBrienKaiser data</code><
 #For now this gives us access to both the pipe operator and the glimpse function.
 
 library(tidyverse)</code></pre>
-<pre><code>## -- Attaching packages ---------------------------------------------------------------------------------------------------------- tidyverse 1.3.0 --</code></pre>
-<pre><code>## v ggplot2 3.2.1     v purrr   0.3.3
-## v tibble  2.1.3     v dplyr   0.8.4
-## v tidyr   1.0.2     v stringr 1.4.0
-## v readr   1.3.1     v forcats 0.5.0</code></pre>
-<pre><code>## Warning: package &#39;forcats&#39; was built under R version 3.6.3</code></pre>
-<pre><code>## -- Conflicts ------------------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.3.3     v purrr   0.3.4
+## v tibble  3.1.1     v dplyr   1.0.2
+## v tidyr   1.1.2     v stringr 1.4.0
+## v readr   1.4.0     v forcats 0.5.0</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.0.5</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 4.0.5</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
 ## x dplyr::recode() masks car::recode()
 ## x purrr::some()   masks car::some()</code></pre>
 <pre class="r"><code>gapminder %&gt;% glimpse</code></pre>
-<pre><code>## Observations: 1,704
-## Variables: 6
-## $ country   &lt;fct&gt; Afghanistan, Afghanistan, Afghanistan, Afghanistan, Afgha...
-## $ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asi...
-## $ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 199...
-## $ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 4...
-## $ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372,...
-## $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.113...</code></pre>
+<pre><code>## Rows: 1,704
+## Columns: 6
+## $ country   &lt;fct&gt; &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, ~
+## $ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, ~
+## $ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, ~
+## $ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.8~
+## $ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 12~
+## $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134, ~</code></pre>
 <pre class="r"><code>OBrienKaiser %&gt;% glimpse</code></pre>
-<pre><code>## Observations: 16
-## Variables: 17
-## $ treatment &lt;fct&gt; control, control, control, control, control, A, A, A, A, ...
+<pre><code>## Rows: 16
+## Columns: 17
+## $ treatment &lt;fct&gt; control, control, control, control, control, A, A, A, A, B, ~
 ## $ gender    &lt;fct&gt; M, M, M, F, F, M, M, F, F, M, M, M, F, F, F, F
 ## $ pre.1     &lt;dbl&gt; 1, 4, 5, 5, 3, 7, 5, 2, 3, 4, 3, 6, 5, 2, 2, 4
 ## $ pre.2     &lt;dbl&gt; 2, 4, 6, 4, 4, 8, 5, 3, 3, 4, 3, 7, 5, 2, 2, 5
@@ -185,13 +186,13 @@ ob_long &lt;- pivot_longer(data = ob_df_v2,
              )
 
 ob_long %&gt;% glimpse </code></pre>
-<pre><code>## Observations: 240
-## Variables: 5
-## $ subject_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2,...
-## $ treatment  &lt;fct&gt; control, control, control, control, control, control, co...
-## $ gender     &lt;fct&gt; M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, M,...
-## $ session    &lt;chr&gt; &quot;pre.1&quot;, &quot;pre.2&quot;, &quot;pre.3&quot;, &quot;pre.4&quot;, &quot;pre.5&quot;, &quot;post.1&quot;, &quot;...
-## $ score      &lt;dbl&gt; 1, 2, 4, 2, 1, 3, 2, 5, 3, 2, 2, 3, 2, 4, 4, 4, 4, 5, 3,...</code></pre>
+<pre><code>## Rows: 240
+## Columns: 5
+## $ subject_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2,~
+## $ treatment  &lt;fct&gt; control, control, control, control, control, control, contr~
+## $ gender     &lt;fct&gt; M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, M,~
+## $ session    &lt;chr&gt; &quot;pre.1&quot;, &quot;pre.2&quot;, &quot;pre.3&quot;, &quot;pre.4&quot;, &quot;pre.5&quot;, &quot;post.1&quot;, &quot;pos~
+## $ score      &lt;dbl&gt; 1, 2, 4, 2, 1, 3, 2, 5, 3, 2, 2, 3, 2, 4, 4, 4, 4, 5, 3, 4,~</code></pre>
 <pre class="r"><code>#now we have a total of 256 observations for our 16 subjects/cases, score
 #measurements are all in a single column that we&#39;ve called &quot;score&quot;, and the data
 #collection session is coded using the session variable (the values of which
@@ -497,20 +498,20 @@ replacement columns</p></li>
     pivot_wider(id_cols = c(country, continent),  
                 names_from = year, values_from = lifeExp)</code></pre>
 <pre><code>## # A tibble: 142 x 14
-##    country continent `1952` `1957` `1962` `1967` `1972` `1977` `1982` `1987`
-##    &lt;fct&gt;   &lt;fct&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-##  1 Afghan~ Asia        28.8   30.3   32.0   34.0   36.1   38.4   39.9   40.8
-##  2 Albania Europe      55.2   59.3   64.8   66.2   67.7   68.9   70.4   72  
-##  3 Algeria Africa      43.1   45.7   48.3   51.4   54.5   58.0   61.4   65.8
-##  4 Angola  Africa      30.0   32.0   34     36.0   37.9   39.5   39.9   39.9
-##  5 Argent~ Americas    62.5   64.4   65.1   65.6   67.1   68.5   69.9   70.8
-##  6 Austra~ Oceania     69.1   70.3   70.9   71.1   71.9   73.5   74.7   76.3
-##  7 Austria Europe      66.8   67.5   69.5   70.1   70.6   72.2   73.2   74.9
-##  8 Bahrain Asia        50.9   53.8   56.9   59.9   63.3   65.6   69.1   70.8
-##  9 Bangla~ Asia        37.5   39.3   41.2   43.5   45.3   46.9   50.0   52.8
-## 10 Belgium Europe      68     69.2   70.2   70.9   71.4   72.8   73.9   75.4
-## # ... with 132 more rows, and 4 more variables: `1992` &lt;dbl&gt;, `1997` &lt;dbl&gt;,
-## #   `2002` &lt;dbl&gt;, `2007` &lt;dbl&gt;</code></pre>
+##    country     continent `1952` `1957` `1962` `1967` `1972` `1977` `1982` `1987`
+##    &lt;fct&gt;       &lt;fct&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1 Afghanistan Asia        28.8   30.3   32.0   34.0   36.1   38.4   39.9   40.8
+##  2 Albania     Europe      55.2   59.3   64.8   66.2   67.7   68.9   70.4   72  
+##  3 Algeria     Africa      43.1   45.7   48.3   51.4   54.5   58.0   61.4   65.8
+##  4 Angola      Africa      30.0   32.0   34     36.0   37.9   39.5   39.9   39.9
+##  5 Argentina   Americas    62.5   64.4   65.1   65.6   67.1   68.5   69.9   70.8
+##  6 Australia   Oceania     69.1   70.3   70.9   71.1   71.9   73.5   74.7   76.3
+##  7 Austria     Europe      66.8   67.5   69.5   70.1   70.6   72.2   73.2   74.9
+##  8 Bahrain     Asia        50.9   53.8   56.9   59.9   63.3   65.6   69.1   70.8
+##  9 Bangladesh  Asia        37.5   39.3   41.2   43.5   45.3   46.9   50.0   52.8
+## 10 Belgium     Europe      68     69.2   70.2   70.9   71.4   72.8   73.9   75.4
+## # ... with 132 more rows, and 4 more variables: 1992 &lt;dbl&gt;, 1997 &lt;dbl&gt;,
+## #   2002 &lt;dbl&gt;, 2007 &lt;dbl&gt;</code></pre>
 <pre class="r"><code>#now all the lifeExp values for each year are in separate columns</code></pre>
 <p>We can also reverse the first ob_df_v2 lengthening transformation we did by using the <code>names_sep</code> argument again. However, you should be aware that <code>names_sep</code> behaves differently for <code>pivot_wider()</code> than it did for <code>pivot_longer()</code>. Specifically, since we’re adding “.” to the names in <code>pivot_wider()</code> instead of searching for it (as we were in <code>pivot_longer()</code>), the <code>names_sep</code> argument text is read literally for <code>pivot_wider()</code> rather than read like a regular expression for pattern matching like it was with <code>pivor_longer()</code>. In most cases you can use the general rules:</p>
 <p><span style="color:green">adding/inserting text = “literal text”</span> where
@@ -519,13 +520,13 @@ you don’t need to worry about special characters</p>
 expresison”</span> where you do need to worry about special characters</p>
 <p>Some functions behave differently, but we’ll reserve that discussion for another post.</p>
 <pre class="r"><code>ob_long %&gt;% glimpse</code></pre>
-<pre><code>## Observations: 240
-## Variables: 5
-## $ subject_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2,...
-## $ treatment  &lt;fct&gt; control, control, control, control, control, control, co...
-## $ gender     &lt;fct&gt; M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, M,...
-## $ session    &lt;chr&gt; &quot;pre.1&quot;, &quot;pre.2&quot;, &quot;pre.3&quot;, &quot;pre.4&quot;, &quot;pre.5&quot;, &quot;post.1&quot;, &quot;...
-## $ score      &lt;dbl&gt; 1, 2, 4, 2, 1, 3, 2, 5, 3, 2, 2, 3, 2, 4, 4, 4, 4, 5, 3,...</code></pre>
+<pre><code>## Rows: 240
+## Columns: 5
+## $ subject_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2,~
+## $ treatment  &lt;fct&gt; control, control, control, control, control, control, contr~
+## $ gender     &lt;fct&gt; M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, M,~
+## $ session    &lt;chr&gt; &quot;pre.1&quot;, &quot;pre.2&quot;, &quot;pre.3&quot;, &quot;pre.4&quot;, &quot;pre.5&quot;, &quot;post.1&quot;, &quot;pos~
+## $ score      &lt;dbl&gt; 1, 2, 4, 2, 1, 3, 2, 5, 3, 2, 2, 3, 2, 4, 4, 4, 4, 5, 3, 4,~</code></pre>
 <pre class="r"><code>ob_wide_again &lt;- pivot_wider(data = ob_long, 
                              names_from = &quot;session&quot;,
                              values_from = &quot;score&quot;,
@@ -533,10 +534,10 @@ expresison”</span> where you do need to worry about special characters</p>
                             
 
 ob_wide_again %&gt;% glimpse</code></pre>
-<pre><code>## Observations: 16
-## Variables: 18
+<pre><code>## Rows: 16
+## Columns: 18
 ## $ subject_id &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
-## $ treatment  &lt;fct&gt; control, control, control, control, control, A, A, A, A,...
+## $ treatment  &lt;fct&gt; control, control, control, control, control, A, A, A, A, B,~
 ## $ gender     &lt;fct&gt; M, M, M, F, F, M, M, F, F, M, M, M, F, F, F, F
 ## $ pre.1      &lt;dbl&gt; 1, 4, 5, 5, 3, 7, 5, 2, 3, 4, 3, 6, 5, 2, 2, 4
 ## $ pre.2      &lt;dbl&gt; 2, 4, 6, 4, 4, 8, 5, 3, 3, 4, 3, 7, 5, 2, 2, 5
@@ -562,15 +563,15 @@ ob_wide_again %&gt;% glimpse</code></pre>
 # objects are different, but the contents are the same.</code></pre>
 <p>…or the 2nd transformation with multiple distinct value columns… just specify them all as a character vector in the values_from argument</p>
 <pre class="r"><code>ob_long2 %&gt;% glimpse</code></pre>
-<pre><code>## Observations: 80
-## Variables: 7
-## $ subject_id &lt;int&gt; 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4,...
-## $ treatment  &lt;fct&gt; control, control, control, control, control, control, co...
-## $ gender     &lt;fct&gt; M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, F, F, F, F,...
-## $ session    &lt;chr&gt; &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;1&quot;, &quot;...
-## $ pre        &lt;dbl&gt; 1, 2, 4, 2, 1, 4, 4, 5, 3, 4, 5, 6, 5, 7, 7, 5, 4, 7, 5,...
-## $ post       &lt;dbl&gt; 3, 2, 5, 3, 2, 2, 2, 3, 5, 3, 4, 5, 7, 5, 4, 2, 2, 3, 5,...
-## $ fup        &lt;dbl&gt; 2, 3, 2, 4, 4, 4, 5, 6, 4, 1, 7, 6, 9, 7, 6, 4, 4, 5, 3,...</code></pre>
+<pre><code>## Rows: 80
+## Columns: 7
+## $ subject_id &lt;int&gt; 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4,~
+## $ treatment  &lt;fct&gt; control, control, control, control, control, control, contr~
+## $ gender     &lt;fct&gt; M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, F, F, F, F, F,~
+## $ session    &lt;chr&gt; &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;1&quot;, &quot;2&quot;,~
+## $ pre        &lt;dbl&gt; 1, 2, 4, 2, 1, 4, 4, 5, 3, 4, 5, 6, 5, 7, 7, 5, 4, 7, 5, 4,~
+## $ post       &lt;dbl&gt; 3, 2, 5, 3, 2, 2, 2, 3, 5, 3, 4, 5, 7, 5, 4, 2, 2, 3, 5, 3,~
+## $ fup        &lt;dbl&gt; 2, 3, 2, 4, 4, 4, 5, 6, 4, 1, 7, 6, 9, 7, 6, 4, 4, 5, 3, 4,~</code></pre>
 <pre class="r"><code>ob_wide_again2 &lt;- ob_long2 %&gt;% 
   pivot_wider(names_from = &quot;session&quot;,
               values_from = c(&quot;pre&quot;, &quot;post&quot;, &quot;fup&quot;),
@@ -580,16 +581,16 @@ all.equal(ob_df_v2, ob_wide_again2, check.attributes = F)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>…or the who2 dataset lengthening transformation by passing a vector with the key column names to the <code>names_from</code> argument and the original starting “new_” portion to the <code>names_prefix</code> argument</p>
 <pre class="r"><code>who_long %&gt;% glimpse</code></pre>
-<pre><code>## Observations: 405,440
-## Variables: 8
-## $ country   &lt;chr&gt; &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan...
-## $ iso2      &lt;chr&gt; &quot;AF&quot;, &quot;AF&quot;, &quot;AF&quot;, &quot;AF&quot;, &quot;AF&quot;, &quot;AF&quot;, &quot;AF&quot;, &quot;AF&quot;, &quot;AF&quot;, &quot;AF...
-## $ iso3      &lt;chr&gt; &quot;AFG&quot;, &quot;AFG&quot;, &quot;AFG&quot;, &quot;AFG&quot;, &quot;AFG&quot;, &quot;AFG&quot;, &quot;AFG&quot;, &quot;AFG&quot;, &quot;...
-## $ year      &lt;int&gt; 1980, 1980, 1980, 1980, 1980, 1980, 1980, 1980, 1980, 198...
-## $ diagnosis &lt;chr&gt; &quot;sp&quot;, &quot;sp&quot;, &quot;sp&quot;, &quot;sp&quot;, &quot;sp&quot;, &quot;sp&quot;, &quot;sp&quot;, &quot;sp&quot;, &quot;sp&quot;, &quot;sp...
-## $ gender    &lt;chr&gt; &quot;m&quot;, &quot;m&quot;, &quot;m&quot;, &quot;m&quot;, &quot;m&quot;, &quot;m&quot;, &quot;m&quot;, &quot;f&quot;, &quot;f&quot;, &quot;f&quot;, &quot;f&quot;, &quot;f...
-## $ age       &lt;chr&gt; &quot;014&quot;, &quot;1524&quot;, &quot;2534&quot;, &quot;3544&quot;, &quot;4554&quot;, &quot;5564&quot;, &quot;65&quot;, &quot;014...
-## $ count     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N...</code></pre>
+<pre><code>## Rows: 405,440
+## Columns: 8
+## $ country   &lt;chr&gt; &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, ~
+## $ iso2      &lt;chr&gt; &quot;AF&quot;, &quot;AF&quot;, &quot;AF&quot;, &quot;AF&quot;, &quot;AF&quot;, &quot;AF&quot;, &quot;AF&quot;, &quot;AF&quot;, &quot;AF&quot;, &quot;AF&quot;, ~
+## $ iso3      &lt;chr&gt; &quot;AFG&quot;, &quot;AFG&quot;, &quot;AFG&quot;, &quot;AFG&quot;, &quot;AFG&quot;, &quot;AFG&quot;, &quot;AFG&quot;, &quot;AFG&quot;, &quot;AFG~
+## $ year      &lt;int&gt; 1980, 1980, 1980, 1980, 1980, 1980, 1980, 1980, 1980, 1980, ~
+## $ diagnosis &lt;chr&gt; &quot;sp&quot;, &quot;sp&quot;, &quot;sp&quot;, &quot;sp&quot;, &quot;sp&quot;, &quot;sp&quot;, &quot;sp&quot;, &quot;sp&quot;, &quot;sp&quot;, &quot;sp&quot;, ~
+## $ gender    &lt;chr&gt; &quot;m&quot;, &quot;m&quot;, &quot;m&quot;, &quot;m&quot;, &quot;m&quot;, &quot;m&quot;, &quot;m&quot;, &quot;f&quot;, &quot;f&quot;, &quot;f&quot;, &quot;f&quot;, &quot;f&quot;, ~
+## $ age       &lt;chr&gt; &quot;014&quot;, &quot;1524&quot;, &quot;2534&quot;, &quot;3544&quot;, &quot;4554&quot;, &quot;5564&quot;, &quot;65&quot;, &quot;014&quot;, ~
+## $ count     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~</code></pre>
 <pre class="r"><code>who2_wide_again &lt;- who_long %&gt;% 
   pivot_wider(names_from = c(&quot;diagnosis&quot;, &quot;gender&quot;, &quot;age&quot;),
               values_from = c(&quot;count&quot;),
@@ -755,4 +756,6 @@ united_gap %&gt;%
 <li><p>If you want to get head start on learning about regular expressions and string manipulation, check <a href="https://stringr.tidyverse.org/articles/regular-expressions.html">this</a> out.</p></li>
 </ul>
 <p>Thank you for visiting my blog. I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.</p>
+<p>This blog is something I do as a volunteer in my free time. If you’ve found it helpful and want to give back, <a href="https://www.buymeacoffee.com/huttoncp">coffee donations</a> would be appreciated.</p>
+<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="huttoncp" data-color="#FF5F5F" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
 </div>

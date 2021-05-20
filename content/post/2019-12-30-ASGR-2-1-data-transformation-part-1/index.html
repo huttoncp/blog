@@ -65,8 +65,16 @@ output:
 <h1><span class="header-section-number">3</span> <strong>select()</strong></h1>
 <p><code>select()</code> is one of the dplyr functions you can use for subsetting. <code>select()</code> lets you extract a subset of <strong>columns</strong> from a data frame.</p>
 <p>Columns may be specified using indices, names, or using string patterns with the assistance of a few <a href="https://www.rdocumentation.org/packages/dplyr/versions/0.5.0/topics/select_helpers">tidyselect helper functions</a> such as <code>contains()</code>, <code>starts_with()</code>, and <code>ends_with()</code>.</p>
-<pre class="r"><code>library(dplyr) #load the dplyr package with the library function.
-#the dplyr package will be used throughout this tutorial so make sure it is
+<pre class="r"><code>library(dplyr) #load the dplyr package with the library function.</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>#the dplyr package will be used throughout this tutorial so make sure it is
 #loaded before trying to run the examples yourself
 
 df &lt;- starwars #assign the star wars data frame (imported when dplyr is loaded) to the label/name &quot;df&quot;
@@ -74,21 +82,22 @@ df &lt;- starwars #assign the star wars data frame (imported when dplyr is loade
 # inspect the structure
 
 glimpse(df)</code></pre>
-<pre><code>## Observations: 87
-## Variables: 13
-## $ name       &lt;chr&gt; &quot;Luke Skywalker&quot;, &quot;C-3PO&quot;, &quot;R2-D2&quot;, &quot;Darth Vader&quot;, &quot;Leia...
-## $ height     &lt;int&gt; 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 180...
-## $ mass       &lt;dbl&gt; 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 84.0, ...
-## $ hair_color &lt;chr&gt; &quot;blond&quot;, NA, NA, &quot;none&quot;, &quot;brown&quot;, &quot;brown, grey&quot;, &quot;brown&quot;...
-## $ skin_color &lt;chr&gt; &quot;fair&quot;, &quot;gold&quot;, &quot;white, blue&quot;, &quot;white&quot;, &quot;light&quot;, &quot;light&quot;...
-## $ eye_color  &lt;chr&gt; &quot;blue&quot;, &quot;yellow&quot;, &quot;red&quot;, &quot;yellow&quot;, &quot;brown&quot;, &quot;blue&quot;, &quot;blu...
-## $ birth_year &lt;dbl&gt; 19.0, 112.0, 33.0, 41.9, 19.0, 52.0, 47.0, NA, 24.0, 57....
-## $ gender     &lt;chr&gt; &quot;male&quot;, NA, NA, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, NA, ...
-## $ homeworld  &lt;chr&gt; &quot;Tatooine&quot;, &quot;Tatooine&quot;, &quot;Naboo&quot;, &quot;Tatooine&quot;, &quot;Alderaan&quot;,...
-## $ species    &lt;chr&gt; &quot;Human&quot;, &quot;Droid&quot;, &quot;Droid&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;H...
-## $ films      &lt;list&gt; [&lt;&quot;Revenge of the Sith&quot;, &quot;Return of the Jedi&quot;, &quot;The Emp...
-## $ vehicles   &lt;list&gt; [&lt;&quot;Snowspeeder&quot;, &quot;Imperial Speeder Bike&quot;&gt;, &lt;&gt;, &lt;&gt;, &lt;&gt;, ...
-## $ starships  &lt;list&gt; [&lt;&quot;X-wing&quot;, &quot;Imperial shuttle&quot;&gt;, &lt;&gt;, &lt;&gt;, &quot;TIE Advanced ...</code></pre>
+<pre><code>## Rows: 87
+## Columns: 14
+## $ name       &lt;chr&gt; &quot;Luke Skywalker&quot;, &quot;C-3PO&quot;, &quot;R2-D2&quot;, &quot;Darth Vader&quot;, &quot;Leia Or~
+## $ height     &lt;int&gt; 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 180, 2~
+## $ mass       &lt;dbl&gt; 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 84.0, 77.~
+## $ hair_color &lt;chr&gt; &quot;blond&quot;, NA, NA, &quot;none&quot;, &quot;brown&quot;, &quot;brown, grey&quot;, &quot;brown&quot;, N~
+## $ skin_color &lt;chr&gt; &quot;fair&quot;, &quot;gold&quot;, &quot;white, blue&quot;, &quot;white&quot;, &quot;light&quot;, &quot;light&quot;, &quot;~
+## $ eye_color  &lt;chr&gt; &quot;blue&quot;, &quot;yellow&quot;, &quot;red&quot;, &quot;yellow&quot;, &quot;brown&quot;, &quot;blue&quot;, &quot;blue&quot;,~
+## $ birth_year &lt;dbl&gt; 19.0, 112.0, 33.0, 41.9, 19.0, 52.0, 47.0, NA, 24.0, 57.0, ~
+## $ sex        &lt;chr&gt; &quot;male&quot;, &quot;none&quot;, &quot;none&quot;, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;,~
+## $ gender     &lt;chr&gt; &quot;masculine&quot;, &quot;masculine&quot;, &quot;masculine&quot;, &quot;masculine&quot;, &quot;femini~
+## $ homeworld  &lt;chr&gt; &quot;Tatooine&quot;, &quot;Tatooine&quot;, &quot;Naboo&quot;, &quot;Tatooine&quot;, &quot;Alderaan&quot;, &quot;T~
+## $ species    &lt;chr&gt; &quot;Human&quot;, &quot;Droid&quot;, &quot;Droid&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Huma~
+## $ films      &lt;list&gt; &lt;&quot;The Empire Strikes Back&quot;, &quot;Revenge of the Sith&quot;, &quot;Return~
+## $ vehicles   &lt;list&gt; &lt;&quot;Snowspeeder&quot;, &quot;Imperial Speeder Bike&quot;&gt;, &lt;&gt;, &lt;&gt;, &lt;&gt;, &quot;Imp~
+## $ starships  &lt;list&gt; &lt;&quot;X-wing&quot;, &quot;Imperial shuttle&quot;&gt;, &lt;&gt;, &lt;&gt;, &quot;TIE Advanced x1&quot;,~</code></pre>
 <pre class="r"><code>#in base R, you would extract columns using either [, &quot;name&quot;] or [[&quot;name&quot;]], or $name
 df[, &quot;name&quot;] #[] returns another data frame</code></pre>
 <pre><code>## # A tibble: 87 x 1
@@ -128,19 +137,19 @@ df[, &quot;name&quot;] #[] returns another data frame</code></pre>
 #or a logical or integer vector the same length as the number of columns
 
 df[, 1:ncol(df) %% 2 == 0] #columns with even indices</code></pre>
-<pre><code>## # A tibble: 87 x 6
-##    height hair_color    eye_color gender species vehicles 
-##     &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;   &lt;list&gt;   
-##  1    172 blond         blue      male   Human   &lt;chr [2]&gt;
-##  2    167 &lt;NA&gt;          yellow    &lt;NA&gt;   Droid   &lt;chr [0]&gt;
-##  3     96 &lt;NA&gt;          red       &lt;NA&gt;   Droid   &lt;chr [0]&gt;
-##  4    202 none          yellow    male   Human   &lt;chr [0]&gt;
-##  5    150 brown         brown     female Human   &lt;chr [1]&gt;
-##  6    178 brown, grey   blue      male   Human   &lt;chr [0]&gt;
-##  7    165 brown         blue      female Human   &lt;chr [0]&gt;
-##  8     97 &lt;NA&gt;          red       &lt;NA&gt;   Droid   &lt;chr [0]&gt;
-##  9    183 black         brown     male   Human   &lt;chr [0]&gt;
-## 10    182 auburn, white blue-gray male   Human   &lt;chr [1]&gt;
+<pre><code>## # A tibble: 87 x 7
+##    height hair_color    eye_color sex    homeworld films     starships
+##     &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;     &lt;list&gt;    &lt;list&gt;   
+##  1    172 blond         blue      male   Tatooine  &lt;chr [5]&gt; &lt;chr [2]&gt;
+##  2    167 &lt;NA&gt;          yellow    none   Tatooine  &lt;chr [6]&gt; &lt;chr [0]&gt;
+##  3     96 &lt;NA&gt;          red       none   Naboo     &lt;chr [7]&gt; &lt;chr [0]&gt;
+##  4    202 none          yellow    male   Tatooine  &lt;chr [4]&gt; &lt;chr [1]&gt;
+##  5    150 brown         brown     female Alderaan  &lt;chr [5]&gt; &lt;chr [0]&gt;
+##  6    178 brown, grey   blue      male   Tatooine  &lt;chr [3]&gt; &lt;chr [0]&gt;
+##  7    165 brown         blue      female Tatooine  &lt;chr [3]&gt; &lt;chr [0]&gt;
+##  8     97 &lt;NA&gt;          red       none   Tatooine  &lt;chr [1]&gt; &lt;chr [0]&gt;
+##  9    183 black         brown     male   Tatooine  &lt;chr [1]&gt; &lt;chr [1]&gt;
+## 10    182 auburn, white blue-gray male   Stewjon   &lt;chr [6]&gt; &lt;chr [5]&gt;
 ## # ... with 77 more rows</code></pre>
 <pre class="r"><code>df[, 1:5] #1st 5 columns</code></pre>
 <pre><code>## # A tibble: 87 x 5
@@ -191,50 +200,50 @@ select(df,
 ## # ... with 77 more rows</code></pre>
 <pre class="r"><code>select(df, 1:5, 9, 10) #select also accepts column indices and doesn&#39;t require c()</code></pre>
 <pre><code>## # A tibble: 87 x 7
-##    name               height  mass hair_color    skin_color  homeworld species
-##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;  
-##  1 Luke Skywalker        172    77 blond         fair        Tatooine  Human  
-##  2 C-3PO                 167    75 &lt;NA&gt;          gold        Tatooine  Droid  
-##  3 R2-D2                  96    32 &lt;NA&gt;          white, blue Naboo     Droid  
-##  4 Darth Vader           202   136 none          white       Tatooine  Human  
-##  5 Leia Organa           150    49 brown         light       Alderaan  Human  
-##  6 Owen Lars             178   120 brown, grey   light       Tatooine  Human  
-##  7 Beru Whitesun lars    165    75 brown         light       Tatooine  Human  
-##  8 R5-D4                  97    32 &lt;NA&gt;          white, red  Tatooine  Droid  
-##  9 Biggs Darklighter     183    84 black         light       Tatooine  Human  
-## 10 Obi-Wan Kenobi        182    77 auburn, white fair        Stewjon   Human  
+##    name               height  mass hair_color    skin_color  gender    homeworld
+##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;    
+##  1 Luke Skywalker        172    77 blond         fair        masculine Tatooine 
+##  2 C-3PO                 167    75 &lt;NA&gt;          gold        masculine Tatooine 
+##  3 R2-D2                  96    32 &lt;NA&gt;          white, blue masculine Naboo    
+##  4 Darth Vader           202   136 none          white       masculine Tatooine 
+##  5 Leia Organa           150    49 brown         light       feminine  Alderaan 
+##  6 Owen Lars             178   120 brown, grey   light       masculine Tatooine 
+##  7 Beru Whitesun lars    165    75 brown         light       feminine  Tatooine 
+##  8 R5-D4                  97    32 &lt;NA&gt;          white, red  masculine Tatooine 
+##  9 Biggs Darklighter     183    84 black         light       masculine Tatooine 
+## 10 Obi-Wan Kenobi        182    77 auburn, white fair        masculine Stewjon  
 ## # ... with 77 more rows</code></pre>
 <pre class="r"><code>#select everything other than a specified column using the subtraction operator &quot;-&quot;
 select(df, -hair_color, -mass) </code></pre>
-<pre><code>## # A tibble: 87 x 11
-##    name  height skin_color eye_color birth_year gender homeworld species films
-##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;   &lt;lis&gt;
-##  1 Luke~    172 fair       blue            19   male   Tatooine  Human   &lt;chr~
-##  2 C-3PO    167 gold       yellow         112   &lt;NA&gt;   Tatooine  Droid   &lt;chr~
-##  3 R2-D2     96 white, bl~ red             33   &lt;NA&gt;   Naboo     Droid   &lt;chr~
-##  4 Dart~    202 white      yellow          41.9 male   Tatooine  Human   &lt;chr~
-##  5 Leia~    150 light      brown           19   female Alderaan  Human   &lt;chr~
-##  6 Owen~    178 light      blue            52   male   Tatooine  Human   &lt;chr~
-##  7 Beru~    165 light      blue            47   female Tatooine  Human   &lt;chr~
-##  8 R5-D4     97 white, red red             NA   &lt;NA&gt;   Tatooine  Droid   &lt;chr~
-##  9 Bigg~    183 light      brown           24   male   Tatooine  Human   &lt;chr~
-## 10 Obi-~    182 fair       blue-gray       57   male   Stewjon   Human   &lt;chr~
-## # ... with 77 more rows, and 2 more variables: vehicles &lt;list&gt;,
+<pre><code>## # A tibble: 87 x 12
+##    name    height skin_color eye_color birth_year sex   gender homeworld species
+##    &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;  
+##  1 Luke S~    172 fair       blue            19   male  mascu~ Tatooine  Human  
+##  2 C-3PO      167 gold       yellow         112   none  mascu~ Tatooine  Droid  
+##  3 R2-D2       96 white, bl~ red             33   none  mascu~ Naboo     Droid  
+##  4 Darth ~    202 white      yellow          41.9 male  mascu~ Tatooine  Human  
+##  5 Leia O~    150 light      brown           19   fema~ femin~ Alderaan  Human  
+##  6 Owen L~    178 light      blue            52   male  mascu~ Tatooine  Human  
+##  7 Beru W~    165 light      blue            47   fema~ femin~ Tatooine  Human  
+##  8 R5-D4       97 white, red red             NA   none  mascu~ Tatooine  Droid  
+##  9 Biggs ~    183 light      brown           24   male  mascu~ Tatooine  Human  
+## 10 Obi-Wa~    182 fair       blue-gray       57   male  mascu~ Stewjon   Human  
+## # ... with 77 more rows, and 3 more variables: films &lt;list&gt;, vehicles &lt;list&gt;,
 ## #   starships &lt;list&gt;</code></pre>
 <pre class="r"><code>select(df, -c(name:hair_color)) #everything other than a range of named columns</code></pre>
-<pre><code>## # A tibble: 87 x 9
-##    skin_color eye_color birth_year gender homeworld species films vehicles
-##    &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;   &lt;lis&gt; &lt;list&gt;  
-##  1 fair       blue            19   male   Tatooine  Human   &lt;chr~ &lt;chr [2~
-##  2 gold       yellow         112   &lt;NA&gt;   Tatooine  Droid   &lt;chr~ &lt;chr [0~
-##  3 white, bl~ red             33   &lt;NA&gt;   Naboo     Droid   &lt;chr~ &lt;chr [0~
-##  4 white      yellow          41.9 male   Tatooine  Human   &lt;chr~ &lt;chr [0~
-##  5 light      brown           19   female Alderaan  Human   &lt;chr~ &lt;chr [1~
-##  6 light      blue            52   male   Tatooine  Human   &lt;chr~ &lt;chr [0~
-##  7 light      blue            47   female Tatooine  Human   &lt;chr~ &lt;chr [0~
-##  8 white, red red             NA   &lt;NA&gt;   Tatooine  Droid   &lt;chr~ &lt;chr [0~
-##  9 light      brown           24   male   Tatooine  Human   &lt;chr~ &lt;chr [0~
-## 10 fair       blue-gray       57   male   Stewjon   Human   &lt;chr~ &lt;chr [1~
+<pre><code>## # A tibble: 87 x 10
+##    skin_color eye_color birth_year sex   gender homeworld species films vehicles
+##    &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;   &lt;lis&gt; &lt;list&gt;  
+##  1 fair       blue            19   male  mascu~ Tatooine  Human   &lt;chr~ &lt;chr [2~
+##  2 gold       yellow         112   none  mascu~ Tatooine  Droid   &lt;chr~ &lt;chr [0~
+##  3 white, bl~ red             33   none  mascu~ Naboo     Droid   &lt;chr~ &lt;chr [0~
+##  4 white      yellow          41.9 male  mascu~ Tatooine  Human   &lt;chr~ &lt;chr [0~
+##  5 light      brown           19   fema~ femin~ Alderaan  Human   &lt;chr~ &lt;chr [1~
+##  6 light      blue            52   male  mascu~ Tatooine  Human   &lt;chr~ &lt;chr [0~
+##  7 light      blue            47   fema~ femin~ Tatooine  Human   &lt;chr~ &lt;chr [0~
+##  8 white, red red             NA   none  mascu~ Tatooine  Droid   &lt;chr~ &lt;chr [0~
+##  9 light      brown           24   male  mascu~ Tatooine  Human   &lt;chr~ &lt;chr [0~
+## 10 fair       blue-gray       57   male  mascu~ Stewjon   Human   &lt;chr~ &lt;chr [1~
 ## # ... with 77 more rows, and 1 more variable: starships &lt;list&gt;</code></pre>
 <pre class="r"><code># dplyr also provides a number of &quot;select helper&quot; functions that allow you to
 # select variables using string patterns, e.g.
@@ -296,19 +305,19 @@ select(df, contains(&quot;m&quot;)) #all columns with names that contain the let
 
 # you can rearrange columns and rename them during the selection process
 select(df, 5:last_col(), 1:4) #select columns 5 to the end, then columns 1 to 4 </code></pre>
-<pre><code>## # A tibble: 87 x 13
-##    skin_color eye_color birth_year gender homeworld species films vehicles
-##    &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;   &lt;lis&gt; &lt;list&gt;  
-##  1 fair       blue            19   male   Tatooine  Human   &lt;chr~ &lt;chr [2~
-##  2 gold       yellow         112   &lt;NA&gt;   Tatooine  Droid   &lt;chr~ &lt;chr [0~
-##  3 white, bl~ red             33   &lt;NA&gt;   Naboo     Droid   &lt;chr~ &lt;chr [0~
-##  4 white      yellow          41.9 male   Tatooine  Human   &lt;chr~ &lt;chr [0~
-##  5 light      brown           19   female Alderaan  Human   &lt;chr~ &lt;chr [1~
-##  6 light      blue            52   male   Tatooine  Human   &lt;chr~ &lt;chr [0~
-##  7 light      blue            47   female Tatooine  Human   &lt;chr~ &lt;chr [0~
-##  8 white, red red             NA   &lt;NA&gt;   Tatooine  Droid   &lt;chr~ &lt;chr [0~
-##  9 light      brown           24   male   Tatooine  Human   &lt;chr~ &lt;chr [0~
-## 10 fair       blue-gray       57   male   Stewjon   Human   &lt;chr~ &lt;chr [1~
+<pre><code>## # A tibble: 87 x 14
+##    skin_color eye_color birth_year sex   gender homeworld species films vehicles
+##    &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;   &lt;lis&gt; &lt;list&gt;  
+##  1 fair       blue            19   male  mascu~ Tatooine  Human   &lt;chr~ &lt;chr [2~
+##  2 gold       yellow         112   none  mascu~ Tatooine  Droid   &lt;chr~ &lt;chr [0~
+##  3 white, bl~ red             33   none  mascu~ Naboo     Droid   &lt;chr~ &lt;chr [0~
+##  4 white      yellow          41.9 male  mascu~ Tatooine  Human   &lt;chr~ &lt;chr [0~
+##  5 light      brown           19   fema~ femin~ Alderaan  Human   &lt;chr~ &lt;chr [1~
+##  6 light      blue            52   male  mascu~ Tatooine  Human   &lt;chr~ &lt;chr [0~
+##  7 light      blue            47   fema~ femin~ Tatooine  Human   &lt;chr~ &lt;chr [0~
+##  8 white, red red             NA   none  mascu~ Tatooine  Droid   &lt;chr~ &lt;chr [0~
+##  9 light      brown           24   male  mascu~ Tatooine  Human   &lt;chr~ &lt;chr [0~
+## 10 fair       blue-gray       57   male  mascu~ Stewjon   Human   &lt;chr~ &lt;chr [1~
 ## # ... with 77 more rows, and 5 more variables: starships &lt;list&gt;, name &lt;chr&gt;,
 ## #   height &lt;int&gt;, mass &lt;dbl&gt;, hair_color &lt;chr&gt;</code></pre>
 <pre class="r"><code># to select() a single column and turn it into a vector (instead of leaving it as a data frame),
@@ -340,21 +349,21 @@ select(df, nm = name, hgt = height, byear = birth_year) #select columns and rena
 ## # ... with 77 more rows</code></pre>
 <pre class="r"><code>#to just rename columns without subsetting, use dplyr::rename() instead of select()
 rename(df, nm = name, hgt = height, b_year = birth_year) #returns all columns</code></pre>
-<pre><code>## # A tibble: 87 x 13
-##    nm      hgt  mass hair_color skin_color eye_color b_year gender homeworld
-##    &lt;chr&gt; &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    
-##  1 Luke~   172    77 blond      fair       blue        19   male   Tatooine 
-##  2 C-3PO   167    75 &lt;NA&gt;       gold       yellow     112   &lt;NA&gt;   Tatooine 
-##  3 R2-D2    96    32 &lt;NA&gt;       white, bl~ red         33   &lt;NA&gt;   Naboo    
-##  4 Dart~   202   136 none       white      yellow      41.9 male   Tatooine 
-##  5 Leia~   150    49 brown      light      brown       19   female Alderaan 
-##  6 Owen~   178   120 brown, gr~ light      blue        52   male   Tatooine 
-##  7 Beru~   165    75 brown      light      blue        47   female Tatooine 
-##  8 R5-D4    97    32 &lt;NA&gt;       white, red red         NA   &lt;NA&gt;   Tatooine 
-##  9 Bigg~   183    84 black      light      brown       24   male   Tatooine 
-## 10 Obi-~   182    77 auburn, w~ fair       blue-gray   57   male   Stewjon  
-## # ... with 77 more rows, and 4 more variables: species &lt;chr&gt;, films &lt;list&gt;,
-## #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+<pre><code>## # A tibble: 87 x 14
+##    nm           hgt  mass hair_color   skin_color eye_color b_year sex   gender 
+##    &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  
+##  1 Luke Skyw~   172    77 blond        fair       blue        19   male  mascul~
+##  2 C-3PO        167    75 &lt;NA&gt;         gold       yellow     112   none  mascul~
+##  3 R2-D2         96    32 &lt;NA&gt;         white, bl~ red         33   none  mascul~
+##  4 Darth Vad~   202   136 none         white      yellow      41.9 male  mascul~
+##  5 Leia Orga~   150    49 brown        light      brown       19   fema~ femini~
+##  6 Owen Lars    178   120 brown, grey  light      blue        52   male  mascul~
+##  7 Beru Whit~   165    75 brown        light      blue        47   fema~ femini~
+##  8 R5-D4         97    32 &lt;NA&gt;         white, red red         NA   none  mascul~
+##  9 Biggs Dar~   183    84 black        light      brown       24   male  mascul~
+## 10 Obi-Wan K~   182    77 auburn, whi~ fair       blue-gray   57   male  mascul~
+## # ... with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
+## #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 <pre class="r"><code>#to save the updated names just assign the output back to the same data frame object
 renamed_df &lt;- rename(df, nm = name, hgt = height, b_year = birth_year) 
 
@@ -369,8 +378,10 @@ df_names &lt;- names(df) #store the original names
 names(df) &lt;- c(&quot;nm&quot;, &quot;hgt&quot;, &quot;mass&quot;, 
                &quot;hair_color&quot;, &quot;skin_color&quot;, &quot;eye_color&quot;,
                &quot;b_year&quot;) #returns a warning and then all non-specified names become NA</code></pre>
-<pre><code>## Warning: The `names` must have length 13, not 7.
-## This warning is displayed once per session.</code></pre>
+<pre><code>## Warning: The `value` argument of `names&lt;-` must have the same length as `x` as of tibble 3.0.0.
+## `names` must have length 14, not 7.</code></pre>
+<pre><code>## Warning: The `value` argument of `names&lt;-` can&#39;t be empty as of tibble 3.0.0.
+## Columns 8, 9, 10, 11, 12, and 2 more must be named.</code></pre>
 <pre class="r"><code>names(df) &lt;- df_names #restore the original names from the vector saved above</code></pre>
 </div>
 </div>
@@ -778,21 +789,22 @@ identical(summary1, summary2)</code></pre>
 <p><code>group_by()</code> adds an explicit grouping structure to a data frame that can subsequently be used by other dplyr functions to perform operations within each level of the grouping variable or level combination of the grouping variables if you specify multiple grouping variables. This is particularly useful in conjunction with either <code>summarize()</code> or <code>mutate()</code>, enabling you to calculate summary statistics or transform variables separately for each of the groups defined by <code>group_by()</code>.</p>
 <pre class="r"><code>#structure of the data before grouping
 glimpse(df)</code></pre>
-<pre><code>## Observations: 87
-## Variables: 13
-## $ name       &lt;chr&gt; &quot;Luke Skywalker&quot;, &quot;C-3PO&quot;, &quot;R2-D2&quot;, &quot;Darth Vader&quot;, &quot;Leia...
-## $ height     &lt;int&gt; 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 180...
-## $ mass       &lt;dbl&gt; 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 84.0, ...
-## $ hair_color &lt;chr&gt; &quot;BLOND&quot;, NA, NA, &quot;none&quot;, &quot;BROWN&quot;, &quot;brown, grey&quot;, &quot;BROWN&quot;...
-## $ skin_color &lt;chr&gt; &quot;fair&quot;, &quot;gold&quot;, &quot;white, blue&quot;, &quot;white&quot;, &quot;light&quot;, &quot;light&quot;...
-## $ eye_color  &lt;chr&gt; &quot;blue&quot;, &quot;yellow&quot;, &quot;red&quot;, &quot;yellow&quot;, &quot;brown&quot;, &quot;blue&quot;, &quot;blu...
-## $ birth_year &lt;dbl&gt; 19.0, 112.0, 33.0, 41.9, 19.0, 52.0, 47.0, NA, 24.0, 57....
-## $ gender     &lt;chr&gt; &quot;male&quot;, NA, NA, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, NA, ...
-## $ homeworld  &lt;chr&gt; &quot;Tatooine&quot;, &quot;Tatooine&quot;, &quot;Naboo&quot;, &quot;Tatooine&quot;, &quot;Alderaan&quot;,...
-## $ species    &lt;chr&gt; &quot;Human&quot;, &quot;Droid&quot;, &quot;Droid&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;H...
-## $ films      &lt;list&gt; [&lt;&quot;Revenge of the Sith&quot;, &quot;Return of the Jedi&quot;, &quot;The Emp...
-## $ vehicles   &lt;list&gt; [&lt;&quot;Snowspeeder&quot;, &quot;Imperial Speeder Bike&quot;&gt;, &lt;&gt;, &lt;&gt;, &lt;&gt;, ...
-## $ starships  &lt;list&gt; [&lt;&quot;X-wing&quot;, &quot;Imperial shuttle&quot;&gt;, &lt;&gt;, &lt;&gt;, &quot;TIE Advanced ...</code></pre>
+<pre><code>## Rows: 87
+## Columns: 14
+## $ name       &lt;chr&gt; &quot;Luke Skywalker&quot;, &quot;C-3PO&quot;, &quot;R2-D2&quot;, &quot;Darth Vader&quot;, &quot;Leia Or~
+## $ height     &lt;int&gt; 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 180, 2~
+## $ mass       &lt;dbl&gt; 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 84.0, 77.~
+## $ hair_color &lt;chr&gt; &quot;BLOND&quot;, NA, NA, &quot;none&quot;, &quot;BROWN&quot;, &quot;brown, grey&quot;, &quot;BROWN&quot;, N~
+## $ skin_color &lt;chr&gt; &quot;fair&quot;, &quot;gold&quot;, &quot;white, blue&quot;, &quot;white&quot;, &quot;light&quot;, &quot;light&quot;, &quot;~
+## $ eye_color  &lt;chr&gt; &quot;blue&quot;, &quot;yellow&quot;, &quot;red&quot;, &quot;yellow&quot;, &quot;brown&quot;, &quot;blue&quot;, &quot;blue&quot;,~
+## $ birth_year &lt;dbl&gt; 19.0, 112.0, 33.0, 41.9, 19.0, 52.0, 47.0, NA, 24.0, 57.0, ~
+## $ sex        &lt;chr&gt; &quot;male&quot;, &quot;none&quot;, &quot;none&quot;, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;,~
+## $ gender     &lt;chr&gt; &quot;masculine&quot;, &quot;masculine&quot;, &quot;masculine&quot;, &quot;masculine&quot;, &quot;femini~
+## $ homeworld  &lt;chr&gt; &quot;Tatooine&quot;, &quot;Tatooine&quot;, &quot;Naboo&quot;, &quot;Tatooine&quot;, &quot;Alderaan&quot;, &quot;T~
+## $ species    &lt;chr&gt; &quot;Human&quot;, &quot;Droid&quot;, &quot;Droid&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Huma~
+## $ films      &lt;list&gt; &lt;&quot;The Empire Strikes Back&quot;, &quot;Revenge of the Sith&quot;, &quot;Return~
+## $ vehicles   &lt;list&gt; &lt;&quot;Snowspeeder&quot;, &quot;Imperial Speeder Bike&quot;&gt;, &lt;&gt;, &lt;&gt;, &lt;&gt;, &quot;Imp~
+## $ starships  &lt;list&gt; &lt;&quot;X-wing&quot;, &quot;Imperial shuttle&quot;&gt;, &lt;&gt;, &lt;&gt;, &quot;TIE Advanced x1&quot;,~</code></pre>
 <pre class="r"><code>df3 &lt;- select(df, name, species, height, mass)#1st. extract just the columns of interest
 
 grouped_data &lt;- group_by(df3, species) #group the data frame &quot;df3&quot; by the variable &quot;species&quot;
@@ -800,13 +812,13 @@ grouped_data &lt;- group_by(df3, species) #group the data frame &quot;df3&quot; 
 class(grouped_data) #new additional class = &quot;grouped_df&quot;</code></pre>
 <pre><code>## [1] &quot;grouped_df&quot; &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
 <pre class="r"><code>glimpse(grouped_data) #note that the structure now has a groups attribute</code></pre>
-<pre><code>## Observations: 87
-## Variables: 4
+<pre><code>## Rows: 87
+## Columns: 4
 ## Groups: species [38]
-## $ name    &lt;chr&gt; &quot;Luke Skywalker&quot;, &quot;C-3PO&quot;, &quot;R2-D2&quot;, &quot;Darth Vader&quot;, &quot;Leia Or...
-## $ species &lt;chr&gt; &quot;Human&quot;, &quot;Droid&quot;, &quot;Droid&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Huma...
-## $ height  &lt;int&gt; 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 180, 2...
-## $ mass    &lt;dbl&gt; 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 84.0, 77....</code></pre>
+## $ name    &lt;chr&gt; &quot;Luke Skywalker&quot;, &quot;C-3PO&quot;, &quot;R2-D2&quot;, &quot;Darth Vader&quot;, &quot;Leia Organ~
+## $ species &lt;chr&gt; &quot;Human&quot;, &quot;Droid&quot;, &quot;Droid&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human&quot;,~
+## $ height  &lt;int&gt; 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 180, 228,~
+## $ mass    &lt;dbl&gt; 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 84.0, 77.0, ~</code></pre>
 <pre class="r"><code>slice(grouped_data, 1) #look at the 1st row of each group</code></pre>
 <pre><code>## # A tibble: 38 x 4
 ## # Groups:   species [38]
@@ -828,6 +840,7 @@ summarise(grouped_data,
           n = n(), 
           mean_height = mean(height, na.rm = TRUE), 
           median_mass = median(mass, na.rm = TRUE))</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <pre><code>## # A tibble: 38 x 4
 ##    species       n mean_height median_mass
 ##    &lt;chr&gt;     &lt;int&gt;       &lt;dbl&gt;       &lt;dbl&gt;
@@ -836,7 +849,7 @@ summarise(grouped_data,
 ##  3 Cerean        1        198         82  
 ##  4 Chagrian      1        196         NA  
 ##  5 Clawdite      1        168         55  
-##  6 Droid         5        140         53.5
+##  6 Droid         6        131.        53.5
 ##  7 Dug           1        112         40  
 ##  8 Ewok          1         88         20  
 ##  9 Geonosian     1        183         80  
@@ -854,18 +867,18 @@ select(mutated_grouped_data, name, mass, scaled_mass) #just print the relevant p
 <pre><code>## Adding missing grouping variables: `species`</code></pre>
 <pre><code>## # A tibble: 87 x 4
 ## # Groups:   species [38]
-##    species name                mass scaled_mass
-##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;
-##  1 Human   Luke Skywalker        77     -0.298 
-##  2 Droid   C-3PO                 75      0.103 
-##  3 Droid   R2-D2                 32     -0.740 
-##  4 Human   Darth Vader          136      2.75  
-##  5 Human   Leia Organa           49     -1.74  
-##  6 Human   Owen Lars            120      1.92  
-##  7 Human   Beru Whitesun lars    75     -0.401 
-##  8 Droid   R5-D4                 32     -0.740 
-##  9 Human   Biggs Darklighter     84      0.0628
-## 10 Human   Obi-Wan Kenobi        77     -0.298 
+##    species name                mass scaled_mass[,1]
+##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;           &lt;dbl&gt;
+##  1 Human   Luke Skywalker        77         -0.298 
+##  2 Droid   C-3PO                 75          0.103 
+##  3 Droid   R2-D2                 32         -0.740 
+##  4 Human   Darth Vader          136          2.75  
+##  5 Human   Leia Organa           49         -1.74  
+##  6 Human   Owen Lars            120          1.92  
+##  7 Human   Beru Whitesun lars    75         -0.401 
+##  8 Droid   R5-D4                 32         -0.740 
+##  9 Human   Biggs Darklighter     84          0.0628
+## 10 Human   Obi-Wan Kenobi        77         -0.298 
 ## # ... with 77 more rows</code></pre>
 <pre class="r"><code>#note that this is done within species, and the results differ from the same
 #operation applied to the ungrouped data
@@ -880,13 +893,13 @@ mutate(df3, scaled_mass = scale(mass))$scaled_mass,
 ungrouped_data &lt;- ungroup(mutated_grouped_data)
 
 glimpse(ungrouped_data) #notice that the groups attribute is no longer there</code></pre>
-<pre><code>## Observations: 87
-## Variables: 5
-## $ name        &lt;chr&gt; &quot;Luke Skywalker&quot;, &quot;C-3PO&quot;, &quot;R2-D2&quot;, &quot;Darth Vader&quot;, &quot;Lei...
-## $ species     &lt;chr&gt; &quot;Human&quot;, &quot;Droid&quot;, &quot;Droid&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;...
-## $ height      &lt;int&gt; 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 18...
-## $ mass        &lt;dbl&gt; 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 84.0,...
-## $ scaled_mass &lt;dbl&gt; -0.29828800, 0.10287692, -0.73973407, 2.74556278, -1.74...</code></pre>
+<pre><code>## Rows: 87
+## Columns: 5
+## $ name        &lt;chr&gt; &quot;Luke Skywalker&quot;, &quot;C-3PO&quot;, &quot;R2-D2&quot;, &quot;Darth Vader&quot;, &quot;Leia O~
+## $ species     &lt;chr&gt; &quot;Human&quot;, &quot;Droid&quot;, &quot;Droid&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Hum~
+## $ height      &lt;int&gt; 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 180, ~
+## $ mass        &lt;dbl&gt; 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 84.0, 77~
+## $ scaled_mass &lt;dbl[,1]&gt; &lt;matrix[26 x 1]&gt;</code></pre>
 <pre class="r"><code>#and grouped_df3 is no longer one of the data frame&#39;s classes
 class(ungrouped_data)</code></pre>
 <pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
@@ -901,6 +914,7 @@ class(ungrouped_data)</code></pre>
 
 arrange(summarize(group_by(select(starwars, species, mass), species), 
                   mean_mass = mean(mass, na.rm = T)), desc(mean_mass))</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <pre><code>## # A tibble: 38 x 2
 ##    species      mean_mass
 ##    &lt;chr&gt;            &lt;dbl&gt;
@@ -932,6 +946,7 @@ arrange(#evaluated last
     mean_mass = mean(mass, na.rm = T)),  #3. then use summarize() to calculate the mean() mass for each species
   
   desc(mean_mass)) #4. then arrange() the summary data frame by mean_mass in descending order</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <pre><code>## # A tibble: 38 x 2
 ##    species      mean_mass
 ##    &lt;chr&gt;            &lt;dbl&gt;
@@ -956,9 +971,9 @@ sorted_mass_by_sw_species_chained &lt;- starwars %&gt;% #take the starwars df
   
   summarise(mean_mass = mean(mass, na.rm = T)) %&gt;% #summarise() the grouped data frame to get the mean mass per group
   
-  arrange(desc(mean_mass)) # arrange the grouped summary by the mean mass column in descending order
-
-sorted_mass_by_sw_species_chained</code></pre>
+  arrange(desc(mean_mass)) # arrange the grouped summary by the mean mass column in descending order</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre class="r"><code>sorted_mass_by_sw_species_chained</code></pre>
 <pre><code>## # A tibble: 38 x 2
 ##    species      mean_mass
 ##    &lt;chr&gt;            &lt;dbl&gt;
@@ -984,9 +999,9 @@ grouped_starwars_sub &lt;- group_by(starwars_sub,
                                  species) 
 
 mass_by_sw_species &lt;- summarise(grouped_starwars_sub, 
-                                mean_mass = mean(mass, na.rm = T))
-
-sorted_mass_by_sw_species_unchained &lt;- arrange(mass_by_sw_species, 
+                                mean_mass = mean(mass, na.rm = T))</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre class="r"><code>sorted_mass_by_sw_species_unchained &lt;- arrange(mass_by_sw_species, 
                                                desc(mean_mass)) 
 
 # and then have to be deleted afterwards to reclaim the memory 
@@ -1017,4 +1032,6 @@ identical(sorted_mass_by_sw_species_chained, sorted_mass_by_sw_species_unchained
 <li><p>For more details on other data manipulation techniques in base R checkout the <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf">official R introductory manual</a>.</p></li>
 </ul>
 <p>Thank you for visiting my blog. I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.</p>
+<p>This blog is something I do as a volunteer in my free time. If you’ve found it helpful and want to give back, <a href="https://www.buymeacoffee.com/huttoncp">coffee donations</a> would be appreciated.</p>
+<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="huttoncp" data-color="#FF5F5F" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
 </div>

@@ -92,23 +92,23 @@ gdp_df &lt;- gapminder %&gt;%
   ungroup()</code></pre>
 <p>Recall that we can print a view of the structure of each data frame using the glimpse function from dplyr</p>
 <pre class="r"><code>life_df %&gt;% glimpse()</code></pre>
-<pre><code>## Observations: 12
-## Variables: 3
-## $ continent            &lt;fct&gt; Africa, Africa, Africa, Americas, Americas, Am...
-## $ year                 &lt;int&gt; 1997, 2002, 2007, 1997, 2002, 2007, 1997, 2002...
-## $ mean_life_expectancy &lt;dbl&gt; 53.59827, 53.32523, 54.80604, 71.15048, 72.422...</code></pre>
+<pre><code>## Rows: 12
+## Columns: 3
+## $ continent            &lt;fct&gt; Africa, Africa, Africa, Americas, Americas, Ameri~
+## $ year                 &lt;int&gt; 1997, 2002, 2007, 1997, 2002, 2007, 1997, 2002, 2~
+## $ mean_life_expectancy &lt;dbl&gt; 53.59827, 53.32523, 54.80604, 71.15048, 72.42204,~</code></pre>
 <pre class="r"><code>pop_df %&gt;% glimpse()</code></pre>
-<pre><code>## Observations: 12
-## Variables: 3
-## $ continent        &lt;fct&gt; Africa, Africa, Africa, Americas, Americas, Americ...
-## $ year             &lt;int&gt; 1997, 2002, 2007, 1997, 2002, 2007, 1997, 2002, 20...
-## $ total_population &lt;dbl&gt; 743832984, 833723916, 929539692, 796900410, 849772...</code></pre>
+<pre><code>## Rows: 12
+## Columns: 3
+## $ continent        &lt;fct&gt; Africa, Africa, Africa, Americas, Americas, Americas,~
+## $ year             &lt;int&gt; 1997, 2002, 2007, 1997, 2002, 2007, 1997, 2002, 2007,~
+## $ total_population &lt;dbl&gt; 743832984, 833723916, 929539692, 796900410, 849772762~</code></pre>
 <pre class="r"><code>gdp_df %&gt;% glimpse()</code></pre>
-<pre><code>## Observations: 10
-## Variables: 3
-## $ continent       &lt;fct&gt; Africa, Africa, Americas, Americas, Asia, Asia, Eur...
-## $ year            &lt;int&gt; 1997, 2007, 1997, 2007, 1997, 2007, 1997, 2007, 199...
-## $ total_gdpPercap &lt;dbl&gt; 123695.50, 160629.70, 222232.52, 275075.79, 324525....</code></pre>
+<pre><code>## Rows: 10
+## Columns: 3
+## $ continent       &lt;fct&gt; Africa, Africa, Americas, Americas, Asia, Asia, Europe~
+## $ year            &lt;int&gt; 1997, 2007, 1997, 2007, 1997, 2007, 1997, 2007, 1997, ~
+## $ total_gdpPercap &lt;dbl&gt; 123695.50, 160629.70, 222232.52, 275075.79, 324525.08,~</code></pre>
 <p>or print them to the console using the names</p>
 <pre class="r"><code>life_df</code></pre>
 <pre><code>## # A tibble: 12 x 3
@@ -238,18 +238,18 @@ rj</code></pre>
 ##  2 Africa     2007                 54.8         160630.
 ##  3 Americas   1997                 71.2         222233.
 ##  4 Americas   2007                 73.6         275076.
-##  5 Asia       1997                 NA           324525.
-##  6 Asia       2007                 NA           411610.
-##  7 Europe     1997                 75.5         572303.
-##  8 Europe     2007                 77.6         751634.
-##  9 Oceania    1997                 78.2          48048.
-## 10 Oceania    2007                 80.7          59620.</code></pre>
+##  5 Europe     1997                 75.5         572303.
+##  6 Europe     2007                 77.6         751634.
+##  7 Oceania    1997                 78.2          48048.
+##  8 Oceania    2007                 80.7          59620.
+##  9 Asia       1997                 NA           324525.
+## 10 Asia       2007                 NA           411610.</code></pre>
 <pre class="r"><code>lj &lt;- gdp_df %&gt;% left_join(life_df)
 
 identical(rj, lj)</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <pre class="r"><code>identical(rj, select(lj, 1, 2, 4, 3))</code></pre>
-<pre><code>## [1] TRUE</code></pre>
+<pre><code>## [1] FALSE</code></pre>
 <p>This time there are missing values for Asia’s mean life expectancy because Asia does not appear in the continent column of life_df (but it does appear in gdp_df), and no rows for the year 2002 because 2002 does not appear in the “year” key column of gdp_df.</p>
 </div>
 <div id="full_join" class="section level1">
@@ -415,7 +415,7 @@ identical(gapminder, bound_gap)</code></pre>
 updated_life_df #now the value we added appears in the printout of the data frame</code></pre>
 <pre><code>## # A tibble: 13 x 3
 ##    continent  year mean_life_expectancy
-##    &lt;fct&gt;     &lt;dbl&gt;                &lt;dbl&gt;
+##    &lt;chr&gt;     &lt;dbl&gt;                &lt;dbl&gt;
 ##  1 Africa     1997                 53.6
 ##  2 Africa     2002                 53.3
 ##  3 Africa     2007                 54.8
@@ -501,7 +501,9 @@ rj_merge &lt;- merge(life_df, pop_df,
 rj_dplyr &lt;- right_join(life_df, pop_df) %&gt;% as.data.frame()
 
 all.equal(rj_merge, rj_dplyr)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
+<pre><code>## [1] &quot;Component \&quot;continent\&quot;: 6 string mismatches&quot;                                        
+## [2] &quot;Component \&quot;mean_life_expectancy\&quot;: &#39;is.NA&#39; value mismatch: 3 in current 3 in target&quot;
+## [3] &quot;Component \&quot;total_population\&quot;: Mean relative difference: 1.974144&quot;</code></pre>
 <p>Why bother with dplyr joins if <code>merge()</code> can do so much? Simply because the dplyr code is easier to read and the dplyr functions are faster. Unfortunately, merge also can’t handle semi joins or anti joins, so you’d have to do a bit more work to achieve the same results without dplyr.</p>
 <p>If you’ve followed along, congratulations! You now know how the basics of combining data frames in with dplyr joins and base R. Just practice these operations a few times on your own and joins will seem trivial!</p>
 </div>
@@ -517,4 +519,6 @@ all.equal(rj_merge, rj_dplyr)</code></pre>
 <li><p>The author of dplyr, <a href="http://hadley.nz/">Hadley Wickham</a>, also wrote the <strong>dbplyr</strong> package, which translates dplyr to SQL for you so you can actually query databases directly using dplyr code or even view the <a href="https://dbplyr.tidyverse.org/articles/sql-translation.html">SQL code translations</a>. You can learn more about dbplyr <a href="https://dbplyr.tidyverse.org/">here</a>. The code translation is really helpful if you’re trying to learn SQL.</p></li>
 </ul>
 <p>Thank you for visiting my blog. I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.</p>
+<p>This blog is something I do as a volunteer in my free time. If you’ve found it helpful and want to give back, <a href="https://www.buymeacoffee.com/huttoncp">coffee donations</a> would be appreciated.</p>
+<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="huttoncp" data-color="#FF5F5F" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
 </div>

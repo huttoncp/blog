@@ -105,6 +105,8 @@ output:
 <h1><span class="header-section-number">4</span> <strong>Detecting pattern matches</strong> with <code>str_detect()</code>, <code>str_which()</code>, <code>str_count()</code>, and <code>str_locate()</code>.</h1>
 <p>To use any of the stringr functions, we 1st need to load the stringr package via the <code>library()</code> function</p>
 <pre class="r"><code>library(tidyverse) #note: stringr is installed and loaded with the tidyverse</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.0.5</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 4.0.5</code></pre>
 <p>We’ll start exploring the uses of some of these special characters with some basic regexps by submitting them to the pattern arguments (2nd argument) of <code>str_detect()</code>, <code>str_which()</code>, <code>str_count()</code>, and <code>str_locate()</code></p>
 <p><code>str_detect()</code> finds matches for a regexp and returns a logical vector that is <strong>TRUE</strong> for matching entries, and <strong>FALSE</strong> for non-matching entries.</p>
 <pre class="r"><code>#1st we&#39;ll construct a vector of weekdays, repeated 10 times
@@ -150,25 +152,25 @@ days[sample(1:70, 10)] &lt;- &quot;day off&quot;
 
 #find the indices of the entries which do not end in &quot;day&quot;, i.e. the indices of the days off
 days %&gt;% str_which(&quot;day$&quot;, negate = T)</code></pre>
-<pre><code>##  [1]  7 10 16 20 21 31 41 46 61 67</code></pre>
+<pre><code>##  [1]  7 10 19 20 32 36 39 42 61 68</code></pre>
 <pre class="r"><code>#as you can see, this is useful for checking for unusual values which may be
 #data entry/coding errors.
 
 #example of the &quot;or&quot; operator in a regular expression
 
 str_which(days, &quot;(Monday|Tuesday)&quot;) #indices for entries containing either &quot;Monday&quot; or &quot;Tuesday&quot;</code></pre>
-<pre><code>## [1]  1  2  8  9 15</code></pre>
+<pre><code>## [1]  1  2  8  9 15 16</code></pre>
 <pre class="r"><code>#which entries contain an empty space (the &quot;day off&quot; ones)?
 
 str_which(days, &quot;[:space:]{1}&quot;) #match entries containing a single {1} space [:space:]</code></pre>
-<pre><code>##  [1]  7 10 16 20 21 31 41 46 61 67</code></pre>
+<pre><code>##  [1]  7 10 19 20 32 36 39 42 61 68</code></pre>
 <p><code>str_locate()</code> or <code>str_locate_all()</code> tell you the character positions the pattern characters are found in. I haven’t needed to use them so far.</p>
 <pre class="r"><code>days %&gt;% 
   str_locate(&quot;day&quot;) %&gt;% #this tells us the starting and ending positions of the pattern &quot;day&quot;
   head() #only print the 1st 6 rows of the output</code></pre>
 <pre><code>##      start end
 ## [1,]     4   6
-## [2,]     1   3
+## [2,]     5   7
 ## [3,]     7   9
 ## [4,]     6   8
 ## [5,]     4   6
@@ -181,8 +183,9 @@ str_which(days, &quot;[:space:]{1}&quot;) #match entries containing a single {1}
 #only, if you want the positions of all matches, use str_locate_all() instead.</code></pre>
 <p><code>str_count()</code> tells you how many times a pattern appears in each entry of a string/character vector. This might be most useful for checking for unexpected duplications of values when cleaning data or for extracting data from unstructured text (e.g. quantifying the number of times a specific keyword appears in an interview transcript).</p>
 <pre class="r"><code>days %&gt;% str_count(&quot;e&quot;) #number of times the letter &quot;e&quot; appears in each entry</code></pre>
-<pre><code>##  [1] 0 0 2 0 0 0 0 0 1 2 0 0 0 0 0 1 2 0 0 0 0 0 1 2 0 0 0 0 0 1 2 0 0 0 0 0 1 2
-## [39] 0 0 0 0 0 1 2 0 0 0 0 0 1 2 0 0 0 0 0 0 2 0 0 0 0 0 1 2 0 0 0 0</code></pre>
+<pre><code>##  [1]  0  1  2  0  0  0  0  0  1  0  0  0  0  0  0  1  2  0  0  0  0 NA NA NA NA
+## [26] NA NA NA NA NA NA  0 NA NA NA  0 NA NA  0 NA NA  0 NA NA NA NA NA NA NA NA
+## [51] NA NA NA NA NA NA NA NA NA NA  0 NA NA NA NA NA NA  0</code></pre>
 </div>
 <div id="subsetting-strings-data-frames-with-str_subset-str_sub-str_match-str_extract." class="section level1">
 <h1><span class="header-section-number">5</span> <strong>Subsetting strings &amp; data frames</strong> with <code>str_subset()</code>, <code>str_sub()</code>, <code>str_match()</code>, &amp; <code>str_extract()</code>.</h1>
@@ -192,12 +195,12 @@ str_which(days, &quot;[:space:]{1}&quot;) #match entries containing a single {1}
 gapminder %&gt;% glimpse() #show the structure of a data frame using dplyr::glimpse()</code></pre>
 <pre><code>## Rows: 1,704
 ## Columns: 6
-## $ country   &lt;fct&gt; Afghanistan, Afghanistan, Afghanistan, Afghanistan, Afgha...
-## $ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asi...
-## $ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 199...
-## $ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 4...
-## $ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372,...
-## $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.113...</code></pre>
+## $ country   &lt;fct&gt; &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, ~
+## $ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, ~
+## $ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, ~
+## $ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.8~
+## $ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 12~
+## $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134, ~</code></pre>
 <p>One of the first things we learned about was how to use “patterns” with numeric vectors via base R <a href="https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/#logical-operators">logical comparison operators</a> like <code>&gt;</code>, <code>&lt;</code>, <code>&lt;=</code>, or <code>&gt;=</code>. The <code>str_subset()</code>, <code>str_sub()</code>, <code>str_match()</code>, &amp; <code>str_extract()</code> from <code>stringr</code> help us subset strings<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 <p><code>str_subset()</code> returns all values in a vector which match a pattern. We could use it to figure out which countries in the gapminder data begin with an A or C and also end with an A or C.</p>
 <pre class="r"><code>subsetted_country_names &lt;- gapminder$country %&gt;% 
@@ -322,7 +325,7 @@ names(gapminder) %&gt;% c(&quot;_gap&quot;)</code></pre>
 <p><code>str_glue()</code> is a convenience wrapper for the <a href="https://github.com/tidyverse/glue">glue::glue()</a> function, which allows you to interpolate strings and values that have been assigned to names in R. To insert a value, you simply wrap it in <code>{}</code>:</p>
 <pre class="r"><code>y &lt;- Sys.Date() #store the current date
 str_glue(&quot;today is {y}&quot;)</code></pre>
-<pre><code>## today is 2020-06-28</code></pre>
+<pre><code>## today is 2021-05-15</code></pre>
 <pre class="r"><code>nm &lt;- &quot;Craig&quot;
 str_glue(&quot;Hi, my name is {nm}&quot;)</code></pre>
 <pre><code>## Hi, my name is Craig</code></pre>
@@ -333,7 +336,7 @@ str_glue(&quot;a = {a}&quot;)</code></pre>
 #text and values with commas. This still accomplishes the same thing, but the
 #code doesn&#39;t look quite as nice.
 paste0(&quot;today is &quot;, y)</code></pre>
-<pre><code>## [1] &quot;today is 2020-06-28&quot;</code></pre>
+<pre><code>## [1] &quot;today is 2021-05-15&quot;</code></pre>
 </div>
 <div id="manage-the-lengths-of-strings-using-str_length-str_pad-str_trunc-str_trim" class="section level1">
 <h1><span class="header-section-number">7</span> <strong>Manage the lengths of strings</strong> using <code>str_length()</code>, <code>str_pad()</code>, <code>str_trunc()</code>, &amp; <code>str_trim()</code></h1>
@@ -498,11 +501,13 @@ identical(
 <li><p>This isn’t something you’ll need to use often, but you can remove special characters from a string using the <code>iconv()</code> function from base R.</p></li>
 </ul>
 <p>Thank you for visiting my blog. I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.</p>
+<p>This blog is something I do as a volunteer in my free time. If you’ve found it helpful and want to give back, <a href="https://www.buymeacoffee.com/huttoncp">coffee donations</a> would be appreciated.</p>
+<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="huttoncp" data-color="#FF5F5F" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
 </div>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>This applies to escaping characters in R. Escaping characters and building regex statements in other languages may require slightly different syntax<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>or any other type of vector if we convert it to a character class temporarily<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>This applies to escaping characters in R. Escaping characters and building regex statements in other languages may require slightly different syntax<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>or any other type of vector if we convert it to a character class temporarily<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>

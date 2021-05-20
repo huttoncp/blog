@@ -1,0 +1,1087 @@
+---
+title: 'A Scientist''s Guide to R: Step 3.1 - data visualization with ggplot2+'
+author: 'Craig Hutton'
+date: '2021-05-17'
+slug:
+categories:
+  - R
+  - Reproducible Research
+  - data exploration
+  - data visualization
+tags:
+  - R
+header:
+  image: ''
+  caption: ''
+  focal_point: ''
+output: 
+  blogdown::html_page:
+    number_sections: true
+    toc: true
+  
+---
+
+<script src="index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="index_files/plotly-binding/plotly.js"></script>
+<script src="index_files/typedarray/typedarray.min.js"></script>
+<script src="index_files/jquery/jquery.min.js"></script>
+<link href="index_files/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="index_files/crosstalk/js/crosstalk.min.js"></script>
+<link href="index_files/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="index_files/plotly-main/plotly-latest.min.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#tldr"><span class="toc-section-number">1</span> <strong>TL;DR</strong></a></li>
+<li><a href="#introduction"><span class="toc-section-number">2</span> <strong>Introduction</strong></a></li>
+<li><a href="#setup"><span class="toc-section-number">3</span> <strong>Setup</strong></a></li>
+<li><a href="#ggplot2-basics"><span class="toc-section-number">4</span> <strong>ggplot2 basics</strong></a></li>
+<li><a href="#aesthetic-customization"><span class="toc-section-number">5</span> <strong>aesthetic customization</strong></a><ul>
+<li><a href="#titleslabels"><span class="toc-section-number">5.1</span> titles/labels</a></li>
+<li><a href="#fill"><span class="toc-section-number">5.2</span> fill</a></li>
+<li><a href="#colourcolor"><span class="toc-section-number">5.3</span> colour/color</a></li>
+<li><a href="#reodering-factors"><span class="toc-section-number">5.4</span> reodering factors</a></li>
+<li><a href="#colour-palettes"><span class="toc-section-number">5.5</span> colour palettes</a></li>
+<li><a href="#colourblind-friendly-palettes"><span class="toc-section-number">5.6</span> colourblind-friendly palettes</a></li>
+<li><a href="#size"><span class="toc-section-number">5.7</span> size</a></li>
+<li><a href="#shape"><span class="toc-section-number">5.8</span> shape</a></li>
+<li><a href="#linetype"><span class="toc-section-number">5.9</span> linetype</a></li>
+<li><a href="#alpha-transparencyopacity"><span class="toc-section-number">5.10</span> alpha (transparency/opacity)</a></li>
+<li><a href="#jittering-to-reduce-overplotting"><span class="toc-section-number">5.11</span> jittering to reduce overplotting</a></li>
+<li><a href="#coordinates"><span class="toc-section-number">5.12</span> coordinates</a><ul>
+<li><a href="#coord_flip"><span class="toc-section-number">5.12.1</span> coord_flip()</a></li>
+<li><a href="#coord_cartesian"><span class="toc-section-number">5.12.2</span> coord_cartesian()</a></li>
+</ul></li>
+<li><a href="#guides-legends"><span class="toc-section-number">5.13</span> guides (legends)</a></li>
+<li><a href="#x-y-axis-modifications"><span class="toc-section-number">5.14</span> x &amp; y axis modifications</a><ul>
+<li><a href="#scale_x_continuousscale_y_continuous"><span class="toc-section-number">5.14.1</span> <code>scale_x_continuous()/scale_y_continuous()</code></a></li>
+<li><a href="#scale_x_discretescale_y_discrete"><span class="toc-section-number">5.14.2</span> <code>scale_x_discrete()/scale_y_discrete()</code></a></li>
+</ul></li>
+<li><a href="#axis-label-scales"><span class="toc-section-number">5.15</span> axis label scales</a></li>
+<li><a href="#themes"><span class="toc-section-number">5.16</span> themes</a></li>
+<li><a href="#text-formatting-with-ggtext"><span class="toc-section-number">5.17</span> text formatting with <code>ggtext</code></a></li>
+<li><a href="#fonts"><span class="toc-section-number">5.18</span> fonts</a></li>
+</ul></li>
+<li><a href="#faceting"><span class="toc-section-number">6</span> <strong>faceting</strong></a><ul>
+<li><a href="#facet_wrap-and-facet_grid"><span class="toc-section-number">6.1</span> <code>facet_wrap()</code> and <code>facet_grid()</code></a></li>
+<li><a href="#too-many-facets"><span class="toc-section-number">6.2</span> too many facets</a></li>
+</ul></li>
+<li><a href="#layouts"><span class="toc-section-number">7</span> <strong>layouts</strong></a></li>
+<li><a href="#animation"><span class="toc-section-number">8</span> <strong>animation</strong></a></li>
+<li><a href="#exporting-ggplots"><span class="toc-section-number">9</span> <strong>exporting ggplots</strong></a></li>
+<li><a href="#navigation"><span class="toc-section-number">10</span> <strong>Navigation</strong></a></li>
+<li><a href="#notes"><span class="toc-section-number">11</span> <strong>Notes</strong></a></li>
+</ul>
+</div>
+
+<div id="tldr" class="section level1">
+<h1><span class="header-section-number">1</span> <strong>TL;DR</strong></h1>
+<p>This post introduces the <a href="https://ggplot2.tidyverse.org/">ggplot2</a> package from the tidyverse and how the grammar of graphics helps you build customized plots in R.</p>
+</div>
+<div id="introduction" class="section level1">
+<h1><span class="header-section-number">2</span> <strong>Introduction</strong></h1>
+<p>This post in the <a href="https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/">Scientist’s Guide to R series</a> introduces you to the grammar of graphics approach to data visualization in R with the popular <a href="https://ggplot2.tidyverse.org/">ggplot2</a> package from the <a href="https://www.tidyverse.org/">tidyverse</a> and some extension packages that expand its functionality.</p>
+<p><em>Grammar:</em> rules about how words (elementary meaningful components of language) change their form and combine with other words to express meaning
+- <a href="https://dictionary.cambridge.org/dictionary/english/grammar">Cambridge English dictionary</a></p>
+<p><em>Grammar of graphics:</em> rules about how elementary graphical components change visual representations of data and combine with other graphical components to express meaning.</p>
+<p>To paraphrase <code>ggplot2</code> creator <a href="http://hadley.nz/">Hadley Wickham</a>, learning the grammar of graphics allows us to move beyond basic named plotting functions, like <code>elucidate::plot_box()</code> or <code>elucidate::plot_scatter()</code>, and leverage the layered structure of statistical graphics to produce bespoke visual presentations of data<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Data visualization is a core data analysis skill that is arguably the most powerful way of communicating research results.</p>
+<p>In <a href="https://craig.rbind.io/post/2020-12-07-asgr-3-0-exploring-data-with-elucidate/">the previous post</a> on the <code>elucidate</code> package you learned about some convenience <code>plot_*</code> functions that were drawing graphs for you with <code>ggplot2</code>. In this post we dive into the mechanics of <code>ggplot2</code> so you can learn to build your own ggplots “from scratch”.</p>
+<p>The <code>ggplot2</code> grammar of graphics approach to plotting comes with some huge <strong>advantages</strong> over the alternatives:</p>
+<ul>
+<li>Oodles of customization and control options are made accessible through a declarative and readable syntax.</li>
+<li>Easier and more intuitive than plotting in base R or with the <a href="https://cran.r-project.org/web/packages/lattice/lattice.pdf">lattice</a> package.</li>
+<li>Used by a massive and growing community of scientists and other data professionals so there are plenty of resources if you need help.</li>
+<li>The new <a href="https://plotnine.readthedocs.io/">plotnine</a> package in python and <a href="http://gadflyjl.org/">gadfly</a> package in Julia (both inspired by ggplot2) mean that you’re not just learning how to make graphs in R, but in Python and Julia as well.</li>
+</ul>
+<p><strong>Disadvantages</strong>:</p>
+<ul>
+<li><p><code>ggplot2</code> is a comprehensive and flexible graphing system, which means there is <em>a lot</em> to learn, even without considering the many extension packages that have been developed in recent years. When customizing graphs I still have to look up the <a href="https://ggplot2.tidyverse.org/reference/index.html">documentation</a> on <code>ggplot2</code> functions I don’t use often.</p></li>
+<li><p><code>ggplot2</code> code can be a bit verbose with customized graphs taking up many lines, although if you find yourself copying and pasting code too often, you can use R’s functional programming capabilities to condense/simplify things. This is why I built the <code>elucidate::plot_*</code> convenience functions.</p></li>
+</ul>
+<p>The declarative syntax of <code>ggplot2</code> is designed to allow you to describe visual features to use for constructing graphics while allowing R to handle the low level details for you (Wickham, 2011). This post will cover most of what you need to know to produce some of the most common plots used in psychology and related fields. Specifically, we will cover the following topics:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong><code>ggplot2</code> basics</strong>: layers, aesthetic mappings, and geometries.</p></li>
+<li><p><strong>Aesthetic customization</strong>: labels, scales, colours, themes, fonts, etc.</p></li>
+<li><p><strong>Faceting</strong>: splitting a large/complex graph into panels.</p></li>
+<li><p><strong>Layouts</strong>: the <code>patchwork</code> extension package for arranging plot combinations.</p></li>
+<li><p><strong>Animation</strong> with the <code>gganimate</code> package.</p></li>
+<li><p><strong>Exporting ggplots</strong>: to a file on disk with <code>ggsave()</code>.</p></li>
+</ol>
+<p>In this post we’ll look at the <code>penguins</code> dataset from the <code>palmerpenguins</code> package.</p>
+<p>According to the description in the documentation (<code>?palmerpenguins::penguins</code>), these data are of body size measurements for different species of penguins in the Palmer archipelago collected annually from 2007-2009.</p>
+<p>By the end of this post, you should know enough to make snazzy graphs like this without much difficulty:</p>
+<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" width="100%" /></p>
+</div>
+<div id="setup" class="section level1">
+<h1><span class="header-section-number">3</span> <strong>Setup</strong></h1>
+<p>Because it is a core tidyverse package, <code>ggplot2</code> is installed for you when you install the <code>tidyverse</code> meta-package. However, if you’re just joining the blog series now, you can install <code>ggplot2</code> using <code>install.packages()</code>:</p>
+<pre class="r"><code>install.packages(&quot;ggplot2&quot;) #only run this if you haven&#39;t installed ggplot2 before (or updated it in a while)
+install.packages(&quot;palmerpenguins&quot;) #contains the data we need</code></pre>
+<p>or</p>
+<pre class="r"><code>install.packages(&quot;tidyverse&quot;) #if you want to install/update the other core tidyverse packages too
+install.packages(&quot;palmerpenguins&quot;)</code></pre>
+<p>I also recommend installing a few add on packages that enhance/supplement <code>ggplot2</code>’s capabilities (to be demonstrated in examples)</p>
+<pre class="r"><code>install.packages(c(&quot;viridis&quot;, &quot;RColorBrewer&quot;, &quot;ggsci&quot;, #colour palettes
+                   &quot;ggthemes&quot;, #additional themes
+                   &quot;extrafont&quot;, #additional font family options
+                   &quot;ggrepel&quot;, #to avoid overlapping labels
+                   &quot;patchwork&quot;, #multi-plot arrangements/combinations
+                   &quot;plotly&quot;, #interactive plots
+                   &quot;gganimate&quot; #animated ggplots
+                   )) 
+
+remotes::install_github(&quot;thomasp85/transformr&quot;) #enables gganimate to transition between different polygons</code></pre>
+<p>Then just load these like any other R package, with the <code>library()</code> function:</p>
+<pre class="r"><code>library(tidyverse) #I&#39;m loading ggplot2 with the rest of the core tidyverse packages
+#or library(ggplot2) to just load ggplot2</code></pre>
+<p>I’m also going to load <code>elucidate</code> for <a href="https://craig.rbind.io/post/2020-12-07-asgr-3-0-exploring-data-with-elucidate/#interrogating-data">data interrogation</a> and import the <code>penguins</code> data from the <code>palmerpenguins</code> package with the <code>data()</code> function. The remaining packages introduced in this post will be loaded later on when they are needed.</p>
+<pre class="r"><code>library(elucidate) #for data exploration/interrogation functions
+
+#load data from an R package with the data function &amp; package argument (could also import it by loading the package)
+data(penguins, package = &quot;palmerpenguins&quot;)</code></pre>
+<p>Next, we take our usual step of checking the structure of the data with the <code>dplyr::glimpse()</code> function (also loaded with the <code>tidyverse</code>).</p>
+<pre class="r"><code>glimpse(penguins)</code></pre>
+<pre><code>## Rows: 344
+## Columns: 8
+## $ species           &lt;fct&gt; Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adel~
+## $ island            &lt;fct&gt; Torgersen, Torgersen, Torgersen, Torgersen, Torgerse~
+## $ bill_length_mm    &lt;dbl&gt; 39.1, 39.5, 40.3, NA, 36.7, 39.3, 38.9, 39.2, 34.1, ~
+## $ bill_depth_mm     &lt;dbl&gt; 18.7, 17.4, 18.0, NA, 19.3, 20.6, 17.8, 19.6, 18.1, ~
+## $ flipper_length_mm &lt;int&gt; 181, 186, 195, NA, 193, 190, 181, 195, 193, 190, 186~
+## $ body_mass_g       &lt;int&gt; 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 3475, ~
+## $ sex               &lt;fct&gt; male, female, female, NA, female, male, female, male~
+## $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007~</code></pre>
+<p><code>glimpse()</code> tells us that there are 344 rows and 8 columns in the <code>penguins</code> data, two of which are numeric/double vectors (bill_length_mm and bill_depth_mm), three are integer vectors (flipper_length_mm, body_mass_g, and year), and three are factors (species, island, and sex).</p>
+<p>Next, we use <code>elucidate::copies()</code>, <code>elucidate::counts_tb_all()</code>, and <code>elucidate::describe_all()</code> to check for duplicates, suspicious values, and missingness.</p>
+<pre class="r"><code>copies(penguins, filter = &quot;dupes&quot;)</code></pre>
+<pre><code>## No column names specified - using all columns.</code></pre>
+<pre><code>## No duplicates detected.</code></pre>
+<pre><code>## # A tibble: 0 x 9
+## # ... with 9 variables: species &lt;fct&gt;, island &lt;fct&gt;, bill_length_mm &lt;dbl&gt;,
+## #   bill_depth_mm &lt;dbl&gt;, flipper_length_mm &lt;int&gt;, body_mass_g &lt;int&gt;, sex &lt;fct&gt;,
+## #   year &lt;int&gt;, n_copies &lt;int&gt;</code></pre>
+<pre class="r"><code>describe_all(penguins, output = &quot;dt&quot;)</code></pre>
+<pre><code>## $factor
+##    variable cases   n na  p_na n_unique ordered
+## 1:  species   344 344  0 0.000        3   FALSE
+## 2:   island   344 344  0 0.000        3   FALSE
+## 3:      sex   344 333 11 0.032        3   FALSE
+##                               counts_tb
+## 1: Adelie_152, Gentoo_124, Chinstrap_68
+## 2:  Biscoe_168, Dream_124, Torgersen_52
+## 3:                 male_168, female_165
+## 
+## $numeric
+##             variable cases   n na  p_na     mean      sd     se     p0      p25
+## 1:    bill_length_mm   344 342  2 0.006   43.922   5.460  0.295   32.1   39.225
+## 2:     bill_depth_mm   344 342  2 0.006   17.151   1.975  0.107   13.1   15.600
+## 3: flipper_length_mm   344 342  2 0.006  200.915  14.062  0.760  172.0  190.000
+## 4:       body_mass_g   344 342  2 0.006 4201.754 801.955 43.365 2700.0 3550.000
+## 5:              year   344 344  0 0.000 2008.029   0.818  0.044 2007.0 2007.000
+##        p50    p75   p100   skew   kurt
+## 1:   44.45   48.5   59.6  0.053 -0.876
+## 2:   17.30   18.7   21.5 -0.143 -0.907
+## 3:  197.00  213.0  231.0  0.346 -0.984
+## 4: 4050.00 4750.0 6300.0  0.470 -0.719
+## 5: 2008.00 2009.0 2009.0 -0.054 -1.505</code></pre>
+<pre class="r"><code>counts_tb_all(penguins, n = 2)</code></pre>
+<pre><code>## $species
+##    top_v top_n     bot_v bot_n
+## 1 Adelie   152 Chinstrap    68
+## 2 Gentoo   124    Gentoo   124
+## 
+## $island
+##    top_v top_n     bot_v bot_n
+## 1 Biscoe   168 Torgersen    52
+## 2  Dream   124     Dream   124
+## 
+## $bill_length_mm
+##   top_v top_n bot_v bot_n
+## 1  41.1     7  32.1     1
+## 2  45.2     6  33.1     1
+## 
+## $bill_depth_mm
+##   top_v top_n bot_v bot_n
+## 1    17    12  13.1     1
+## 2    15    10  13.2     1
+## 
+## $flipper_length_mm
+##   top_v top_n bot_v bot_n
+## 1   190    22   172     1
+## 2   195    17   174     1
+## 
+## $body_mass_g
+##   top_v top_n bot_v bot_n
+## 1  3800    12  2700     1
+## 2  3700    11  2925     1
+## 
+## $sex
+##    top_v top_n  bot_v bot_n
+## 1   male   168 female   165
+## 2 female   165   male   168
+## 
+## $year
+##   top_v top_n bot_v bot_n
+## 1  2009   120  2007   110
+## 2  2008   114  2008   114</code></pre>
+<p>These checks don’t reveal any obvious issues aside from a few missing values. Approaches to dealing with missing values will be covered in detail in the next post, so for now we’ll just drop the rows with missing values via <code>na.omit()</code> to keep things simple.</p>
+<pre class="r"><code>nrow(penguins)</code></pre>
+<pre><code>## [1] 344</code></pre>
+<pre class="r"><code>penguins2 &lt;- na.omit(penguins)
+
+nrow(penguins2)</code></pre>
+<pre><code>## [1] 333</code></pre>
+</div>
+<div id="ggplot2-basics" class="section level1">
+<h1><span class="header-section-number">4</span> <strong>ggplot2 basics</strong></h1>
+<p>The first thing you need to know about the mechanics of <code>ggplot2</code> is that it builds plots in layers. This feature means that you can modify and add components to a graph by simply adding a layer to it, which makes it incredibly flexible. Unfortunately this flexibility can also be confusing for new users especially if they’ve only ever seen code for highly complex graphs that contain many layers. In my personal R learning journey, I found <code>ggplot2</code> to be a lot more intuitive when I realized that there are <strong>only 3 layers</strong> you need to build a basic graph:</p>
+<ol style="list-style-type: decimal">
+<li><p>The <strong>initialization layer</strong>, which is just using the <code>ggplot()</code> function to tell R that you want initialize a ggplot graphical object. I find it helpful to think of this as creating the blank canvas upon which the graph will be drawn.</p></li>
+<li><p>The <strong>aesthetic layer</strong>, added via the <code>aes()</code> function, is used to define aesthetic mappings, i.e. the assignment of variables in the data frame specified in the “data” argument of the initialization layer to visual features of the plot.</p></li>
+</ol>
+<ul>
+<li>In general, if you want a graphical feature of a ggplot to be based on the levels of a variable, you map the unquoted name of the variable to the feature inside the <code>aes()</code> function. For example, in the Palmer penguins data we could assign a different colour to the graphed values for each penguin species with <code>aes(colour = species)</code>, independently of the plot geometry (scatter plot, bar graph, box plot, etc.). In contrast, if you want to set a graphical parameter to a specific value that will be applied to all geometric objects of the same class that are drawn on the graph, like making all points on a scatter plot blue, you would set use <code>colour = "blue"</code> without the <code>aes()</code> part in a <code>geom_point()</code> layer (i.e. <code>geom_point(colour = "blue")</code>). This tells R that you want to set the colour of all geometric objects from the same layer (e.g. points on a scatter plot) to a specific colour, rather than assigning distinct colours to each level of a variable. Aesthetic mappings are the most conceptually challenging part of learning <code>ggplot2</code>, but their meaning will become clear after seeing some examples.</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>A <strong>geometry layer</strong> to define the spatial features of the graph. There are many geometries available in <code>ggplot2</code> as intuitively named functions beginning with <code>geom_*</code>. Some of more commonly used ones are:</li>
+</ol>
+<ul>
+<li><p><code>geom_histogram()</code> = histograms</p></li>
+<li><p><code>geom_density()</code> = kernel density plots</p></li>
+<li><p><code>geom_bar()</code> = bar charts</p></li>
+<li><p><code>geom_point()</code> = scatter plots</p></li>
+<li><p><code>geom_box()</code> = box-and-whisker plots</p></li>
+<li><p><code>geom_violin()</code> = violin plots</p></li>
+<li><p><code>geom_line()</code> = line graphs</p></li>
+<li><p><code>geom_error()</code> = error bars</p></li>
+<li><p><code>geom_smooth()</code> = adds lines for conditional mean estimates (i.e. regression lines)</p></li>
+</ul>
+<p>You can visit the <code>ggplot2</code> reference page <a href="https://ggplot2.tidyverse.org/reference/">here</a> for a full list. It is worth mentioning that the <code>ggplot2</code> layering system allows you to overlay multiple geometric layers on the same plot (just add another layer), a feature that was not obvious to me when I was starting to learn it.</p>
+<p>You also need to know that layers are added to a ggplot using the <code>+</code> symbol instead of the pipe operator (<code>%&gt;%</code>), where:</p>
+<pre class="r"><code>ggplot(data = penguins2) + #or equivalently penguins2 %&gt;% ggplot() +
+  aes(x = body_mass_g) +
+  geom_histogram()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>…can be read as: “initialize a ggplot while setting the data frame <code>penguins2</code> as the default dataset to use for aesthetic mappings, then add a layer of aesthetic mappings where the variable ‘body_mass_g’ is to be assigned to the x-axis of the graph, then add a geometry layer that tells R to draw a histogram of that variable.”</p>
+<p><strong><em>N.B.</em></strong> The <a href="https://magrittr.tidyverse.org/reference/pipe.html">magrittr</a> package’s pipe<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> operator (<code>%&gt;%</code>) was covered in <a href="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#chaining-functions-with-the-pipe-operator">an earlier post</a>.</p>
+<p>It is more common to see the <code>aes()</code> layer embedded in the initialization layer via <code>ggplot()</code>’s “mapping” argument, like this:</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(mapping = aes(x = body_mass_g)) + #or ggplot(penguins2, aes(x = body_mass_g))
+  geom_histogram()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>As you can clearly see, these are effectively identical in that they both define global aesthetic mappings that are “inherited” by all subsequent layers (<code>geom_histogram()</code> in this example) unless the “inherit.aes” argument in those layers is set to <code>FALSE</code>, e.g.</p>
+<pre class="r"><code>ggplot(penguins2) + 
+  aes(x = body_mass_g) +
+  geom_histogram(inherit.aes = FALSE)</code></pre>
+<pre><code>## Error: stat_bin() requires an x or y aesthetic.</code></pre>
+<p>This time I get an error that <code>stat_bin()</code>, which is a function called by <code>geom_histogram()</code>, “requires an x or y aesthetic” (variable mapping), because I’ve told <code>geom_histogram()</code> to ignore the global/default mappings for the ggplot by setting “inherit.aes”. In practice you probably won’t use “inherit.aes” much because you can also just overwrite a mapping for a specific layer by using that layer’s “mapping” argument like this:</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) + 
+  geom_histogram(mapping = aes(x = flipper_length_mm))</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Now we end up with a histogram that plots the <em>binned</em> distribution of the flipper_length_mm variable (as per the new x-axis mapping in the <code>geom_histogram()</code> layer) but the x-axis title still reads “body_mass_g” because the rest of the plotting components (of which axis titles are one) are affected by the default/global x-axis mapping we set to the body_mass_g variable in the <code>ggplot()</code> layer.</p>
+<ul>
+<li>The key point here is when you map a variable, like penguin body mass in grams, to an aesthetic parameter of a ggplot with the <code>aes()</code> function, in either the <code>ggplot()</code> initialization layer of the graph, like this:</li>
+</ul>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g))</code></pre>
+<p>…or as a separate layer, like this:</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot() +
+  aes(x = body_mass_g)</code></pre>
+<p>…then that mapping of body mass to the x-axis will be applied by default to all layers of the plot. So you can add a second geom to the plot, like rug lines to density plot of body mass for each species…</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot() +
+  aes(x = body_mass_g) +
+  geom_density() +
+  geom_rug()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+…and each <code>geom_*</code> layer uses penguin body mass as the x-axis variable. If you only want to assign a variable aesthetic mapping to affect a single geom, then pass the <code>aes()</code> portion to the chosen <code>geom_*</code> layer’s “mapping” argument instead, as in:</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot() +
+  geom_density(aes(x = body_mass_g)) +
+  geom_rug()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+This time the rug lines aren’t rendered because I’ve only assigned penguin body mass to the x-axis of the <code>geom_density()</code> layer and <code>geom_rug()</code> has no idea what is supposed to go on the x-axis.</p>
+</div>
+<div id="aesthetic-customization" class="section level1">
+<h1><span class="header-section-number">5</span> <strong>aesthetic customization</strong></h1>
+<p>This section introduces fundamental methods of customizing ggplot aesthetic parameters, many of which can be either mapped to a variable within the <code>aes()</code> function, or applied globally outside of the <code>aes()</code> function.</p>
+<div id="titleslabels" class="section level2">
+<h2><span class="header-section-number">5.1</span> titles/labels</h2>
+<p>To correct the title in the previous density plot we could use an <code>xlab()</code> layer (short for “x-axis label”), but I prefer the <code>labs()</code> function instead because you can use it to modify multiple labels/titles in the same layer, e.g. both the x and y axis labels:</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) + 
+  geom_histogram() +
+  labs(x = &quot;body mass (g)&quot;, y = &quot;count (using 30 bins)&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>Other labels that can be modified with <code>labs()</code> layer include:</p>
+<ul>
+<li><p><strong>“title”</strong>: the title of the ggplot, which appears at the top and is left-aligned by default.</p></li>
+<li><p><strong>“subtitle”</strong>: a subtitle for the ggplot that is in a slightly smaller font size and positioned just below the title (if there is one)</p></li>
+<li><p><strong>“caption”</strong>: a caption for the ggplot, which appears at the bottom and is right-aligned by default.</p></li>
+<li><p><strong>“tag”</strong>: adds a tag to the plot. Think about this as putting a letter “a” (or whatever text you want) in the top left corner of the graph (by default) to <em>tag</em> it as part <strong>a</strong> of multi-plot figure.</p></li>
+<li><p><strong>“colour”/“color”</strong>: if a variable has been assigned to “colour” (“color” is also valid if you prefer); this controls the title of colour legend.</p></li>
+<li><p><strong>“fill”</strong>: if a variable has been assigned to “fill”, this controls the title of fill legend.</p></li>
+<li><p><strong>“size”</strong>: if a variable has been assigned to “size”, this controls the title of size legend.</p></li>
+<li><p><strong>“shape”</strong>: if a variable has been assigned to “shape”, this controls the title of shape legend.</p></li>
+<li><p><strong>“linetype”</strong>: if a variable has been assigned to “linetype”, this controls the title of the linetype legend.</p></li>
+</ul>
+<p><strong><em>N.B.</em></strong> you can remove any of these labels by setting them to <code>NULL</code> in a <code>labs()</code> layer, e.g.:</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) + 
+  geom_histogram() +
+  labs(x = &quot;body mass (g)&quot;, y = NULL,
+       caption = &quot;source: palmerpenguins R package&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+<div id="fill" class="section level2">
+<h2><span class="header-section-number">5.2</span> fill</h2>
+<p>The fill aesthetic in <code>ggplot2</code> controls the fill colour of ggplot geometric components. You can either map a variable to fill using the <code>aes()</code> function,</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_histogram(aes(fill = species)) +
+  labs(fill = &quot;Species&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+…or you can set it to a single value (as a character string) to be applied globally by specifying it in the geometry layer <em>outside</em> of <code>aes()</code>.</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_histogram(fill = &quot;blue2&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+As you can see, when you assign a variable to the fill (colour) aesthetic, you get different fill colours for each value/level of the specified variable, which is a convenient way of splitting the data in a ggplot. You’ll also get a legend by default. Other aesthetics covered below behave similarly (colour, shape, size, etc.).</p>
+<p>Recall from the last <a href="https://craig.rbind.io/post/2020-12-07-asgr-3-0-exploring-data-with-elucidate/">post</a> that we can see the colour options available in base R via <code>elucidate::colour_options()</code>…</p>
+<pre class="r"><code>elucidate::colour_options()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-22-1.png" width="672" />
+…which will be easy to read if you run it yourself and expand it to full screen viewing mode.</p>
+<p><code>ggplot2</code> also provides <code>scale_*</code> functions that give you finer control over many aesthetic features of the graphs you build. For example, we can add a <code>scale_fill_manual()</code> layer to change the fill colours assigned to groups in a histogram…</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_histogram(aes(fill = species)) +
+  scale_fill_manual(values = c(&quot;royalblue3&quot;, &quot;darkorchid2&quot;, &quot;green3&quot;))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>…or <code>scale_fill_continuous()</code>/<code>scale_fill_gradient()</code> if a continuous variable has been assigned to the fill aesthetic in a scatter plot.</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm, fill = body_mass_g)) +
+  geom_point(shape = 21, size = 4) +
+  scale_fill_continuous(low = &quot;blue&quot;, high = &quot;red&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+</div>
+<div id="colourcolor" class="section level2">
+<h2><span class="header-section-number">5.3</span> colour/color</h2>
+<p>The colour aesthetic in <code>ggplot2</code> controls the outline colour of ggplot geometric components. Note that both the British/Canadian (colour) and American (color) English spellings are valid thanks to the <code>ggplot2</code> authors. Like fill, you can either map a variable to outline colour using the <code>aes()</code> function,</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_histogram(aes(colour = species))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>…or you can set it to a single value (outside of <code>aes()</code>).</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_histogram(colour = &quot;blue2&quot;,
+                 fill = &quot;white&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p>For finer control, you can use <code>scale_colour_manual()</code>…</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(y = body_mass_g, x = species, colour = species)) +
+  geom_boxplot() +
+  scale_colour_manual(values = c(&quot;green3&quot;, &quot;blue3&quot;, &quot;red2&quot;))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-27-1.png" width="672" />
+…or <code>scale_colour_continuous()</code>, just like the <code>scale_fill_*</code> functions. If you want to specify more than 2 colours to use in constructing a colour gradient, then try the <code>scale_colour_gradientn()</code> function instead<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm, colour = body_mass_g)) +
+  geom_point(shape = &quot;square&quot;, size = 4) +
+  scale_colour_gradientn(colours = c(&quot;blue&quot;, &quot;yellow&quot;, &quot;red&quot;)) #in order from low to medium to high</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+</div>
+<div id="reodering-factors" class="section level2">
+<h2><span class="header-section-number">5.4</span> reodering factors</h2>
+<p>To move the box plot for Gentoo penguins to the far left in the second last graph, we can use <code>forcats::fct_relevel()</code> in a call to <a href="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#mutate">dplyr::mutate()</a> <em>before</em> passing the data to the <code>ggplot()</code> function.</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  mutate(species = fct_relevel(species, &quot;Gentoo&quot;)) %&gt;% 
+  ggplot(aes(y = body_mass_g, x = species, colour = species)) +
+  geom_boxplot() +
+  #the order of colours should match the order of factor levels
+  scale_colour_manual(values = c(&quot;green3&quot;, &quot;blue3&quot;, &quot;red2&quot;)) </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-29-1.png" width="672" />
+See the earlier <a href="https://craig.rbind.io/post/2020-08-29-asgr-2-4-factors/">post</a> on factors and the <a href="https://forcats.tidyverse.org/">forcats</a> package for more information on manipulating factor levels in R.</p>
+</div>
+<div id="colour-palettes" class="section level2">
+<h2><span class="header-section-number">5.5</span> colour palettes</h2>
+<p>If you don’t want to pick individual colours to use yourself, you should be aware that there are several packages that provide conveniently organized colour palettes. See this <a href="https://github.com/EmilHvitfeldt/r-color-palettes/blob/master/type-sorted-palettes.md">link</a> for the most comprehesive list I’ve come across so far. For the purposes of this blog post I will only cover four of these packages: the <a href="https://cran.r-project.org/web/packages/RColorBrewer/index.html">RColorBrewer</a>, <a href="https://nanx.me/ggsci/articles/ggsci.html">ggsci</a>, <a href="https://github.com/clauswilke/colorblindr">colorblindr</a>, and <a href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html">viridis</a> packages.</p>
+<p><a href="https://cran.r-project.org/web/packages/RColorBrewer/index.html">RColorBrewer</a>, which is installed automatically for you with <code>ggplot2</code>, was perhaps the first package to offer convenient color palettes for data visualization in R, and provides three types of palettes: sequential, diverging, and qualitative. According to <a href="https://cran.r-project.org/web/packages/RColorBrewer/RColorBrewer.pdf">the package documentation</a>:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Sequential</strong> palettes are appropriate for ordered variables that progress from low to high values, where low values are assigned light colours and high values are assigned dark colours. Sequential palettes are useful if you want to emphasize extreme values.</p></li>
+<li><p><strong>Diverging</strong> palettes are useful when you want to place equal emphasis on low, middle, and high values of an ordered variable.</p></li>
+<li><p><strong>Qualitative</strong> palettes are useful for unordered categorical variables where the goal is to simply use distinct colours for each group. I tend to use these ones most often out of the RColorBrewer palettes.</p></li>
+</ol>
+<p>You can view the <code>RColorBrewer</code> palette options in your R session’s active graphics device (e.g. R studio “plot” tab) with <code>RColorBrewer::display.brewer.all()</code>. Here I’ll show you the different palette types separately so they all appear on the screen legibly, but you will be able to see them all at once if you run the default <code>display.brewer.all()</code> command yourself.</p>
+<pre class="r"><code>#sequential
+RColorBrewer::display.brewer.all(type = &quot;seq&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<pre class="r"><code>#diverging
+RColorBrewer::display.brewer.all(type = &quot;div&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-30-2.png" width="672" /></p>
+<pre class="r"><code>#qualitative
+RColorBrewer::display.brewer.all(type = &quot;qual&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-30-3.png" width="672" /></p>
+<p><code>ggplot2</code> provides <code>scale_fill_brewer()</code> and <code>scale_colour_brewer()</code> (or <code>scale_color_brewer()</code> if you prefer) as convenience functions that allow you to access these palettes via the “palette” argument. E.g.</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_histogram(aes(fill = species)) +
+  scale_fill_brewer(palette = &quot;Dark2&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p>Alternatively, you can use the <code>RColorBrewer::brewer.pal()</code> function with the “n” and “name” arguments to generate a character vector of colour names of length n that can be passed to any plotting function in R.</p>
+<pre class="r"><code>RColorBrewer::brewer.pal(n = 3, name = &quot;Set1&quot;)</code></pre>
+<pre><code>## [1] &quot;#E41A1C&quot; &quot;#377EB8&quot; &quot;#4DAF4A&quot;</code></pre>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_histogram(aes(fill = species)) +
+  scale_fill_manual(values = RColorBrewer::brewer.pal(n = 3, name = &quot;Set1&quot;))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p>Those of us who are interested in publishing our work in peer-reviewed journals may be interested in using the <a href="https://nanx.me/ggsci/articles/ggsci.html">ggsci</a> package, which provides palettes inspired by common colour schemes used by prominent journals, like <em>Nature</em>, <em>Science</em>, <em>JAMA</em>, and <em>The New England Journal of Medicine</em> (and several others inspired by science fiction). When <code>ggsci</code> is loaded, you can access these palettes with additional <code>scale_fill_*</code> and <code>scale_colour/color_*</code> functions, where * can be any of the <code>ggsci</code> palette names. See the package <a href="https://nanx.me/ggsci/articles/ggsci.html">website</a> for a full list. For the sake of brevity, I will just demonstrate the <em>Nature</em>-themed palette because, like most other scientists, I’ve always dreamed of one day publishing in <em>Nature</em>.</p>
+<pre class="r"><code>library(ggsci)
+
+penguins2 %&gt;% 
+  ggplot(aes(y = body_mass_g)) +
+  geom_boxplot(aes(fill = species)) +
+  scale_fill_npg() #npg = Nature Publishing Group</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<p>As soon as you have some data worthy of publication in <em>Nature</em> (good luck!) you’ll now have no trouble making figures for it!</p>
+</div>
+<div id="colourblind-friendly-palettes" class="section level2">
+<h2><span class="header-section-number">5.6</span> colourblind-friendly palettes</h2>
+<p>To assess the friendliness of your graphs to colour blind individuals, you should check out the website for the <a href="https://github.com/clauswilke/colorblindr">colorblindr</a> package by <code>ggplot2</code>’ developer and author of <a href="https://clauswilke.com/dataviz/">The Fundamentals of Data Visualization</a>, Claus Wilke. You can even upload an image file of a finished graph and simulate how it will look like to colour blind individuals with this cool <a href="http://hclwizard.org:3000/cvdemulator/">simulation tool</a>.</p>
+<p>The <a href="https://sjmgarnier.github.io/viridis/">viridis</a> package’s colour palettes are all colourblind-friendly, examples of which are shown <a href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html#the-color-scales">here</a>.</p>
+<p><code>viridis</code> doesn’t come with a built-in convenience function to display all of the colour palettes at once, but we can show them each using <code>scales::show_col()</code> and <code>viridis::viridis_pal()</code>. Five options can be displayed this way:</p>
+<pre class="r"><code>#both of these packages are installed for you with ggplot2 so we can just load them
+library(scales)
+library(viridis)</code></pre>
+<pre><code>## Warning: package &#39;viridisLite&#39; was built under R version 4.0.5</code></pre>
+<pre class="r"><code>show_col(viridis_pal(option = &quot;magma&quot;)(9)) #equivalent to option = &quot;A&quot;.</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<pre class="r"><code>show_col(viridis_pal(option = &quot;inferno&quot;)(9)) #equivalent to option = &quot;B&quot;.</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-34-2.png" width="672" /></p>
+<pre class="r"><code>show_col(viridis_pal(option = &quot;plasma&quot;)(9)) #equivalent to option = &quot;C&quot;.</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-34-3.png" width="672" /></p>
+<pre class="r"><code>show_col(viridis_pal(option = &quot;viridis&quot;)(9)) #the default, equivalent to option = &quot;D&quot;.</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-34-4.png" width="672" /></p>
+<pre class="r"><code>show_col(viridis_pal(option = &quot;cividis&quot;)(9)) #equivalent to option = &quot;E&quot;.</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-34-5.png" width="672" /></p>
+<p>We can use one of these palettes in a ggplot with <code>viridis::scale_fill_viridis()</code> or <code>viridis::scale_colour_viridis()</code> (or <code>viridis::scale_color_viridis()</code>)</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_density(aes(fill = species)) +
+  scale_fill_viridis(option = &quot;viridis&quot;, #the default
+                     discrete = TRUE) </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<pre class="r"><code>                     #discrete = TRUE needs to be added here to use
+                     #scale_*_viridis() for a discrete variable</code></pre>
+</div>
+<div id="size" class="section level2">
+<h2><span class="header-section-number">5.7</span> size</h2>
+<p>The obviously named “size” aesthetic parameter adjusts the size of a geom. Like other <code>ggplot2</code> aesthetics, you would either assign a numeric variable to size in <code>aes()</code>…</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm, 
+             size = body_mass_g)) + #point size will be proportional to body_mass_g
+  geom_point(colour = &quot;blue2&quot;) #scatter plot</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p>…or set the geom size to a specific value.</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) + 
+  geom_point(colour = &quot;blue2&quot;, size = 4) </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p>As you can see, setting an additional continuous variable to the size aesthetic of a scatter plot is an easy way to explore relationships between 3 variables at once (also called a <a href="https://www.data-to-viz.com/graph/bubble.html">“bubble chart”</a>). I also find it easier to read than extending the plot into a third spatial dimension, which we can do with <a href="https://plotly.com/r/3d-scatter-plots/">plotly</a> instead of <code>ggplot2</code>:</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  plotly::plot_ly(x = ~bill_length_mm, 
+                  y = ~bill_depth_mm, 
+                  z = ~body_mass_g,
+                  type = &quot;scatter3d&quot;, 
+                  color = I(&quot;blue2&quot;))</code></pre>
+<div id="htmlwidget-1" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"visdat":{"5248314d6ef7":["function () ","plotlyVisDat"]},"cur_data":"5248314d6ef7","attrs":{"5248314d6ef7":{"x":{},"y":{},"z":{},"color":["blue2"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"title":"bill_length_mm"},"yaxis":{"title":"bill_depth_mm"},"zaxis":{"title":"body_mass_g"}},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[39.1,39.5,40.3,36.7,39.3,38.9,39.2,41.1,38.6,34.6,36.6,38.7,42.5,34.4,46,37.8,37.7,35.9,38.2,38.8,35.3,40.6,40.5,37.9,40.5,39.5,37.2,39.5,40.9,36.4,39.2,38.8,42.2,37.6,39.8,36.5,40.8,36,44.1,37,39.6,41.1,36,42.3,39.6,40.1,35,42,34.5,41.4,39,40.6,36.5,37.6,35.7,41.3,37.6,41.1,36.4,41.6,35.5,41.1,35.9,41.8,33.5,39.7,39.6,45.8,35.5,42.8,40.9,37.2,36.2,42.1,34.6,42.9,36.7,35.1,37.3,41.3,36.3,36.9,38.3,38.9,35.7,41.1,34,39.6,36.2,40.8,38.1,40.3,33.1,43.2,35,41,37.7,37.8,37.9,39.7,38.6,38.2,38.1,43.2,38.1,45.6,39.7,42.2,39.6,42.7,38.6,37.3,35.7,41.1,36.2,37.7,40.2,41.4,35.2,40.6,38.8,41.5,39,44.1,38.5,43.1,36.8,37.5,38.1,41.1,35.6,40.2,37,39.7,40.2,40.6,32.1,40.7,37.3,39,39.2,36.6,36,37.8,36,41.5,46.1,50,48.7,50,47.6,46.5,45.4,46.7,43.3,46.8,40.9,49,45.5,48.4,45.8,49.3,42,49.2,46.2,48.7,50.2,45.1,46.5,46.3,42.9,46.1,47.8,48.2,50,47.3,42.8,45.1,59.6,49.1,48.4,42.6,44.4,44,48.7,42.7,49.6,45.3,49.6,50.5,43.6,45.5,50.5,44.9,45.2,46.6,48.5,45.1,50.1,46.5,45,43.8,45.5,43.2,50.4,45.3,46.2,45.7,54.3,45.8,49.8,49.5,43.5,50.7,47.7,46.4,48.2,46.5,46.4,48.6,47.5,51.1,45.2,45.2,49.1,52.5,47.4,50,44.9,50.8,43.4,51.3,47.5,52.1,47.5,52.2,45.5,49.5,44.5,50.8,49.4,46.9,48.4,51.1,48.5,55.9,47.2,49.1,46.8,41.7,53.4,43.3,48.1,50.5,49.8,43.5,51.5,46.2,55.1,48.8,47.2,46.8,50.4,45.2,49.9,46.5,50,51.3,45.4,52.7,45.2,46.1,51.3,46,51.3,46.6,51.7,47,52,45.9,50.5,50.3,58,46.4,49.2,42.4,48.5,43.2,50.6,46.7,52,50.5,49.5,46.4,52.8,40.9,54.2,42.5,51,49.7,47.5,47.6,52,46.9,53.5,49,46.2,50.9,45.5,50.9,50.8,50.1,49,51.5,49.8,48.1,51.4,45.7,50.7,42.5,52.2,45.2,49.3,50.2,45.6,51.9,46.8,45.7,55.8,43.5,49.6,50.8,50.2],"y":[18.7,17.4,18,19.3,20.6,17.8,19.6,17.6,21.2,21.1,17.8,19,20.7,18.4,21.5,18.3,18.7,19.2,18.1,17.2,18.9,18.6,17.9,18.6,18.9,16.7,18.1,17.8,18.9,17,21.1,20,18.5,19.3,19.1,18,18.4,18.5,19.7,16.9,18.8,19,17.9,21.2,17.7,18.9,17.9,19.5,18.1,18.6,17.5,18.8,16.6,19.1,16.9,21.1,17,18.2,17.1,18,16.2,19.1,16.6,19.4,19,18.4,17.2,18.9,17.5,18.5,16.8,19.4,16.1,19.1,17.2,17.6,18.8,19.4,17.8,20.3,19.5,18.6,19.2,18.8,18,18.1,17.1,18.1,17.3,18.9,18.6,18.5,16.1,18.5,17.9,20,16,20,18.6,18.9,17.2,20,17,19,16.5,20.3,17.7,19.5,20.7,18.3,17,20.5,17,18.6,17.2,19.8,17,18.5,15.9,19,17.6,18.3,17.1,18,17.9,19.2,18.5,18.5,17.6,17.5,17.5,20.1,16.5,17.9,17.1,17.2,15.5,17,16.8,18.7,18.6,18.4,17.8,18.1,17.1,18.5,13.2,16.3,14.1,15.2,14.5,13.5,14.6,15.3,13.4,15.4,13.7,16.1,13.7,14.6,14.6,15.7,13.5,15.2,14.5,15.1,14.3,14.5,14.5,15.8,13.1,15.1,15,14.3,15.3,15.3,14.2,14.5,17,14.8,16.3,13.7,17.3,13.6,15.7,13.7,16,13.7,15,15.9,13.9,13.9,15.9,13.3,15.8,14.2,14.1,14.4,15,14.4,15.4,13.9,15,14.5,15.3,13.8,14.9,13.9,15.7,14.2,16.8,16.2,14.2,15,15,15.6,15.6,14.8,15,16,14.2,16.3,13.8,16.4,14.5,15.6,14.6,15.9,13.8,17.3,14.4,14.2,14,17,15,17.1,14.5,16.1,14.7,15.7,15.8,14.6,14.4,16.5,15,17,15.5,15,16.1,14.7,15.8,14,15.1,15.2,15.9,15.2,16.3,14.1,16,16.2,13.7,14.3,15.7,14.8,16.1,17.9,19.5,19.2,18.7,19.8,17.8,18.2,18.2,18.9,19.9,17.8,20.3,17.3,18.1,17.1,19.6,20,17.8,18.6,18.2,17.3,17.5,16.6,19.4,17.9,19,18.4,19,17.8,20,16.6,20.8,16.7,18.8,18.6,16.8,18.3,20.7,16.6,19.9,19.5,17.5,19.1,17,17.9,18.5,17.9,19.6,18.7,17.3,16.4,19,17.3,19.7,17.3,18.8,16.6,19.9,18.8,19.4,19.5,16.5,17,19.8,18.1,18.2,19,18.7],"z":[3750,3800,3250,3450,3650,3625,4675,3200,3800,4400,3700,3450,4500,3325,4200,3400,3600,3800,3950,3800,3800,3550,3200,3150,3950,3250,3900,3300,3900,3325,4150,3950,3550,3300,4650,3150,3900,3100,4400,3000,4600,3425,3450,4150,3500,4300,3450,4050,2900,3700,3550,3800,2850,3750,3150,4400,3600,4050,2850,3950,3350,4100,3050,4450,3600,3900,3550,4150,3700,4250,3700,3900,3550,4000,3200,4700,3800,4200,3350,3550,3800,3500,3950,3600,3550,4300,3400,4450,3300,4300,3700,4350,2900,4100,3725,4725,3075,4250,2925,3550,3750,3900,3175,4775,3825,4600,3200,4275,3900,4075,2900,3775,3350,3325,3150,3500,3450,3875,3050,4000,3275,4300,3050,4000,3325,3500,3500,4475,3425,3900,3175,3975,3400,4250,3400,3475,3050,3725,3000,3650,4250,3475,3450,3750,3700,4000,4500,5700,4450,5700,5400,4550,4800,5200,4400,5150,4650,5550,4650,5850,4200,5850,4150,6300,4800,5350,5700,5000,4400,5050,5000,5100,5650,4600,5550,5250,4700,5050,6050,5150,5400,4950,5250,4350,5350,3950,5700,4300,4750,5550,4900,4200,5400,5100,5300,4850,5300,4400,5000,4900,5050,4300,5000,4450,5550,4200,5300,4400,5650,4700,5700,5800,4700,5550,4750,5000,5100,5200,4700,5800,4600,6000,4750,5950,4625,5450,4725,5350,4750,5600,4600,5300,4875,5550,4950,5400,4750,5650,4850,5200,4925,4875,4625,5250,4850,5600,4975,5500,5500,4700,5500,4575,5500,5000,5950,4650,5500,4375,5850,6000,4925,4850,5750,5200,5400,3500,3900,3650,3525,3725,3950,3250,3750,4150,3700,3800,3775,3700,4050,3575,4050,3300,3700,3450,4400,3600,3400,2900,3800,3300,4150,3400,3800,3700,4550,3200,4300,3350,4100,3600,3900,3850,4800,2700,4500,3950,3650,3550,3500,3675,4450,3400,4300,3250,3675,3325,3950,3600,4050,3350,3450,3250,4050,3800,3525,3950,3650,3650,4000,3400,3775,4100,3775],"type":"scatter3d","mode":"markers","marker":{"color":"rgba(0,0,238,1)","line":{"color":"rgba(0,0,238,1)"}},"textfont":{"color":"rgba(0,0,238,1)"},"error_y":{"color":"rgba(0,0,238,1)"},"error_x":{"color":"rgba(0,0,238,1)"},"line":{"color":"rgba(0,0,238,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>#hint: try hovering your mouse over this plot and clicking/dragging it in
+#different directions to rotate it.</code></pre>
+<p><strong><em>N.B.</em></strong> I recommend against using 3D scatter plots like this for anything other than data exploration on your own or if you are planning to personally demonstrate the relationships between the three variables by rotating the graph for an audience.</p>
+</div>
+<div id="shape" class="section level2">
+<h2><span class="header-section-number">5.8</span> shape</h2>
+<p>As you may have guessed, the “shape” parameter affects the shape of the chosen geom, which is typically the points of a scatter plot. You can either map a categorical variable to it…</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm, 
+             shape = island)) + 
+  geom_point(size = 3) #scatter plot</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p>…or set it to a specific shape choice (see <a href="https://ggplot2.tidyverse.org/articles/ggplot2-specs.html?q=shape#sec:shape-spec">here</a> for options).</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) + 
+  geom_point(size = 3, shape = 21)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+</div>
+<div id="linetype" class="section level2">
+<h2><span class="header-section-number">5.9</span> linetype</h2>
+<p>Changes the type of line (solid, dashed, dotted, etc.) in a line graph. Set globally in the <code>geom_line()</code> layer…</p>
+<pre class="r"><code>penguins2 %&gt;%
+  mutate(year = factor(year, ordered = TRUE)) %&gt;% 
+  group_by(year) %&gt;% 
+  summarise(avg_body_mass_g = mean(body_mass_g), .groups = &quot;drop&quot;) %&gt;% #to get a single value per year
+  ungroup() %&gt;% 
+  ggplot(aes(x = year, y = avg_body_mass_g)) + 
+  geom_line(aes(group = 1), linetype = &quot;dashed&quot;, size = 1.5)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<pre class="r"><code>#set the group aesthetic to 1 to disable grouping of lines</code></pre>
+<p>…or map a categorical variable to it with <code>aes()</code>:</p>
+<pre class="r"><code>penguins2 %&gt;%
+  mutate(year = factor(year, ordered = TRUE)) %&gt;%
+  group_by(year, species) %&gt;%
+  summarise(avg_body_mass_g = mean(body_mass_g), .groups = &quot;drop&quot;) %&gt;% #to get a single value per year
+  ungroup() %&gt;%
+  ggplot(aes(x = year, y = avg_body_mass_g)) + 
+  geom_line(aes(group = species, linetype = species), size = 1.5)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<pre class="r"><code>  #In aes() for geom_line(), &quot;group&quot; splits the lines and &quot;linetype&quot; assigns a
+  #different line type to each group</code></pre>
+</div>
+<div id="alpha-transparencyopacity" class="section level2">
+<h2><span class="header-section-number">5.10</span> alpha (transparency/opacity)</h2>
+<p>The “alpha” aesthetic adjusts the transparency of a geom and can be specified using a value ranging between 0 (0% opaque/100% transparent) and 1 (100% opaque/0% transparent). It is especially helpful in cases where “overplotting” obscures some of the data because there are too many overlapping elements, like the scatter plot I made of penguin bill depth by bill length…</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) + 
+  geom_point(colour = &quot;blue2&quot;, size = 4, alpha = 0.5) </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<p>…or density plots of penguin body masses grouped by species.</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g, fill = species, group = species)) +
+  geom_density(alpha = 0.6)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+</div>
+<div id="jittering-to-reduce-overplotting" class="section level2">
+<h2><span class="header-section-number">5.11</span> jittering to reduce overplotting</h2>
+<p>In addition to modifying the transparency of a geom to deal with overplotting, we can also slightly move geometric objects in random directions, or “jitter” them by adding random noise. This should retain most statistical properties of the data (because the displacements are random), while making it easier to see more of the data. Jittering can be used with any <code>ggplot2</code> geom that accepts the output of the <code>ggplot2::position_jitter()</code> function as an option for a “position” argument. This is so common in scatter plots that there is even a shortcut function, <code>ggplot2::geom_jitter()</code>, that you can use instead of <code>ggplot2::geom_point(position = position_jitter())</code>.</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) +  
+  geom_jitter(colour = &quot;blue2&quot;, size = 3, alpha = 0.5) </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<pre class="r"><code>  #or, equivalently: 
+  # geom_point(colour = &quot;blue2&quot;, size = 3, alpha = 0.5, 
+  #            position = position_jitter())</code></pre>
+<p>One exception to this advice is the situation when the geom you want to jitter happens to be text, e.g. labels for the species of a penguin that were rendered via <code>ggplot2::geom_text(aes(label = species))</code>, like this:</p>
+<pre class="r"><code>set.seed(2021) #set random number generator seed for reproducibility
+
+#I&#39;ll just sample 50 rows at random (i.e. data for 50 penguins) for demo
+#purposes
+penguins_sample &lt;- penguins2[sample(seq_len(nrow(penguins2)), 50), ] 
+
+penguins_sample %&gt;% 
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) +  
+  geom_jitter(colour = &quot;blue&quot;, size = 3, alpha = 0.5) +
+  geom_text(aes(label = species)) </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<p>The best option for moving the labels out of the way of the points and other labels is to use the <code>ggplot2</code> extension package <a href="https://ggrepel.slowkow.com/">ggrepel</a>, which contains a <code>geom_text_repel()</code> function to repel labels from one another in ggplots. It also conveniently works with <code>geom_jitter()</code>, as shown here:</p>
+<pre class="r"><code>penguins_sample %&gt;% 
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) +  
+  geom_jitter(colour = &quot;blue&quot;, size = 3, alpha = 0.5) +
+  ggrepel::geom_text_repel(aes(label = species))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<p>That’s so much easier to read!</p>
+</div>
+<div id="coordinates" class="section level2">
+<h2><span class="header-section-number">5.12</span> coordinates</h2>
+<div id="coord_flip" class="section level3">
+<h3><span class="header-section-number">5.12.1</span> coord_flip()</h3>
+<p>You can add a <code>coord_flip()</code> layer to your ggplot graph if you want to swap the x and y axes. This can be particularly helpful if you have overlapping tick labels on the x axis, like a long list of countries, as in the <a href="https://www.rdocumentation.org/packages/gapminder/versions/0.3.0">gapminder</a> data that we’ve seen many times <a href="https://craig.rbind.io/post/2020-01-25-asgr-2-1-data-transformation-part-2/">before</a> in the blog series…</p>
+<pre class="r"><code>set.seed(2021) #set the random number generator seed for reproducibility
+
+gapminder::gapminder %&gt;% 
+  filter(country %in% sample(unique(gapminder::gapminder$country), 20)) %&gt;% #we&#39;ll try to plot 20 for now 
+  ggplot(aes(x = country, y = gdpPercap)) +
+  geom_violin(fill = &quot;limegreen&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<p>vs. </p>
+<pre class="r"><code>gapminder::gapminder %&gt;% 
+  filter(country %in% sample(unique(gapminder::gapminder$country), 20)) %&gt;% 
+  ggplot(aes(x = country, y = gdpPercap)) +
+  geom_violin(fill = &quot;limegreen&quot;) +
+  coord_flip()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+</div>
+<div id="coord_cartesian" class="section level3">
+<h3><span class="header-section-number">5.12.2</span> coord_cartesian()</h3>
+<p><code>coord_cartesian()</code> allows you to zoom in on a portion of the data without dropping any values. Simply set the x-axis or y-axis (viewing) limits with “xlim” or “ylim” as appropriate. This could allow us to zoom into the lower end of the GDP per capita scale in the above violin plots, e.g. </p>
+<pre class="r"><code>gapminder::gapminder %&gt;% 
+  filter(country %in% sample(unique(gapminder::gapminder$country), 20)) %&gt;% 
+  ggplot(aes(x = country, y = gdpPercap)) +
+  geom_violin(fill = &quot;limegreen&quot;) +
+  coord_cartesian(ylim = c(0, 2500)) </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+<p>Unfortunately, we can’t combine <code>coord_flip()</code> and <code>coord_catesian()</code> layers in the same ggplot because the last one added will overwrite the first, as per the message that prints to the console when I try it:</p>
+<pre class="r"><code>gapminder::gapminder %&gt;% 
+  filter(country %in% sample(unique(gapminder::gapminder$country), 20)) %&gt;% 
+  ggplot(aes(x = country, y = gdpPercap)) +
+  geom_violin(fill = &quot;limegreen&quot;) +
+  coord_cartesian(ylim = c(0, 2500)) +
+  coord_flip()</code></pre>
+<pre><code>## Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<p>To get around this issue, <code>coord_flip()</code> also accepts “xlim” and “ylim” specifications for zooming in on a subset of the data just like <code>coord_cartesian()</code> does.</p>
+<pre class="r"><code>gapminder::gapminder %&gt;% 
+  filter(country %in% sample(unique(gapminder::gapminder$country), 20)) %&gt;% 
+  ggplot(aes(x = country, y = gdpPercap)) +
+  geom_violin(fill = &quot;limegreen&quot;) +
+  coord_flip(ylim = c(0, 2500)) </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
+<p><strong><em>N.B.</em></strong> You should avoid setting x or y axis limits with the “limits” argument of <code>scale_x_continuous()</code> or <code>scale_y_continuous()</code> to restrict the range of values that are shown in your graphs; doing so will affect the statistical properties (and shape) of geoms like density curves and regression lines that are drawn based on calculations using data within the limits set by <code>scale_x_continuous()</code> and/or <code>scale_y_continous()</code>. Fortunately, you now know that you can use <code>coord_cartesian()</code> or <code>coord_flip()</code> for this purpose instead so it shouldn’t be a problem for you.</p>
+</div>
+</div>
+<div id="guides-legends" class="section level2">
+<h2><span class="header-section-number">5.13</span> guides (legends)</h2>
+<p>I’m sure you’ve noticed that whenever we map a variable to an aesthetic parameter inside the <code>aes()</code> function, a guide (AKA legend) is automatically added to the plot for us. If you want to omit a guide, simply set it to <code>FALSE</code> for that aesthetic parameter, like this:</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = species, y = body_mass_g, fill = species)) +
+  geom_violin() +
+  scale_fill_viridis(discrete = TRUE) +
+  guides(fill = FALSE)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<p>In this case, it makes sense to omit the guide for fill because it isn’t needed. I suppose the fill colours aren’t needed for this graph either, but you might want to use them for consistency with other plots where the guide was needed.</p>
+</div>
+<div id="x-y-axis-modifications" class="section level2">
+<h2><span class="header-section-number">5.14</span> x &amp; y axis modifications</h2>
+<div id="scale_x_continuousscale_y_continuous" class="section level3">
+<h3><span class="header-section-number">5.14.1</span> <code>scale_x_continuous()/scale_y_continuous()</code></h3>
+<p><code>scale_x_continuous()</code> controls the x-axis “breaks”, “limits”, and “labels” when x is a continuous variable. I find it helpful to use the base R <code>seq()</code> function when modifying the axis break points.</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) + 
+  geom_point(colour = &quot;blue2&quot;, size = 4, alpha = 0.5) +
+  scale_x_continuous(limits = c(30, 60),
+                     breaks = seq(from = 30, #start at 
+                                   to = 60, #end at
+                                   by = 5)) #by this increment</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+<p>You can also modify the x-axis title/label here with the “names” argument and apply a transformation to the x-axis with with the “trans” argument.</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) + 
+  geom_point(colour = &quot;blue2&quot;, size = 4, alpha = 0.5) +
+  scale_x_continuous(name = &quot;bill length (mm)&quot;,
+                     trans = &quot;reverse&quot;,
+                     #keep in mind the transformation when specifying axis limit
+                     #and breaks
+                     limits = c(60, 30),
+                     breaks = seq(60, 30, -5))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-55-1.png" width="672" />
+See the “trans” argument description with <code>?scale_x_continuous()</code> for a full list of available transformations and information on custom transformation functions via the <a href="https://scales.r-lib.org/">scales</a> package function <code>scales::trans_new()</code></p>
+<p>I can’t say that I’ve ever needed to do this before, but you can also move the axis to the opposite side of the graph with the “position” argument (“bottom” or “top” for x-axis, “left” or “right” for y-axis).</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) + 
+  geom_point(colour = &quot;blue2&quot;, size = 4, alpha = 0.5) +
+  scale_y_continuous(position = &quot;right&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-56-1.png" width="672" />
+If you want to add a second x/y-axis on the top/right side of a graph you can use the “sec.axis” argument to <code>scale_x_continuous()</code> and/or <code>scale_y_continuous()</code>:</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) + 
+  geom_point(colour = &quot;blue2&quot;, size = 4, alpha = 0.5) +
+  scale_x_continuous(name = &quot;bill length (mm)&quot;,
+                     sec.axis = sec_axis(~ . /10, name = &quot;bill length (cm)&quot;)) +
+  scale_y_continuous(name = &quot;bill depth (mm)&quot;,
+                     sec.axis = sec_axis(~ . /10, name = &quot;bill depth (cm)&quot;))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+<pre class="r"><code>#where &quot;.&quot; in this case represents the value of the original y axis</code></pre>
+<p>Overlaying 2 different geoms with very different y-axis scales is difficult to do in <code>ggplot2</code> because the lead author, Hadley Wickham, <a href="https://stackoverflow.com/a/3101876">asserts</a> that it is generally bad practice and “fundamentally flawed”.</p>
+<p>One non-flawed example of when it would be OK to do this, in my opinion, is overlaying a normal distribution kernel density plot over a histogram, like this:</p>
+<pre class="r"><code>bw &lt;- 100 #define bin width to be used in the histogram
+n_obs &lt;- sum(!is.na(penguins2$body_mass_g)) #count of non-missing observations
+
+#define a function that returns the normal density curve scaled by the bin width
+#and number of observations
+scaled_dnorm &lt;- function(x) {
+    dnorm(x, mean = mean(penguins2$body_mass_g), sd = sd(penguins2$body_mass_g)) * (bw * n_obs)
+}
+
+penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_histogram(binwidth = bw) +
+  #pass the custom scaled_dnorm function to the fun argument of a
+  #stat_function() layer
+  stat_function(fun = scaled_dnorm, colour = &quot;blue2&quot;, size = 1.5, alpha = 0.8) + 
+  #then reverse the scaling in the sec.axis = sec_axis() part of
+  #scale_y_continuous so the secondary y-axis shows the density values
+  scale_y_continuous(sec.axis = sec_axis(trans = ~./(bw*n_obs), name = &quot;density&quot;, labels = scales::scientific)) +
+  #optionally, make the secondary y-axis the same colour as the density curve
+  #using theme()
+  theme(axis.ticks.y.right = element_line(colour = &quot;blue2&quot;),
+        axis.text.y.right = element_text(colour = &quot;blue2&quot;), 
+        axis.title.y.right = element_text(colour = &quot;blue2&quot;)) </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-58-1.png" width="672" /></p>
+</div>
+<div id="scale_x_discretescale_y_discrete" class="section level3">
+<h3><span class="header-section-number">5.14.2</span> <code>scale_x_discrete()/scale_y_discrete()</code></h3>
+<p>If a categorical variable has been assigned to the x-axis, as in this box-and-whiskers plot,</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = species, y = body_mass_g)) +
+  geom_boxplot()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-59-1.png" width="672" /></p>
+<p>you can modify the axis title, labels, factor levels that are displayed, and position with <code>scale_x_discrete()</code>.</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = species, y = body_mass_g)) +
+  geom_boxplot() +
+  scale_x_discrete(name = &quot;Species&quot;, 
+                   position = &quot;top&quot;, 
+                   limits = c(&quot;Chinstrap&quot;, &quot;Gentoo&quot;),
+                   labels = c(&quot;C&quot;, &quot;G&quot;))</code></pre>
+<pre><code>## Warning: Removed 146 rows containing missing values (stat_boxplot).</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
+<p><code>scale_y_continuous()</code> and <code>scale_y_discrete()</code> are the equivalent functions for the y-axis.</p>
+</div>
+</div>
+<div id="axis-label-scales" class="section level2">
+<h2><span class="header-section-number">5.15</span> axis label scales</h2>
+<p>The <a href="https://scales.r-lib.org/">scales</a> package, a <code>ggplot2</code> dependency<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>, makes it incredibly easy to reformat x and y axis labels (among other things). For example, if you wanted to insert commas in every three digits of the labels for a continuous variable, you could use <code>scales::label_comma()</code> by passing it to the “labels” argument of <code>scale_x_continuous()</code>, like this:</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g, y = flipper_length_mm)) +
+  geom_point() +
+  scale_x_continuous(labels = scales::label_comma())</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-61-1.png" width="672" />
+or convert very large/small values, e.g. populations of countries in the <a href="https://www.rdocumentation.org/packages/gapminder/versions/0.3.0">gapminder</a> data, to scientific notation on the x axis of a scatter plot with <code>scales::label_scientific()</code></p>
+<pre class="r"><code>gapminder::gapminder %&gt;% #using data frame gapminder from the gapminder package
+  ggplot(aes(x = pop, y = gdpPercap)) +
+  geom_point(colour = &quot;blue2&quot;, size = 2, alpha = 0.5) +
+  scale_x_continuous(labels = scales::label_scientific())</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
+<p>or add dollar symbols to the GDP per capita values on the y-axis with <code>scales::label_dollar()</code>. It’s definitely worth spending a few minutes to peruse the <a href="https://scales.r-lib.org/reference/index.html">reference page</a> and take stock of the many options.</p>
+<p>While we’re here, I’ll incorporate some other features in the <code>scale_x_continuous()</code> layer by applying a base 10 logarithmic transformation to both axes to spread things out a bit from the bottom-left corner. Perhaps it would also be easier to read if we mapped another variable to the colour aesthetic, like life expectancy, using the “plasma” viridis colour palette.</p>
+<pre class="r"><code>gapminder::gapminder %&gt;% #using data frame gapminder from the gapminder package
+  ggplot(aes(x = pop, y = gdpPercap, fill = lifeExp)) +
+  geom_point(size = 3, alpha = 0.7, colour = &quot;black&quot;, shape = 21) +
+  scale_x_continuous(trans = &quot;log10&quot;,
+                     labels = scales::label_scientific()) +
+  scale_y_continuous(trans = &quot;log10&quot;,
+                     labels = scales::label_dollar())  +
+  scale_fill_viridis(option = &quot;plasma&quot;, end = 0.9) </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
+<p>Much better for only a few extra lines of code!</p>
+</div>
+<div id="themes" class="section level2">
+<h2><span class="header-section-number">5.16</span> themes</h2>
+<p>The <code>theme()</code> function in <code>ggplot2</code> gives you much finer control over graphical features unrelated to the data being plotted, like the background color of the <code>ggplot()</code> foundation layer, or the font typeface (i.e. bold, italic). There are far too many graphical feature modifications accessible to you through <code>theme()</code> to cover them in this post. I will therefore leave it as an exercise to the reader to simply consult the function’s <a href="https://ggplot2.tidyverse.org/reference/theme.html">reference page</a> as needed when building graphs.</p>
+<p>Fortunately, you won’t need to use the <code>theme()</code> function directly too often, as there are many <code>theme_*</code> shortcut functions that control all non-data elements of a ggplot which are available from <code>ggplot2</code> itself and expansion packages like <a href="https://jrnold.github.io/ggthemes/index.html">ggthemes</a> that you can use instead.</p>
+<p>The themes available in <code>ggplot2</code> itself are:</p>
+<p><code>theme_grey()</code>/<code>theme_gray()</code>; the <code>ggplot2</code> default</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_density(fill = &quot;blue2&quot;, alpha = 0.5) +
+  theme_grey(base_size = 14) #base_size = 14 changes the base font size to 14</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-64-1.png" width="672" /></p>
+<p>Note that the <code>theme_*</code> layer is the key part of the code in these examples.</p>
+<p><code>theme_bw()</code></p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_density(fill = &quot;blue2&quot;, alpha = 0.5) +
+  theme_bw(14) #base_size is the first argument so you don&#39;t need to specify it</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
+<p><code>theme_classic()</code>; the <a href="https://craig.rbind.io/post/2020-12-07-asgr-3-0-exploring-data-with-elucidate/">elucidate</a> package default</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_density(fill = &quot;blue2&quot;, alpha = 0.5) +
+  theme_classic(14) </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<p><code>theme_dark()</code></p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_density(fill = &quot;blue2&quot;, alpha = 0.5) +
+  theme_dark(14) </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
+<p><code>theme_light()</code></p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_density(fill = &quot;blue2&quot;, alpha = 0.5) +
+  theme_light(14) </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
+<p><code>theme_linedraw()</code></p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_density(fill = &quot;blue2&quot;, alpha = 0.5) +
+  theme_linedraw(14) </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
+<p><code>theme_minimal()</code></p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_density(fill = &quot;blue2&quot;, alpha = 0.5) +
+  theme_minimal(14) </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
+<p>…and <code>theme_void()</code></p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_density(fill = &quot;blue2&quot;, alpha = 0.5) +
+  theme_void(14)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-71-1.png" width="672" /></p>
+<p>The <a href="https://jrnold.github.io/ggthemes/index.html">ggthemes</a> package offers a nice variety of additional themes like <code>theme_wsj()</code> combined with matching fill colour palette <code>scale_fill_wsj()</code>…</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g, fill = species)) +
+  geom_density(alpha = 0.5) +
+  ggthemes::theme_wsj(14) + #wsj = Wall Street Journal
+  ggthemes::scale_fill_wsj()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-72-1.png" width="672" /></p>
+<p>…that you should try out on a rainy day.</p>
+<p>One last thing to be aware of for now is that you can set a theme for all of the ggplots you make with the <code>ggplot2::theme_set()</code> function. Just wrap it around the <code>theme*</code>, like this:</p>
+<pre class="r"><code>theme_set(theme_classic())</code></pre>
+<p>…to change the default <code>ggplot2</code> theme from <code>theme_grey()</code> to <code>theme_classic()</code> for the duration of your R session.</p>
+</div>
+<div id="text-formatting-with-ggtext" class="section level2">
+<h2><span class="header-section-number">5.17</span> text formatting with <code>ggtext</code></h2>
+<p>The <a href="https://wilkelab.org/ggtext/articles/introduction.html">ggtext</a> extension package for <code>ggplot2</code> makes it considerably easier to change the formatting of text in ggplot graphs via <a href="https://bookdown.org/yihui/rmarkdown/">Markdown</a> and html rendering. <code>ggtext</code> provides a few new theme elements to simplify text formatting, such as <code>element_markdown()</code> &amp; <code>element_textbox()</code> (or <code>element_textbox_simple()</code>). According to the linked webpage, the following text element customization features are currently supported:</p>
+<ul>
+<li>bold and/or italics (<code>*text*</code> for <em>italics</em>, <code>**text**</code> for <strong>bold</strong>, and <code>***text***</code> for <strong><em>both</em></strong>)</li>
+<li>changing the font</li>
+<li>colour</li>
+<li>size</li>
+<li>subscript or superscript placement of text (<code>&lt;sub&gt;text to be subscripted&lt;/sub&gt;</code> or <code>&lt;sup&gt;text to be superscripted&lt;/sup&gt;</code>)</li>
+<li>“rudimentary” support for images</li>
+</ul>
+<p>For example, to bold segments of the x and y axis titles we can use the <code>**text**</code> double asterisk Markdown syntax and then call <code>ggtext::element_markdown()</code> (in place of <code>ggplot2::element_text()</code>), in a <code>theme()</code> layer. We can also specify a line break in a title using <code>&lt;br&gt;</code>, and adjust the colour of a portion of a label between an html-defined “span”, using:</p>
+<p><code>&lt;span style = 'color:r_colour_name;'&gt;text&lt;/span&gt;</code></p>
+<p>or</p>
+<p><code>&lt;span style = 'color:r_colour_hex_code;'&gt;text&lt;/span&gt;</code></p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm, fill = species)) +  
+  geom_jitter(size = 4, alpha = 0.5, shape = 21) +
+  scale_fill_manual(values = c(&quot;Red3&quot;, &quot;blue3&quot;, &quot;green3&quot;)) +
+  #change the x and y axis titles with the **text** markdown syntax to bold part
+  #of the text
+  labs(x = &quot;**bill length** (mm)&quot;, 
+       y = &quot;**bill depth** (mm)&quot;,
+       #customize the color of parts of the plot title using the html 
+       # &lt;span&gt;style = &#39;color:colorname;&#39;&gt;text to be coloured&lt;/span&gt; syntax
+       #Notice from this example that you can also use the markdown bold/italics
+       #syntax on text between the &lt;span&gt; &lt;/span&gt; segments
+       title = &quot;Scatterplot of bill lengths and bill depths of &lt;span style = &#39;color:red3;&#39;&gt;***P. adeliae*** **(Adelie)**&lt;/span&gt;, 
+       &lt;span style = &#39;color:blue3;&#39;&gt;***P. antarcticus*** **(Chinstrap)**&lt;/span&gt;, 
+       and &lt;span style = &#39;color:green3;&#39;&gt;***P. papua*** **(Gentoo)**&lt;/span&gt; penguins in the Palmer Archipelago&quot;) +
+  theme_bw() +
+  theme(plot.title = ggtext::element_textbox_simple(size = 12), #adjust the font size of the title
+        #adjust the colour of the entire label in the theme layer like this
+        axis.title.x = ggtext::element_markdown(colour = &quot;darkorchid4&quot;, 
+                                                size = 14), 
+        #adjust the colour of the entire label in the theme layer like this
+        axis.title.y = ggtext::element_markdown(colour = &quot;darkorchid4&quot;, 
+                                                size = 14)) + 
+  #because we&#39;ve identified the species fill colour in the plot title we no
+  #longer need the fill legend
+  guides(fill = FALSE)  </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-74-1.png" width="672" /></p>
+<p>It’s a bit beyond the scope of this post, but if you’re interested in learning how to write your own <code>theme_*</code> function, I recommend checking out this other <a href="https://themockup.blog/posts/2020-12-26-creating-and-using-custom-ggplot2-themes/#custom-themes">blog post</a> by <a href="https://themockup.blog/about.html">Thomas Mock</a>, the creator of <a href="https://github.com/rfordatascience/tidytuesday/blob/master/README.md">TidyTuesday</a>.</p>
+</div>
+<div id="fonts" class="section level2">
+<h2><span class="header-section-number">5.18</span> fonts</h2>
+<p>If you want to change the font family of the text elements of a graph, you can use the “base_family” argument accepted by most <code>theme_*</code> layers. With just <code>ggplot2</code> installed, you’ll only be able to access these three font options<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>“serif”</strong> = Times New Roman</p></li>
+<li><p><strong>“sans”</strong> = Arial, which is the <code>ggplot2</code> default.</p></li>
+<li><p><strong>“mono”</strong> = Courier New</p></li>
+</ol>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_density(fill = &quot;blue2&quot;, alpha = 0.5) +
+  theme_bw(base_size = 16, #font size 
+           base_family = &quot;serif&quot;) #font family</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-75-1.png" width="672" /></p>
+<p><a href="https://www.rstudio.com/speakers/winston-chang/">Winston Chang</a>’s <a href="https://github.com/wch/extrafont/blob/master/README.md">extrafont</a> package makes it easy to access many more font family options. Simply run <code>extrafont::font_import()</code> once after installing the package on a computer to import the available True Type fonts from your operating system. It can take a few minutes for <code>extrafont::font_import()</code> to locate the font information located on your computer and copy it over to R so be patient.</p>
+<pre class="r"><code>extrafont::font_import() #run once per computer or after installing a new font</code></pre>
+<p>Afterwards, you should see a much longer list of font options if you use the <code>extrafont::fonts()</code> or <code>extrafont::fonttable()</code> function, like this:</p>
+<pre class="r"><code>font_vector &lt;- extrafont::fonts()
+
+#I&#39;ll just print a random sample of 20 font options as examples here
+sample(font_vector, 20)</code></pre>
+<pre><code>##  [1] &quot;Californian FB&quot;         &quot;Felix Titling&quot;          &quot;Corbel&quot;                
+##  [4] &quot;Book Antiqua&quot;           &quot;Vivaldi&quot;                &quot;Stencil&quot;               
+##  [7] &quot;SimSun-ExtB&quot;            &quot;Myanmar Text&quot;           &quot;Perpetua Titling MT&quot;   
+## [10] &quot;Trebuchet MS&quot;           &quot;Calisto MT&quot;             &quot;HP Simplified&quot;         
+## [13] &quot;Bell MT&quot;                &quot;Bradley Hand ITC&quot;       &quot;Palatino Linotype&quot;     
+## [16] &quot;Agency FB&quot;              &quot;Franklin Gothic Medium&quot; &quot;Script MT Bold&quot;        
+## [19] &quot;Harrington&quot;             &quot;Britannic Bold&quot;</code></pre>
+<p>After importing fonts from your OS with <code>extrafont::font_import()</code> I recommend restarting R (<code>[ctrl] + [shift] + [F10]</code> on Windows/Linux; <code>[cmd] + [shift] + [F10]</code> on Mac). Then you will just need to load the package with <code>library(extrafont)</code> to make the additional fonts available as options to ggplot <code>theme_*</code> layers using the “base_family” argument, like this:</p>
+<pre class="r"><code>library(extrafont)
+
+penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_density() +
+  theme_bw(base_size = 16, base_family = &quot;Broadway&quot;) </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-78-1.png" width="672" /></p>
+<p>…or you can use them in a separate <code>theme()</code> layer if you don’t want to change other aspects of the theme, like this:</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_density() +
+  theme(text = element_text(size = 14, family = &quot;Broadway&quot;))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-79-1.png" width="672" /></p>
+<p>As pointed out in a webinar I attended today by my colleague <a href="https://samalbers.science/about/">Sam Albers</a>, this is a really nice feature if you want to align the font of your graphs with the rest of the text in a PowerPoint presentation or other document format created with <a href="https://bookdown.org/yihui/rmarkdown/">R markdown</a>. R markdown and reproducible reporting will be covered in detail later on in the “communication” part of the blog series.</p>
+</div>
+</div>
+<div id="faceting" class="section level1">
+<h1><span class="header-section-number">6</span> <strong>faceting</strong></h1>
+<div id="facet_wrap-and-facet_grid" class="section level2">
+<h2><span class="header-section-number">6.1</span> <code>facet_wrap()</code> and <code>facet_grid()</code></h2>
+<p>To split a ggplot into multiple panels, or facets, all we need to do is add a <code>ggplot2::facet_wrap()</code> or <code>ggplot2::facet_grid()</code> layer to a graph.</p>
+<p><code>facet_wrap()</code> is typically used when you want to split the graph into panels based on a single variable, which is done with the <code>~variable</code> syntax.</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_density(fill = &quot;blue&quot;, alpha = 0.8) +
+  facet_wrap(~species) </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-80-1.png" width="672" /></p>
+<pre class="r"><code>#note: the optional nrow or ncol arguments control the number of rows or columns
+#to use</code></pre>
+<p>I would recommend using <code>facet_grid()</code> instead if you want to use more than one variable for faceting, like penguin species <em>and</em> the islands they were observed on, where one variable goes to the left side of the <code>~</code> and the other goes on the right side.</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_density(fill = &quot;blue&quot;, alpha = 0.8) +
+  facet_grid(island~species) #split vertically by island ~ split horizontally by species </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
+<p>There are a few empty panels here because not all species of penguin were observed on all islands. You can also use two variables for faceting like this with <code>facet_wrap(x~y)</code> if you don’t want any empty panels, because <code>facet_wrap()</code> will just render one panel for each unique combination of the faceting variable levels that has some data. In this case, the group labels for the additional faceting variable will appear above or below the labels for the first variable. To diambiguate them, you can update the facet labels by passing the <code>ggplot2::label_both</code> to the “labeller” argument. You may have also noticed that when you use faceting, the x and y axis scales of all panels are standardized by default. If you want to allow them to vary, set the “scales” argument in the <code>facet_*</code> layer to “free” instead of the default value of “fixed”. For the sake of brevity, I’ll apply both changes at once.</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_density(fill = &quot;blue&quot;, alpha = 0.8) +
+  facet_wrap(island~species, 
+             labeller = label_both,
+             scales = &quot;free&quot;) #use &quot;free_y&quot; or &quot;free_x&quot; instead to allow just one axis to vary</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
+<p>In case you were wondering, we <em>can</em> use the <code>forcats</code> package to change the order of the facets as well. This is another example of the consistency across <code>ggplot2</code> functions that makes it so much fun to graph with.</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  mutate(species = fct_relevel(species, c(&quot;Gentoo&quot;, &quot;Adelie&quot;, &quot;Chinstrap&quot;)),
+         island = fct_relevel(island, c(&quot;Torgersen&quot;, &quot;Biscoe&quot;, &quot;Dream&quot;))) %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_density(fill = &quot;blue&quot;, alpha = 0.8) +
+  facet_wrap(island~species, labeller = label_both)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
+<p>Changing the facet strip label text within the <code>facet_wrap()</code> or <code>facet_grid()</code> layer is just as easy if you simply recode/relabel the variable before passing it to <code>ggplot()</code>. For example, we can add a more detailed prefix to the facet strip labels with <code>forcats::fct_relabel()</code> and <code>paste0()</code> in a <code>dplyr::mutate()</code> layer of our graphing pipeline. We can also move the facet label strips from the top of the graph to the bottom by setting the “strip.position” argument of <code>facet_wrap()</code> or <code>facet_grid()</code> to “bottom”.</p>
+<pre class="r"><code>penguins2 %&gt;% 
+  mutate(species = paste0(&quot;Species of penguin: &quot;, species)) %&gt;% 
+  ggplot(aes(x = body_mass_g)) +
+  geom_density(fill = &quot;blue&quot;, alpha = 0.8) +
+  facet_wrap(~species, 
+             scale = &quot;free&quot;,
+             strip.position = &quot;bottom&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-84-1.png" width="672" /></p>
+</div>
+<div id="too-many-facets" class="section level2">
+<h2><span class="header-section-number">6.2</span> too many facets</h2>
+<p>Sometimes you just have too many facets for them to show up legibly on a single page. If this is a problem for you, check out the <a href="https://hafen.github.io/trelliscopejs/">trelliscopejs</a> package, which turns the ggplot into an interactive html widget that enables you to browse a smaller number of facets at a time so you can actually see the data.</p>
+<p>Just swap out <code>ggplot2::facet_wrap()</code> for <code>trelliscopejs::facet_trelliscope()</code> and set the initial layout of the viewing pane with the “ncol” and “nrow” arguments.</p>
+<p>Unfortunately I can’t demonstrate <code>facet_trelliscope()</code> for you in this post because <code>trelliscopejs::facet_trelliscope()</code> is <a href="https://github.com/hafen/trelliscopejs/issues/67">currently incompatible</a> with <a href="https://bookdown.org/yihui/blogdown/">blogdown</a> (the package I use to write my blog), but it should work for you if you try it yourself. There is also an introductory vignette <a href="https://hafen.github.io/trelliscopejs/articles/trelliscopejs.html">here</a> that you can visit to see some examples.</p>
+</div>
+</div>
+<div id="layouts" class="section level1">
+<h1><span class="header-section-number">7</span> <strong>layouts</strong></h1>
+<p>You’ve seen how <code>ggplot2::facet_wrap()</code> and <code>ggplot2::facet_grid()</code> make it easy to split a graph into multiple panels based on the unique levels of a faceting variable from the same data source, but what if you want to construct a multi-panel figure from completely different plots?</p>
+<p>The <a href="https://patchwork.data-imaginist.com/">patchwork</a> package makes this incredibly easy, in large part by modifying the behaviour of the <code>+</code> and <code>/</code> arithmetic operators when they are applied to ggplots such that:</p>
+<ul>
+<li><p><code>plot_a + plot_b</code> tells R to render a second plot (<code>plot_b</code>) to the right of a first plot (<code>plot_a</code>)</p></li>
+<li><p><code>plot_a / plot_b</code> tells R to render <code>plot_b</code> underneath <code>plot_a</code></p></li>
+</ul>
+<p>You can combine these basic instructions with <code>patchwork::plot_annotation()</code>, which is also added with the <code>+</code> operator, to annotate the combined plot with features like a title and/or caption. If you have redundant guides/legends in each panel and want to instead use a single guide, you can also add a <code>patchwork::plot_layout(guides = "collect")</code> layer.</p>
+<pre class="r"><code>library(patchwork)
+
+plot_a &lt;- penguins2 %&gt;% 
+  ggplot(aes(x = flipper_length_mm, fill = species)) +
+  geom_density(alpha = 0.6) +
+  ggsci::scale_fill_lancet() +
+  labs(tag = &quot;a&quot;, x = &quot;body mass (g)&quot;)
+
+plot_b &lt;- penguins2 %&gt;% 
+  ggplot(aes(x = flipper_length_mm, fill = species)) +
+  geom_density(alpha = 0.6) +
+  ggsci::scale_fill_lancet() +
+  labs(tag = &quot;b&quot;, x = &quot;flipper length (mm)&quot;)
+
+plot_a + plot_b + 
+  plot_annotation(title = &quot;Density plots of Adelie, Chinstrap, and Gentoo penguin:&lt;br&gt;
+                  **a)** body masses (g) and **b)** flipper lengths (mm)&quot;,
+                  caption = &quot;Source: palmerpenguins R package&quot;,
+                  #you&#39;ll need to use the &quot;theme&quot; argument to plot_annotation()
+                  #rather than a separate `theme()` layer to customize the
+                  #formatting of text added via plot_annotation(), e.g. to use
+                  #it with ggtext::element_markdown()
+                  theme = theme(plot.title = ggtext::element_markdown())) +
+  patchwork::plot_layout(guides = &quot;collect&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-85-1.png" width="672" /></p>
+<p>There is a lot more you can do with the <code>patchwork</code> package. See the <a href="https://patchwork.data-imaginist.com/reference/index.html">reference page</a> for details.</p>
+</div>
+<div id="animation" class="section level1">
+<h1><span class="header-section-number">8</span> <strong>animation</strong></h1>
+<p>Interested in animating a ggplot to show a statistical relationship that changes over time, actually unfolding over time? Try out the incredibly intuitive <code>ggplot2</code> extension package <a href="https://gganimate.com/">gganimate</a>! Inspired by the <code>gganimate</code> authors’ example of animating the gapminder data, I’ll generate a simple looping animation of box plots of life expectancy for each continent changing with the year variable.</p>
+<p>All I need to do is load the <code>gganimate</code> package and add a <code>gganimate::transition_time(time_variable)</code> layer to the ggplot code. If you want the current time point to be displayed in the title, <code>gganimate</code> allows you to do so by inserting the special string “{frame_time}” as part of a title specified in a basic <code>ggplot2::labs()</code> layer. Animated plots can take a while to render, so I recommend assigning the plot to an object name and then rendering it in a separate step with the <code>gganimate::animate()</code> function, which comes with an added bonus of allowing you to control the framerate with the “fps” argument (default = 10). You can also save an animated ggplot to a .gif file with <code>gganimate::anim_save()</code> if you would like to watch it outside of an active R session.</p>
+<pre class="r"><code>library(gganimate)
+
+animated_ggplot &lt;- gapminder::gapminder %&gt;% 
+  ggplot(aes(x = continent, y = lifeExp, fill = continent)) +
+  geom_boxplot(alpha = 0.8) +
+  theme_classic() +
+  viridis::scale_fill_viridis(discrete = TRUE) + 
+  # the remaining plot code is the gganimate part 
+  labs(title = &quot;Year: {frame_time}&quot;, 
+       #{frame_time} will be displayed as the value of the time variable in the
+       #current frame of the animation
+       x = &quot;life expectancy&quot;) +
+  #use the year variable to transition between frames of the animation
+  transition_time(year) 
+
+#render the animation in the Viewer pane of R studio
+animate(animated_ggplot, fps = 20)
+
+#save to a .gif file with `gganimate::anim_save()`
+anim_save(&quot;my first animated ggplot.gif&quot;,
+          animation = animated_ggplot, 
+          #if you don&#39;t specify the animation the most recently rendered one will be saved
+          fps = 20)
+
+#N.B. anim_save() also accepts &quot;fps&quot; and other arguments that you can use with
+#animate() in case you don&#39;t want to render the animation in the current R
+#session but still want to adjust the frame rate. You can also use the
+#anim_save() &quot;path&quot; argument if you want the plot saved somewhere other than
+#your working directory.</code></pre>
+<p><img src="my%20first%20animated%20ggplot.gif" /></p>
+<p>To animate a ggplot using a variable that isn’t time-related, simply use <code>gganimate::transition_states()</code> instead of <code>gganimate::transition_time()</code>, and special string “{closest_state}” instead of “{frame_time}”. Here is an example of an animated scatterplot of bill lengths and bill depths of the Palmer penguins with the species assigned as a transitioning variable. We can add <code>gganimate::enter_fade()</code> and <code>gganimate::exit_fade()</code> layers to transition between plot states by fading points in and out as well.</p>
+<p>I’ll also assign body mass to the point size and apply the Lancet colour palette from <code>ggsci</code> and the tufte theme from <code>ggthemes</code> to spruce things up a bit more.</p>
+<pre class="r"><code>penguins_animation &lt;- penguins2 %&gt;% 
+  ggplot(aes(bill_length_mm, bill_depth_mm, size = body_mass_g, fill = species)) +
+  geom_point(alpha = 0.7, colour = &quot;black&quot;, shape = 21) +
+  ggsci::scale_fill_lancet() + 
+  ggthemes::theme_tufte(14) +
+  # the remaining plot code is the gganimate part 
+  labs(title = &quot;Species: {closest_state}&quot;, 
+       x = &quot;bill length (mm)&quot;, y = &quot;bill depth (mm)&quot;) +
+  transition_states(species) +
+  enter_fade() + #get points to fade in
+  exit_fade() #and fade out</code></pre>
+<pre class="r"><code>animate(penguins_animation)</code></pre>
+<p><img src="penguins_animation.gif" /></p>
+</div>
+<div id="exporting-ggplots" class="section level1">
+<h1><span class="header-section-number">9</span> <strong>exporting ggplots</strong></h1>
+<p>You can most easily save a static ggplot graph to your project’s working directory (by default, elsewhere if you use the “path” argument) with the <code>ggplot2::ggsave()</code> function, where you specify the file name, the plot to save, and the device to use. In this case, the “device” argument refers to the type of image file you want to write, such as “jpeg”, “tiff”, “png”, “bmp”, “pdf”, etc.</p>
+<p><code>ggsave()</code> will try to guess the device you want to use based on the file extension you specify in the file name so you may not need to use the “device” argument in most cases. If you don’t specify which plot to save, the last plot displayed will be exported by default using the size of the current graphics device (where the plot was rendered). You can also optionally specify the “width” and “height” of the graph in inches, cm, or mm (via the “units” argument) and the resolution in DPI (default is 300).</p>
+<pre class="r"><code>#example of ggsave() usage
+ggsave(filename = &quot;custom ggplot.png&quot;, plot = plot_object)</code></pre>
+<p>Congratulations! If you’ve made it here, you should have a pretty solid understanding of how to use <code>ggplot2</code> and some extension packages to create stunning data visualizations with R. You might find it hard to believe given how much I’ve just covered, but this post only scratches the surface of the graphical options available to you as an R user. Indeed, it would be nearly impossible to cover every single use case without writing a long book on the topic (something to consider as a future project perhaps), but the principles covered here should help you get started at the very least.</p>
+</div>
+<div id="navigation" class="section level1">
+<h1><span class="header-section-number">10</span> <strong>Navigation</strong></h1>
+<p>Click <a href="https://craig.rbind.io/post/2020-12-07-asgr-3-0-exploring-data-with-elucidate/">here</a> to go back to the previous post on exploratory data analysis with <a href="https://github.com/bcgov/elucidate">elucidate</a>. A link to the next one, on dealing with missing values, will be added as soon as I have time to write it.</p>
+</div>
+<div id="notes" class="section level1">
+<h1><span class="header-section-number">11</span> <strong>Notes</strong></h1>
+<ul>
+<li><p>Spatial plots (maps) were a bit beyond the scope of this post, but the <a href="https://r-spatial.github.io/sf/">sf</a> and <a href="https://rstudio.github.io/leaflet/">leaflet</a> packages may be helpful to those who are interested in building maps with R. Spatial data analysis and map building may become the topic of a future post.</p></li>
+<li><p>You can access an online version of <em>the</em> <code>ggplot2</code> book <a href="https://ggplot2-book.org/index.html">here</a> for a deeper dive into the mechanics of the <code>ggplot2</code> graphics system.</p></li>
+<li><p>This post covers quite a few <code>ggplot2</code> extension packages but there are <em>many</em> more. You can learn more about most of them <a href="https://exts.ggplot2.tidyverse.org/gallery/">here</a>.</p></li>
+<li><p>The <a href="https://www.r-graph-gallery.com/">R Graph Gallery</a> has a lot of R code templates for graphs with an emphasis on <code>ggplot2</code> that may be of interest.</p></li>
+</ul>
+<p>Thank you for visiting my blog. I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.</p>
+<p>This blog is something I do as a volunteer in my free time. If you’ve found it helpful and want to give back, <a href="https://www.buymeacoffee.com/huttoncp">coffee donations</a> would be appreciated.</p>
+<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="huttoncp" data-color="#FF5F5F" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Wickham, H. (2011). ggplot2. Wiley Interdisciplinary Reviews: <em>Computational Statistics</em>, 3(2), 180-185.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>The latest version of R (4.1.0) also introduced a native pipe operator, <code>|&gt;</code>, that behaves similarly to <code>%&gt;%</code> except that it only allows you to pass the output of the left side to the first argument of the right side, whereas <code>%&gt;%</code> lets you use a “.” to insert the output of the previous operation anywhere in the subsequently applied function.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>There <em>is</em> an equivalent <code>scale_fill_gradientn()</code> function in case you were wondering.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>meaning it is installed for you when you installed <code>ggplot2</code><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>If you’re using a PC with Windows, you can print these options to the console with <code>windowsFonts()</code><a href="#fnref5" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
