@@ -906,7 +906,7 @@ That's it! Hopefully you'll find that `elucidate` makes exploratory data analysi
 
 # **Navigation**
 
-Click [here](https://craig.rbind.io/post/2020-10-10-asgr-2-5-dates/) to go back to the previous post on dates and times. Click [here](2021-04-25-asgr-3-1-data-visualization/) to go to the next one, on intermediate data visualization with the the popular tidyverse package [ggplot2](https://ggplot2.tidyverse.org/).
+Click [here](https://craig.rbind.io/post/2020-10-10-asgr-2-5-dates/) to go back to the previous post on dates and times. Click [here](https://craig.rbind.io/post/2021-05-17-asgr-3-1-data-visualization/) to go to the next one, on intermediate data visualization with the the popular tidyverse package [ggplot2](https://ggplot2.tidyverse.org/).
 
 # **Notes**
 
