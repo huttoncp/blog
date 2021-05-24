@@ -36,7 +36,7 @@ The 10th post of the [Scientist's Guide to R series](https://craig.rbind.io/post
 
 `elucidate` helps you *explore* data by making it easy and efficient to:
 
-1. **Interrogate** data in search of anomalies with `copies()` and `counts*`.
+1. **Interrogate** data in search of anomalies with `copies()`, `dupes()`, and `counts*`.
 
 2. **Describe** data with the `describe*` set of functions for obtaining summary statistics, bootstrapping confidence intervals, and detecting missing values. 
 
@@ -105,7 +105,7 @@ pdata_resampled <- pdata[sample(1:nrow(pdata), 1e6, replace = TRUE),]
 
 dim(pdata_resampled) 
 ```
-## checking for row `copies()`
+## checking for row `copies()` and `dupes()`
 
 `dplyr::glimpse()` is a great first step in the data interrogation process. After learning about the columns names classes, dimensions, and previewing some of the data, the next thing I usually check is how many copies I have of each row based on columns like subject ID # and date, where I'm hoping that there are as many copies as I should find (i.e. one row per ID and date combination, representing unique measurements). Usually this means making sure there aren't any unexpected row duplicates. This can easily be checked with `elucidate::copies()`.
 
@@ -140,6 +140,15 @@ pdata %>%
 
 ```
 ...and they do :smile:.
+
+Checking for duplicates and sorting the result like this is by far the most common way to use `copies()`, so `elucidate` version 0.0.0.9023 also introduced a convenience wrapper function for the above called `dupes()`:
+
+```{r, cache = TRUE, message = FALSE}
+copies_result <- pdata %>% copies(id, d, filter = "dupes", sort_by_copies = TRUE)
+dupes_result <- pdata %>% dupes(id, d)
+
+identical(copies_result, dupes_result)
+```
 
 Since the extra copies in the resampled version of the data are meaningless, if this were a real dataset intended for research purposes we would probably want to get rid of them and just keep the 1st copy of each to end up with a distinct^[in case you're wondering, yes, dplyr does have a function called `distinct()` that does the same thing as `copies(filter = "first")`, although the underlying code is different and it is less flexible] set of rows. This can also be achieved with `copies()` by instead setting the **filter** argument to **"first"** (or **"last"** for the last copy). In this situation, we actually recover a data frame that is equivalent to the original version of `pdata`, as demonstrated using `identical()` after some sorting and reformatting.
 
@@ -286,7 +295,7 @@ pdata_resampled %>%
   describe_all()
 ```
 
-Despite the number of calculations and operations that need to be performed, `describe_all()` also runs pretty quickly for this amount of data, taking *~600 milliseconds* and using less than 600 MB of RAM to describe 6 columns of various classes with 1,000,000 values each^[This great performance comes from the wonderful [data.table](https://rdatatable.gitlab.io/data.table/) package doing the bulk of the heavy lifting for us under the hood.].
+Despite the number of calculations and operations that need to be performed, `describe_all()` also runs pretty quickly for this amount of data, taking *a second* and using less than 620 MB of RAM to describe 6 columns of various classes with 1,000,000 values each^[This great performance comes from the wonderful [data.table](https://rdatatable.gitlab.io/data.table/) package doing the bulk of the heavy lifting for us under the hood.].
 
 ```{r, cache = T, message = F}
 mark(
@@ -455,7 +464,7 @@ gridExtra::grid.arrange(p1, p2,
 
 I think you'll agree that these variable combinations are quite a bit different than we might have expected based solely on the descriptive stats! Also, basic linear regression only seems like an appropriate choice for the top left plot comparing y1 to x1. I hope you now have a better appreciation of the value of plotting data as well as the utility of metrics like skewness and kurtosis. 
 
-Other obviously named `plot_*` (think "plot_geometry") convenience functions currently provided by `elucidate` include:
+Other obviously named `plot_*` (think "plot_geometry") convenience functions currently provided^[Since this post was originally written, `plot_pie()` and `plot_bar()` have been added to `elucidate` to make it easier to generate pie charts and bar graphs. Of the two, a bar graph is nearly always better at presenting the same information, but `plot_pie()` is available in case your boss asks for a pie chart anyways.] by `elucidate` include:
 
 * `plot_histogram()` = histogram of the binned counts of a continuous variable on the x axis (y is not supplied for this one).
 
@@ -466,7 +475,6 @@ Other obviously named `plot_*` (think "plot_geometry") convenience functions cur
 * `plot_violin()` = violin plot of a continuous variable on the y axis by one or more groups (a nominal variable) on the x axis. Violin plots can reveal the presence of a bimodal distribution (containing multiple density peaks), which isn't captured in a box plot.
 
 * `plot_stat_error()` = plot a summary statistic (via the **"stat"** argument) for a numeric variable, and error bars (via the **"error"** argument) representing a measure of uncertainty in it. You can use this to quickly plot the mean +/- standard error or a confidence interval. The other "stat" option currently available is "median".
-
 
 The 4 plot types I tend to use most often in my research are the density plot, box-and-whiskers plot, scatter plot (as above), and statistic +/- error bars plot, so for this post I will focus on examples for the remaining 3 we haven't covered so far. 
 
@@ -669,17 +677,17 @@ messy_cars <- rbind(messy_cars, messy_cars[sample(1:nrow(messy_cars), 12, replac
 
 ```
 
-Let's see what we're dealing with using a combination of `glimpse()` , `copies()`, `counts_tb_all()`, and `describe_all()`.
+Let's see what we're dealing with using a combination of `glimpse()` , `dupes()`, `counts_tb_all()`, and `describe_all()`.
 
 ```{r, cache = TRUE}
 messy_cars %>% 
   glimpse() %>% 
-  copies(filter = "dupes", sort_by_copies = TRUE) %>% 
+  dupes() %>% 
   head()
 
 ```
 
-`glimpse()` reveals some inconveniently formatted column names, which (in R) shouldn't contain spaces or begin with non-letter characters. You also want a column to have consistently formatted values, not like the mix of string and numeric values we are seeing under the number of cylinders column. `copies(filter = "dupes")` also notifies us that 22 of the 44 rows in `messy_cars` are not unique.
+`glimpse()` reveals some inconveniently formatted column names, which (in R) shouldn't contain spaces or begin with non-letter characters. You also want a column to have consistently formatted values, not like the mix of string and numeric values we are seeing under the number of cylinders column. `copies(filter = "dupes")` also notifies us that 21 of the 44 rows in `messy_cars` are not unique.
 
 ```{r, cache = TRUE}
 counts_tb_all(messy_cars, n = 5)
@@ -751,14 +759,14 @@ Not bad. Most aspects match the original, with a couple of mismatches in cases w
 
 # **Performance Evaluations**
 
-To show you how well `elucidate` functions perform relative to the closest alternatives, we'll do a few memory utilization and speed comparisons with `bench::mark()`. For the sake of brevity, we'll focus on evaluating two of the most computationally demanding `elucidate` functions: `copies()` and `describe_all()`. We'll also increase the number of iterations from 10 to 25 for improved benchmarking reliability.
+To show you how well `elucidate` functions perform relative to the closest alternatives, we'll do a few memory utilization and speed comparisons with `bench::mark()`. For the sake of brevity, we'll focus on evaluating two of the most computationally demanding `elucidate` functions: `dupes()` and `describe_all()`. We'll also increase the number of iterations from 10 to 25 for improved benchmarking reliability.
 
-## `copies()` vs `janitor::get_dupes()`
+## `dupes()` vs `janitor::get_dupes()`
 
-First, I'll apply `copies(filter = "dupes")` and it's closest non-elucidate counterpart, `janitor::get_dupes()`, to `pdata_resampled` when a couple of search columns are specified and standardize the formatting of the output to show that they yield equivalent results. 
+First, I'll apply `dupes()` and it's closest non-elucidate counterpart, `janitor::get_dupes()`, to `pdata_resampled` when a couple of search columns are specified and standardize the formatting of the output to show that they yield equivalent results. 
 
 ```{r, cache = T, message = F}
-a <- copies(pdata_resampled, d, id, filter = "dupes") %>%
+a <- dupes(pdata_resampled, d, id) %>%
   #remainder of pipeline just serves to standardize the output format
   select(d, id, dupe_count = n_copies, everything()) %>%
   arrange(d, id, dupe_count) %>%
@@ -773,12 +781,12 @@ all.equal(a, b)
 
 ```
 
-Good, now we can use [bench::mark()](https://github.com/r-lib/bench) to compare the performance of `copies()` to
+Good, now we can use [bench::mark()](https://github.com/r-lib/bench) to compare the performance of `dupes()` to
 `janitor::get_dupes()` when checking for duplicates based on a single variable (column "d" in this case).
 
 ```{r, cache = T, message = F}
 bm <- bench::mark(
-  copies(pdata_resampled, d, filter = "dupes"),
+  dupes(pdata_resampled, d),
   get_dupes(pdata_resampled, d), 
   iterations = 25,
   check = FALSE 
@@ -792,13 +800,34 @@ bm %>%
 plot(bm)
 ```
 
-`copies()` is almost twice as fast when only checking 1 column. It also uses less memory.
+`dupes()` is slightly faster when only checking 1 column. It also uses less memory. 
+
+**N.B.** If you're working with a very large dataset you can speed things up quite a bit by setting the `dupes()` function's "sort_by_copies" argument to `FALSE` to skip the time-consuming sorting step...
+
+```{r, cache = T, message = F}
+bm <- bench::mark(
+  dupes(pdata_resampled, d, 
+        sort_by_copies = FALSE), #disable sorting by duplicates to maximize speed
+  get_dupes(pdata_resampled, d), 
+  iterations = 25,
+  check = FALSE 
+  #we won't check for equal output structures here so the other formatting
+  #steps from before don't need to be included in the timing
+)
+
+bm %>% 
+  select(expression, median, mem_alloc)
+
+plot(bm)
+```
+
+This reduces the median run time of `dupes()` by around 40% in this case. As far as I am aware, there isn't a similar option for `get_dupes()`.
 
 What happens when we try to search for duplicates using more than one column?
 
 ```{r, cache = T, message = F}
 bm2 <- bench::mark(
-  copies(pdata_resampled, high_low, g, filter = "dupes"),
+  dupes(pdata_resampled, high_low, g),
   get_dupes(pdata_resampled, high_low, g), 
   iterations = 25, 
   check = FALSE
@@ -810,13 +839,13 @@ bm2 %>%
 plot(bm2)
 ```
 
-Now the difference is much more noticeable (~43 milliseconds vs. ~1.1 seconds; over a *25-fold* speedup in favour of `copies()`!) and `copies()` still uses less memory.
+Now the difference is much more noticeable (~64 milliseconds vs. ~1.1 seconds; over a *17-fold* speedup in favour of `dupes()`!) and `dupes()` still uses less memory.
 
 What if we condition the search upon all 10 columns (the default behaviour for each function if no variables are specified to base the search on using the `...` argument)?
 
 ```{r, cache = T, message=F}
 bm3 <- bench::mark(
-  copies(pdata_resampled, filter = "dupes"),
+  dupes(pdata_resampled),
   get_dupes(pdata_resampled), 
   iterations = 25,
   check = FALSE
@@ -828,7 +857,7 @@ bm3 %>%
 plot(bm3)
 ```
 
-Here the speed difference is smaller but `copies()` is still over an order of magnitude faster. `get_dupes()` also uses more memory but, surprisingly, `copies()` doesn't at all. 
+Here the speed difference is smaller but `dupes()` is still over an order of magnitude faster. `get_dupes()` also uses more memory but, surprisingly, `dupes()` doesn't at all. 
 
 ## `describe_all()` vs. `skimr::skim()`
 
@@ -866,15 +895,14 @@ bm1 %>% plot()
 
 Aesthetically, `skim()` does give us some nicely formatted & stylish output when used in R markdown ^[[R markdown](https://bookdown.org/yihui/blogdown/) is what these blog posts are written in; the `skim()` output looks different when printed from a regular R script.], but we could achieve something similar by simply passing the outputs of `describe*` functions to `static_to_dynamic()`.
 
-In terms of performance, we can see that `describe_all()` runs ~50% faster and uses ~67% less memory when a grouping variable with a handful of levels is specified (similar in terms of scale to most experimental designs with a few treatment groups). `describe_all()` also gives you *more* information (for numeric variables: se, skew, kurtosis, proportion of values that are missing). `skim()` does produce in-line mini-histograms for numeric variables, but I find the resolution of these to be too low to be useful and opt to instead rely on a combination of skewness, kurtosis, and dedicated plotting functions. 
+In terms of performance, we can see that `describe_all()` runs ~28% faster and uses ~60% less memory when a grouping variable with a handful of levels is specified (similar in terms of scale to most experimental designs with a few treatment groups). `describe_all()` also gives you *more* information (for numeric variables: se, skew, kurtosis, proportion of values that are missing). `skim()` does produce in-line mini-histograms for numeric variables, but I find the resolution of these to be too low to be useful and opt to instead rely on a combination of skewness, kurtosis, and dedicated plotting functions. 
 
-What about a situation where you want to split the descriptive summary by more than one grouping variable? When we ask for a description of `pdata_resampled` grouped by both "g" and "d" with a total of 60 level combinations, now the speed gap between `skim()` and `describe_all()` has narrowed considerably to ~10% in favour of `describe_all()`, although the latter is still using 60% less RAM. This result suggests that `skim()` may scale better in terms of speed for situations when you need to describe a very large number of groups/partitions (e.g. splitting by many geographic areas like the thousands of US zip codes). 
+What about a situation where you want to split the descriptive summary by more than one grouping variable? When we ask for a description of `pdata_resampled` grouped by both "g" and "d" with a total of 60 level combinations, now the speed gap between `skim()` and `describe_all()` has shifted to a 5% advantage in favour of `skim()`, although `describe_all()` is still using substantially less RAM. This result suggests that `skim()` may scale better in terms of speed, but not memory efficiency, for situations when you need to describe a very large number of groups/partitions (e.g. splitting by many geographic areas like the thousands of US zip codes). 
 
 ```{r, cache = TRUE}
 bm1 <- mark(
   describe_all(pdata_resampled, d, g), 
   skimr::skim(group_by(pdata_resampled, d, g)),
-  
   iterations = 25,
   check = FALSE) #the output isn't exactly the same so we disable the check argument
 
@@ -900,7 +928,7 @@ bm1 %>% plot()
 
 ```
 
-Here `describe_all()` clearly comes out on top again, finishing ~50% faster and using ~60% less RAM than `skim()`.
+Here `describe_all()` clearly comes out on top again, finishing ~22% faster and using ~53% less RAM than `skim()`.
 
 That's it! Hopefully you'll find that `elucidate` makes exploratory data analysis in R a breeze when you try it out for yourself. 
 
