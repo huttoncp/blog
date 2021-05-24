@@ -152,10 +152,10 @@ glimpse(penguins)
 
 `glimpse()` tells us that there are 344 rows and 8 columns in the `penguins` data, two of which are numeric/double vectors (bill_length_mm and bill_depth_mm), three are integer vectors (flipper_length_mm, body_mass_g, and year), and three are factors (species, island, and sex). 
 
-Next, we use `elucidate::copies()`, `elucidate::counts_tb_all()`, and `elucidate::describe_all()` to check for duplicates, suspicious values, and missingness.  
+Next, we use `elucidate::dupes()`, `elucidate::counts_tb_all()`, and `elucidate::describe_all()` to check for duplicates, suspicious values, and missingness.  
 
 ```{r}
-copies(penguins, filter = "dupes")
+dupes(penguins)
 
 describe_all(penguins, output = "dt")
 
@@ -176,11 +176,11 @@ nrow(penguins2)
 
 The first thing you need to know about the mechanics of `ggplot2` is that it builds plots in layers. This feature means that you can modify and add components to a graph by simply adding a layer to it, which makes it incredibly flexible. Unfortunately this flexibility can also be confusing for new users especially if they've only ever seen code for highly complex graphs that contain many layers. In my personal R learning journey, I found `ggplot2` to be a lot more intuitive when I realized that there are **only 3 layers** you need to build a basic graph:
 
-  1. The **initialization layer**, which is just using the `ggplot()` function to tell R that you want initialize a ggplot graphical object. I find it helpful to think of this as creating the blank canvas upon which the graph will be drawn.
+  1. The **initialization layer**, which is just using the `ggplot()` function to tell R that you want to initialize a ggplot graphical object. I find it helpful to think of this as creating the blank canvas upon which the graph will be drawn.
 
   2. The **aesthetic layer**, added via the `aes()` function, is used to define aesthetic mappings, i.e. the assignment of variables in the data frame specified in the "data" argument of the initialization layer to visual features of the plot. 
   
-  * In general, if you want a graphical feature of a ggplot to be based on the levels of a variable, you map the unquoted name of the variable to the feature inside the `aes()` function. For example, in the Palmer penguins data we could assign a different colour to the graphed values for each penguin species with `aes(colour = species)`, independently of the plot geometry (scatter plot, bar graph, box plot, etc.). In contrast, if you want to set a graphical parameter to a specific value that will be applied to all geometric objects of the same class that are drawn on the graph, like making all points on a scatter plot blue, you would set use `colour = "blue"` without the `aes()` part in a `geom_point()` layer (i.e. `geom_point(colour = "blue")`). This tells R that you want to set the colour of all geometric objects from the same layer (e.g. points on a scatter plot) to a specific colour, rather than assigning distinct colours to each level of a variable. Aesthetic mappings are the most conceptually challenging part of learning `ggplot2`, but their meaning will become clear after seeing some examples.
+  * In general, if you want a graphical feature of a ggplot to be based on the levels of a variable, you map the unquoted name of the variable to the feature inside the `aes()` function. For example, in the Palmer penguins data we could assign a different colour to the graphed values for each penguin species with `aes(colour = species)`, independently of the plot geometry (scatter plot, bar graph, box plot, etc.). In contrast, if you want to set a graphical parameter to a specific value that will be applied to all geometric objects of the same class that are drawn on the graph, like making all points on a scatter plot blue, you would  use `colour = "blue"` without the `aes()` part in a `geom_point()` layer (i.e. `geom_point(colour = "blue")`). This tells R that you want to set the colour of all geometric objects from the same layer (e.g. points on a scatter plot) to a specific colour, rather than assigning distinct colours to each level of a variable. Aesthetic mappings are the most conceptually challenging part of learning `ggplot2`, but their meaning will become clear after seeing some examples.
   
   3. A **geometry layer** to define the spatial features of the graph. There are many geometries available in `ggplot2` as intuitively named functions beginning with `geom_*`. Some of more commonly used ones are: 
   
@@ -409,7 +409,7 @@ penguins2 %>%
 ```
 
 
-## reodering factors
+## reorering factors
 
 To move the box plot for Gentoo penguins to the far left in the second last graph, we can use `forcats::fct_relevel()` in a call to [dplyr::mutate()](https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#mutate) *before* passing the data to the `ggplot()` function.
 
