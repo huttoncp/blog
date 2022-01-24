@@ -1,0 +1,10 @@
+http://craighutton.netlify.app*	https://craig.rbind.io/:splat	301!
+https://craighutton.netlify.com*	https://craig.rbind.io/:splat	301!
+https://craighutton.netlify.app*	https://craig.rbind.io/:splat	301!
+http://craig.rbind.io/*		https://craig.rbind.io/:splat	301!
+http://craig.netlify.com*		https://craig.rbind.io/:splat	301!
+http://craighutton.netlify.com*	https://craig.rbind.io/:splat	301!
+https://craighutton.netlify.com*	https://craig.rbind.io/:splat	301!
+https://craig.rbind.io/scholar		https://scholar.google.ca/citations?user=bMNjAzkAAAAJ&hl=en	301!
+http://craig.rbind.io/scholar		https://scholar.google.ca/citations?user=bMNjAzkAAAAJ&hl=en	301!
+craig.rbind.io/scholar		https://scholar.google.ca/citations?user=bMNjAzkAAAAJ&hl=en	301!
