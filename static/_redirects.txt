@@ -12,3 +12,4 @@ https://craighutton.netlify.com*	https://craig.rbind.io/:splat	301!
 https://craig.rbind.io/scholar		https://scholar.google.ca/citations?user=bMNjAzkAAAAJ&hl=en	301!
 http://craig.rbind.io/scholar		https://scholar.google.ca/citations?user=bMNjAzkAAAAJ&hl=en	301!
 craig.rbind.io/scholar		https://scholar.google.ca/citations?user=bMNjAzkAAAAJ&hl=en	301!
+https://craig.rbind.io/ODworkshop2021 https://www.youtube.com/watch?v=qU6odthcSTQ&list=PLS84kiEDGvNxDd1JwbzKSF2qrh69CBZ2C&index=7 301!
