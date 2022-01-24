@@ -32,7 +32,7 @@ date_format = "Jan 2006"
   * Studying the recent history of government service utilization in the Downtown Eastside neighbourhood of Vancouver to characterize (mental) health, socioeconomic, and demographic relationships with poverty and homelessness. You can learn more about this data innovation program project [here](https://www2.gov.bc.ca/gov/content/data/about-data-management/data-innovation-program/projects). 
   * In partnership with the BC Centre for Disease Control, I am leading a team of 4 researchers seeking to use unsupervised machine learning and statistical models to identify determinants of overdose risk among British Columbians struggling with opioid addiction.
   *	Advising executives on the use of quantitative methods to address strategic knowledge gaps.
-  * Developing an R package, ["elucidate"](https://github.com/bcgov/elucidate), to make data analysis easier for scientific researchers.
+  * Developing an R package, ["elucidate"](https://bcgov.github.io/elucidate/index.html), to make data analysis easier for scientific researchers.
   * Querying, modifying, and constructing relational databases using SQL and Git Bash. 
   * Cleaning, transforming, and processing high dimensional data (millions of rows) to facilitate reproducible analysis.
   """
@@ -49,7 +49,7 @@ date_format = "Jan 2006"
   
   *	Applied time-series regression models to simultaneously evaluate the effects of multiple social assistance policies and economic recessions on social assistance program utilization and estimate the costs of service delivery.
   *	Designed and began to conduct a team research project examining the government service utilization history of Vancouver. 
-  *	Created an R package, ["elucidate"](https://github.com/bcgov/elucidate), to make exploratory data analysis easier for researchers.
+  *	Created an R package, ["elucidate"](https://bcgov.github.io/elucidate/index.html), to make exploratory data analysis easier for researchers.
   * Queried, modified, and constructed relational database tables using SQL and Git Bash. 
   * Cleaned, transformed, and processed high dimensional data (millions of rows) to facilitate reproducible analysis in secure analytics environments.
   """

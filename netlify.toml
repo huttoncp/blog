@@ -30,37 +30,56 @@ HUGO_VERSION = "0.55.5"
 HUGO_ENABLEGITINFO = "true"
 
 [[redirects]]
-from = "http://craighutton.netlify.app*"
-to = "https://craig.rbind.io/:splat"
-status = 301
-force = true
+  from = "http://craighutton.netlify.app*"
+  to = "https://craig.rbind.io/:splat"
+  status = 301
+  force = true
 
 [[redirects]]
-from = "https://craighutton.netlify.app*"
-to = "https://craig.rbind.io/:splat"
-status = 301
-force = true
+  from = "https://craighutton.netlify.app*"
+  to = "https://craig.rbind.io/:splat"
+  status = 301
+  force = true
 
 [[redirects]]
-from = "http://craig.rbind.io/*"
-to = "https://craig.rbind.io/:splat"
-status = 301
-force = true
+  from = "http://craig.rbind.io/*"
+  to = "https://craig.rbind.io/:splat"
+  status = 301
+  force = true
 
 [[redirects]]
-from = "http://craig.netlify.com*"
-to = "https://craig.rbind.io/:splat"
-status = 301
-force = true
+  from = "http://craig.netlify.com*"
+  to = "https://craig.rbind.io/:splat"
+  status = 301
+  force = true
 
 [[redirects]]
-from = "http://craighutton.netlify.com*"
-to = "https://craig.rbind.io/:splat"
-status = 301
-force = true
+  from = "http://craighutton.netlify.com*"
+  to = "https://craig.rbind.io/:splat"
+  status = 301
+  force = true
 
 [[redirects]]
-from = "https://craighutton.netlify.com*"
-to = "https://craig.rbind.io/:splat"
-status = 301
-force = true
+  from = "https://craighutton.netlify.com*"
+  to = "https://craig.rbind.io/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://craig.rbind.io/scholar"
+  to = "https://scholar.google.ca/citations?user=bMNjAzkAAAAJ&hl=en"
+  status = 301
+  force = true
+  
+[[redirects]]
+  from = "http://craig.rbind.io/scholar"
+  to = "https://scholar.google.ca/citations?user=bMNjAzkAAAAJ&hl=en"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "craig.rbind.io/scholar"
+  to = "https://scholar.google.ca/citations?user=bMNjAzkAAAAJ&hl=en"
+  status = 301
+  force = true
+  
