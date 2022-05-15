@@ -2,8 +2,8 @@
 # abstract: 
 all_day: false
 authors: [Craig P. Hutton]
-date: "2022-04-06T12:00:00Z"
-date_end: "2030-06-01T15:00:00Z"
+date: "2022-04-26T12:00:00Z"
+date_end: 
 event: BC Centre for Disease Control Grand Rounds
 event_url: https://nexuswebcast.mediasite.com/mediasite/Showcase/bc-cdc-showcase/Presentation/398c028d3f3b458e9d6c37156b3eb13a1d
 featured: true
