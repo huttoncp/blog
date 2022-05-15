@@ -29,9 +29,14 @@
   weight = 60  
   
 [[main]]
+  name = "Talks"
+  url = "#talks"
+  weight = 70
+  
+[[main]]
   name = "Awards"
   url = "#accomplishments"
-  weight = 70  
+  weight = 80  
 
 #[[main]]
 #  name = "Connect"
