@@ -83,3 +83,9 @@ HUGO_ENABLEGITINFO = "true"
   status = 301
   force = true
   
+[[redirects]]
+  from = "https://craig.rbind.io/talks/bccdc2022"
+  to = "https://nexuswebcast.mediasite.com/mediasite/Showcase/bc-cdc-showcase/Presentation/398c028d3f3b458e9d6c37156b3eb13a1d"
+  status = 301
+  force = true
+  
