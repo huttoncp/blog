@@ -101,3 +101,20 @@ HUGO_ENABLEGITINFO = "true"
   status = 301
   force = true
   
+[[redirects]]
+  from = "https://craig.rbind.io/resume"
+  to = "https://craig.rbind.io/resume.pdf"
+  status = 301
+  force = true
+  
+[[redirects]]
+  from = "http://craig.rbind.io/resume"
+  to = "https://craig.rbind.io/resume.pdf"
+  status = 301
+  force = true
+  
+[[redirects]]
+  from = "craig.rbind.io/resume"
+  to = "https://craig.rbind.io/resume.pdf"
+  status = 301
+  force = true

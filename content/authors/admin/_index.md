@@ -2,15 +2,15 @@
 authors:
 - admin
 
-bio: 
-education:
-  courses:
-  - course: Ph.D. in Psychology
-    institution: McMaster University
-    year: 2018
-  - course: Hons. B.Sc. in Biopsychology
-    institution: University of Winnipeg
-    year: 2013
+# bio: 
+# education:
+#   courses:
+#   - course: Ph.D. in Psychology
+#     institution: McMaster University
+#     year: 2018
+#   - course: Hons. B.Sc. in Biopsychology
+#     institution: University of Winnipeg
+#     year: 2013
     
 email: "craig.hutton@gov.bc.ca"
 
@@ -48,8 +48,10 @@ user_groups:
 - Visitors
 ---
 
-I am a scientist working within the domains of machine learning and mental health. My diverse background in behavioural neuroscience, applied statistics, and epidemiology leads me to apply a multidisciplinary and creative approach to doing research. I deeply enjoy solving complex problems and exploring new ideas.
+I am a data scientist and lead investigator with the Province of British Columbia's [Data Innovation Program](https://www2.gov.bc.ca/gov/content/data/about-data-management/data-innovation-program/projects). My diverse training in applied statistics, behavioural neuroscience, and epidemiology leads me to apply a multidisciplinary and creative approach to doing research. I deeply enjoy solving complex problems and exploring new ideas.
 
 I’ve worked both as an independent contributor and as a leader of teams of up to 10. In my current role as a Data Scientist with the Province of British Columbia I primarily work in R and SQL.
 
 In my free time I enjoy coding, gaming, reading, biking, hiking, playing guitar, listening to live music, and visiting with friends and family.
+
+Learn more about my research interests, skills, and experience, by exploring my website or reading my [resume](resume.pdf).
