@@ -2,13 +2,13 @@
 # A Projects section created with the Portfolio widget.
 widget = "portfolio"  # See https://sourcethemes.com/academic/docs/page-builder/
 headless = true  # This file represents a page section.
-active = false  # Activate this widget? true/false
+active = true  # Activate this widget? true/false
 weight = 70  # Order that this section will appear.
 
 title = "Projects"
 subtitle = ""
 
-[content]
+# [content]
   # Page type to display. E.g. project.
   page_type = "project"
   
@@ -19,26 +19,26 @@ subtitle = ""
   # To remove toolbar, delete/comment all instances of `[[content.filter_button]]` below.
   
   # Default filter index (e.g. 0 corresponds to the first `[[filter_button]]` instance below).
-  filter_default = 0
+  # filter_default = 0
   
   # [[content.filter_button]]
-  #   name = "All"
-  #   tag = "*"
-  
-  [[content.filter_button]]
-    name = "R"
-    tag = "R packages"
+  #  name = "All"
+  #  tag = "*"
+   
+  # [[content.filter_button]]
+  #   name = "R"
+  #   tag = "R"
   
 
 [design]
   # Choose how many columns the section has. Valid values: 1 or 2.
-  columns = "1"
+  columns = "5"
 
   # Toggle between the various page layout types.
   #   1 = List
   #   3 = Card
   #   5 = Showcase
-  view = 3
+  view = 5
 
   # For Showcase view, flip alternate rows?
   flip_alt_rows = false
@@ -57,7 +57,7 @@ subtitle = ""
   # gradient_end = "SkyBlue"
   
   # Background image.
-  # image = "https://bcgov.github.io/elucidate/reference/figures/hex-elucidate.png"  # Name of image in `static/img/`.
+  # image = "hex-elucidate.png"  # Name of image in `static/img/`.
   # image_darken = 0.6  # Darken the image? Range 0-1 where 0 is transparent and 1 is opaque.
 
   # Text color (true=light or false=dark).
@@ -70,4 +70,11 @@ subtitle = ""
  # CSS class.
  css_class = ""
 +++
+
+## **R packages**
+
+
+<img src="https://bcgov.github.io/elucidate/reference/figures/hex-elucidate.png" width="150px"</img>
+
+  - [elucidate](https://bcgov.github.io/elucidate): a collection of convenience functions to help researchers *elucidate* patterns in their data. 
 
