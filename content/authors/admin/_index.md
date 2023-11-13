@@ -23,12 +23,12 @@ academic interests:
 
 name: Dr. Craig P. Hutton
 organizations:
-- name: Ministry of Social Development & Poverty Reduction, Province of British Columbia
-  url: "https://www2.gov.bc.ca/gov/content/governments/organizational-structure/ministries-organizations/ministries/social-development-poverty-reduction"
+- name: BC Behavioural Insights Group, Province of British Columbia
+  url: "https://www2.gov.bc.ca/gov/content/governments/services-for-government/service-experience-digital-delivery/behavioural-insights"
 - name: Data Science Studio, Institute on Aging & Lifelong Health, University of Victoria
   url: "https://dss-ialh.rbind.io"
 
-role: Data Scientist | Behavioural Neuroscientist
+role: Psychologist | Data Scientist
 social:
 - icon: envelope
   icon_pack: fas
@@ -48,10 +48,10 @@ user_groups:
 - Visitors
 ---
 
-I am a data scientist and lead investigator with the Province of British Columbia's [Data Innovation Program](https://www2.gov.bc.ca/gov/content/data/about-data-management/data-innovation-program/projects). My diverse training in applied statistics, behavioural neuroscience, and epidemiology leads me to apply a multidisciplinary and creative approach to doing research. I deeply enjoy solving complex problems and exploring new ideas.
+I am senior behavioural scientist with the Province of British Columbia's [Behavioural Insights Group](https://www2.gov.bc.ca/gov/content/governments/services-for-government/service-experience-digital-delivery/behavioural-insights). My diverse training in applied statistics, neuroscience, and experimental psychology leads me to apply a multidisciplinary and creative approach to doing research. I deeply enjoy solving complex problems and exploring new ideas.
 
-I’ve worked both as an independent contributor and as a leader of teams of up to 10. In my current role as a Data Scientist with the Province of British Columbia I primarily work in R and SQL.
+I’ve worked both as an independent contributor and as a leader of teams of up to 10. In my current role with the Province of British Columbia I primarily work in R.
 
-In my free time I enjoy coding, gaming, reading, biking, hiking, playing guitar, listening to live music, and visiting with friends and family.
+In my free time I enjoy yoga, hiking, skiing, gaming, coding, reading, travel, live music, and visiting with friends and family.
 
 Learn more about my research interests, skills, and experience, by exploring my website or reading my [resume](resume.pdf).
