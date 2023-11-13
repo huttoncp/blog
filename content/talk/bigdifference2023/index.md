@@ -2,7 +2,7 @@
 # abstract: 
 all_day: false
 authors: [Craig P. Hutton]
-date: "2023-11-13T12:30:00Z"
+date: "2023-11-03T12:30:00Z"
 date_end: 
 event: BIG Difference BC
 event_url: https://bigdifferencebc.ca/program-2023
