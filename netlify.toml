@@ -100,6 +100,24 @@ HUGO_ENABLEGITINFO = "true"
   to = "https://nexuswebcast.mediasite.com/mediasite/Showcase/bc-cdc-showcase/Presentation/398c028d3f3b458e9d6c37156b3eb13a1d"
   status = 301
   force = true
+
+[[redirects]]
+  from = "https://craig.rbind.io/talks/bigdifference2023"
+  to = "https://ubc.ca.panopto.com/Panopto/Pages/Viewer.aspx?id=cc233eea-5d01-40aa-947f-b0b400730790"
+  status = 301
+  force = true
+  
+[[redirects]]
+  from = "http://craig.rbind.io/talks/bigdifference2023"
+  to = "https://ubc.ca.panopto.com/Panopto/Pages/Viewer.aspx?id=cc233eea-5d01-40aa-947f-b0b400730790"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "craig.rbind.io/talks/bigdifference2023"
+  to = "https://ubc.ca.panopto.com/Panopto/Pages/Viewer.aspx?id=cc233eea-5d01-40aa-947f-b0b400730790"
+  status = 301
+  force = true
   
 [[redirects]]
   from = "https://craig.rbind.io/resume"
