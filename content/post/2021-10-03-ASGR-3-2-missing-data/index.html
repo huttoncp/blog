@@ -1,0 +1,77 @@
+---
+title: 'A Scientist''s Guide to R: Step 3.2 - missing data'
+author: 'Craig Hutton'
+date: '2021-10-03'
+slug:
+categories:
+  - R
+  - Reproducible Research
+  - data exploration
+  - missing data
+
+tags:
+  - R
+header:
+  image: ''
+  caption: ''
+  focal_point: ''
+output: 
+  blogdown::html_page:
+    number_sections: true
+    toc: true
+  
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#tldr"><span class="toc-section-number">1</span> <strong>TL;DR</strong></a></li>
+<li><a href="#introduction"><span class="toc-section-number">2</span> <strong>Introduction</strong></a>
+<ul>
+<li><a href="#types-of-missingness"><span class="toc-section-number">2.1</span> types of missingness</a></li>
+<li><a href="#detecting-missing-values"><span class="toc-section-number">2.2</span> detecting missing values</a></li>
+</ul></li>
+<li><a href="#navigation"><span class="toc-section-number">3</span> <strong>Navigation</strong></a></li>
+<li><a href="#notes"><span class="toc-section-number">4</span> <strong>Notes</strong></a></li>
+</ul>
+</div>
+
+<div id="tldr" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> <strong>TL;DR</strong></h1>
+<p>This post provides guidance on how to handle missing data.</p>
+</div>
+<div id="introduction" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> <strong>Introduction</strong></h1>
+<p>This post in the <a href="https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/">Scientist’s Guide to R series</a> introduces you to the problem of missing data and offers several strategies for dealing with it.</p>
+<div id="types-of-missingness" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> types of missingness</h2>
+<ul>
+<li><p>missing completely at random</p></li>
+<li><p>missing at random</p></li>
+<li><p>missing not at random</p></li>
+</ul>
+</div>
+<div id="detecting-missing-values" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> detecting missing values</h2>
+<ul>
+<li><p><code>elucidate::describe_all()</code></p></li>
+<li><p>combination of describe all and a graph.</p></li>
+</ul>
+<p>How to tell if missingness might be non-random? Plot missingness in one variable against other variables.</p>
+</div>
+</div>
+<div id="navigation" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> <strong>Navigation</strong></h1>
+<p>Click <a href="https://craig.rbind.io/post/2021-05-17-asgr-3-1-data-visualization/">here</a> to go back to the previous post on data visualization with <a href="https://ggplot2.tidyverse.org/">ggplot2</a>. A link to the next one, on dealing with missing values, will be added as soon as I have time to write it.</p>
+</div>
+<div id="notes" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> <strong>Notes</strong></h1>
+<ul>
+<li><p>note 1</p></li>
+<li><p>note 2</p></li>
+</ul>
+<p>Thank you for visiting my blog. I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.</p>
+<p>This blog is something I do as a volunteer in my free time. If you’ve found it helpful and want to give back, <a href="https://www.buymeacoffee.com/huttoncp">coffee donations</a> would be appreciated.</p>
+<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="huttoncp" data-color="#FF5F5F" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
+</div>
