@@ -1,25 +1,24 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Data Analysis on Craig Hutton, PhD</title>
-    <link>/categories/data-analysis/</link>
+    <link>https://craig.rbind.io/categories/data-analysis/</link>
     <description>Recent content in Data Analysis on Craig Hutton, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
     <lastBuildDate>Fri, 17 May 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/categories/data-analysis/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://craig.rbind.io/categories/data-analysis/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>A Scientist&#39;s Guide to R: Introduction and Basic Workflow</title>
-      <link>/post/2019-05-17-asgr-basic-workflow/</link>
+      <link>https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/</link>
       <pubDate>Fri, 17 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/2019-05-17-asgr-basic-workflow/</guid>
-      <description>Introduction This tutorial will be the first of many blog posts for new researchers and science program students/trainees on how to use R as an analytical and productivity tool in the process of conducting scientific research. Specifically, in this post I will explain why you might want to use R and provide a brief overview of the basic R workflow used in the analysis of experimentally obtained data.
-As someone who has spent many years analyzing data using a variety of technologies (e.</description>
+      <guid>https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/</guid>
+      <description>1 Introduction2 Workflow Outline2.1 Navigation2.2 Notes1 IntroductionThis tutorial will be the first of many blog posts for new researchers and science program students/trainees on how to use R as an analytical and productivity tool in the process of conducting scientific research. Specifically, in this post I will explain why you might want to use R and provide a brief overview of the basic R workflow used in the analysis of experimentally obtained data.</description>
     </item>
     
   </channel>

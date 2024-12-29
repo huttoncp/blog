@@ -1,15 +1,24 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Craig Hutton, PhD</title>
-    <link>/authors/admin/</link>
+    <link>https://craig.rbind.io/authors/admin/</link>
     <description>Recent content on Craig Hutton, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
     
-	<atom:link href="/authors/admin/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://craig.rbind.io/authors/admin/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title></title>
+      <link>https://craig.rbind.io/authors/admin/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://craig.rbind.io/authors/admin/</guid>
+      <description>I am a Senior Behavioural Scientist with the Province of British Columbia&amp;rsquo;s Behavioural Insights Group. I also teach an introductory data analysis course at the University of Victoria and occasionally work as a data science consultant for the Winstanley Laboratory at the University of British Columbia. My diverse training in experimental psychology, applied statistics, and data science leads me to apply a multidisciplinary and creative approach to doing research. I deeply enjoy solving complex problems and exploring new ideas.</description>
+    </item>
     
   </channel>
 </rss>

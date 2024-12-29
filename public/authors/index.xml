@@ -1,241 +1,249 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Authors on Craig Hutton, PhD</title>
-    <link>/authors/</link>
+    <link>https://craig.rbind.io/authors/</link>
     <description>Recent content in Authors on Craig Hutton, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
-    <lastBuildDate>Fri, 17 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Nov 2023 12:30:00 +0000</lastBuildDate>
     
-	<atom:link href="/authors/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://craig.rbind.io/authors/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Craig P. Hutton</title>
+      <link>https://craig.rbind.io/authors/craig-p.-hutton/</link>
+      <pubDate>Fri, 03 Nov 2023 12:30:00 +0000</pubDate>
+      
+      <guid>https://craig.rbind.io/authors/craig-p.-hutton/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Christie, B.R.</title>
-      <link>/authors/christie-b.r./</link>
+      <link>https://craig.rbind.io/authors/christie-b.r./</link>
       <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/authors/christie-b.r./</guid>
+      <guid>https://craig.rbind.io/authors/christie-b.r./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Hutton, C.P.</title>
-      <link>/authors/hutton-c.p./</link>
+      <link>https://craig.rbind.io/authors/hutton-c.p./</link>
       <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/authors/hutton-c.p./</guid>
+      <guid>https://craig.rbind.io/authors/hutton-c.p./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Lysenko-Martin, M.R.</title>
-      <link>/authors/lysenko-martin-m.r./</link>
+      <link>https://craig.rbind.io/authors/lysenko-martin-m.r./</link>
       <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/authors/lysenko-martin-m.r./</guid>
+      <guid>https://craig.rbind.io/authors/lysenko-martin-m.r./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Snowden, T.</title>
-      <link>/authors/snowden-t./</link>
+      <link>https://craig.rbind.io/authors/snowden-t./</link>
       <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/authors/snowden-t./</guid>
+      <guid>https://craig.rbind.io/authors/snowden-t./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Sparks, T.</title>
-      <link>/authors/sparks-t./</link>
+      <link>https://craig.rbind.io/authors/sparks-t./</link>
       <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/authors/sparks-t./</guid>
+      <guid>https://craig.rbind.io/authors/sparks-t./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Bettio, L.</title>
-      <link>/authors/bettio-l./</link>
+      <link>https://craig.rbind.io/authors/bettio-l./</link>
       <pubDate>Tue, 06 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>/authors/bettio-l./</guid>
+      <guid>https://craig.rbind.io/authors/bettio-l./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Thacker, J.</title>
-      <link>/authors/thacker-j./</link>
+      <link>https://craig.rbind.io/authors/thacker-j./</link>
       <pubDate>Tue, 06 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>/authors/thacker-j./</guid>
+      <guid>https://craig.rbind.io/authors/thacker-j./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Meconi, A.</title>
-      <link>/authors/meconi-a./</link>
+      <link>https://craig.rbind.io/authors/meconi-a./</link>
       <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>/authors/meconi-a./</guid>
+      <guid>https://craig.rbind.io/authors/meconi-a./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Neale, K.J.</title>
-      <link>/authors/neale-k.j./</link>
+      <link>https://craig.rbind.io/authors/neale-k.j./</link>
       <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>/authors/neale-k.j./</guid>
+      <guid>https://craig.rbind.io/authors/neale-k.j./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Pinar, C.</title>
-      <link>/authors/pinar-c./</link>
+      <link>https://craig.rbind.io/authors/pinar-c./</link>
       <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>/authors/pinar-c./</guid>
+      <guid>https://craig.rbind.io/authors/pinar-c./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Reid, H.</title>
-      <link>/authors/reid-h./</link>
+      <link>https://craig.rbind.io/authors/reid-h./</link>
       <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>/authors/reid-h./</guid>
+      <guid>https://craig.rbind.io/authors/reid-h./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Trivino-Paredes, J.</title>
-      <link>/authors/trivino-paredes-j./</link>
+      <link>https://craig.rbind.io/authors/trivino-paredes-j./</link>
       <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>/authors/trivino-paredes-j./</guid>
+      <guid>https://craig.rbind.io/authors/trivino-paredes-j./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Becker, S.</title>
-      <link>/authors/becker-s./</link>
+      <link>https://craig.rbind.io/authors/becker-s./</link>
       <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/authors/becker-s./</guid>
+      <guid>https://craig.rbind.io/authors/becker-s./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Boreham, D.R.</title>
-      <link>/authors/boreham-d.r./</link>
+      <link>https://craig.rbind.io/authors/boreham-d.r./</link>
       <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/authors/boreham-d.r./</guid>
+      <guid>https://craig.rbind.io/authors/boreham-d.r./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Fahnestock, M.</title>
-      <link>/authors/fahnestock-m./</link>
+      <link>https://craig.rbind.io/authors/fahnestock-m./</link>
       <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/authors/fahnestock-m./</guid>
+      <guid>https://craig.rbind.io/authors/fahnestock-m./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Lemon, J.A.</title>
-      <link>/authors/lemon-j.a./</link>
+      <link>https://craig.rbind.io/authors/lemon-j.a./</link>
       <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/authors/lemon-j.a./</guid>
+      <guid>https://craig.rbind.io/authors/lemon-j.a./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Rollo, C.D.</title>
-      <link>/authors/rollo-c.d./</link>
+      <link>https://craig.rbind.io/authors/rollo-c.d./</link>
       <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/authors/rollo-c.d./</guid>
+      <guid>https://craig.rbind.io/authors/rollo-c.d./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Sakic, B.</title>
-      <link>/authors/sakic-b./</link>
+      <link>https://craig.rbind.io/authors/sakic-b./</link>
       <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/authors/sakic-b./</guid>
+      <guid>https://craig.rbind.io/authors/sakic-b./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Wojtowicz, J.M.</title>
-      <link>/authors/wojtowicz-j.m./</link>
+      <link>https://craig.rbind.io/authors/wojtowicz-j.m./</link>
       <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/authors/wojtowicz-j.m./</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>deCatanzaro, D.</title>
-      <link>/authors/decatanzaro-d./</link>
-      <pubDate>Thu, 12 Nov 2015 00:00:00 +0000</pubDate>
-      
-      <guid>/authors/decatanzaro-d./</guid>
+      <guid>https://craig.rbind.io/authors/wojtowicz-j.m./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Déry, N.</title>
-      <link>/authors/d%C3%A9ry-n./</link>
+      <link>https://craig.rbind.io/authors/d%C3%A9ry-n./</link>
       <pubDate>Thu, 12 Nov 2015 00:00:00 +0000</pubDate>
       
-      <guid>/authors/d%C3%A9ry-n./</guid>
+      <guid>https://craig.rbind.io/authors/d%C3%A9ry-n./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Rosa, R.</title>
-      <link>/authors/rosa-r./</link>
+      <link>https://craig.rbind.io/authors/rosa-r./</link>
       <pubDate>Thu, 12 Nov 2015 00:00:00 +0000</pubDate>
       
-      <guid>/authors/rosa-r./</guid>
+      <guid>https://craig.rbind.io/authors/rosa-r./</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>deCatanzaro, D.</title>
+      <link>https://craig.rbind.io/authors/decatanzaro-d./</link>
+      <pubDate>Thu, 12 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://craig.rbind.io/authors/decatanzaro-d./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Aujla, H.</title>
-      <link>/authors/aujla-h./</link>
+      <link>https://craig.rbind.io/authors/aujla-h./</link>
       <pubDate>Tue, 01 Jan 2013 00:00:00 +0000</pubDate>
       
-      <guid>/authors/aujla-h./</guid>
+      <guid>https://craig.rbind.io/authors/aujla-h./</guid>
       <description></description>
     </item>
     
     <item>
       <title>Rogala, B.</title>
-      <link>/authors/rogala-b./</link>
+      <link>https://craig.rbind.io/authors/rogala-b./</link>
       <pubDate>Tue, 01 Jan 2013 00:00:00 +0000</pubDate>
       
-      <guid>/authors/rogala-b./</guid>
+      <guid>https://craig.rbind.io/authors/rogala-b./</guid>
       <description></description>
     </item>
     
     <item>
       <title></title>
-      <link>/authors/admin/</link>
+      <link>https://craig.rbind.io/authors/admin/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/authors/admin/</guid>
-      <description>I am a scientist working within the domains of machine learning and mental health. My diverse background in behavioural neuroscience, applied statistics, and epidemiology leads me to apply a multidisciplinary and creative approach to doing research. I deeply enjoy solving complex problems and exploring new ideas.
-I’ve worked both as an independent contributor and as a leader of teams of up to 10. In my current role as a Data Scientist with the Province of British Columbia I primarily work in R and SQL.</description>
+      <guid>https://craig.rbind.io/authors/admin/</guid>
+      <description>I am a Senior Behavioural Scientist with the Province of British Columbia&amp;rsquo;s Behavioural Insights Group. I also teach an introductory data analysis course at the University of Victoria and occasionally work as a data science consultant for the Winstanley Laboratory at the University of British Columbia. My diverse training in experimental psychology, applied statistics, and data science leads me to apply a multidisciplinary and creative approach to doing research. I deeply enjoy solving complex problems and exploring new ideas.</description>
     </item>
     
   </channel>

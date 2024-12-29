@@ -1,24 +1,44 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>data exploration on Craig Hutton, PhD</title>
-    <link>/categories/data-exploration/</link>
+    <link>https://craig.rbind.io/categories/data-exploration/</link>
     <description>Recent content in data exploration on Craig Hutton, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
-    <lastBuildDate>Mon, 30 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 03 Oct 2021 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/categories/data-exploration/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://craig.rbind.io/categories/data-exploration/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>A Scientist&#39;s Guide to R: Step 3.0 - exploring data with elucidate</title>
-      <link>/post/2020-11-17-asgr-3-0-exploring-data-with-elucidate/</link>
-      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
+      <title>A Scientist&#39;s Guide to R: Step 3.2 - missing data</title>
+      <link>https://craig.rbind.io/post/2021-10-03-asgr-3-2-missing-data/</link>
+      <pubDate>Sun, 03 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>/post/2020-11-17-asgr-3-0-exploring-data-with-elucidate/</guid>
-      <description>1 TL;DR2 Introduction3 Installation &amp;amp; setup4 interrogating data4.1 checking for row copies()4.2 count()-ing unique values4.3 describe()-ing missingness &amp;amp; extreme values5 descriptives5.1 describe() a vector5.2 grouped descriptions5.3 describe_all() columns in a data frame5.4 confidence intervals6 to see, look6.1 Anscombe’s lesson: numeric descriptions can be misleading6.2 plot_*-ting data with elucidate7 interacting with data representations8 fix ’er up9 performance evaluations9.</description>
+      <guid>https://craig.rbind.io/post/2021-10-03-asgr-3-2-missing-data/</guid>
+      <description>1 TL;DR2 Introduction2.1 types of missingness2.2 detecting missing values3 Navigation4 Notes1 TL;DRThis post provides guidance on how to handle missing data.
+2 IntroductionThis post in the Scientist’s Guide to R series introduces you to the problem of missing data and offers several strategies for dealing with it.
+2.1 types of missingnessmissing completely at random</description>
+    </item>
+    
+    <item>
+      <title>A Scientist&#39;s Guide to R: Step 3.1 - data visualization with ggplot2&#43;</title>
+      <link>https://craig.rbind.io/post/2021-05-17-asgr-3-1-data-visualization/</link>
+      <pubDate>Mon, 17 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://craig.rbind.io/post/2021-05-17-asgr-3-1-data-visualization/</guid>
+      <description>1 TL;DR2 Introduction3 Setup4 ggplot2 basics5 aesthetic customization5.1 titles/labels5.2 fill5.3 colour/color5.4 reordering factors5.5 colour palettes5.6 colourblind-friendly palettes5.7 size5.8 shape5.9 linetype5.10 alpha (transparency/opacity)5.11 jittering to reduce overplotting5.12 coordinates5.12.1 coord_flip()5.12.2 coord_cartesian()5.13 guides (legends)5.14 x &amp;amp; y axis modifications5.14.1 scale_x_continuous()/scale_y_continuous()5.14.2 scale_x_discrete()/scale_y_discrete()5.</description>
+    </item>
+    
+    <item>
+      <title>A Scientist&#39;s Guide to R: Step 3.0 - exploring data with elucidate</title>
+      <link>https://craig.rbind.io/post/2020-12-07-asgr-3-0-exploring-data-with-elucidate/</link>
+      <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://craig.rbind.io/post/2020-12-07-asgr-3-0-exploring-data-with-elucidate/</guid>
+      <description>1 TL;DR2 Introduction3 Installation &amp;amp; Setup4 Interrogating Data4.1 checking for row copies() and dupes()4.2 count()-ing unique values4.3 describe()-ing missingness &amp;amp; extreme values5 Descriptives5.1 describe() a vector with summary statistics5.2 grouped descriptions5.3 describe_all() columns in a data frame5.4 confidence intervals6 To see, look6.1 Anscombe’s lesson: numeric descriptions can be misleading6.2 plot_*-ting data with elucidate6.</description>
     </item>
     
   </channel>

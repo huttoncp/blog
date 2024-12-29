@@ -1,508 +1,611 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/courses/example/example1/</loc>
+    <loc>https://craig.rbind.io/courses/example/example1/</loc>
     <lastmod>2019-05-05T00:00:00+01:00</lastmod>
   </url>
   
   <url>
-    <loc>/courses/example/</loc>
+    <loc>https://craig.rbind.io/courses/example/</loc>
     <lastmod>2018-09-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/courses/example/example2/</loc>
+    <loc>https://craig.rbind.io/courses/example/example2/</loc>
     <lastmod>2019-05-05T00:00:00+01:00</lastmod>
   </url>
   
   <url>
-    <loc>/</loc>
-    <lastmod>2030-06-01T13:00:00+00:00</lastmod>
+    <loc>https://craig.rbind.io/authors/</loc>
+    <lastmod>2023-11-03T12:30:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/talk/example/</loc>
-    <lastmod>2030-06-01T13:00:00+00:00</lastmod>
+    <loc>https://craig.rbind.io/talk/bigdifference2023/</loc>
+    <lastmod>2023-11-03T12:30:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/talk/</loc>
-    <lastmod>2030-06-01T13:00:00+00:00</lastmod>
+    <loc>https://craig.rbind.io/</loc>
+    <lastmod>2023-11-03T12:30:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/2020-11-17-asgr-3-0-exploring-data-with-elucidate/</loc>
-    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+    <loc>https://craig.rbind.io/authors/craig-p.-hutton/</loc>
+    <lastmod>2023-11-03T12:30:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/</loc>
-    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+    <loc>https://craig.rbind.io/talk/</loc>
+    <lastmod>2023-11-03T12:30:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/data-exploration/</loc>
-    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+    <loc>https://craig.rbind.io/tags/</loc>
+    <lastmod>2023-11-03T12:30:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/data-interrogation/</loc>
-    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+    <loc>https://craig.rbind.io/tags/behavioural-insights/</loc>
+    <lastmod>2023-11-03T12:30:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/data-visualisation/</loc>
-    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+    <loc>https://craig.rbind.io/tags/data-science/</loc>
+    <lastmod>2023-11-03T12:30:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/descriptive-statistics/</loc>
-    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+    <loc>https://craig.rbind.io/tags/research/</loc>
+    <lastmod>2023-11-03T12:30:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/</loc>
-    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+    <loc>https://craig.rbind.io/talk/bccdc2022/</loc>
+    <lastmod>2022-04-26T12:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/r/</loc>
-    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+    <loc>https://craig.rbind.io/tags/mental-health/</loc>
+    <lastmod>2022-04-26T12:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/r/</loc>
-    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+    <loc>https://craig.rbind.io/tags/overdose/</loc>
+    <lastmod>2022-04-26T12:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/r-basics/</loc>
-    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+    <loc>https://craig.rbind.io/post/2021-10-03-asgr-3-2-missing-data/</loc>
+    <lastmod>2021-10-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/reproducible-research/</loc>
-    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+    <loc>https://craig.rbind.io/categories/</loc>
+    <lastmod>2021-10-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/</loc>
-    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+    <loc>https://craig.rbind.io/post/</loc>
+    <lastmod>2021-10-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/2020-10-10-asgr-2-5-dates/</loc>
+    <loc>https://craig.rbind.io/categories/r/</loc>
+    <lastmod>2021-10-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/tags/r/</loc>
+    <lastmod>2021-10-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/categories/reproducible-research/</loc>
+    <lastmod>2021-10-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/categories/data-exploration/</loc>
+    <lastmod>2021-10-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/categories/missing-data/</loc>
+    <lastmod>2021-10-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/post/2021-05-17-asgr-3-1-data-visualization/</loc>
+    <lastmod>2021-05-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/categories/data-visualization/</loc>
+    <lastmod>2021-05-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/post/2020-12-07-asgr-3-0-exploring-data-with-elucidate/</loc>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/tags/r-basics/</loc>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/categories/data-interrogation/</loc>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/categories/data-visualisation/</loc>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/categories/descriptive-statistics/</loc>
+    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/post/2020-10-10-asgr-2-5-dates/</loc>
     <lastmod>2020-10-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/data-cleaning-and-transformation/</loc>
+    <loc>https://craig.rbind.io/categories/data-cleaning-and-transformation/</loc>
     <lastmod>2020-10-10T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/2020-08-29-asgr-2-4-factors/</loc>
+    <loc>https://craig.rbind.io/post/2020-08-29-asgr-2-4-factors/</loc>
     <lastmod>2020-08-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/2020-06-28-asgr-2-3-string-manipulation/</loc>
+    <loc>https://craig.rbind.io/post/2020-06-28-asgr-2-3-string-manipulation/</loc>
     <lastmod>2020-06-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/2020-03-29-asgr-2-2-joining-data/</loc>
+    <loc>https://craig.rbind.io/post/2020-03-29-asgr-2-2-joining-data/</loc>
     <lastmod>2020-03-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/2020-01-25-asgr-2-1-data-transformation-part-2/</loc>
+    <loc>https://craig.rbind.io/post/2020-01-25-asgr-2-1-data-transformation-part-2/</loc>
     <lastmod>2020-01-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/publication_types/2/</loc>
+    <loc>https://craig.rbind.io/publication_types/2/</loc>
+    <lastmod>2020-01-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/authors/christie-b.r./</loc>
+    <lastmod>2020-01-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/authors/hutton-c.p./</loc>
+    <lastmod>2020-01-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/authors/lysenko-martin-m.r./</loc>
+    <lastmod>2020-01-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/publication/lysenk-martin-hutton-et-al-2020/</loc>
     <lastmod>2020-01-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/authors/</loc>
+    <loc>https://craig.rbind.io/publication_types/</loc>
+    <lastmod>2020-01-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/publication/</loc>
     <lastmod>2020-01-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/authors/christie-b.r./</loc>
+    <loc>https://craig.rbind.io/authors/snowden-t./</loc>
     <lastmod>2020-01-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/cognitive-function/</loc>
+    <loc>https://craig.rbind.io/authors/sparks-t./</loc>
     <lastmod>2020-01-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/concussion/</loc>
+    <loc>https://craig.rbind.io/tags/cognitive-function/</loc>
     <lastmod>2020-01-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/human-studies/</loc>
+    <loc>https://craig.rbind.io/tags/concussion/</loc>
     <lastmod>2020-01-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/authors/hutton-c.p./</loc>
+    <loc>https://craig.rbind.io/tags/human-studies/</loc>
     <lastmod>2020-01-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/authors/lysenko-martin-m.r./</loc>
+    <loc>https://craig.rbind.io/tags/machine-learning/</loc>
     <lastmod>2020-01-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/machine-learning/</loc>
+    <loc>https://craig.rbind.io/tags/neuropsychology/</loc>
     <lastmod>2020-01-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/publication/lysenk-martin-hutton-et-al-2020/</loc>
+    <loc>https://craig.rbind.io/tags/traumatic-brain-injury/</loc>
     <lastmod>2020-01-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/neuropsychology/</loc>
-    <lastmod>2020-01-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/publication_types/</loc>
-    <lastmod>2020-01-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/publication/</loc>
-    <lastmod>2020-01-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/authors/snowden-t./</loc>
-    <lastmod>2020-01-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/authors/sparks-t./</loc>
-    <lastmod>2020-01-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/traumatic-brain-injury/</loc>
-    <lastmod>2020-01-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/2019-12-30-asgr-2-1-data-transformation-part-1/</loc>
+    <loc>https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/</loc>
     <lastmod>2019-12-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/</loc>
+    <loc>https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/</loc>
     <lastmod>2019-08-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/authors/bettio-l./</loc>
+    <loc>https://craig.rbind.io/authors/bettio-l./</loc>
+    <lastmod>2019-08-06T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/publication/bettio-et-al-2019/</loc>
     <lastmod>2019-08-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/exercise/</loc>
+    <loc>https://craig.rbind.io/authors/thacker-j./</loc>
     <lastmod>2019-08-06T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/publication/bettio-et-al-2019/</loc>
+    <loc>https://craig.rbind.io/tags/exercise/</loc>
     <lastmod>2019-08-06T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/neuroscience/</loc>
+    <loc>https://craig.rbind.io/tags/neuroscience/</loc>
     <lastmod>2019-08-06T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/plasticity/</loc>
+    <loc>https://craig.rbind.io/tags/plasticity/</loc>
     <lastmod>2019-08-06T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/authors/thacker-j./</loc>
-    <lastmod>2019-08-06T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/publication/christie-et-al-2019/</loc>
+    <loc>https://craig.rbind.io/publication/christie-et-al-2019/</loc>
     <lastmod>2019-07-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/behaviour/</loc>
+    <loc>https://craig.rbind.io/authors/meconi-a./</loc>
     <lastmod>2019-07-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/head-trauma/</loc>
+    <loc>https://craig.rbind.io/authors/neale-k.j./</loc>
     <lastmod>2019-07-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/authors/meconi-a./</loc>
+    <loc>https://craig.rbind.io/authors/pinar-c./</loc>
     <lastmod>2019-07-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/mild-traumatic-brain-injury/</loc>
+    <loc>https://craig.rbind.io/authors/reid-h./</loc>
     <lastmod>2019-07-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/authors/neale-k.j./</loc>
+    <loc>https://craig.rbind.io/authors/trivino-paredes-j./</loc>
     <lastmod>2019-07-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/authors/pinar-c./</loc>
+    <loc>https://craig.rbind.io/tags/behaviour/</loc>
     <lastmod>2019-07-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/authors/reid-h./</loc>
+    <loc>https://craig.rbind.io/tags/head-trauma/</loc>
     <lastmod>2019-07-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/authors/trivino-paredes-j./</loc>
+    <loc>https://craig.rbind.io/tags/mild-traumatic-brain-injury/</loc>
     <lastmod>2019-07-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/2019-06-22-asgr-1-getting-data-into-r/</loc>
+    <loc>https://craig.rbind.io/post/2019-06-22-asgr-1-getting-data-into-r/</loc>
     <lastmod>2019-06-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/data-analysis/</loc>
+    <loc>https://craig.rbind.io/tags/data-analysis/</loc>
     <lastmod>2019-06-22T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/importing-data/</loc>
+    <loc>https://craig.rbind.io/tags/importing-data/</loc>
     <lastmod>2019-06-22T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/2019-05-17-asgr-basic-workflow/</loc>
+    <loc>https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/</loc>
     <lastmod>2019-05-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/data-analysis/</loc>
+    <loc>https://craig.rbind.io/categories/data-analysis/</loc>
     <lastmod>2019-05-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/statistics/</loc>
+    <loc>https://craig.rbind.io/categories/statistics/</loc>
     <lastmod>2019-05-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/statistics/</loc>
+    <loc>https://craig.rbind.io/tags/statistics/</loc>
     <lastmod>2019-05-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/slides/</loc>
+    <loc>https://craig.rbind.io/slides/</loc>
+    <lastmod>2019-02-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/slides/example/</loc>
     <lastmod>2019-02-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/slides/example/</loc>
-    <lastmod>2019-02-05T00:00:00+00:00</lastmod>
+    <loc>https://craig.rbind.io/tags/alzheimers-disease/</loc>
+    <lastmod>2018-05-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/privacy/</loc>
-    <lastmod>2018-06-28T00:00:00+01:00</lastmod>
+    <loc>https://craig.rbind.io/authors/becker-s./</loc>
+    <lastmod>2018-05-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/alzheimers-disease/</loc>
+    <loc>https://craig.rbind.io/authors/boreham-d.r./</loc>
+    <lastmod>2018-05-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/publication/hutton-et-al-2018/</loc>
     <lastmod>2018-05-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/anhedonia/</loc>
+    <loc>https://craig.rbind.io/authors/fahnestock-m./</loc>
     <lastmod>2018-05-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/anxiety/</loc>
+    <loc>https://craig.rbind.io/authors/lemon-j.a./</loc>
     <lastmod>2018-05-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/authors/becker-s./</loc>
+    <loc>https://craig.rbind.io/authors/rollo-c.d./</loc>
     <lastmod>2018-05-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/authors/boreham-d.r./</loc>
+    <loc>https://craig.rbind.io/authors/sakic-b./</loc>
     <lastmod>2018-05-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/dietary-supplements/</loc>
+    <loc>https://craig.rbind.io/authors/wojtowicz-j.m./</loc>
     <lastmod>2018-05-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/publication/hutton-et-al-2018/</loc>
+    <loc>https://craig.rbind.io/tags/anhedonia/</loc>
     <lastmod>2018-05-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/authors/fahnestock-m./</loc>
+    <loc>https://craig.rbind.io/tags/anxiety/</loc>
     <lastmod>2018-05-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/learning/</loc>
+    <loc>https://craig.rbind.io/tags/dietary-supplements/</loc>
     <lastmod>2018-05-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/authors/lemon-j.a./</loc>
+    <loc>https://craig.rbind.io/tags/learning/</loc>
     <lastmod>2018-05-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/memory/</loc>
+    <loc>https://craig.rbind.io/tags/memory/</loc>
     <lastmod>2018-05-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/mild-cognitive-impairment/</loc>
+    <loc>https://craig.rbind.io/tags/mild-cognitive-impairment/</loc>
     <lastmod>2018-05-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/authors/rollo-c.d./</loc>
-    <lastmod>2018-05-09T00:00:00+00:00</lastmod>
+    <loc>https://craig.rbind.io/authors/d%C3%A9ry-n./</loc>
+    <lastmod>2015-11-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/authors/sakic-b./</loc>
-    <lastmod>2018-05-09T00:00:00+00:00</lastmod>
+    <loc>https://craig.rbind.io/authors/rosa-r./</loc>
+    <lastmod>2015-11-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/authors/wojtowicz-j.m./</loc>
-    <lastmod>2018-05-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/deep-learning/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/demo/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/project/external-project/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/project/internal-project/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/project/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/authors/decatanzaro-d./</loc>
+    <loc>https://craig.rbind.io/publication/hutton-et-al-2015/</loc>
     <lastmod>2015-11-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/depression/</loc>
+    <loc>https://craig.rbind.io/authors/decatanzaro-d./</loc>
     <lastmod>2015-11-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/authors/d%C3%A9ry-n./</loc>
+    <loc>https://craig.rbind.io/tags/depression/</loc>
     <lastmod>2015-11-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/hippocampus/</loc>
+    <loc>https://craig.rbind.io/tags/hippocampus/</loc>
     <lastmod>2015-11-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/neurogenesis/</loc>
+    <loc>https://craig.rbind.io/tags/neurogenesis/</loc>
     <lastmod>2015-11-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/authors/rosa-r./</loc>
+    <loc>https://craig.rbind.io/tags/stress/</loc>
     <lastmod>2015-11-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/stress/</loc>
-    <lastmod>2015-11-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/publication/hutton-et-al-2015/</loc>
-    <lastmod>2015-11-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/alcohol/</loc>
+    <loc>https://craig.rbind.io/publication/aujla-et-al-2013/</loc>
     <lastmod>2013-01-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/publication/aujla-et-al-2013/</loc>
+    <loc>https://craig.rbind.io/authors/aujla-h./</loc>
     <lastmod>2013-01-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/authors/aujla-h./</loc>
+    <loc>https://craig.rbind.io/authors/rogala-b./</loc>
     <lastmod>2013-01-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/authors/rogala-b./</loc>
+    <loc>https://craig.rbind.io/tags/alcohol/</loc>
     <lastmod>2013-01-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/authors/admin/</loc>
+    <loc>https://craig.rbind.io/authors/admin/</loc>
   </url>
   
   <url>
-    <loc>/courses/</loc>
+    <loc>https://craig.rbind.io/courses/</loc>
   </url>
   
 </urlset>

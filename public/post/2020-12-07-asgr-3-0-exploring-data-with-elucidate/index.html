@@ -1,0 +1,2473 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.3.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Dr. Craig P. Hutton">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="1 TL;DR2 Introduction3 Installation &amp; Setup4 Interrogating Data4.1 checking for row copies() and dupes()4.2 count()-ing unique values4.3 describe()-ing missingness &amp; extreme values5 Descriptives5.1 describe() a vector with summary statistics5.2 grouped descriptions5.3 describe_all() columns in a data frame5.4 confidence intervals6 To see, look6.1 Anscombe’s lesson: numeric descriptions can be misleading6.2 plot_*-ting data with elucidate6.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://craig.rbind.io/post/2020-12-07-asgr-3-0-exploring-data-with-elucidate/">
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:400,400italic,700|Roboto+Mono">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.min.9e398b7a64ee2c82769da9724cdbf0cc.css">
+
+  
+
+  
+  
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-140167948-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('require', 'eventTracker');
+      ga('require', 'outboundLinkTracker');
+      ga('require', 'urlChangeTracker');
+      ga('send', 'pageview');
+    </script>
+    <script async src="//www.google-analytics.com/analytics.js"></script>
+    
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
+    
+  
+  
+
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://craig.rbind.io/post/2020-12-07-asgr-3-0-exploring-data-with-elucidate/">
+
+  
+  
+  
+  
+    
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@huttoncp">
+  <meta property="twitter:creator" content="@huttoncp">
+  
+  <meta property="og:site_name" content="Craig Hutton, PhD">
+  <meta property="og:url" content="https://craig.rbind.io/post/2020-12-07-asgr-3-0-exploring-data-with-elucidate/">
+  <meta property="og:title" content="A Scientist&#39;s Guide to R: Step 3.0 - exploring data with elucidate | Craig Hutton, PhD">
+  <meta property="og:description" content="1 TL;DR2 Introduction3 Installation &amp; Setup4 Interrogating Data4.1 checking for row copies() and dupes()4.2 count()-ing unique values4.3 describe()-ing missingness &amp; extreme values5 Descriptives5.1 describe() a vector with summary statistics5.2 grouped descriptions5.3 describe_all() columns in a data frame5.4 confidence intervals6 To see, look6.1 Anscombe’s lesson: numeric descriptions can be misleading6.2 plot_*-ting data with elucidate6."><meta property="og:image" content="https://craig.rbind.io/post/2020-12-07-asgr-3-0-exploring-data-with-elucidate/featured.png">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2020-12-07T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2020-12-07T00:00:00&#43;00:00">
+  
+
+  
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+<script>
+  window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#2962ff",
+          "text": "#fff"
+        },
+        "button": {
+          "background": "#fff",
+          "text": "#2962ff"
+        }
+      },
+      "theme": "classic",
+      "content": {
+        "message": "This website uses cookies to ensure you get the best experience on our website.",
+        "dismiss": "Got it!",
+        "link": "Learn more",
+        "href": "https://cookies.insites.com"
+      }
+    })});
+</script>
+
+
+  
+
+  <title>A Scientist&#39;s Guide to R: Step 3.0 - exploring data with elucidate | Craig Hutton, PhD</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#TableOfContents" data-offset="71" >
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" role="textbox" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/"><img src="/img/Picture1.png" alt="Craig Hutton, PhD"></a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav mr-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publications">
+            
+            <span>Publications</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#talks">
+            
+            <span>Talks</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects">
+            
+            <span>Projects</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/resume.pdf">
+            
+            <span>Resume</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+      
+      </ul>
+      <ul class="navbar-nav ml-auto">
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="article-header d-xl-none">
+  <div class="featured-image" style="background-image: url('/post/2020-12-07-asgr-3-0-exploring-data-with-elucidate/featured_huca0fead370fcca78acb3fc7b4ff23967_35843_800x0_resize_lanczos_2.png');"></div>
+  
+</div>
+
+
+<div class="container-fluid split-header d-none d-xl-block">
+  <div class="row">
+    <div class="col-6">
+      <div class="split-header-content">
+        <h1 itemprop="name">A Scientist&#39;s Guide to R: Step 3.0 - exploring data with elucidate</h1>
+
+        
+
+        
+
+
+
+<meta content="2020-12-07 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2020-12-07 00:00:00 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>Dec 7, 2020</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    63 min read
+  </span>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <a href="/post/2020-12-07-asgr-3-0-exploring-data-with-elucidate/#disqus_thread"></a>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder"></i>
+    <a href="/categories/r/">R</a>, <a href="/categories/reproducible-research/">Reproducible Research</a>, <a href="/categories/data-exploration/">data exploration</a>, <a href="/categories/data-interrogation/">data interrogation</a>, <a href="/categories/data-visualisation/">data visualisation</a>, <a href="/categories/descriptive-statistics/">descriptive statistics</a></span>
+  
+
+  
+
+</div>
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=A%20Scientist%27s%20Guide%20to%20R%3a%20Step%203.0%20-%20exploring%20data%20with%20elucidate&amp;url=https%3a%2f%2fcraig.rbind.io%2fpost%2f2020-12-07-asgr-3-0-exploring-data-with-elucidate%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fcraig.rbind.io%2fpost%2f2020-12-07-asgr-3-0-exploring-data-with-elucidate%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fcraig.rbind.io%2fpost%2f2020-12-07-asgr-3-0-exploring-data-with-elucidate%2f&amp;title=A%20Scientist%27s%20Guide%20to%20R%3a%20Step%203.0%20-%20exploring%20data%20with%20elucidate"
+         target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=https%3a%2f%2fcraig.rbind.io%2fpost%2f2020-12-07-asgr-3-0-exploring-data-with-elucidate%2f&amp;title=A%20Scientist%27s%20Guide%20to%20R%3a%20Step%203.0%20-%20exploring%20data%20with%20elucidate"
+         target="_blank" rel="noopener">
+        <i class="fab fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=A%20Scientist%27s%20Guide%20to%20R%3a%20Step%203.0%20-%20exploring%20data%20with%20elucidate&amp;body=https%3a%2f%2fcraig.rbind.io%2fpost%2f2020-12-07-asgr-3-0-exploring-data-with-elucidate%2f">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="split-header-image">
+        <img src="/post/2020-12-07-asgr-3-0-exploring-data-with-elucidate/featured_huca0fead370fcca78acb3fc7b4ff23967_35843_680x500_fill_q90_lanczos_smart1_2.png" itemprop="image" alt="">
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="article-container d-xl-none">
+  <h1 itemprop="name">A Scientist&#39;s Guide to R: Step 3.0 - exploring data with elucidate</h1>
+
+  
+
+  
+
+
+
+<meta content="2020-12-07 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2020-12-07 00:00:00 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>Dec 7, 2020</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    63 min read
+  </span>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <a href="/post/2020-12-07-asgr-3-0-exploring-data-with-elucidate/#disqus_thread"></a>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder"></i>
+    <a href="/categories/r/">R</a>, <a href="/categories/reproducible-research/">Reproducible Research</a>, <a href="/categories/data-exploration/">data exploration</a>, <a href="/categories/data-interrogation/">data interrogation</a>, <a href="/categories/data-visualisation/">data visualisation</a>, <a href="/categories/descriptive-statistics/">descriptive statistics</a></span>
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=&amp;url="
+         target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u="
+         target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=&amp;title="
+         target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=&amp;title="
+         target="_blank" rel="noopener">
+        <i class="fab fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=&amp;body=">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+<div id="TOC">
+<ul>
+<li><a href="#tldr"><span class="toc-section-number">1</span> <strong>TL;DR</strong></a></li>
+<li><a href="#introduction"><span class="toc-section-number">2</span> <strong>Introduction</strong></a></li>
+<li><a href="#installation-setup"><span class="toc-section-number">3</span> <strong>Installation &amp; Setup</strong></a></li>
+<li><a href="#interrogating-data"><span class="toc-section-number">4</span> <strong>Interrogating Data</strong></a><ul>
+<li><a href="#checking-for-row-copies-and-dupes"><span class="toc-section-number">4.1</span> checking for row <code>copies()</code> and <code>dupes()</code></a></li>
+<li><a href="#count-ing-unique-values"><span class="toc-section-number">4.2</span> <code>count()</code>-ing unique values</a></li>
+<li><a href="#describe-ing-missingness-extreme-values"><span class="toc-section-number">4.3</span> <code>describe()</code>-ing missingness &amp; extreme values</a></li>
+</ul></li>
+<li><a href="#descriptives"><span class="toc-section-number">5</span> <strong>Descriptives</strong></a><ul>
+<li><a href="#describe-a-vector-with-summary-statistics"><span class="toc-section-number">5.1</span> <code>describe()</code> a vector with summary statistics</a></li>
+<li><a href="#grouped-descriptions"><span class="toc-section-number">5.2</span> grouped descriptions</a></li>
+<li><a href="#describe_all-columns-in-a-data-frame"><span class="toc-section-number">5.3</span> <code>describe_all()</code> columns in a data frame</a></li>
+<li><a href="#confidence-intervals"><span class="toc-section-number">5.4</span> confidence intervals</a></li>
+</ul></li>
+<li><a href="#to-see-look"><span class="toc-section-number">6</span> <strong>To see, look</strong></a><ul>
+<li><a href="#anscombes-lesson-numeric-descriptions-can-be-misleading"><span class="toc-section-number">6.1</span> Anscombe’s lesson: numeric descriptions can be misleading</a></li>
+<li><a href="#plot_-ting-data-with-elucidate"><span class="toc-section-number">6.2</span> <code>plot_*</code>-ting data with elucidate</a><ul>
+<li><a href="#basic-plot_scatter-with-regression-lines"><span class="toc-section-number">6.2.1</span> basic <code>plot_scatter()</code> with regression lines</a></li>
+<li><a href="#basic-plot_density"><span class="toc-section-number">6.2.2</span> basic <code>plot_density()</code></a></li>
+<li><a href="#customized-plot_density"><span class="toc-section-number">6.2.3</span> customized <code>plot_density()</code></a></li>
+<li><a href="#basic-plot_box"><span class="toc-section-number">6.2.4</span> basic <code>plot_box()</code></a></li>
+<li><a href="#customized-plot_box-with-facetting"><span class="toc-section-number">6.2.5</span> customized <code>plot_box()</code> with facetting</a></li>
+<li><a href="#basic-plot_stat_error-of-the-mean---se"><span class="toc-section-number">6.2.6</span> basic <code>plot_stat_error()</code> of the mean +/- SE</a></li>
+<li><a href="#plot-medians-and-bootstrapped-cis"><span class="toc-section-number">6.2.7</span> plot medians and bootstrapped CIs</a></li>
+<li><a href="#plot-means-or-medians-and-cis-for-multiple-time-points-connected-with-lines"><span class="toc-section-number">6.2.8</span> plot means or medians and CIs for multiple time points connected with lines</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#interacting-with-dynamic-data-representations"><span class="toc-section-number">7</span> <strong>Interacting with dynamic data representations</strong></a></li>
+<li><a href="#correct-data-with-wash_df-recode_errors"><span class="toc-section-number">8</span> <strong>Correct</strong> data with <code>wash_df()</code> &amp; <code>recode_errors()</code></a></li>
+<li><a href="#performance-evaluations"><span class="toc-section-number">9</span> <strong>Performance Evaluations</strong></a><ul>
+<li><a href="#dupes-vs-janitorget_dupes"><span class="toc-section-number">9.1</span> <code>dupes()</code> vs <code>janitor::get_dupes()</code></a></li>
+<li><a href="#describe_all-vs.-skimrskim"><span class="toc-section-number">9.2</span> <code>describe_all()</code> vs. <code>skimr::skim()</code></a></li>
+</ul></li>
+<li><a href="#navigation"><span class="toc-section-number">10</span> <strong>Navigation</strong></a></li>
+<li><a href="#notes"><span class="toc-section-number">11</span> <strong>Notes</strong></a></li>
+</ul>
+</div>
+
+<div id="tldr" class="section level1">
+<h1><span class="header-section-number">1</span> <strong>TL;DR</strong></h1>
+<p>This post dives into the <a href="https://github.com/bcgov/elucidate">elucidate</a> package and how it can help you explore data using sets of functions for interrogating, describing, visualising, interacting with, and correcting data. This is a key stage of any analysis where errors are found and interesting relationships begin to appear.</p>
+<p><img src="hex-elucidate%20v4.png" width="300"></p>
+</div>
+<div id="introduction" class="section level1">
+<h1><span class="header-section-number">2</span> <strong>Introduction</strong></h1>
+<p>The 10th post of the <a href="https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/">Scientist’s Guide to R series</a> takes us on a journey of discovery through data exploration. It’s going to be an epic journey too because of how much there is to cover. In data science, sometimes you can even learn enough in this stage of an analysis to answer basic research questions. Read on to see how straightforward exploratory data analysis (EDA) can be with a new R package I created called <a href="https://github.com/bcgov/elucidate">elucidate</a>.</p>
+<p><code>elucidate</code> helps you <em>explore</em> data by making it easy and efficient to:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Interrogate</strong> data in search of anomalies with <code>copies()</code>, <code>dupes()</code>, and <code>counts*</code>.</p></li>
+<li><p><strong>Describe</strong> data with the <code>describe*</code> set of functions for obtaining summary statistics, bootstrapping confidence intervals, and detecting missing values.</p></li>
+<li><p>Quickly <strong>visualise</strong> data with the <code>plot_*</code> set of functions.</p></li>
+<li><p><strong>Interact</strong> with data representations using the <code>static_to_dynamic()</code> function.</p></li>
+<li><p><strong>Correct</strong> data entry errors, anomaly indicator values, and structural inconsistencies seen in real world data more easily using <code>wash_df()</code> and <code>recode_errors()</code>. Here we blur the lines a bit between transformation and EDA, because data prep is usually an iterative cleaning/exploring process in practice.</p></li>
+</ol>
+<p><code>elucidate</code> is a package I’ve been thrilled to be developing for the Research Branch of the <a href="https://www2.gov.bc.ca/gov/content/governments/organizational-structure/ministries-organizations/ministries/social-development-poverty-reduction">British Columbia Ministry of Social Development &amp; Poverty Reduction</a> since I started working as a public servant last spring<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Although I only spend a small fraction of my time on <code>elucidate</code>, I’m incredibly grateful for the BC Gov’s ongoing support of the project so I can continue building it for all of us.</p>
+<p>Inspired by tidyverse naming conventions, many <code>elucidate</code> function are organized into sets that begin with a common root (e.g. <code>describe*</code>, <code>plot_*</code>, <code>counts*</code>), since this lets you see them all as suggestions while coding in R studio after typing the first three characters of the function or object name. It also facilitates code completion via the <code>tab</code> key.</p>
+<p>Many <code>elucidate</code> functions also accept a data frame as the 1st argument and return a data frame (or <code>ggplot</code>) as output, so they are compatible with the <a href="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#chaining-functions-with-the-pipe-operator">pipe operator</a> (<code>%&gt;%</code>) from the <a href="https://magrittr.tidyverse.org/">magrittr</a> package for easy integration into <a href="https://r4ds.had.co.nz/tidy-data.html">“tidy”</a> data processing pipelines. For convenience, the pipe operator is also imported from <code>magrittr</code> when <code>elucidate</code> is loaded.</p>
+<p><strong>Bonus!</strong> I recently saw a great <a href="https://twitter.com/lisalendway/status/1312097209752711169?s=20">twitter thread</a> on how to capture screen recordings and include them in R markdown<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> docs, so I’m going to try them out in this very post.</p>
+<p><strong>Disclaimer:</strong> This post covers ways of using R to get descriptive statistics, such as the sample mean, standard deviation, and skewness for numeric variables. I’m going to assume that you learned what these are and how to calculate them in an undergraduate introductory statistics course. If these terms are unfamiliar to you and/or statistics seems scary as a topic in general, I strongly recommend visiting Brown University’s awesome <a href="https://seeing-theory.brown.edu/">Seeing Theory website</a> before proceeding.</p>
+</div>
+<div id="installation-setup" class="section level1">
+<h1><span class="header-section-number">3</span> <strong>Installation &amp; Setup</strong></h1>
+<p>Because it is still rapidly evolving, <code>elucidate</code> is not on <a href="https://cran.r-project.org/web/packages/">CRAN</a> yet (maybe in 2021); so you can’t install it the normal way with <code>install.packages()</code>.</p>
+<p>Instead, like the <em>development versions</em> of many other packages, you can get it from <a href="https://github.com/">github</a> with:</p>
+<pre class="r"><code>install.packages(&quot;remotes&quot;) #only run this 1st if you haven&#39;t installed remotes before
+
+remotes::install_github(&quot;bcgov/elucidate&quot;) 
+
+#note: if you have trouble installing or updating some of the dependencies when
+#installing a package from GitHub, try (re)-installing their CRAN versions (if
+#available) 1st using install.packages().</code></pre>
+<p>Then just load it like any other R package, with the <code>library()</code> function:</p>
+<pre class="r"><code>library(tidyverse) #for comparisons &amp; the glimpse function</code></pre>
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.3.3     v purrr   0.3.4
+## v tibble  3.1.1     v dplyr   1.0.2
+## v tidyr   1.1.2     v stringr 1.4.0
+## v readr   1.4.0     v forcats 0.5.0</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.0.5</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 4.0.5</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(janitor) #for comparisons</code></pre>
+<pre><code>## 
+## Attaching package: &#39;janitor&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     chisq.test, fisher.test</code></pre>
+<pre class="r"><code>library(bench) #for benchmarking
+
+library(elucidate)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;elucidate&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     mode</code></pre>
+<pre class="r"><code>#also set the random generator seed for reproducibility
+set.seed(1234)</code></pre>
+<p>For this post, we’ll use the generated dataset, <code>pdata</code> (short for <em>p</em>ractice <em>data</em>), that is imported with <code>elucidate</code>.</p>
+</div>
+<div id="interrogating-data" class="section level1">
+<h1><span class="header-section-number">4</span> <strong>Interrogating Data</strong></h1>
+<p>As usual, we’ll start by inspecting the structure of it with <a href="https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/#functions-for-describing-the-structural-information-of-data-objects">dplyr::glimpse()</a>.</p>
+<pre class="r"><code>glimpse(pdata)</code></pre>
+<pre><code>## Rows: 12,000
+## Columns: 10
+## $ id       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18~
+## $ d        &lt;date&gt; 2008-01-01, 2008-01-01, 2008-01-01, 2008-01-01, 2008-01-01, ~
+## $ g        &lt;fct&gt; e, c, d, c, a, a, d, b, e, c, a, a, a, a, a, b, c, b, a, c, a~
+## $ high_low &lt;chr&gt; &quot;high&quot;, &quot;high&quot;, &quot;low&quot;, &quot;high&quot;, &quot;high&quot;, &quot;high&quot;, &quot;low&quot;, &quot;low&quot;, ~
+## $ even     &lt;lgl&gt; FALSE, TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, TR~
+## $ y1       &lt;dbl&gt; 106.26334, 96.47998, 99.33155, 108.94097, 99.65422, 101.59775~
+## $ y2       &lt;dbl&gt; 117.92654, 107.16036, 96.16405, 101.78278, 113.36807, 113.586~
+## $ x1       &lt;int&gt; 59, 5, 71, 60, 96, 19, 77, 74, 92, 4, 56, 100, 69, 44, 91, 35~
+## $ x2       &lt;int&gt; 116, 101, 111, 130, 196, 163, 133, 191, 106, 134, 142, 111, 1~
+## $ x3       &lt;int&gt; 248, 238, 250, 287, 284, 206, 201, 249, 277, 209, 285, 277, 2~</code></pre>
+<p>This tells us that we’ve got 12,000 rows and 10 columns of various classes to work with including an “id” and date (“d”) column that could represent distinct observations.</p>
+<p>Instead of 12,000 rows, let’s over-sample it with replacement so that there are 1,000,000 rows to allow the performance of <code>elucidate</code> functions to be more realistically evaluated.</p>
+<pre class="r"><code>pdata_resampled &lt;- pdata[sample(1:nrow(pdata), 1e6, replace = TRUE),]
+
+dim(pdata_resampled) </code></pre>
+<pre><code>## [1] 1000000      10</code></pre>
+<div id="checking-for-row-copies-and-dupes" class="section level2">
+<h2><span class="header-section-number">4.1</span> checking for row <code>copies()</code> and <code>dupes()</code></h2>
+<p><code>dplyr::glimpse()</code> is a great first step in the data interrogation process. After learning about the columns names classes, dimensions, and previewing some of the data, the next thing I usually check is how many copies I have of each row based on columns like subject ID # and date, where I’m hoping that there are as many copies as I should find (i.e. one row per ID and date combination, representing unique measurements). Usually this means making sure there aren’t any unexpected row duplicates. This can easily be checked with <code>elucidate::copies()</code>.</p>
+<pre class="r"><code>pdata_resampled %&gt;% 
+  copies() %&gt;% 
+  glimpse() #glimpse() again to show all output columns</code></pre>
+<pre><code>## No column names specified - using all columns.</code></pre>
+<pre><code>## Rows: 1,000,000
+## Columns: 12
+## $ id          &lt;int&gt; 452, 16, 162, 86, 269, 196, 623, 885, 934, 948, 146, 367, ~
+## $ d           &lt;date&gt; 2015-01-01, 2016-01-01, 2015-01-01, 2016-01-01, 2015-01-0~
+## $ g           &lt;fct&gt; d, b, e, c, a, e, c, d, d, d, b, c, c, a, c, a, c, a, d, e~
+## $ high_low    &lt;chr&gt; &quot;high&quot;, &quot;high&quot;, &quot;low&quot;, &quot;high&quot;, &quot;high&quot;, &quot;low&quot;, &quot;low&quot;, &quot;low&quot;~
+## $ even        &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE, TRUE, T~
+## $ y1          &lt;dbl&gt; 195.22487, 196.53225, 117.96544, 228.54892, 144.27335, 134~
+## $ y2          &lt;dbl&gt; 104.22839, 108.96997, 92.46506, 108.54791, 107.09374, 95.1~
+## $ x1          &lt;int&gt; 49, 34, 72, 78, 36, 35, 32, 43, 55, 85, 33, 84, 85, 44, 52~
+## $ x2          &lt;int&gt; 196, 142, 181, 105, 190, 181, 108, 161, 111, 199, 191, 183~
+## $ x3          &lt;int&gt; 254, 295, 286, 244, 202, 260, 280, 284, 233, 254, 267, 222~
+## $ copy_number &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1~
+## $ n_copies    &lt;int&gt; 77, 72, 82, 88, 98, 105, 76, 69, 78, 87, 92, 80, 85, 85, 9~</code></pre>
+<p>You can see that the default version of <code>copies()</code> simply returns the input data with the addition of two columns called “copy_number” (which copy the rows is if multiple copies were detected) and “n_copies” (total number of row copies detected)<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
+<p>In this case, I’ve resampled the same data quite a lot, so there are multiple copies of all original rows. <code>copies()</code> will also preserve the original ordering of the rows unless you ask it to sort the output by the number of copies<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>. You do so by setting the <strong>sort_by_copies</strong> argument to <code>TRUE</code>. If you also only want to see duplicated rows, you can set the <strong>filter</strong> argument to <strong>“dupes”</strong><a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>.</p>
+<pre class="r"><code>pdata_resampled %&gt;% 
+  copies(filter = &quot;dupes&quot;, sort_by_copies = TRUE)</code></pre>
+<pre><code>## No column names specified - using all columns.</code></pre>
+<pre><code>## Duplicated rows detected! 1000000 of 1000000 rows in the input data have multiple copies.</code></pre>
+<pre><code>## # A tibble: 1,000,000 x 11
+##       id d          g     high_low even     y1    y2    x1    x2    x3 n_copies
+##    &lt;int&gt; &lt;date&gt;     &lt;fct&gt; &lt;chr&gt;    &lt;lgl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;
+##  1   546 2016-01-01 d     high     TRUE   221.  104.    81   122   226      119
+##  2   546 2016-01-01 d     high     TRUE   221.  104.    81   122   226      119
+##  3   558 2016-01-01 e     high     TRUE   149.  107.    63   134   223      119
+##  4   558 2016-01-01 e     high     TRUE   149.  107.    63   134   223      119
+##  5   546 2016-01-01 d     high     TRUE   221.  104.    81   122   226      119
+##  6   546 2016-01-01 d     high     TRUE   221.  104.    81   122   226      119
+##  7   546 2016-01-01 d     high     TRUE   221.  104.    81   122   226      119
+##  8   558 2016-01-01 e     high     TRUE   149.  107.    63   134   223      119
+##  9   558 2016-01-01 e     high     TRUE   149.  107.    63   134   223      119
+## 10   546 2016-01-01 d     high     TRUE   221.  104.    81   122   226      119
+## # ... with 999,990 more rows</code></pre>
+<p>As the message informed us, by default <code>copies()</code> will check for duplicates based on all columns unless you specify columns to condition the search upon. This is done by simply listing the <em>unquoted</em> names of the columns. E.g. to check for copies based on just the “id” and “d” (date) columns. This time we’ll use the original version of <code>pdata</code>, to see if each combination of the id and d columns do in fact represents distinct observations…</p>
+<pre class="r"><code>pdata %&gt;% 
+  copies(id, d, #only consider these columns when searching for copies
+         #only return the rows with at least one duplicate
+         filter = &quot;dupes&quot;, 
+         #sort the result by the number of copies and then specified
+         #conditioning variables (in the same order specified). 
+         sort_by_copies = TRUE)</code></pre>
+<pre><code>## No duplicates detected.</code></pre>
+<pre><code>## # A tibble: 0 x 11
+## # ... with 11 variables: id &lt;int&gt;, d &lt;date&gt;, g &lt;fct&gt;, high_low &lt;chr&gt;,
+## #   even &lt;lgl&gt;, y1 &lt;dbl&gt;, y2 &lt;dbl&gt;, x1 &lt;int&gt;, x2 &lt;int&gt;, x3 &lt;int&gt;,
+## #   n_copies &lt;int&gt;</code></pre>
+<pre class="r"><code># note: if you didn&#39;t specify any conditioning variables, sort_by_copies will
+# only cause copies() to sort the output by the n_copies column</code></pre>
+<p>…and they do 😄.</p>
+<p>Checking for duplicates and sorting the result like this is by far the most common way to use <code>copies()</code>, so <code>elucidate</code> version 0.0.0.9023 also introduced a convenience wrapper function for the above called <code>dupes()</code>:</p>
+<pre class="r"><code>copies_result &lt;- pdata %&gt;% copies(id, d, filter = &quot;dupes&quot;, sort_by_copies = TRUE)
+dupes_result &lt;- pdata %&gt;% dupes(id, d)
+
+identical(copies_result, dupes_result)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>Since the extra copies in the resampled version of the data are meaningless, if this were a real dataset intended for research purposes we would probably want to get rid of them and just keep the 1st copy of each to end up with a distinct<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> set of rows. This can also be achieved with <code>copies()</code> by instead setting the <strong>filter</strong> argument to <strong>“first”</strong> (or <strong>“last”</strong> for the last copy). In this situation, we actually recover a data frame that is equivalent to the original version of <code>pdata</code>, as demonstrated using <code>identical()</code> after some sorting and reformatting.</p>
+<pre class="r"><code>pdata_distinct &lt;- pdata_resampled %&gt;% #the resampled 1,000,000 row version
+  copies(filter = &quot;first&quot;) %&gt;% #only keep the 1st detected copy of each row
+  arrange(id, d, g, high_low, even, y1, y2, x1, x2, x3) %&gt;% 
+  wash_df()</code></pre>
+<pre><code>## No column names specified - using all columns.</code></pre>
+<pre class="r"><code>pdata_sorted &lt;- pdata %&gt;% #original data that has not been resampled
+  arrange(id, d, g, high_low, even, y1, y2, x1, x2, x3) %&gt;% 
+  wash_df()
+
+pdata_distinct %&gt;% glimpse</code></pre>
+<pre><code>## Rows: 12,000
+## Columns: 10
+## $ id       &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2~
+## $ d        &lt;date&gt; 2008-01-01, 2009-01-01, 2010-01-01, 2011-01-01, 2012-01-01, ~
+## $ g        &lt;chr&gt; &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;~
+## $ high_low &lt;chr&gt; &quot;high&quot;, &quot;low&quot;, &quot;high&quot;, &quot;low&quot;, &quot;low&quot;, &quot;low&quot;, &quot;low&quot;, &quot;low&quot;, &quot;lo~
+## $ even     &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE~
+## $ y1       &lt;dbl&gt; 106.26334, 110.03424, 157.88571, 110.80402, 134.40024, 158.24~
+## $ y2       &lt;dbl&gt; 117.92654, 90.61188, 106.97367, 99.20771, 96.22263, 94.98052,~
+## $ x1       &lt;dbl&gt; 59, 14, 14, 69, 93, 26, 47, 79, 19, 87, 75, 86, 5, 73, 25, 86~
+## $ x2       &lt;dbl&gt; 116, 186, 141, 186, 193, 149, 180, 197, 196, 135, 172, 199, 1~
+## $ x3       &lt;dbl&gt; 248, 238, 243, 256, 216, 277, 232, 251, 293, 261, 287, 261, 2~</code></pre>
+<pre class="r"><code>identical(pdata_distinct, pdata_sorted)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>Here the <code>dplyr::arrange()</code> and <code>elucidate::wash_df()</code> steps only serve to standardize the formatting/order of the data without modifying any of the actual values. There will be more about <code>wash_df()</code> later. Now you also know how to eliminate row duplicates and recover data that has been oversampled. When working with real data, this issue most commonly occurs when a <a href="https://craig.rbind.io/post/2020-03-29-asgr-2-2-joining-data/">join</a> goes awry. In fact, I <strong><em>strongly recommend checking</em></strong> for duplicates and filtering them if appropriate both <strong><em>before and after every join</em></strong>, at least the first time you’re trying to combine two datasets. <code>copies()</code> can help you with both tasks.</p>
+<p><em>Real world relevance</em> - Not long ago I was examining medical records and expected to see one record per person per visit to a health care provider. I was surprised to learn that in fact the data contained one row per service provided, with multiple rows per visit. Checking for duplicates using <code>copies()</code> revealed this important structural aspect of the data, which subsequently determined how I prepared it for analysis.</p>
+</div>
+<div id="count-ing-unique-values" class="section level2">
+<h2><span class="header-section-number">4.2</span> <code>count()</code>-ing unique values</h2>
+<p>The <code>counts*</code> set of functions helps you quickly check your data for manual entry errors or weird values by providing counts of unique values. In my experience, such errors tend to show up as very rare or common values.</p>
+<p><code>counts()</code> returns the unique values and counts for a vector in the form “value_count”, sorted by decreasing frequency<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>.</p>
+<pre class="r"><code>counts(pdata_resampled$g)</code></pre>
+<pre><code>## [1] &quot;a_216058&quot; &quot;b_205319&quot; &quot;d_197784&quot; &quot;e_196104&quot; &quot;c_184735&quot;</code></pre>
+<pre class="r"><code>#use order = &quot;a&quot; or &quot;i&quot; to sort in ascending/increasing order</code></pre>
+<p><code>counts_all()</code> gives you a list of unique values and their frequency for all columns in a data frame. To avoid printing too much here, we’ll first <a href="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#select">select</a> a few columns to show you what the output looks like.</p>
+<pre class="r"><code>pdata_resampled %&gt;% 
+  select(d, high_low, even) %&gt;% 
+  counts_all()</code></pre>
+<pre><code>## $d
+##  [1] &quot;2012-01-01_83846&quot; &quot;2015-01-01_83674&quot; &quot;2018-01-01_83667&quot; &quot;2010-01-01_83558&quot;
+##  [5] &quot;2017-01-01_83385&quot; &quot;2019-01-01_83372&quot; &quot;2014-01-01_83335&quot; &quot;2011-01-01_83114&quot;
+##  [9] &quot;2009-01-01_83024&quot; &quot;2008-01-01_83013&quot; &quot;2016-01-01_83009&quot; &quot;2013-01-01_83003&quot;
+## 
+## $high_low
+## [1] &quot;high_504860&quot; &quot;low_495140&quot; 
+## 
+## $even
+## [1] &quot;TRUE_500662&quot;  &quot;FALSE_499338&quot;</code></pre>
+<p>For convenience, <code>elucidate</code> also provides shortcut functions <code>counts_tb()</code> and <code>counts_tb_all()</code> that give you the <em>t</em>op and <em>b</em>ottom <strong>“n”</strong> unique values (<strong>“n”</strong> is up to 10 by default) in terms of frequency. Here we’ll just ask for the top 5 and bottom 5 values.</p>
+<pre class="r"><code>pdata_resampled %&gt;% 
+  select(d, high_low, even) %&gt;% 
+  counts_tb_all(n = 5)</code></pre>
+<pre><code>## $d
+##        top_v top_n      bot_v bot_n
+## 1 2012-01-01 83846 2013-01-01 83003
+## 2 2015-01-01 83674 2016-01-01 83009
+## 3 2018-01-01 83667 2008-01-01 83013
+## 4 2010-01-01 83558 2009-01-01 83024
+## 5 2017-01-01 83385 2011-01-01 83114
+## 
+## $high_low
+##   top_v  top_n bot_v  bot_n
+## 1  high 504860   low 495140
+## 2   low 495140  high 504860
+## 3  &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;
+## 4  &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;
+## 5  &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;
+## 
+## $even
+##   top_v  top_n bot_v  bot_n
+## 1  TRUE 500662 FALSE 499338
+## 2 FALSE 499338  TRUE 500662
+## 3  &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;
+## 4  &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;
+## 5  &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;   &lt;NA&gt;</code></pre>
+<p>This time we get a list of tibbles instead of a list of vectors, with the top values (“top_v”) and their counts (“top_n”) as a pair of columns, and the bottom values (“bot_v”) beside their counts (“bot_n”). You may have noticed that in cases where there are fewer than “n” unique values, all of them will be shown under each of the <code>top_*</code> and <code>bot_*</code> columns, albeit in opposite orders. As expected, <code>counts_tb()</code> gives you a single tibble showing the top and bottom counts for a single column.</p>
+<p>Using the <code>mark()</code> function from the <code>bench</code> package (i.e. <code>bench::mark()</code>), we can see that these functions run reasonably fast on even 1,000,000 rows of data; under 10 seconds on my laptop (Intel i7-9750H processor <span class="citation">@2.6</span> GHz with 16GB of RAM).</p>
+<pre class="r"><code>mark(
+  #just wrap the expression you want to evaluate the performance of with the
+  #bench::mark() function
+  pdata_resampled %&gt;% 
+    select(d, high_low, even) %&gt;% 
+    counts_tb_all(),
+  #specify the number of iterations to use for benchmarking with the iterations
+  #argument
+  iterations = 10) %&gt;% 
+  #subset the output to just get the timing &amp; memory usage info
+  select(median)</code></pre>
+<pre><code>## Warning: Some expressions had a GC in every iteration; so filtering is disabled.</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##     median
+##   &lt;bch:tm&gt;
+## 1    9.69s</code></pre>
+<p>Now you know how easy it can be to check for data entry errors with the <code>counts*</code> set of <code>elucidate</code> functions.</p>
+<p>The latest version of <code>elucidate</code> also includes a <code>mode()</code><a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> function which returns just the most common value (i.e. the mode) of any vector.</p>
+</div>
+<div id="describe-ing-missingness-extreme-values" class="section level2">
+<h2><span class="header-section-number">4.3</span> <code>describe()</code>-ing missingness &amp; extreme values</h2>
+<p>Checking for other anomalies like extreme values (outliers) and missing values can be achieved with <code>describe()</code>. To start with, we’ll subset the output to just focus on columns relevant these quality indicators.</p>
+<pre class="r"><code>pdata_resampled %&gt;% 
+  describe(y1) %&gt;% 
+  #desctibe() outputs a tibble, which means we can subsequently manipulate the
+  #output with dplyr functions, like select()
+  select(cases:p_na, p0:p100) </code></pre>
+<pre><code>## # A tibble: 1 x 9
+##     cases       n    na  p_na    p0   p25   p50   p75  p100
+##     &lt;int&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 1000000 1000000     0     0  69.2  121.  145.  181.  289.</code></pre>
+<p>From this subset of the output alone we can tell that there are no missing values for y1, which ranges from a minimum (p0) of 69 to a maximum (p100) of 289.2. If p0 is less than ~1.5 x the interquartile range (p75-p25) away from p25 (= 25th percentile) or p100 is &gt;1.5 x IQR greater than p75 (= 75th percentile), we might be concerned about possible outliers in the data. However, unless the deviation is really obvious, you’re better off just looking at a box plot (basically gets you the same information much faster) using <code>elucidate::plot_box()</code>. If you happen to know <em>a priori</em> what the normal range of the dependent variable is you can just check the minimum and maximum values for potential outliers.</p>
+<p>Data entry errors can show up here as extreme deviations, like a maximum value of 2,892 or a minimum value of -500 would be in this case. You should also check to see if most of the percentiles are very close to the same value, which could indicate the presence of ceiling effects or floor effects in the dependent variable<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>.</p>
+<p>Another thing to keep in mind is that some data collection protocols use codes like “9999” (when most true values are &lt; 100) to represent invalid responses (e.g. the patient refused to answer the question) or a specific reason data are missing (e.g. equipment failures). If possible, you should check for those sorts of details in any available protocol documents or other <a href="https://en.wikipedia.org/wiki/Metadata">metadata</a> that exist for the data you’re using.</p>
+</div>
+</div>
+<div id="descriptives" class="section level1">
+<h1><span class="header-section-number">5</span> <strong>Descriptives</strong></h1>
+<div id="describe-a-vector-with-summary-statistics" class="section level2">
+<h2><span class="header-section-number">5.1</span> <code>describe()</code> a vector with summary statistics</h2>
+<p>To get a descriptive summary of a vector you could use the base R <code>summary()</code> function, which is very fast but yields rather limited information. For numeric vectors, <code>summary()</code> will give you the minimum, mean, median, 25th percentile, 75th percentile, and maximum values. It will also tell you how many <code>NA</code>’s there are, but only if some are detected (and not for non-numeric vectors). Alternatively, we can use <code>describe()</code> to get most (or all) of the summary statistics we typically want.<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a></p>
+<pre class="r"><code>pdata_resampled$y1 %&gt;% summary()</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   69.22  120.94  144.75  153.74  181.08  289.24</code></pre>
+<pre class="r"><code>describe(data = pdata_resampled, 
+         #if data is a data frame, then you specify the column to describe using
+         #the 2nd argument &quot;y&quot;
+         y = y1,
+         #you can output the results as a data.table instead of a tibble
+         #(default is &quot;tibble&quot;) so all output is printed
+         output = &quot;dt&quot;)</code></pre>
+<pre><code>##      cases       n na p_na    mean     sd    se     p0     p25    p50     p75
+## 1: 1000000 1000000  0    0 153.742 42.734 0.043 69.224 120.942 144.75 181.079
+##       p100 skew   kurt
+## 1: 289.235 0.74 -0.183</code></pre>
+<pre class="r"><code>#equivalently, describe(pdata_resampled$y1, output = &quot;dt&quot;)</code></pre>
+<p>In addition to everything provided by <code>summary()</code>, <code>describe()</code> also gives us the standard deviation, standard error of the mean, and clearer information on the shape of the distribution via skewness = “skew” and (excess-)kurtosis = “kurt”, where values of either <code>&gt; 1</code> or <code>&lt; -1</code> indicate <a href="https://brownmath.com/stat/shape.htm">non-trivial deviations from normality</a>. In such cases you might want to use the median (p50) and as a measure of central tendency rather than the mean, and the interquartile range (p75-p25) as a measure of the spread of values instead of the standard deviation or standard error. You may also want to look at the distribution with one of the <code>plot_*</code> functions covered below. <code>elucicidate</code> also provides convenience wrappers for the <code>skewness()</code> and <code>kurtosis()</code> functions in the <a href="https://www.rdocumentation.org/packages/e1071/versions/1.7-4">e1071</a> (and other) packages if you want just these measures for a numeric vector<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>.</p>
+<p>We also get information on the presence of missing values, as highlighted previously.</p>
+</div>
+<div id="grouped-descriptions" class="section level2">
+<h2><span class="header-section-number">5.2</span> grouped descriptions</h2>
+<p>Experimental research typically focuses on group comparisons (i.e. intervention vs. control), which was a key consideration in developing <code>elucidate</code>. Where possible, <code>elucidate</code> functions make it easy for you to incorporate grouping variables. For example, you can specify any number of them in the <code>describe*</code> functions as unquoted column names via the special <a href="https://www.r-bloggers.com/2015/02/r-three-dots-ellipsis/"><code>...</code></a> argument. For example, to summarise the “y1” numeric variable in <code>pdata</code> for each level of the factor <code>g</code>, we just use:</p>
+<pre class="r"><code>pdata_resampled %&gt;% 
+  #1st column name is passed to the y argument to indicate the variable to be
+  #described
+  describe(y1, 
+           #subsequent unquoted column names are interpreted as grouping
+           #variables
+           g)</code></pre>
+<pre><code>## # A tibble: 5 x 15
+##   g      cases      n    na  p_na  mean    sd    se    p0   p25   p50   p75
+##   &lt;fct&gt;  &lt;int&gt;  &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 d     197784 197784     0     0  174.  43.8 0.098  69.2  138.  175.  214.
+## 2 b     205319 205319     0     0  152.  37.8 0.083  74.4  118.  146.  188.
+## 3 e     196104 196104     0     0  135.  18.6 0.042  75.1  123.  137.  148.
+## 4 c     184735 184735     0     0  177.  57.0 0.133  77.0  127.  166.  232.
+## 5 a     216058 216058     0     0  134.  25.8 0.055  75.9  112.  133.  156.
+## # ... with 3 more variables: p100 &lt;dbl&gt;, skew &lt;dbl&gt;, kurt &lt;dbl&gt;</code></pre>
+<pre class="r"><code>#or more compactly: describe(pdata, y1, g)</code></pre>
+<p>It’s really that easy.</p>
+</div>
+<div id="describe_all-columns-in-a-data-frame" class="section level2">
+<h2><span class="header-section-number">5.3</span> <code>describe_all()</code> columns in a data frame</h2>
+<p>What if you want to describe all columns of a data frame? What about such a description for each level of one or more grouping variables? This is what <code>describe_all()</code> does.</p>
+<p>To describe a subset of variables instead of all of them, just pass the data through <code>dplyr::select()</code> before piping it to <code>describe_all()</code>.</p>
+<pre class="r"><code>pdata_resampled %&gt;%
+  #for the sake of brevity we&#39;ll just pick one of each major class to
+  #demonstrate class-specific results that are provided
+  select(d, g, high_low, even, y2, x1) %&gt;% 
+  describe_all()</code></pre>
+<pre><code>## $date
+## # A tibble: 1 x 8
+##   variable   cases       n    na  p_na n_unique start      end       
+##   &lt;chr&gt;      &lt;int&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;    &lt;int&gt; &lt;date&gt;     &lt;date&gt;    
+## 1 d        1000000 1000000     0     0       12 2008-01-01 2019-01-01
+## 
+## $factor
+## # A tibble: 1 x 8
+##   variable  cases      n    na  p_na n_unique ordered counts_tb                 
+##   &lt;chr&gt;     &lt;int&gt;  &lt;int&gt; &lt;int&gt; &lt;dbl&gt;    &lt;int&gt; &lt;lgl&gt;   &lt;chr&gt;                     
+## 1 g           1e6    1e6     0     0        5 FALSE   a_216058, b_205319, ..., ~
+## 
+## $character
+## # A tibble: 1 x 9
+##   variable  cases      n    na  p_na n_unique min_chars max_chars counts_tb     
+##   &lt;chr&gt;     &lt;int&gt;  &lt;int&gt; &lt;int&gt; &lt;dbl&gt;    &lt;int&gt;     &lt;int&gt;     &lt;int&gt; &lt;chr&gt;         
+## 1 high_low    1e6    1e6     0     0        2         3         4 high_504860, ~
+## 
+## $logical
+## # A tibble: 1 x 8
+##   variable   cases       n    na  p_na n_TRUE n_FALSE p_TRUE
+##   &lt;chr&gt;      &lt;int&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+## 1 even     1000000 1000000     0     0 500662  499338  0.501
+## 
+## $numeric
+## # A tibble: 2 x 15
+##   variable   cases       n    na  p_na  mean    sd    se    p0   p25   p50   p75
+##   &lt;chr&gt;      &lt;int&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 y2       1000000 1000000     0     0 100.   10.1 0.01   60.0  93.4  100.  107.
+## 2 x1       1000000 1000000     0     0  50.6  28.9 0.029   1    25     50    76 
+## # ... with 3 more variables: p100 &lt;dbl&gt;, skew &lt;dbl&gt;, kurt &lt;dbl&gt;</code></pre>
+<p>Despite the number of calculations and operations that need to be performed, <code>describe_all()</code> also runs pretty quickly for this amount of data, taking <em>a second</em> and using less than 620 MB of RAM to describe 6 columns of various classes with 1,000,000 values each<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>.</p>
+<pre class="r"><code>mark(
+  pdata_resampled %&gt;%
+    select(d, g, high_low, even, y2, x1) %&gt;% 
+    describe_all(),
+  
+  iterations = 10
+) %&gt;% 
+  select(median, 
+         #bench::mark() also tells us how much memory was used
+         mem_alloc)</code></pre>
+<pre><code>## Warning: Some expressions had a GC in every iteration; so filtering is disabled.</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##     median mem_alloc
+##   &lt;bch:tm&gt; &lt;bch:byt&gt;
+## 1    998ms     619MB</code></pre>
+<p>Again, you can specify any number of grouping variables as unquoted column names that are present in the input data via the <code>...</code>. You can also selectively describe variables of specific classes using <code>describe_all()</code>’s “class” argument, which accepts a character vector of options:</p>
+<ul>
+<li><strong>“d”</strong>: dates</li>
+<li><strong>“f”</strong>: factors</li>
+<li><strong>“c”</strong>: character</li>
+<li><strong>“l”</strong>: logical</li>
+<li><strong>“n”</strong>: numeric</li>
+<li><strong>“all”</strong>: shortcut for all of the above &amp; syntactically equivalent to c(“d”, “f”, “c”, “l”, “n”)</li>
+</ul>
+<p>This can save you time both by avoiding a <code>dplyr::select(where())</code> layer sometimes and also in terms of execution time (especially on larger datasets), because no unnecessary operations are performed upon columns of non-requested classes.</p>
+<pre class="r"><code>pdata_resampled %&gt;%
+  select(-id) %&gt;% 
+  describe_all(g, d, #group by factor variable &quot;g&quot; and date variable &quot;d&quot;
+               class = &quot;n&quot;) #only describe numeric variables other than the id column</code></pre>
+<pre><code>## # A tibble: 300 x 17
+##    g     d          variable cases     n    na  p_na  mean    sd    se    p0
+##    &lt;fct&gt; &lt;date&gt;     &lt;chr&gt;    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 d     2015-01-01 y1       16606 16606     0     0 199.  11.5  0.089 172. 
+##  2 d     2015-01-01 y2       16606 16606     0     0  99.5  9.56 0.074  73.4
+##  3 d     2015-01-01 x1       16606 16606     0     0  54.0 28.4  0.22    1  
+##  4 d     2015-01-01 x2       16606 16606     0     0 151.  26.8  0.208 101  
+##  5 d     2015-01-01 x3       16606 16606     0     0 250.  30.6  0.237 201  
+##  6 b     2016-01-01 y1       17099 17099     0     0 185.  11.1  0.085 150. 
+##  7 b     2016-01-01 y2       17099 17099     0     0 101.  10.2  0.078  74.4
+##  8 b     2016-01-01 x1       17099 17099     0     0  51.4 30.0  0.229   2  
+##  9 b     2016-01-01 x2       17099 17099     0     0 149.  28.9  0.221 101  
+## 10 b     2016-01-01 x3       17099 17099     0     0 253.  29.9  0.228 201  
+## # ... with 290 more rows, and 6 more variables: p25 &lt;dbl&gt;, p50 &lt;dbl&gt;,
+## #   p75 &lt;dbl&gt;, p100 &lt;dbl&gt;, skew &lt;dbl&gt;, kurt &lt;dbl&gt;</code></pre>
+<pre class="r"><code>#performance when splitting by 2 variables. 
+mark(
+  pdata_resampled %&gt;% select(-id) %&gt;% 
+    describe_all(g, d, class = &quot;n&quot;), 
+  
+  iterations = 10) %&gt;% 
+  select(median, mem_alloc)</code></pre>
+<pre><code>## Warning: Some expressions had a GC in every iteration; so filtering is disabled.</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##     median mem_alloc
+##   &lt;bch:tm&gt; &lt;bch:byt&gt;
+## 1    1.59s     994MB</code></pre>
+<p>Note that if only one description variable class is requested, you’ll get a data frame back instead of a list of data frames. Moreover, despite having to repeat all calculations across the 5 non-id numeric columns in the 1,000,000 row version of <code>pdata</code> <em>for each of 5 levels of the g factor</em>, we get all of the results in <em>~1.6 seconds</em> using ~1 GB of RAM!</p>
+</div>
+<div id="confidence-intervals" class="section level2">
+<h2><span class="header-section-number">5.4</span> confidence intervals</h2>
+<p>Confidence intervals are a topic that students (and some seasoned researchers) tend to struggle with, so I’ll cover it here in more detail. In <a href="https://seeing-theory.brown.edu/frequentist-inference/index.html">frequentist inference</a>, a <a href="https://rpsychologist.com/d3/ci/">confidence interval (CI)</a> provides an estimate of the possible values a statistic (AKA “parameter”), such as the mean, could take in the population based on the distribution of values in the observed sample data. It is basically an educated guess about what the population value for the parameter is, based on the observed evidence. Naturally, the more observations you have to work with, the more precise your estimates will be. More concretely, an observed 95% CI for a mean of 1-5 has a 95% probability of containing the true population mean.</p>
+<p>Bootstrapping<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a> is a computational procedure to estimate the sampling distribution for the statistic of interest by sampling from the observed data with replacement and calculating the statistic for each sample. This process is repeated thousands of times, and the observed probability distribution of (re-)sampled statistics is used to define confidence limits for plausible values of the statistic in the underlying population. CIs are difficult to derive analytically for statistics other than the mean, but modern computers make it no trouble at all to use bootstrapping to estimate them.</p>
+<p>In practice, we often estimate a statistic, like the mean, based on a single sample under the <em>assumption</em> that the true probability distribution of what we are measuring closely approximates a well defined distribution in the <a href="https://en.wikipedia.org/wiki/Exponential_family">exponential family</a>, such as the “normal” (AKA “Gaussian”) distribution for continuous variables. In behavioural research, this “normality” assumption is often reasonable because most psychological traits (e.g. intelligence) tend to be expressed in an approximately normally distributed fashion (e.g. performance on IQ tests). Interestingly, it is also generally reasonable for large sample sizes, due to the <a href="http://www.biostathandbook.com/normality.html">central limit theorem (CLT)</a>. The CLT teaches us that a mean estimated from a sufficiently large random sample of independent and identically distributed values (often abbreviated as “i.i.d.”)<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a> will be approximately normally distributed <em>irrespective</em> of the shape of the distribution of values in the underlying population. You can see the CLT in action <a href="https://seeing-theory.brown.edu/probability-distributions/index.html#section3">here</a>, which is the best demonstration of it I’ve come across so far. You can typically benefit from the CLT if you have a sample size <a href="https://statisticsbyjim.com/basics/central-limit-theorem/">&gt;= 30</a>, which means that you don’t need to worry as much about violations of normality for large samples as they pertain to the validity of popular tests like the analysis of variance.</p>
+<p><code>elucidate</code> helps you get either theory-based CIs for the mean or bootstrapped CIs for other numeric variable summary statistics using the <code>describe_ci()</code> and <code>describe_ci_all()</code> functions.</p>
+<p>These functions are also super easy to use. They both return a tibble, with a column indicating the “lower” bound of the CI, the observed statistic, and the “upper” bound of the CI. By default, you’ll get a 95% CI for the mean derived analytically from a normal distribution.</p>
+<p>Generating CIs can take a while for larger vectors especially when bootstrapping is involved, so for this segment of the post we’ll work with the original 12,000-row version of <code>pdata</code>.</p>
+<pre class="r"><code>pdata %&gt;% 
+  describe_ci(y1)</code></pre>
+<pre><code>## # A tibble: 1 x 3
+##   lower  mean upper
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  153.  154.  154.</code></pre>
+<p>To get a CI for another statistic, you set the “stat” argument to the unquoted name of the summary statistic function. For example, to get a 95% CI for the median of y1, we can use:</p>
+<pre class="r"><code>pdata %&gt;% 
+  describe_ci(y1, stat = median)</code></pre>
+<pre><code>## # A tibble: 1 x 3
+##   lower median upper
+##   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1  144.   145.  146.</code></pre>
+<p>The CIs for summary statistics other than the mean are obtained using bootstrapping via the <a href="https://cran.r-project.org/web/packages/boot/boot.pdf">boot</a> package that is installed with R. You can modify some key bootstrapping parameters, like the number of replicates or the type of CIs to return, via some additional arguments. Like <code>describe()</code>, <code>describe_ci()</code> also accepts any number of unquoted variable names to use as grouping variables via <code>...</code>. You can also try to speed things up with parallel processing if you have multiple cores on your machine<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a>.</p>
+<pre class="r"><code>pdata %&gt;% 
+  describe_ci(y1,
+              g, #get the median and bootstrapped CI of y1 for each level of g
+              stat = median, 
+              #use 5,000 bootstrap replicates instead of the default 2,000
+              replicates = 5000,  
+              #get a bias-corrected and accelerated CI instead of the default
+              #percentile intervals
+              ci_type = &quot;bca&quot;, 
+              #you can adjust the confidence level via ci_level
+              ci_level = 0.9,
+              #you can enable parallel processing if you have multiple cores
+              parallel = TRUE, 
+              #specify the number of cores to use with the cores argument
+              #my laptop has 12 logical cores so I&#39;ll use 10 of them
+              cores = 10)</code></pre>
+<pre><code>## # A tibble: 5 x 4
+##   g     lower median upper
+##   &lt;fct&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1 a      131.   133.  134.
+## 2 b      141.   147.  152.
+## 3 c      159.   165.  172.
+## 4 d      170.   175.  180.
+## 5 e      136.   137.  137.</code></pre>
+<p>It is worth noting that adding more cores doesn’t necessarily mean things will end up finishing sooner, due to the <a href="http://parallelcomp.uw.hu/ch05lev1sec1.html#:~:text=The%20time%20spent%20communicating%20data,serial%20components%20in%20a%20program.">overhead</a> of coordinating operations across cores.</p>
+<p><code>describe_ci_all()</code> gives you confidence intervals for the specified statistic for all numeric columns in the input data frame.</p>
+<pre class="r"><code>pdata %&gt;% 
+  select(-id) %&gt;% 
+  #mean and estimated CI for the mean for each non-id numeric column and each
+  #level of g
+  describe_ci_all(g) %&gt;% 
+  print(n = Inf) #print all rows</code></pre>
+<pre><code>## # A tibble: 25 x 5
+##    variable g     lower  mean upper
+##    &lt;chr&gt;    &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 x1       e      49.5  50.7  51.8
+##  2 x1       c      48.7  49.9  51.1
+##  3 x1       d      49.4  50.5  51.7
+##  4 x1       a      50.2  51.3  52.4
+##  5 x1       b      48.8  50.0  51.1
+##  6 x2       e     150.  151.  152. 
+##  7 x2       c     149.  150.  151. 
+##  8 x2       d     150.  151.  152. 
+##  9 x2       a     150.  151.  153. 
+## 10 x2       b     149.  150.  151. 
+## 11 x3       e     249.  250.  251. 
+## 12 x3       c     250.  251.  252. 
+## 13 x3       d     249.  250.  251. 
+## 14 x3       a     249.  250.  251. 
+## 15 x3       b     250.  251.  252. 
+## 16 y1       e     134.  135.  136. 
+## 17 y1       c     175.  177.  180. 
+## 18 y1       d     172.  174.  176. 
+## 19 y1       a     133.  134.  135. 
+## 20 y1       b     150.  152.  153. 
+## 21 y2       e      99.7 100.  101. 
+## 22 y2       c      99.5  99.9 100. 
+## 23 y2       d      99.7 100.  100. 
+## 24 y2       a      99.7 100.  100. 
+## 25 y2       b      99.8 100.  101.</code></pre>
+<p>This reveals that all groups of the “g” factor in <code>pdata</code> probably have similar population mean values and are unlikely to represent statistically different populations in terms of the “x1”, “x2”, “x3”, or “y2” variables (because the 95% CIs for the mean of each group overlap with one another). However, the mean “y1” scores of groups “c” &amp; “d” seem to be higher than the means of groups “a”, “b”, &amp; “e”. These results suggest that “y1” is a useful measure for differentiating between some of the “g” factor groups in <code>pdata</code>.</p>
+</div>
+</div>
+<div id="to-see-look" class="section level1">
+<h1><span class="header-section-number">6</span> <strong>To see, look</strong></h1>
+<div id="anscombes-lesson-numeric-descriptions-can-be-misleading" class="section level2">
+<h2><span class="header-section-number">6.1</span> Anscombe’s lesson: numeric descriptions can be misleading</h2>
+<p>Anscombe’s <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">famous quartet</a> revealed that we can’t always rely upon a set of summary statistics to learn all of the key features of our data. The quartet is a set of four pairs of variables with nearly identical summary statistic values &amp; linear regression parameters but very different distributions. Since these data come pre-loaded with base R, we can just use them (like <code>mtcars</code>) by calling the name <code>anscombe</code>. There are 4 pairs (numbered 1-4) of x and y variables to be examined.</p>
+<p>We’ll first examine these data using <code>describe_all()</code>.</p>
+<pre class="r"><code>anscombe %&gt;% 
+  #recall that glimpse doesn&#39;t modify the data itself, so we can use it in the
+  #middle of a pipeline
+  glimpse() %&gt;% 
+  describe_all() %&gt;% 
+  select(mean:kurt)</code></pre>
+<pre><code>## Rows: 11
+## Columns: 8
+## $ x1 &lt;dbl&gt; 10, 8, 13, 9, 11, 14, 6, 4, 12, 7, 5
+## $ x2 &lt;dbl&gt; 10, 8, 13, 9, 11, 14, 6, 4, 12, 7, 5
+## $ x3 &lt;dbl&gt; 10, 8, 13, 9, 11, 14, 6, 4, 12, 7, 5
+## $ x4 &lt;dbl&gt; 8, 8, 8, 8, 8, 8, 8, 19, 8, 8, 8
+## $ y1 &lt;dbl&gt; 8.04, 6.95, 7.58, 8.81, 8.33, 9.96, 7.24, 4.26, 10.84, 4.82, 5.68
+## $ y2 &lt;dbl&gt; 9.14, 8.14, 8.74, 8.77, 9.26, 8.10, 6.13, 3.10, 9.13, 7.26, 4.74
+## $ y3 &lt;dbl&gt; 7.46, 6.77, 12.74, 7.11, 7.81, 8.84, 6.08, 5.39, 8.15, 6.42, 5.73
+## $ y4 &lt;dbl&gt; 6.58, 5.76, 7.71, 8.84, 8.47, 7.04, 5.25, 12.50, 5.56, 7.91, 6.89</code></pre>
+<pre><code>## # A tibble: 8 x 10
+##    mean    sd    se    p0   p25   p50   p75  p100   skew   kurt
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1  9     3.32 1      4     6.5   9    11.5  14     0     -1.2  
+## 2  9     3.32 1      4     6.5   9    11.5  14     0     -1.2  
+## 3  9     3.32 1      4     6.5   9    11.5  14     0     -1.2  
+## 4  9     3.32 1      8     8     8     8    19     3.32  11    
+## 5  7.50  2.03 0.613  4.26  6.32  7.58  8.57 10.8  -0.065 -0.535
+## 6  7.50  2.03 0.613  3.1   6.70  8.14  8.95  9.26 -1.32   0.846
+## 7  7.5   2.03 0.612  5.39  6.25  7.11  7.98 12.7   1.86   4.38 
+## 8  7.50  2.03 0.612  5.25  6.17  7.04  8.19 12.5   1.51   3.15</code></pre>
+<p>The means, standard deviations, and standard errors we get suggest that all of the x variables and y variables are quite similar to one another, although the percentiles and skew/kurtosis columns hint that perhaps this isn’t quite true.</p>
+</div>
+<div id="plot_-ting-data-with-elucidate" class="section level2">
+<h2><span class="header-section-number">6.2</span> <code>plot_*</code>-ting data with elucidate</h2>
+<p>The best way to know for sure is to look at the data, in this case with scatter plots (for combinations of continous variables). R allows you do plot data in a variety of ways, but for now we’ll focus on the <code>elucidate::plot_*</code> function set. Each of these accepts a data frame as the 1st argument for compatibility with the pipe operator (<code>%&gt;%</code>) . <code>plot_scatter()</code> gives us scatter plots. Required arguments are:</p>
+<ol style="list-style-type: decimal">
+<li>data = data frame containing the x and y variables</li>
+<li>y = variable to plot on the y-axis</li>
+<li>x = variable to plot on the x-axis</li>
+</ol>
+<p>We can also opt to add regression lines using the <strong>“regression_line”</strong> argument, and to get a <em>linear</em> regression line, we’ll set the <strong>“regression_method”</strong> argument to <strong>“lm”</strong> (for <strong>l</strong>inear <strong>m</strong>odel). There is also an option to specify the “regression_formula” (more on this in a later post), but if you don’t use it the function will conveniently<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a> tell you which formula is being used by default.</p>
+<p><em>N.B.</em> There are quite a few other <code>plot_scatter()</code> arguments to facilitate customization. You can learn about them via <code>?plot_scatter()</code>.</p>
+<p>The <a href="https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html">gridExtra</a> package provides a helpful function called <code>grid.arrange()</code> that we can use to combine plots into one graphics window/printout as panels.</p>
+<div id="basic-plot_scatter-with-regression-lines" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> basic <code>plot_scatter()</code> with regression lines</h3>
+<pre class="r"><code>p1 &lt;- anscombe %&gt;% 
+  plot_scatter(y = y1, x = x1,
+               regression_line = TRUE, regression_method = &quot;lm&quot;)
+
+p2 &lt;- anscombe %&gt;% 
+  plot_scatter(y = y2, x = x2,
+               regression_line = TRUE, regression_method = &quot;lm&quot;)
+
+p3 &lt;- anscombe %&gt;% 
+  plot_scatter(y = y3, x = x3,
+               regression_line = TRUE, regression_method = &quot;lm&quot;)
+
+p4 &lt;- anscombe %&gt;% 
+  plot_scatter(y = y4, x = x4, 
+               regression_line = TRUE, regression_method = &quot;lm&quot;)
+
+#since I&#39;m only planning to use grid.arrange() once, I&#39;ll just call it via the
+#pacakge::function() syntax, which lets you access any object (yes, R functions
+#are objects) from any package that you have installed without loading the rest
+#of the package,
+gridExtra::grid.arrange(p1, p2, 
+                        p3, p4, 
+                        #provide unquoted plot object names to be included
+                        ncol = 2) #specify ncol or nrow</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;
+## `geom_smooth()` using formula &#39;y ~ x&#39;
+## `geom_smooth()` using formula &#39;y ~ x&#39;
+## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>I think you’ll agree that these variable combinations are quite a bit different than we might have expected based solely on the descriptive stats! Also, basic linear regression only seems like an appropriate choice for the top left plot comparing y1 to x1. I hope you now have a better appreciation of the value of plotting data as well as the utility of metrics like skewness and kurtosis.</p>
+<p>Other obviously named <code>plot_*</code> (think “plot_geometry”) convenience functions currently provided<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a> by <code>elucidate</code> include:</p>
+<ul>
+<li><p><code>plot_histogram()</code> = histogram of the binned counts of a continuous variable on the x axis (y is not supplied for this one).</p></li>
+<li><p><code>plot_density()</code> = basically a smoothed version of the histogram that shows a kernel density estimate of the probability density function for a continuous variable. I tend to prefer this over the histogram because it is easier to overlay a normal distribution over it (both are on the same “probability density” scale).</p></li>
+<li><p><code>plot_box()</code> = “box-and-whiskers” plot of a continuous variable on the y axis by one or more groups (a nominal variable) on the x axis. As you are hopefully already aware, this shows you the 25th, 50th (i.e. the median), and 75th percentiles for the y-variable as a box with a line through it plus whiskers extending above the 75th percentile to the maximum value (or 1.5 x the IQR) and below the 25th percentile to the minimum value.</p></li>
+<li><p><code>plot_violin()</code> = violin plot of a continuous variable on the y axis by one or more groups (a nominal variable) on the x axis. Violin plots can reveal the presence of a bimodal distribution (containing multiple density peaks), which isn’t captured in a box plot.</p></li>
+<li><p><code>plot_stat_error()</code> = plot a summary statistic (via the <strong>“stat”</strong> argument) for a numeric variable, and error bars (via the <strong>“error”</strong> argument) representing a measure of uncertainty in it. You can use this to quickly plot the mean +/- standard error or a confidence interval. The other “stat” option currently available is “median”.</p></li>
+</ul>
+<p>The 4 plot types I tend to use most often in my research are the density plot, box-and-whiskers plot, scatter plot (as above), and statistic +/- error bars plot, so for this post I will focus on examples for the remaining 3 we haven’t covered so far.</p>
+</div>
+<div id="basic-plot_density" class="section level3">
+<h3><span class="header-section-number">6.2.2</span> basic <code>plot_density()</code></h3>
+<pre class="r"><code>pdata_resampled %&gt;% 
+  plot_density(x = y1,
+               title = &quot;basic density plot&quot;,
+               fill = &quot;blue2&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+</div>
+<div id="customized-plot_density" class="section level3">
+<h3><span class="header-section-number">6.2.3</span> customized <code>plot_density()</code></h3>
+<pre class="r"><code>pdata %&gt;% plot_density(x = y1,
+                       fill_var = g, #assign a variable to colour
+                       alpha = 0.4,
+                       fill_var_order = c( &quot;c&quot;, &quot;a&quot;, &quot;b&quot;, &quot;d&quot;, &quot;e&quot;), #reorder the levels of the colour variable
+                       fill_var_labs = c(&quot;control&quot; = &quot;c&quot;, 
+                                         &quot;treatment A&quot; = &quot;a&quot;,
+                                         &quot;treatment B&quot; = &quot;b&quot;,
+                                         &quot;treatment D&quot; = &quot;d&quot;,
+                                         &quot;treatment E&quot; = &quot;e&quot;), #recode the colour variable labels
+                       fill_var_values = c(&quot;blue3&quot;, 
+                                           &quot;red3&quot;, 
+                                           &quot;green3&quot;,
+                                           &quot;purple3&quot;,
+                                           &quot;gold3&quot;), #change the colours from the ggplot2 defaults
+                       fill_var_title = &quot;# cylinders&quot;) +
+  #the plot_* functions give you ggplots, so you can build upon them using
+  #ggplot2 layers if you want (added via &quot;+&quot;, not &quot;%&gt;%&quot;). ggplot2 will be the
+  #focus of the next post so don&#39;t worry if it doesn&#39;t make as much sense to you
+  #yet
+  labs(title = &quot;customized density plot&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+</div>
+<div id="basic-plot_box" class="section level3">
+<h3><span class="header-section-number">6.2.4</span> basic <code>plot_box()</code></h3>
+<pre class="r"><code>pdata_resampled %&gt;% 
+  plot_box(y1, g, fill = &quot;blue2&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+</div>
+<div id="customized-plot_box-with-facetting" class="section level3">
+<h3><span class="header-section-number">6.2.5</span> customized <code>plot_box()</code> with facetting</h3>
+<pre class="r"><code>#boxplot showing additional customization
+plot_box(data = pdata, #data source
+         y = y2, #variable to go on the y-axis
+         x = high_low, #variable on the x-axis
+         ylab = &quot;y2 score&quot;, #custom y-axis label
+         xlab = &quot;treatment dosage&quot;, #custom x-axis label
+         x_var_order = c(&quot;low&quot;, &quot;high&quot;),
+         fill_var = g, #assign variable am to fill
+         fill_var_title = &quot;group&quot;, #relabel the fill variable title in the legend
+         fill_var_order = c( &quot;c&quot;, &quot;a&quot;, &quot;b&quot;, &quot;d&quot;, &quot;e&quot;), #reorder the levels of the colour variable
+         fill_var_labs = c(&quot;control&quot; = &quot;c&quot;, 
+                           &quot;treatment A&quot; = &quot;a&quot;,
+                           &quot;treatment B&quot; = &quot;b&quot;,
+                           &quot;treatment D&quot; = &quot;d&quot;,
+                           &quot;treatment E&quot; = &quot;e&quot;), #recode the colour variable labels
+         fill_var_values = c(&quot;blue3&quot;, 
+                             &quot;red3&quot;, 
+                             &quot;green3&quot;,
+                             &quot;purple3&quot;,
+                             &quot;gold3&quot;), #change the colours from the ggplot2 defaults
+         facet_var = d,
+         theme = &quot;bw&quot;) #specify the theme</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+</div>
+<div id="basic-plot_stat_error-of-the-mean---se" class="section level3">
+<h3><span class="header-section-number">6.2.6</span> basic <code>plot_stat_error()</code> of the mean +/- SE</h3>
+<pre class="r"><code>#plot a mean with SE error bars
+pdata %&gt;% 
+  plot_stat_error(y = y1, 
+                  x = g,
+                  fill = &quot;red&quot;,
+                  stat = &quot;mean&quot;, 
+                  error = &quot;se&quot;, 
+                  theme = &quot;bw&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<pre class="r"><code>#notice that the y-axis default reflects the specified statistic (mean or
+#median) and error metric</code></pre>
+<p>This one shows us that the mean y1 scores of groups “c” and “d” are actually a lot higher (over 170) than the mean y1 scores of the other groups with groups “a” and “e” having very similar means around 135 and group “b” falling in between the others at approximately 152. The practical utility of these observed mean differences of course depends on whether or not the distributions are approximately Gaussian. If so, then a plot of the group medians and 95% CIs for them should look similar. However, as shown below, they aren’t (which shouldn’t be a surprise after seeing the density plots above).</p>
+</div>
+<div id="plot-medians-and-bootstrapped-cis" class="section level3">
+<h3><span class="header-section-number">6.2.7</span> plot medians and bootstrapped CIs</h3>
+<pre class="r"><code>#You can also produce a bar graph of group medians with 95% bootstrapped
+#confidence interval error bars and easily modify fill, colour, and transparency
+pdata[1:100, ] %&gt;% 
+  plot_stat_error(y = y1, x = g, 
+                  #in case your supervisor asks for it, you can get bars instead
+                  #of points... although the default points are recommended in
+                  #most cases
+                  geom = &quot;bar&quot;, 
+                  stat = &quot;median&quot;, 
+                  fill = &quot;blue2&quot;,
+                  colour = &quot;black&quot;,
+                  alpha = 0.7, 
+                  replicates = 2000) #controls the number of bootstrapped samples to use</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+</div>
+<div id="plot-means-or-medians-and-cis-for-multiple-time-points-connected-with-lines" class="section level3">
+<h3><span class="header-section-number">6.2.8</span> plot means or medians and CIs for multiple time points connected with lines</h3>
+<p>Overall means and medians can hide important variations in the data in cases where repeated measurements are taken over time. For example, when we account for observation year in <code>pdata</code> by plotting the “d” date column on the x-axis and assigning the “g” factor to colour, there is a clear divergence of group median “y1” scores from 2008-2019 that becomes especially noticeable after 2014.</p>
+<pre class="r"><code>#an example with &quot;longitudinal&quot; data
+pdata %&gt;%
+  #all dates in the d column are for Jan. 1st. Since only the year is
+  #meaningful, we&#39;ll 1st extract the 1st 4 characters from the d column values
+  #using a combination of dplyr::mutate() and stringr::str_sub()
+  mutate(d = as.factor(str_sub(d, end = 4))) %&gt;% 
+  plot_stat_error(y = y1, x = d,
+                  xlab = &quot;year&quot;,
+                  stat = &quot;median&quot;, #default error metric is a 95% CI
+                  colour_var_title = &quot;group&quot;, 
+                  colour_var = g,
+                  colour_var_order = c( &quot;c&quot;, &quot;a&quot;, &quot;b&quot;, &quot;d&quot;, &quot;e&quot;),
+                  colour_var_labs = c(&quot;control&quot; = &quot;c&quot;, 
+                                      &quot;drug A&quot; = &quot;a&quot;,
+                                      &quot;drug B&quot; = &quot;b&quot;,
+                                      &quot;drug D&quot; = &quot;d&quot;,
+                                      &quot;drug E&quot; = &quot;e&quot;), #recode the colour variable labels
+                  colour_var_values = c(&quot;blue3&quot;, 
+                                        &quot;red3&quot;, 
+                                        &quot;green3&quot;,
+                                        &quot;purple3&quot;,
+                                        &quot;gold3&quot;), #change the colours from the ggplot2 defaults
+                  geom = &quot;point&quot;, #either &quot;bar&quot; or &quot;point&quot;. default = &quot;point&quot;
+                  p_size = 2, #adjust the size of the points
+                  add_lines = T, #connect the points with lines. This is useful for repeated-measures data.
+                  alpha = 0.6) #adjusts the transparency</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p>Thus, despite the apparent lack of any “g” factor group differences in median y1 scores that we saw before when plotting the overall medians &amp; CIs, there do appear to be substantial group differences at specific time points which are revealed when time is properly considered.</p>
+<p>A number of additional <code>plot_*</code> functions (e.g. <code>plot_bar()</code>, <code>plot_line()</code>, etc.) are in development and will be added to the package as soon as they are ready.</p>
+<p>To see what the basic R colour options are (which I’ve found to be more than sufficient for exploratory purposes), you can use <code>eludicate::colour_options()</code>, which renders labeled example tiles of the colours in either the “plot” panel of R studio…</p>
+<p><img src="colour_options_demo.gif" /></p>
+<p>…or saves them to a PDF file in your working directory using the “print_to_pdf” argument (in case you wanted to print it). By default, this PDF will be called “base_r_colour_options.pdf” but you can change it using the “pdf_name” argument.</p>
+</div>
+</div>
+</div>
+<div id="interacting-with-dynamic-data-representations" class="section level1">
+<h1><span class="header-section-number">7</span> <strong>Interacting with dynamic data representations</strong></h1>
+<p><code>elucidate::static_to_dynamic()</code> is a convenience wrapper for functions in the <a href="https://rstudio.github.io/DT/">DT</a>, <a href="https://glin.github.io/reactable/">reactable</a> and <a href="https://plotly.com/r/">plotly</a> packages that allow you to convert <em>static</em> data frames and ggplot2 graphs into <em>dynamic</em> <code>DataTables/reactables</code> and <code>plotly</code> graphs you can interact with. Output from <code>static_to_dynamic()</code> is displayed in the “Viewer” tab of R studio, rather than the “Plots” tab.</p>
+<p>By default, <code>static_to_dynamic()</code> will convert a data frame into a JavaScript “DataTable” via the <code>DT::datatable()</code> function if there are &lt;= 10,000 rows, and a “reactable” via the <code>reactable::reactable()</code><a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a> function if there are more than 10,000 rows. This is because (in my experience) the current local-processing implementation of <code>datatable()</code> function tends to run slowly (if at all) for data sets that are larger than this threshold, whereas the <code>reactable</code> alternative still works reasonably well with larger data sets (at least 100,000 rows)<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a>.</p>
+<ul>
+<li><p>Either option can be used for data frames with less than 10,000 rows via a <code>reactable</code> argument (<code>TRUE</code> = “reactable”/<code>FALSE</code> = “DT”, default = <code>FALSE</code>). Both options offer search-based filtering for the entire table or for specific columns, and (multi-)column sorting capabilities.</p></li>
+<li><p><code>datatable()</code> provides more functionality overall than <code>reactable()</code>, including Excel-like cell-editing/filling, easier filtering of rows, the ability to rearrange columns by clicking and dragging them, show or hide columns selectively, and options for downloading/copying/printing data. I tend to prefer the <code>DT</code> version for these features when I’m interacting with smaller tables, like the outputs of the <code>describe*</code> functions, but if you find that it is loading too slowly on your machine, try the “reactable” = <code>TRUE</code> argument option instead (which will still be nicer than the base R <code>View()</code> display).</p></li>
+</ul>
+<p><img src="static_to_dynamic_DT_demo.gif" /></p>
+<ul>
+<li><code>reactable()</code> is faster and more efficient than (locally-processed) <code>datatable</code>’s, so it still works reasonably well for larger datasets. <code>reactable()</code>, but not <code>datatable()</code> also allows you to group the table by one or more columns with the “group_by” argument so that you can collapse/expand certain groups of interest with a simple click of the mouse. The row stripes and highlighting are more clearly visible in the <code>reactable()</code> version as well, and you can also select multiple rows with check boxes to highlight them which can make visually comparing rows of interest a bit easier.</li>
+</ul>
+<p><img src="static_to_dynamic_reactable_demo.gif" /></p>
+<ul>
+<li><code>ggplot2</code> graphs (i.e. the outputs of the <code>plot_*</code> functions) are converted to interactive <code>plotly</code> graphs via <code>plotly::ggplotly()</code>, which lets you pan around the plot, zoom in to different areas of it, highlight a subset of data points, and more.</li>
+</ul>
+<p><img src="static_to_dynamic_plotly_demo.gif" /></p>
+</div>
+<div id="correct-data-with-wash_df-recode_errors" class="section level1">
+<h1><span class="header-section-number">8</span> <strong>Correct</strong> data with <code>wash_df()</code> &amp; <code>recode_errors()</code></h1>
+<p>Although, the main focus of <code>elucidate</code> is on data exploration, it has a few auxiliary utility functions, <code>recode_errors()</code> &amp; <code>wash_df()</code>, which help you replace/remove errors &amp; correct common formatting problems detected during the exploration process.</p>
+<p>To demonstrate their utility, I’ve prepared a messy version of a subset of the <a href="https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html">mtcars</a> dataset that we’ve seen before. Imagine, if you will, that these messy data had been supplied by a collaborator for you to analyse and you hadn’t seen another version of them before.</p>
+<p>Let’s see what we’re dealing with using a combination of <code>glimpse()</code> , <code>dupes()</code>, <code>counts_tb_all()</code>, and <code>describe_all()</code>.</p>
+<pre class="r"><code>messy_cars %&gt;% 
+  glimpse() %&gt;% 
+  dupes() %&gt;% 
+  head()</code></pre>
+<pre><code>## No column names specified - using all columns.</code></pre>
+<pre><code>## Rows: 44
+## Columns: 8
+## $ `Miles per gallon` &lt;dbl&gt; 21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.~
+## $ `# of cylinders`   &lt;chr&gt; &quot;six&quot;, &quot;six&quot;, &quot;4&quot;, &quot;six&quot;, &quot;8&quot;, &quot;six&quot;, &quot;8&quot;, &quot;4&quot;, &quot;4&quot;~
+## $ DISP               &lt;chr&gt; &quot;160&quot;, &quot;160&quot;, &quot;108&quot;, &quot;258&quot;, &quot;N/A&quot;, &quot;225&quot;, &quot;N/A&quot;, &quot;1~
+## $ hp                 &lt;dbl&gt; 110, 110, 93, 110, 175, 105, 245, 62, 95, 123, 123,~
+## $ wt                 &lt;dbl&gt; 2.620, 2.875, 2.320, 3.215, 3.440, 3.460, 3.570, 3.~
+## $ gear               &lt;chr&gt; &quot;four&quot;, &quot;four&quot;, &quot;four&quot;, &quot;3&quot;, &quot;3&quot;, &quot;3&quot;, &quot;3&quot;, &quot;four&quot;,~
+## $ am                 &lt;dbl&gt; 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+## $ notes              &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~</code></pre>
+<pre><code>## Duplicated rows detected! 21 of 44 rows in the input data have multiple copies.</code></pre>
+<pre><code>##   Miles per gallon # of cylinders DISP  hp   wt gear am notes n_copies
+## 1             15.0              8  N/A 999 3.57    5  1    NA        4
+## 2             15.0              8  N/A 999 3.57    5  1    NA        4
+## 3             15.0              8  N/A 999 3.57    5  1    NA        4
+## 4             15.0              8  N/A 999 3.57    5  1    NA        4
+## 5             15.5              8  N/A 150 3.52    3  0    NA        3
+## 6             15.5              8  N/A 150 3.52    3  0    NA        3</code></pre>
+<p><code>glimpse()</code> reveals some inconveniently formatted column names, which (in R) shouldn’t contain spaces or begin with non-letter characters. You also want a column to have consistently formatted values, not like the mix of string and numeric values we are seeing under the number of cylinders column. <code>copies(filter = "dupes")</code> also notifies us that 21 of the 44 rows in <code>messy_cars</code> are not unique.</p>
+<pre class="r"><code>counts_tb_all(messy_cars, n = 5)</code></pre>
+<pre><code>## $`Miles per gallon`
+##   top_v top_n bot_v bot_n
+## 1    15     4  13.3     1
+## 2  15.2     3  14.3     1
+## 3  15.5     3  14.7     1
+## 4  19.2     3  15.8     1
+## 5    21     3  16.4     1
+## 
+## $`# of cylinders`
+##   top_v top_n bot_v bot_n
+## 1     8    21   six     9
+## 2     4    14     4    14
+## 3   six     9     8    21
+## 4  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;
+## 5  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;
+## 
+## $DISP
+##   top_v top_n bot_v bot_n
+## 1   N/A    17   108     1
+## 2 275.8     4 120.1     1
+## 3   160     3 120.3     1
+## 4 146.7     2   121     1
+## 5 167.6     2 140.8     1
+## 
+## $hp
+##   top_v top_n bot_v bot_n
+## 1   110     4   109     1
+## 2   150     4   113     1
+## 3   175     4   205     1
+## 4   180     4   215     1
+## 5   999     4   230     1
+## 
+## $wt
+##   top_v top_n bot_v bot_n
+## 1    -1     5  2.14     1
+## 2  3.57     5  2.32     1
+## 3  3.44     3 2.465     1
+## 4  3.52     3  2.77     1
+## 5   2.2     2  2.78     1
+## 
+## $gear
+##   top_v top_n bot_v bot_n
+## 1     3    20     4     2
+## 2  four    14     5     8
+## 3     5     8  four    14
+## 4     4     2     3    20
+## 5  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;
+## 
+## $am
+##   top_v top_n bot_v bot_n
+## 1     0    25     1    19
+## 2     1    19     0    25
+## 3  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;
+## 4  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;
+## 5  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;
+## 
+## $notes
+##   top_v top_n bot_v bot_n
+## 1                        
+## 2  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;
+## 3  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;
+## 4  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;
+## 5  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;</code></pre>
+<p><code>counts_tb_all()</code> tells us that the “# of cylinders” column uses numeric coding for all 4 and 8 cylinder cars but the string “six” for all 6 cylinder cars, a problem that also affects some entries of “four” in the “gears” column. It also shows us an impossible value of “-1” for the car’s weight (“wt”) in 5 cases, 14 invalid <code>N/A</code> values in the “DISP” column (these should be simply <code>NA</code> or missing altogether).</p>
+<pre class="r"><code>describe_all(messy_cars, 
+             output = &quot;dt&quot;) #so all output is printed</code></pre>
+<pre><code>## $character
+##          variable cases  n na p_na n_unique min_chars max_chars
+## 1: # of cylinders    44 44  0    0        3         1         3
+## 2:           DISP    44 44  0    0       18         2         5
+## 3:           gear    44 44  0    0        4         1         4
+##                             counts_tb
+## 1:                  8_21, 4_14, six_9
+## 2: N/A_17, 275.8_4, ..., 79_1, 95.1_1
+## 3:            3_20, four_14, 5_8, 4_2
+## 
+## $logical
+##    variable cases n na p_na n_TRUE n_FALSE p_TRUE
+## 1:    notes    44 0 44    1      0       0    NaN
+## 
+## $numeric
+##            variable cases  n na p_na    mean      sd     se   p0   p25    p50
+## 1: Miles per gallon    44 44  0    0  20.070   6.169  0.930 10.4 15.20  18.95
+## 2:               hp    44 44  0    0 214.045 257.074 38.755 52.0 96.50 136.50
+## 3:               wt    44 44  0    0   2.907   1.585  0.239 -1.0  2.62   3.44
+## 4:               am    44 44  0    0   0.432   0.501  0.076  0.0  0.00   0.00
+##       p75    p100   skew   kurt
+## 1:  22.80  33.900  0.855  0.006
+## 2: 180.00 999.000  2.707  6.114
+## 3:   3.57   5.424 -1.512  2.195
+## 4:   1.00   1.000  0.285 -2.012</code></pre>
+<p><code>describe_all()</code> reveals two further problems, a maximum value of 999 (likely representing a data entry error or surrogate value for missingness) under the “hp” column and a completely empty “notes” column. These kinds of inconsistencies and errors are common in datasets where multiple individuals have entered the data manually, e.g. into a shared excel file.</p>
+<p>I was the one who messed these data up so I happen to know in this case that “999” and “-1” are erroneous values, but if you see something like this in data that were collected/entered by someone else, you should ask them about it before proceeding.</p>
+<p>Fortunately the problems we’re seeing aren’t tough to deal with (for the most part) with a few <code>elucidate</code> helper functions: <code>copies(filter = "first")</code>, <code>wash_df()</code>, and <code>recode_errors()</code>.</p>
+<p>As you saw earlier, <code>copies(filter = "first")</code> drops the duplicated rows for us, solving one problem. We’ll assign it to a new object, “fixed_cars” which will hopefully converge to the original mtcars data structure as we apply these cleaning functions to it.</p>
+<pre class="r"><code>fixed_cars &lt;- messy_cars %&gt;% copies(filter = &quot;first&quot;)</code></pre>
+<pre><code>## No column names specified - using all columns.</code></pre>
+<p>The <code>recode_errors()</code> function accepts a vector of erroneous values to replace with a single value, where the default is <code>NA</code> (but this can be changed via the “replacement” argument). It will also replace “error” argument matches found in any cell in the input data across all rows and columns, but you can limit the search to specific rows or columns by passing a character, logical, or numeric vector of indices to the “rows” and/or “cols” arguments. It accepts a data frame or vector as input, so it also works within <a href="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#mutate">dplyr::mutate()</a>. In this case, we can use <code>recode_errors()</code> to fix many of the problems present in <code>messy_cars</code>.</p>
+<pre class="r"><code>fixed_cars &lt;- fixed_cars %&gt;% 
+  recode_errors(errors = &quot;six&quot;, replacement = &quot;6&quot;) %&gt;%
+  recode_errors(&quot;four&quot;, &quot;4&quot;) %&gt;% 
+  #after &quot;data&quot;, args. 2 and 3 are &quot;errors&quot; and &quot;replacement&quot;
+  recode_errors(c(-1, 999), 
+                #default replacement value is NA so we don&#39;t need to specify it
+                cols = c(&quot;hp&quot;, &quot;wt&quot;)) %&gt;% #choose columns to recode
+  recode_errors(&quot;N/A&quot;)</code></pre>
+<p><code>wash_df()</code> is a convenience wrapper for several functions in the <a href="https://github.com/sfirke/janitor">janitor</a>, <a href="https://readr.tidyverse.org/articles/readr.html">readr</a>, and <a href="https://tibble.tidyverse.org/">tibble</a> packages that help you clean up the formatting of your data and drop empty rows and/or columns. Specifically, by default it will (in this order):</p>
+<p><strong>1.</strong> Remove completely empty rows and columns using <code>janitor::remove_empty()</code>.</p>
+<p><strong>2.</strong> Convert all column names to “snake_case” format using <code>janitor::clean_names(case = "snake")</code>. The “case” argument allows you to choose a different case to use instead if you want. See the <code>janitor::clean_names()</code> documentation for details.</p>
+<p><strong>3.</strong> re-parse the classes of all columns in the data with <code>readr::parse_guess()</code>. Such parsing normally happens when you import data using <code>readr::read_csv()</code> and other importing functions, and now you can re-parse the columns on data that are already loaded into R just as easily. This can save you from having to reclassify columns one at a time with the “as.class”-set of functions (<code>as.numeric()</code>, <code>as.character()</code>, etc.).</p>
+<p>Each of these operations can also be modified or disabled with <code>wash_df()</code> arguments.</p>
+<p>Optionally, you can also convert the row names to a column with the “rownames_to_column” argument, or a column to row names with the “column_to_rownames” argument. These each use <code>tibble</code> package functions with the same names as the <code>wash_df()</code> arguments.</p>
+<p>It helps us clean up the <code>messy_cars</code> data by standardizing formatting of column names, dropping the empty “notes” column, and updating the class of the “number_of_cylinders”, “disp”, and “gear” columns from character to numeric to reflect the character-to-numeric value recoding above.</p>
+<pre class="r"><code>fixed_cars &lt;- fixed_cars %&gt;% wash_df()</code></pre>
+<p>Let’s see how it turned out by comparison to the relevant columns from the original <code>mtcars</code> data after renaming the “miles_per_gallon” and “number_of_cylinders” columns to match their original <code>mtcars</code> names (“mpg” and “cyl”).</p>
+<pre class="r"><code>fixed_cars %&gt;% 
+  rename(mpg = miles_per_gallon, cyl = number_of_cylinders) %&gt;% glimpse()</code></pre>
+<pre><code>## Rows: 32
+## Columns: 7
+## $ mpg  &lt;dbl&gt; 21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 19.2, 17.8,~
+## $ cyl  &lt;dbl&gt; 6, 6, 4, 6, 8, 6, 8, 4, 4, 6, 6, 8, 8, 8, 8, 8, 8, 4, 4, 4, 4, 8,~
+## $ disp &lt;dbl&gt; 160.0, 160.0, 108.0, 258.0, NA, 225.0, NA, 146.7, 140.8, 167.6, 1~
+## $ hp   &lt;dbl&gt; 110, 110, 93, 110, 175, 105, 245, 62, 95, 123, 123, 180, 180, 180~
+## $ wt   &lt;dbl&gt; 2.620, 2.875, 2.320, 3.215, 3.440, 3.460, 3.570, 3.190, 3.150, 3.~
+## $ gear &lt;dbl&gt; 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3,~
+## $ am   &lt;dbl&gt; 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0,~</code></pre>
+<pre class="r"><code>select(mtcars, mpg:hp, wt, gear, am) %&gt;% glimpse()</code></pre>
+<pre><code>## Rows: 32
+## Columns: 7
+## $ mpg  &lt;dbl&gt; 21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 19.2, 17.8,~
+## $ cyl  &lt;dbl&gt; 6, 6, 4, 6, 8, 6, 8, 4, 4, 6, 6, 8, 8, 8, 8, 8, 8, 4, 4, 4, 4, 8,~
+## $ disp &lt;dbl&gt; 160.0, 160.0, 108.0, 258.0, 360.0, 225.0, 360.0, 146.7, 140.8, 16~
+## $ hp   &lt;dbl&gt; 110, 110, 93, 110, 175, 105, 245, 62, 95, 123, 123, 180, 180, 180~
+## $ wt   &lt;dbl&gt; 2.620, 2.875, 2.320, 3.215, 3.440, 3.460, 3.570, 3.190, 3.150, 3.~
+## $ gear &lt;dbl&gt; 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3,~
+## $ am   &lt;dbl&gt; 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0,~</code></pre>
+<p>Not bad. Most aspects match the original, with a couple of mismatches in cases where the “errors” I introduced (<code>N/A</code>, <code>-1</code>, and <code>999</code>), and then subsequently deleted (set to <code>NA</code>), were meaningful values in the original dataset that I “corrupted” in preparing <code>messy_cars</code> for pedagogical purposes. In this case the true data are available to us for comparison so we could restore the correct values from the uncorrupted backup source. However, in real projects you may be less fortunate and find yourself in the position of having to omit<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a> anomalous values because doing so interferes less with your ability to get useful results from the data than leaving them in would. Let this example also serve as a lesson of <em>how important it is to be careful with your data at all stages, and back it up, starting on day 1 of collection/entry</em>.</p>
+</div>
+<div id="performance-evaluations" class="section level1">
+<h1><span class="header-section-number">9</span> <strong>Performance Evaluations</strong></h1>
+<p>To show you how well <code>elucidate</code> functions perform relative to the closest alternatives, we’ll do a few memory utilization and speed comparisons with <code>bench::mark()</code>. For the sake of brevity, we’ll focus on evaluating two of the most computationally demanding <code>elucidate</code> functions: <code>dupes()</code> and <code>describe_all()</code>. We’ll also increase the number of iterations from 10 to 25 for improved benchmarking reliability.</p>
+<div id="dupes-vs-janitorget_dupes" class="section level2">
+<h2><span class="header-section-number">9.1</span> <code>dupes()</code> vs <code>janitor::get_dupes()</code></h2>
+<p>First, I’ll apply <code>dupes()</code> and it’s closest non-elucidate counterpart, <code>janitor::get_dupes()</code>, to <code>pdata_resampled</code> when a couple of search columns are specified and standardize the formatting of the output to show that they yield equivalent results.</p>
+<pre class="r"><code>a &lt;- dupes(pdata_resampled, d, id) %&gt;%
+  #remainder of pipeline just serves to standardize the output format
+  select(d, id, dupe_count = n_copies, everything()) %&gt;%
+  arrange(d, id, dupe_count) %&gt;%
+  wash_df() 
+
+glimpse(a)</code></pre>
+<pre><code>## Rows: 1,000,000
+## Columns: 11
+## $ d          &lt;date&gt; 2008-01-01, 2008-01-01, 2008-01-01, 2008-01-01, 2008-01-01~
+## $ id         &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,~
+## $ dupe_count &lt;dbl&gt; 67, 67, 67, 67, 67, 67, 67, 67, 67, 67, 67, 67, 67, 67, 67,~
+## $ g          &lt;chr&gt; &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;, &quot;e&quot;,~
+## $ high_low   &lt;chr&gt; &quot;high&quot;, &quot;high&quot;, &quot;high&quot;, &quot;high&quot;, &quot;high&quot;, &quot;high&quot;, &quot;high&quot;, &quot;hi~
+## $ even       &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FAL~
+## $ y1         &lt;dbl&gt; 106.2633, 106.2633, 106.2633, 106.2633, 106.2633, 106.2633,~
+## $ y2         &lt;dbl&gt; 117.9265, 117.9265, 117.9265, 117.9265, 117.9265, 117.9265,~
+## $ x1         &lt;dbl&gt; 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59,~
+## $ x2         &lt;dbl&gt; 116, 116, 116, 116, 116, 116, 116, 116, 116, 116, 116, 116,~
+## $ x3         &lt;dbl&gt; 248, 248, 248, 248, 248, 248, 248, 248, 248, 248, 248, 248,~</code></pre>
+<pre class="r"><code>b &lt;- get_dupes(pdata_resampled, d, id) %&gt;%
+  wash_df()
+
+all.equal(a, b)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>Good, now we can use <a href="https://github.com/r-lib/bench">bench::mark()</a> to compare the performance of <code>dupes()</code> to
+<code>janitor::get_dupes()</code> when checking for duplicates based on a single variable (column “d” in this case).</p>
+<pre class="r"><code>bm &lt;- bench::mark(
+  dupes(pdata_resampled, d),
+  get_dupes(pdata_resampled, d), 
+  iterations = 25,
+  check = FALSE 
+  #we won&#39;t check for equal output structures here so the other formatting
+  #steps from before don&#39;t need to be included in the timing
+)
+
+bm %&gt;% 
+  select(expression, median, mem_alloc)</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   expression                      median mem_alloc
+##   &lt;bch:expr&gt;                    &lt;bch:tm&gt; &lt;bch:byt&gt;
+## 1 dupes(pdata_resampled, d)        106ms     142MB
+## 2 get_dupes(pdata_resampled, d)    119ms     184MB</code></pre>
+<pre class="r"><code>plot(bm)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<p><code>dupes()</code> is slightly faster when only checking 1 column. It also uses less memory.</p>
+<p><strong>N.B.</strong> If you’re working with a very large dataset you can speed things up quite a bit by setting the <code>dupes()</code> function’s “sort_by_copies” argument to <code>FALSE</code> to skip the time-consuming sorting step…</p>
+<pre class="r"><code>bm &lt;- bench::mark(
+  dupes(pdata_resampled, d, 
+        sort_by_copies = FALSE), #disable sorting by duplicates to maximize speed
+  get_dupes(pdata_resampled, d), 
+  iterations = 25,
+  check = FALSE 
+  #we won&#39;t check for equal output structures here so the other formatting
+  #steps from before don&#39;t need to be included in the timing
+)
+
+bm %&gt;% 
+  select(expression, median, mem_alloc)</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   expression                                          median mem_alloc
+##   &lt;bch:expr&gt;                                        &lt;bch:tm&gt; &lt;bch:byt&gt;
+## 1 dupes(pdata_resampled, d, sort_by_copies = FALSE)   61.8ms     130MB
+## 2 get_dupes(pdata_resampled, d)                      116.7ms     184MB</code></pre>
+<pre class="r"><code>plot(bm)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<p>This reduces the median run time of <code>dupes()</code> by around 40% in this case. As far as I am aware, there isn’t a similar option for <code>get_dupes()</code>.</p>
+<p>What happens when we try to search for duplicates using more than one column?</p>
+<pre class="r"><code>bm2 &lt;- bench::mark(
+  dupes(pdata_resampled, high_low, g),
+  get_dupes(pdata_resampled, high_low, g), 
+  iterations = 25, 
+  check = FALSE
+)
+
+bm2 %&gt;% 
+  select(expression, median, mem_alloc)</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   expression                                median mem_alloc
+##   &lt;bch:expr&gt;                              &lt;bch:tm&gt; &lt;bch:byt&gt;
+## 1 dupes(pdata_resampled, high_low, g)      74.74ms     143MB
+## 2 get_dupes(pdata_resampled, high_low, g)    1.18s     184MB</code></pre>
+<pre class="r"><code>plot(bm2)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<p>Now the difference is much more noticeable (~64 milliseconds vs. ~1.1 seconds; over a <em>17-fold</em> speedup in favour of <code>dupes()</code>!) and <code>dupes()</code> still uses less memory.</p>
+<p>What if we condition the search upon all 10 columns (the default behaviour for each function if no variables are specified to base the search on using the <code>...</code> argument)?</p>
+<pre class="r"><code>bm3 &lt;- bench::mark(
+  dupes(pdata_resampled),
+  get_dupes(pdata_resampled), 
+  iterations = 25,
+  check = FALSE
+)
+
+bm3 %&gt;% 
+  select(expression, median, mem_alloc) </code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   expression                   median mem_alloc
+##   &lt;bch:expr&gt;                 &lt;bch:tm&gt; &lt;bch:byt&gt;
+## 1 dupes(pdata_resampled)     175.72ms     142MB
+## 2 get_dupes(pdata_resampled)    2.09s     237MB</code></pre>
+<pre class="r"><code>plot(bm3)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<p>Here the speed difference is smaller but <code>dupes()</code> is still over an order of magnitude faster. <code>get_dupes()</code> also uses more memory but, surprisingly, <code>dupes()</code> doesn’t at all.</p>
+</div>
+<div id="describe_all-vs.-skimrskim" class="section level2">
+<h2><span class="header-section-number">9.2</span> <code>describe_all()</code> vs. <code>skimr::skim()</code></h2>
+<p>The only other R function that I’m aware of which is comparable to <code>describe_all()</code> is <code>skimr::skim()</code>. To describe multiple columns of a data frame within each level of a grouping variable with <code>skim()</code>, we need to pass it through a <code>dplyr::group_by()</code> layer first. To simplify the output a bit we’ll just start with “g” as a grouping variable.</p>
+<p>I’ll start by showing you what the output of <code>skim()</code> looks like.</p>
+<pre class="r"><code>pdata_resampled %&gt;%
+  select(g, y1, d, even) %&gt;% #just to limit printed output
+  group_by(g) %&gt;% 
+  skimr::skim()</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-46">Table 9.1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">Piped data</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">1000000</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Date</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">logical</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">numeric</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">g</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: Date</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="left">g</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">d</td>
+<td align="left">a</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2008-01-01</td>
+<td align="left">2019-01-01</td>
+<td align="left">2014-01-01</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">d</td>
+<td align="left">b</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2008-01-01</td>
+<td align="left">2019-01-01</td>
+<td align="left">2013-01-01</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">d</td>
+<td align="left">c</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2008-01-01</td>
+<td align="left">2019-01-01</td>
+<td align="left">2014-01-01</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">d</td>
+<td align="left">d</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2008-01-01</td>
+<td align="left">2019-01-01</td>
+<td align="left">2014-01-01</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">d</td>
+<td align="left">e</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2008-01-01</td>
+<td align="left">2019-01-01</td>
+<td align="left">2013-01-01</td>
+<td align="right">12</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: logical</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="left">g</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="left">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">even</td>
+<td align="left">a</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.50</td>
+<td align="left">FAL: 109047, TRU: 107011</td>
+</tr>
+<tr class="even">
+<td align="left">even</td>
+<td align="left">b</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.56</td>
+<td align="left">TRU: 115207, FAL: 90112</td>
+</tr>
+<tr class="odd">
+<td align="left">even</td>
+<td align="left">c</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.42</td>
+<td align="left">FAL: 106647, TRU: 78088</td>
+</tr>
+<tr class="even">
+<td align="left">even</td>
+<td align="left">d</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.55</td>
+<td align="left">TRU: 108896, FAL: 88888</td>
+</tr>
+<tr class="odd">
+<td align="left">even</td>
+<td align="left">e</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.47</td>
+<td align="left">FAL: 104644, TRU: 91460</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="left">g</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">y1</td>
+<td align="left">a</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">133.98</td>
+<td align="right">25.75</td>
+<td align="right">75.86</td>
+<td align="right">112.24</td>
+<td align="right">132.56</td>
+<td align="right">156.23</td>
+<td align="right">202.22</td>
+<td align="left">▂▇▆▆▁</td>
+</tr>
+<tr class="even">
+<td align="left">y1</td>
+<td align="left">b</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">151.62</td>
+<td align="right">37.83</td>
+<td align="right">74.35</td>
+<td align="right">117.82</td>
+<td align="right">145.74</td>
+<td align="right">187.91</td>
+<td align="right">247.29</td>
+<td align="left">▃▇▃▇▁</td>
+</tr>
+<tr class="odd">
+<td align="left">y1</td>
+<td align="left">c</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">177.35</td>
+<td align="right">57.00</td>
+<td align="right">77.02</td>
+<td align="right">126.68</td>
+<td align="right">165.83</td>
+<td align="right">232.25</td>
+<td align="right">289.24</td>
+<td align="left">▅▇▃▆▅</td>
+</tr>
+<tr class="even">
+<td align="left">y1</td>
+<td align="left">d</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">174.25</td>
+<td align="right">43.79</td>
+<td align="right">69.22</td>
+<td align="right">137.83</td>
+<td align="right">175.44</td>
+<td align="right">214.06</td>
+<td align="right">268.21</td>
+<td align="left">▂▆▆▇▂</td>
+</tr>
+<tr class="odd">
+<td align="left">y1</td>
+<td align="left">e</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">134.81</td>
+<td align="right">18.61</td>
+<td align="right">75.10</td>
+<td align="right">122.66</td>
+<td align="right">136.63</td>
+<td align="right">148.35</td>
+<td align="right">186.97</td>
+<td align="left">▁▃▇▇▁</td>
+</tr>
+</tbody>
+</table>
+<p>Next, I’ll evaluate the performance of both functions using the factor “g” as a grouping variable and requesting descriptions of the other 9 columns in <code>pdata_resampled</code>.</p>
+<pre class="r"><code>bm1 &lt;- mark(
+  #describe_all() version
+  describe_all(pdata_resampled, g), 
+  
+  #skimr::skim() version
+  skimr::skim(group_by(pdata_resampled, g)), 
+  
+  iterations = 25,
+  #the output isn&#39;t exactly the same so we disable the check argument
+  check = FALSE)</code></pre>
+<pre><code>## Warning: Some expressions had a GC in every iteration; so filtering is disabled.</code></pre>
+<pre class="r"><code>bm1 %&gt;% 
+  select(expression, median, mem_alloc)</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   expression                                  median mem_alloc
+##   &lt;bch:expr&gt;                                &lt;bch:tm&gt; &lt;bch:byt&gt;
+## 1 describe_all(pdata_resampled, g)             1.91s    1.32GB
+## 2 skimr::skim(group_by(pdata_resampled, g))    2.41s    2.12GB</code></pre>
+<pre class="r"><code>bm1 %&gt;% plot()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<p>Aesthetically, <code>skim()</code> does give us some nicely formatted &amp; stylish output when used in R markdown <a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a>, but we could achieve something similar by simply passing the outputs of <code>describe*</code> functions to <code>static_to_dynamic()</code>.</p>
+<p>In terms of performance, we can see that <code>describe_all()</code> runs ~28% faster and uses ~60% less memory when a grouping variable with a handful of levels is specified (similar in terms of scale to most experimental designs with a few treatment groups). <code>describe_all()</code> also gives you <em>more</em> information (for numeric variables: se, skew, kurtosis, proportion of values that are missing). <code>skim()</code> does produce in-line mini-histograms for numeric variables, but I find the resolution of these to be too low to be useful and opt to instead rely on a combination of skewness, kurtosis, and dedicated plotting functions.</p>
+<p>What about a situation where you want to split the descriptive summary by more than one grouping variable? When we ask for a description of <code>pdata_resampled</code> grouped by both “g” and “d” with a total of 60 level combinations, now the speed gap between <code>skim()</code> and <code>describe_all()</code> has shifted to a 5% advantage in favour of <code>skim()</code>, although <code>describe_all()</code> is still using substantially less RAM. This result suggests that <code>skim()</code> may scale better in terms of speed, but not memory efficiency, for situations when you need to describe a very large number of groups/partitions (e.g. splitting by many geographic areas like the thousands of US zip codes).</p>
+<pre class="r"><code>bm1 &lt;- mark(
+  describe_all(pdata_resampled, d, g), 
+  skimr::skim(group_by(pdata_resampled, d, g)),
+  iterations = 25,
+  check = FALSE) #the output isn&#39;t exactly the same so we disable the check argument</code></pre>
+<pre><code>## Warning: Some expressions had a GC in every iteration; so filtering is disabled.</code></pre>
+<pre class="r"><code>bm1 %&gt;% 
+  select(expression, median, mem_alloc)</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   expression                                     median mem_alloc
+##   &lt;bch:expr&gt;                                   &lt;bch:tm&gt; &lt;bch:byt&gt;
+## 1 describe_all(pdata_resampled, d, g)             2.52s    1.29GB
+## 2 skimr::skim(group_by(pdata_resampled, d, g))    2.44s    1.99GB</code></pre>
+<pre class="r"><code>bm1 %&gt;% plot()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<p>What about the non-grouped version that you’ll probably use most often?</p>
+<pre class="r"><code>bm1 &lt;- mark(
+  describe_all(pdata_resampled), 
+  skimr::skim(pdata_resampled), 
+  iterations = 25,
+  check = FALSE) #the output isn&#39;t exactly the same so we disable the check argument</code></pre>
+<pre><code>## Warning: Some expressions had a GC in every iteration; so filtering is disabled.</code></pre>
+<pre class="r"><code>bm1 %&gt;% 
+  select(expression, median, mem_alloc)</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   expression                      median mem_alloc
+##   &lt;bch:expr&gt;                    &lt;bch:tm&gt; &lt;bch:byt&gt;
+## 1 describe_all(pdata_resampled)    1.73s    1.33GB
+## 2 skimr::skim(pdata_resampled)      2.1s    2.04GB</code></pre>
+<pre class="r"><code>bm1 %&gt;% plot()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+<p>Here <code>describe_all()</code> clearly comes out on top again, finishing ~22% faster and using ~53% less RAM than <code>skim()</code>.</p>
+<p>That’s it! Hopefully you’ll find that <code>elucidate</code> makes exploratory data analysis in R a breeze when you try it out for yourself.</p>
+</div>
+</div>
+<div id="navigation" class="section level1">
+<h1><span class="header-section-number">10</span> <strong>Navigation</strong></h1>
+<p>Click <a href="https://craig.rbind.io/post/2020-10-10-asgr-2-5-dates/">here</a> to go back to the previous post on dates and times. Click <a href="https://craig.rbind.io/post/2021-05-17-asgr-3-1-data-visualization/">here</a> to go to the next one, on intermediate data visualization with the the popular tidyverse package <a href="https://ggplot2.tidyverse.org/">ggplot2</a>.</p>
+</div>
+<div id="notes" class="section level1">
+<h1><span class="header-section-number">11</span> <strong>Notes</strong></h1>
+<ul>
+<li><p>I acknowledge and express my deep gratitude to the many authors of the <a href="https://www.tidyverse.org/">tidyverse</a> packages, <a href="https://rdatatable.gitlab.io/data.table/index.html">data.table</a>, and the functions of other dependency packages which were used to build <code>elucidate</code>, since without their effort and ingenuity <code>elucidate</code> would mostly have remained a collection of ideas instead of functions.</p></li>
+<li><p>There is one other major component of <code>elucidate</code> scheduled to be developed starting sometime next quarter, which will facilitate clustering and dimensionality reduction (i.e. unsupervised machine learning), via a <code>profile*</code> set of functions. After that component has been successfully integrated we’ll try to submit the package to CRAN. I look forward to writing another blog post about those new functions when they’re ready 😄.</p></li>
+</ul>
+<p>Thank you for visiting my blog. I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.</p>
+<p>This blog is something I do as a volunteer in my free time. If you’ve found it helpful and want to give back, <a href="https://www.buymeacoffee.com/huttoncp">coffee donations</a> would be appreciated.</p>
+<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="huttoncp" data-color="#FF5F5F" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>R (or python) programming really is one of those <em>transferable research skills</em> that eventually does pay 💰 if you stick with it… on top of all the time you’ll find yourself saving by <a href="https://automatetheboringstuff.com/">“automating the boring stuff”</a>. If you’re currently a grad student, you can learn about some of the other highly marketable skills you’re developing <a href="https://beyondprof.com/10-transferable-skills-from-your-phd-that-employers-want/">here</a>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://bookdown.org/yihui/rmarkdown-cookbook/">R markdown</a> is what I’m using to write these posts, you’ll learn much more about it when we get to the reporting &amp; communication part of the guide<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>The “copy_number” column is only provided for the default filter = “all” version of <code>copies()</code>, since this is when knowing the specific copy number is most useful (i.e. to facilitate subsequent <a href="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#filter">subsetting</a>). Following similar logic, the “n_copies” column is only provided when the filter argument is set to “all” or “dupes” because the other options (“first”, “last”, and “unique”) drop all rows with more than one copy, meaning that the “n_copies” column would contain only values of 1.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>The sorting occurs in descending order.<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>If you only want the truly unique/non-duplicated rows instead use <code>copies(data, filter = "unique")</code><a href="#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>in case you’re wondering, yes, dplyr does have a function called <code>distinct()</code> that does the same thing as <code>copies(filter = "first")</code>, although the underlying code is different and it is less flexible<a href="#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p>or ascending frequency if you prefer, via the “order” argument<a href="#fnref7" class="footnote-back">↩︎</a></p></li>
+<li id="fn8"><p>It is worth noting that <code>elucidate::mode()</code> masks a <code>mode()</code> function in base R which is merely a shortcut for the <code>storage.mode()</code> function that has nothing to do with tabulating values. Although I usually try to avoid such conflicts, I suspect that <code>elucidate</code> users who are primarily analysing data would prefer a tabulating <code>mode()</code> function.<a href="#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p>These are particularly common in psychological research, for example if you test individuals using questions that are too easy or too difficulty. Ceiling and floor effects are also why most university professors who teach tend to be concerned if the class average deviates too far from ~67%<a href="#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p>The base R <code>quantile()</code> function can be used to get percentiles, i.e. the value of the vector below which are “x”% of the other values in that vector. In case you ever happen to want to find out which percentile a value is, instead of the value at a specified percentile, elucidate provides an <code>inv_quantile()</code> function that gives you the inverse or opposite of <code>quantile()</code>. This could be useful if you are a teacher and want to know how some students with scores “x”, “y”, &amp; “z” rank in the class, or in case a student asks you how well they performed on a test relative to the their peers.<a href="#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p>However, unlike the equivalent functions in other packages, the <code>elucidate</code> version’s default setting for each of these is type 2 because it is unbiased under normality, and to a lesser extent for consistency with SAS &amp; SPSS<a href="#fnref11" class="footnote-back">↩︎</a></p></li>
+<li id="fn12"><p>This great performance comes from the wonderful <a href="https://rdatatable.gitlab.io/data.table/">data.table</a> package doing the bulk of the heavy lifting for us under the hood.<a href="#fnref12" class="footnote-back">↩︎</a></p></li>
+<li id="fn13"><p>Efron, B., &amp; Tibshirani, R. J. (1994). <em>An introduction to the bootstrap</em>. CRC press.<a href="#fnref13" class="footnote-back">↩︎</a></p></li>
+<li id="fn14"><p>“Independent and identically distributed” means that the value of one observation is completely <em>independent</em> from the values of other observations in the sample. This is another assumption of most common (frequentist) parametric tests, like the t-test, which is referred to as the “independence assumption”. We’ll learn how to evaluate it in a future post on model diagnostics.<a href="#fnref14" class="footnote-back">↩︎</a></p></li>
+<li id="fn15"><p>Parallelisation for bootstrapping with the <code>elucidate::*_ci</code> functions uses the “snow” (multi-session) method for Windows machines (as the only option available) and the faster “multicore” (forking) method for non-Windows machines. The <code>describe_ci()</code> function checks which OS you are using and chooses the correct one for you via the underlying <code>boot::boot()</code> function’s “parallel” argument. See the <code>?boot()</code> documentation for additional details.<a href="#fnref15" class="footnote-back">↩︎</a></p></li>
+<li id="fn16"><p>thanks to the thoughtful authors of the <code>ggplot2</code> package, which I’ll dive into in the next post<a href="#fnref16" class="footnote-back">↩︎</a></p></li>
+<li id="fn17"><p>Since this post was originally written, <code>plot_pie()</code> and <code>plot_bar()</code> have been added to <code>elucidate</code> to make it easier to generate pie charts and bar graphs. Of the two, a bar graph is nearly always better at presenting the same information, but <code>plot_pie()</code> is available in case your boss asks for a pie chart anyways.<a href="#fnref17" class="footnote-back">↩︎</a></p></li>
+<li id="fn18"><p><strong><em>N.B.</em></strong> For the reactable version to work properly, you’ll need to have the <a href="https://glin.github.io/reactable/">reactable</a> and <a href="https://shiny.rstudio.com/">shiny</a> packages installed. These packages are currently “suggested” instead of “required” as dependencies to limit the number of installation requirements for <code>elucidate</code><a href="#fnref18" class="footnote-back">↩︎</a></p></li>
+<li id="fn19"><p>There is a server-side processing option available for use with <code>datatable()</code> specifically designed to use with bigger data, but sending your data to be processed on a server isn’t a usually a viable option when you’re working with sensitive or proprietary information (unless you have a private server of course), so it has not been implemented in <code>static_to_dynamic()</code>.<a href="#fnref19" class="footnote-back">↩︎</a></p></li>
+<li id="fn20"><p>Other strategies for dealing with missing values will be the topic of a future blog post.<a href="#fnref20" class="footnote-back">↩︎</a></p></li>
+<li id="fn21"><p><a href="https://bookdown.org/yihui/blogdown/">R markdown</a> is what these blog posts are written in; the <code>skim()</code> output looks different when printed from a regular R script.<a href="#fnref21" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+    </div>
+
+    
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/r/">R</a>
+  
+  <a class="badge badge-light" href="/tags/r-basics/">R basics</a>
+  
+</div>
+
+
+
+    
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <div class="media author-card" itemscope itemtype="http://schema.org/Person">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu2f2cc1d9a2e5ef4dd3cb6b37c4b590f4_2725710_250x250_fill_q90_lanczos_center.jpg" itemprop="image" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title" itemprop="name"><a href="/authors/admin/">Dr. Craig P. Hutton</a></h5>
+      <h6 class="card-subtitle">Psychologist | Data Scientist</h6>
+      
+      <ul class="network-icon" aria-hidden="true">
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="/#contact" >
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://twitter.com/huttoncp" target="_blank" rel="noopener">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://scholar.google.ca/citations?user=bMNjAzkAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+              <i class="ai ai-google-scholar"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://github.com/huttoncp" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+      <div class="article-widget">
+        <div class="hr-light"></div>
+        <h3>Related</h3>
+        <ul>
+          
+          <li><a href="/post/2020-10-10-asgr-2-5-dates/">A Scientist&#39;s Guide to R: Step 2.5 - dates &amp; times</a></li>
+          
+          <li><a href="/post/2020-08-29-asgr-2-4-factors/">A Scientist&#39;s Guide to R: Step 2.4 - forcats for factors</a></li>
+          
+          <li><a href="/post/2020-06-28-asgr-2-3-string-manipulation/">A Scientist&#39;s Guide to R: Step 2.3 - string manipulation and regex</a></li>
+          
+          <li><a href="/post/2020-03-29-asgr-2-2-joining-data/">A Scientist&#39;s Guide to R: Step 2.2 - Joining Data with dplyr</a></li>
+          
+          <li><a href="/post/2020-01-25-asgr-2-1-data-transformation-part-2/">A Scientist&#39;s Guide to R: Step 2.1 Data Transformation - part 2</a></li>
+          
+        </ul>
+      </div>
+      
+    
+
+    
+
+    <div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://craig-rbind-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  </div>
+</article>
+
+<div class="container">
+  <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    Copyright &copy; 2024 by Craig P. Hutton &middot; 
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+</div>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+      
+
+      
+      
+    
+
+    
+    
+
+    
+    
+    
+    <script id="dsq-count-scr" src="//craig-rbind-io.disqus.com/count.js" async></script>
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.3258b3a711acd6208568ec000de4beec.js"></script>
+
+  </body>
+</html>
+
+

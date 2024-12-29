@@ -1,293 +1,320 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Craig Hutton, PhD</title>
-    <link>/tags/</link>
+    <link>https://craig.rbind.io/tags/</link>
     <description>Recent content in Tags on Craig Hutton, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
-    <lastBuildDate>Mon, 30 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Nov 2023 12:30:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://craig.rbind.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>R</title>
-      <link>/tags/r/</link>
-      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
+      <title>behavioural insights</title>
+      <link>https://craig.rbind.io/tags/behavioural-insights/</link>
+      <pubDate>Fri, 03 Nov 2023 12:30:00 +0000</pubDate>
       
-      <guid>/tags/r/</guid>
+      <guid>https://craig.rbind.io/tags/behavioural-insights/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>data science</title>
+      <link>https://craig.rbind.io/tags/data-science/</link>
+      <pubDate>Fri, 03 Nov 2023 12:30:00 +0000</pubDate>
+      
+      <guid>https://craig.rbind.io/tags/data-science/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>research</title>
+      <link>https://craig.rbind.io/tags/research/</link>
+      <pubDate>Fri, 03 Nov 2023 12:30:00 +0000</pubDate>
+      
+      <guid>https://craig.rbind.io/tags/research/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mental health</title>
+      <link>https://craig.rbind.io/tags/mental-health/</link>
+      <pubDate>Tue, 26 Apr 2022 12:00:00 +0000</pubDate>
+      
+      <guid>https://craig.rbind.io/tags/mental-health/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>overdose</title>
+      <link>https://craig.rbind.io/tags/overdose/</link>
+      <pubDate>Tue, 26 Apr 2022 12:00:00 +0000</pubDate>
+      
+      <guid>https://craig.rbind.io/tags/overdose/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>https://craig.rbind.io/tags/r/</link>
+      <pubDate>Sun, 03 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://craig.rbind.io/tags/r/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R Basics</title>
-      <link>/tags/r-basics/</link>
-      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
+      <link>https://craig.rbind.io/tags/r-basics/</link>
+      <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/r-basics/</guid>
+      <guid>https://craig.rbind.io/tags/r-basics/</guid>
       <description></description>
     </item>
     
     <item>
       <title>cognitive function</title>
-      <link>/tags/cognitive-function/</link>
+      <link>https://craig.rbind.io/tags/cognitive-function/</link>
       <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/cognitive-function/</guid>
+      <guid>https://craig.rbind.io/tags/cognitive-function/</guid>
       <description></description>
     </item>
     
     <item>
       <title>concussion</title>
-      <link>/tags/concussion/</link>
+      <link>https://craig.rbind.io/tags/concussion/</link>
       <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/concussion/</guid>
+      <guid>https://craig.rbind.io/tags/concussion/</guid>
       <description></description>
     </item>
     
     <item>
       <title>human studies</title>
-      <link>/tags/human-studies/</link>
+      <link>https://craig.rbind.io/tags/human-studies/</link>
       <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/human-studies/</guid>
+      <guid>https://craig.rbind.io/tags/human-studies/</guid>
       <description></description>
     </item>
     
     <item>
       <title>machine learning</title>
-      <link>/tags/machine-learning/</link>
+      <link>https://craig.rbind.io/tags/machine-learning/</link>
       <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/machine-learning/</guid>
+      <guid>https://craig.rbind.io/tags/machine-learning/</guid>
       <description></description>
     </item>
     
     <item>
       <title>neuropsychology</title>
-      <link>/tags/neuropsychology/</link>
+      <link>https://craig.rbind.io/tags/neuropsychology/</link>
       <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/neuropsychology/</guid>
+      <guid>https://craig.rbind.io/tags/neuropsychology/</guid>
       <description></description>
     </item>
     
     <item>
       <title>traumatic brain injury</title>
-      <link>/tags/traumatic-brain-injury/</link>
+      <link>https://craig.rbind.io/tags/traumatic-brain-injury/</link>
       <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/traumatic-brain-injury/</guid>
+      <guid>https://craig.rbind.io/tags/traumatic-brain-injury/</guid>
       <description></description>
     </item>
     
     <item>
       <title>exercise</title>
-      <link>/tags/exercise/</link>
+      <link>https://craig.rbind.io/tags/exercise/</link>
       <pubDate>Tue, 06 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/exercise/</guid>
+      <guid>https://craig.rbind.io/tags/exercise/</guid>
       <description></description>
     </item>
     
     <item>
       <title>neuroscience</title>
-      <link>/tags/neuroscience/</link>
+      <link>https://craig.rbind.io/tags/neuroscience/</link>
       <pubDate>Tue, 06 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/neuroscience/</guid>
+      <guid>https://craig.rbind.io/tags/neuroscience/</guid>
       <description></description>
     </item>
     
     <item>
       <title>plasticity</title>
-      <link>/tags/plasticity/</link>
+      <link>https://craig.rbind.io/tags/plasticity/</link>
       <pubDate>Tue, 06 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/plasticity/</guid>
+      <guid>https://craig.rbind.io/tags/plasticity/</guid>
       <description></description>
     </item>
     
     <item>
       <title>behaviour</title>
-      <link>/tags/behaviour/</link>
+      <link>https://craig.rbind.io/tags/behaviour/</link>
       <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/behaviour/</guid>
+      <guid>https://craig.rbind.io/tags/behaviour/</guid>
       <description></description>
     </item>
     
     <item>
       <title>head trauma</title>
-      <link>/tags/head-trauma/</link>
+      <link>https://craig.rbind.io/tags/head-trauma/</link>
       <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/head-trauma/</guid>
+      <guid>https://craig.rbind.io/tags/head-trauma/</guid>
       <description></description>
     </item>
     
     <item>
       <title>mild traumatic brain injury</title>
-      <link>/tags/mild-traumatic-brain-injury/</link>
+      <link>https://craig.rbind.io/tags/mild-traumatic-brain-injury/</link>
       <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/mild-traumatic-brain-injury/</guid>
+      <guid>https://craig.rbind.io/tags/mild-traumatic-brain-injury/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Data Analysis</title>
-      <link>/tags/data-analysis/</link>
+      <link>https://craig.rbind.io/tags/data-analysis/</link>
       <pubDate>Sat, 22 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/data-analysis/</guid>
+      <guid>https://craig.rbind.io/tags/data-analysis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Importing Data</title>
-      <link>/tags/importing-data/</link>
+      <link>https://craig.rbind.io/tags/importing-data/</link>
       <pubDate>Sat, 22 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/importing-data/</guid>
+      <guid>https://craig.rbind.io/tags/importing-data/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Statistics</title>
-      <link>/tags/statistics/</link>
+      <link>https://craig.rbind.io/tags/statistics/</link>
       <pubDate>Fri, 17 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/statistics/</guid>
+      <guid>https://craig.rbind.io/tags/statistics/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Alzheimer&#39;s disease</title>
-      <link>/tags/alzheimers-disease/</link>
+      <link>https://craig.rbind.io/tags/alzheimers-disease/</link>
       <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/alzheimers-disease/</guid>
+      <guid>https://craig.rbind.io/tags/alzheimers-disease/</guid>
       <description></description>
     </item>
     
     <item>
       <title>anhedonia</title>
-      <link>/tags/anhedonia/</link>
+      <link>https://craig.rbind.io/tags/anhedonia/</link>
       <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/anhedonia/</guid>
+      <guid>https://craig.rbind.io/tags/anhedonia/</guid>
       <description></description>
     </item>
     
     <item>
       <title>anxiety</title>
-      <link>/tags/anxiety/</link>
+      <link>https://craig.rbind.io/tags/anxiety/</link>
       <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/anxiety/</guid>
+      <guid>https://craig.rbind.io/tags/anxiety/</guid>
       <description></description>
     </item>
     
     <item>
       <title>dietary supplements</title>
-      <link>/tags/dietary-supplements/</link>
+      <link>https://craig.rbind.io/tags/dietary-supplements/</link>
       <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/dietary-supplements/</guid>
+      <guid>https://craig.rbind.io/tags/dietary-supplements/</guid>
       <description></description>
     </item>
     
     <item>
       <title>learning</title>
-      <link>/tags/learning/</link>
+      <link>https://craig.rbind.io/tags/learning/</link>
       <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/learning/</guid>
+      <guid>https://craig.rbind.io/tags/learning/</guid>
       <description></description>
     </item>
     
     <item>
       <title>memory</title>
-      <link>/tags/memory/</link>
+      <link>https://craig.rbind.io/tags/memory/</link>
       <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/memory/</guid>
+      <guid>https://craig.rbind.io/tags/memory/</guid>
       <description></description>
     </item>
     
     <item>
       <title>mild cognitive impairment</title>
-      <link>/tags/mild-cognitive-impairment/</link>
+      <link>https://craig.rbind.io/tags/mild-cognitive-impairment/</link>
       <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/mild-cognitive-impairment/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Deep Learning</title>
-      <link>/tags/deep-learning/</link>
-      <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/deep-learning/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Demo</title>
-      <link>/tags/demo/</link>
-      <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/demo/</guid>
+      <guid>https://craig.rbind.io/tags/mild-cognitive-impairment/</guid>
       <description></description>
     </item>
     
     <item>
       <title>depression</title>
-      <link>/tags/depression/</link>
+      <link>https://craig.rbind.io/tags/depression/</link>
       <pubDate>Thu, 12 Nov 2015 00:00:00 +0000</pubDate>
       
-      <guid>/tags/depression/</guid>
+      <guid>https://craig.rbind.io/tags/depression/</guid>
       <description></description>
     </item>
     
     <item>
       <title>hippocampus</title>
-      <link>/tags/hippocampus/</link>
+      <link>https://craig.rbind.io/tags/hippocampus/</link>
       <pubDate>Thu, 12 Nov 2015 00:00:00 +0000</pubDate>
       
-      <guid>/tags/hippocampus/</guid>
+      <guid>https://craig.rbind.io/tags/hippocampus/</guid>
       <description></description>
     </item>
     
     <item>
       <title>neurogenesis</title>
-      <link>/tags/neurogenesis/</link>
+      <link>https://craig.rbind.io/tags/neurogenesis/</link>
       <pubDate>Thu, 12 Nov 2015 00:00:00 +0000</pubDate>
       
-      <guid>/tags/neurogenesis/</guid>
+      <guid>https://craig.rbind.io/tags/neurogenesis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>stress</title>
-      <link>/tags/stress/</link>
+      <link>https://craig.rbind.io/tags/stress/</link>
       <pubDate>Thu, 12 Nov 2015 00:00:00 +0000</pubDate>
       
-      <guid>/tags/stress/</guid>
+      <guid>https://craig.rbind.io/tags/stress/</guid>
       <description></description>
     </item>
     
     <item>
       <title>alcohol</title>
-      <link>/tags/alcohol/</link>
+      <link>https://craig.rbind.io/tags/alcohol/</link>
       <pubDate>Tue, 01 Jan 2013 00:00:00 +0000</pubDate>
       
-      <guid>/tags/alcohol/</guid>
+      <guid>https://craig.rbind.io/tags/alcohol/</guid>
       <description></description>
     </item>
     

@@ -1,23 +1,23 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Importing Data on Craig Hutton, PhD</title>
-    <link>/tags/importing-data/</link>
+    <link>https://craig.rbind.io/tags/importing-data/</link>
     <description>Recent content in Importing Data on Craig Hutton, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
     <lastBuildDate>Sat, 22 Jun 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/importing-data/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://craig.rbind.io/tags/importing-data/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 1. Getting Data into R</title>
-      <link>/post/2019-06-22-asgr-1-getting-data-into-r/</link>
+      <link>https://craig.rbind.io/post/2019-06-22-asgr-1-getting-data-into-r/</link>
       <pubDate>Sat, 22 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/2019-06-22-asgr-1-getting-data-into-r/</guid>
+      <guid>https://craig.rbind.io/post/2019-06-22-asgr-1-getting-data-into-r/</guid>
       <description>1 TL;DR2 Introduction3 Installing and Loading R Packages4 How to Get Your Data Into R4.1 Comma Delimited (.csv) Files4.2 Tab Delimited (.txt) Files4.3 Files With Other Delimiting Characters (also .txt)4.4 Microsoft Excel Files (.xlsx, .xls)4.5 Files from SPSS, SAS, or Stata4.6 Fixed Width Files (.txt, .gz, .bz2, .xz, .zip, etc.)4.7 html/xml files4.8 JavaScript Object Notation (JSON) Files4.</description>
     </item>
     

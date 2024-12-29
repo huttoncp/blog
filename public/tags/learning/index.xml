@@ -1,23 +1,23 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>learning on Craig Hutton, PhD</title>
-    <link>/tags/learning/</link>
+    <link>https://craig.rbind.io/tags/learning/</link>
     <description>Recent content in learning on Craig Hutton, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
     <lastBuildDate>Wed, 09 May 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/learning/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://craig.rbind.io/tags/learning/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Early intervention with a multi-ingredient dietary supplement improves mood and spatial memory in a triple transgenic mouse model of Alzheimer&#39;s disease</title>
-      <link>/publication/hutton-et-al-2018/</link>
+      <link>https://craig.rbind.io/publication/hutton-et-al-2018/</link>
       <pubDate>Wed, 09 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/publication/hutton-et-al-2018/</guid>
+      <guid>https://craig.rbind.io/publication/hutton-et-al-2018/</guid>
       <description></description>
     </item>
     

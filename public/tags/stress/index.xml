@@ -1,32 +1,32 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>stress on Craig Hutton, PhD</title>
-    <link>/tags/stress/</link>
+    <link>https://craig.rbind.io/tags/stress/</link>
     <description>Recent content in stress on Craig Hutton, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
     <lastBuildDate>Thu, 12 Nov 2015 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/stress/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://craig.rbind.io/tags/stress/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Synergistic effects of diet and exercise on hippocampal function in chronically stressed mice or chronic stress</title>
-      <link>/publication/hutton-et-al-2015/</link>
+      <link>https://craig.rbind.io/publication/hutton-et-al-2015/</link>
       <pubDate>Thu, 12 Nov 2015 00:00:00 +0000</pubDate>
       
-      <guid>/publication/hutton-et-al-2015/</guid>
+      <guid>https://craig.rbind.io/publication/hutton-et-al-2015/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Assessing anxiety and reward-related behaviors following alcohol administration or chronic stress</title>
-      <link>/publication/aujla-et-al-2013/</link>
+      <link>https://craig.rbind.io/publication/aujla-et-al-2013/</link>
       <pubDate>Tue, 01 Jan 2013 00:00:00 +0000</pubDate>
       
-      <guid>/publication/aujla-et-al-2013/</guid>
+      <guid>https://craig.rbind.io/publication/aujla-et-al-2013/</guid>
       <description></description>
     </item>
     

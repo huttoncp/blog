@@ -1,0 +1,2069 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.3.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Dr. Craig P. Hutton">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="1 TL;DR2 Introduction3 select()3.1 Renaming Columns with select() or rename()4 filter()4.1 Subset Rows using Indices with slice()5 mutate()5.1 Recoding or Creating Indicator Variables using if_else(), case_when(), or recode()6 summarise()7 group_by()8 Chaining Functions with the pipe operator (%&gt;%)9 Navigation10 Notes1 TL;DRThe 4th post in the Scientist’s Guide to R series introduces data transformation techniques useful for wrangling/tidying/cleaning data.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/">
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:400,400italic,700|Roboto+Mono">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.min.9e398b7a64ee2c82769da9724cdbf0cc.css">
+
+  
+
+  
+  
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-140167948-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('require', 'eventTracker');
+      ga('require', 'outboundLinkTracker');
+      ga('require', 'urlChangeTracker');
+      ga('send', 'pageview');
+    </script>
+    <script async src="//www.google-analytics.com/analytics.js"></script>
+    
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
+    
+  
+  
+
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/">
+
+  
+  
+  
+  
+    
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@huttoncp">
+  <meta property="twitter:creator" content="@huttoncp">
+  
+  <meta property="og:site_name" content="Craig Hutton, PhD">
+  <meta property="og:url" content="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/">
+  <meta property="og:title" content="A Scientist&#39;s Guide to R: Step 2.1. Data Transformation - Part 1 | Craig Hutton, PhD">
+  <meta property="og:description" content="1 TL;DR2 Introduction3 select()3.1 Renaming Columns with select() or rename()4 filter()4.1 Subset Rows using Indices with slice()5 mutate()5.1 Recoding or Creating Indicator Variables using if_else(), case_when(), or recode()6 summarise()7 group_by()8 Chaining Functions with the pipe operator (%&gt;%)9 Navigation10 Notes1 TL;DRThe 4th post in the Scientist’s Guide to R series introduces data transformation techniques useful for wrangling/tidying/cleaning data."><meta property="og:image" content="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/featured.png">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2019-12-30T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2019-12-30T00:00:00&#43;00:00">
+  
+
+  
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+<script>
+  window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#2962ff",
+          "text": "#fff"
+        },
+        "button": {
+          "background": "#fff",
+          "text": "#2962ff"
+        }
+      },
+      "theme": "classic",
+      "content": {
+        "message": "This website uses cookies to ensure you get the best experience on our website.",
+        "dismiss": "Got it!",
+        "link": "Learn more",
+        "href": "https://cookies.insites.com"
+      }
+    })});
+</script>
+
+
+  
+
+  <title>A Scientist&#39;s Guide to R: Step 2.1. Data Transformation - Part 1 | Craig Hutton, PhD</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#TableOfContents" data-offset="71" >
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" role="textbox" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/"><img src="/img/Picture1.png" alt="Craig Hutton, PhD"></a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav mr-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publications">
+            
+            <span>Publications</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#talks">
+            
+            <span>Talks</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects">
+            
+            <span>Projects</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/resume.pdf">
+            
+            <span>Resume</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+      
+      </ul>
+      <ul class="navbar-nav ml-auto">
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="article-header d-xl-none">
+  <div class="featured-image" style="background-image: url('/post/2019-12-30-asgr-2-1-data-transformation-part-1/featured_hu3922ef13c9d2627cf512baf19fc48074_35544_800x0_resize_lanczos_2.png');"></div>
+  
+</div>
+
+
+<div class="container-fluid split-header d-none d-xl-block">
+  <div class="row">
+    <div class="col-6">
+      <div class="split-header-content">
+        <h1 itemprop="name">A Scientist&#39;s Guide to R: Step 2.1. Data Transformation - Part 1</h1>
+
+        
+
+        
+
+
+
+<meta content="2019-12-30 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2019-12-30 00:00:00 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>Dec 30, 2019</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    38 min read
+  </span>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <a href="/post/2019-12-30-asgr-2-1-data-transformation-part-1/#disqus_thread"></a>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder"></i>
+    <a href="/categories/r/">R</a>, <a href="/categories/reproducible-research/">Reproducible Research</a>, <a href="/categories/data-cleaning-and-transformation/">Data Cleaning and Transformation</a></span>
+  
+
+  
+
+</div>
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=A%20Scientist%27s%20Guide%20to%20R%3a%20Step%202.1.%20Data%20Transformation%20-%20Part%201&amp;url=https%3a%2f%2fcraig.rbind.io%2fpost%2f2019-12-30-asgr-2-1-data-transformation-part-1%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fcraig.rbind.io%2fpost%2f2019-12-30-asgr-2-1-data-transformation-part-1%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fcraig.rbind.io%2fpost%2f2019-12-30-asgr-2-1-data-transformation-part-1%2f&amp;title=A%20Scientist%27s%20Guide%20to%20R%3a%20Step%202.1.%20Data%20Transformation%20-%20Part%201"
+         target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=https%3a%2f%2fcraig.rbind.io%2fpost%2f2019-12-30-asgr-2-1-data-transformation-part-1%2f&amp;title=A%20Scientist%27s%20Guide%20to%20R%3a%20Step%202.1.%20Data%20Transformation%20-%20Part%201"
+         target="_blank" rel="noopener">
+        <i class="fab fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=A%20Scientist%27s%20Guide%20to%20R%3a%20Step%202.1.%20Data%20Transformation%20-%20Part%201&amp;body=https%3a%2f%2fcraig.rbind.io%2fpost%2f2019-12-30-asgr-2-1-data-transformation-part-1%2f">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="split-header-image">
+        <img src="/post/2019-12-30-asgr-2-1-data-transformation-part-1/featured_hu3922ef13c9d2627cf512baf19fc48074_35544_680x500_fill_q90_lanczos_smart1_2.png" itemprop="image" alt="">
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="article-container d-xl-none">
+  <h1 itemprop="name">A Scientist&#39;s Guide to R: Step 2.1. Data Transformation - Part 1</h1>
+
+  
+
+  
+
+
+
+<meta content="2019-12-30 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2019-12-30 00:00:00 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>Dec 30, 2019</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    38 min read
+  </span>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <a href="/post/2019-12-30-asgr-2-1-data-transformation-part-1/#disqus_thread"></a>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder"></i>
+    <a href="/categories/r/">R</a>, <a href="/categories/reproducible-research/">Reproducible Research</a>, <a href="/categories/data-cleaning-and-transformation/">Data Cleaning and Transformation</a></span>
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=&amp;url="
+         target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u="
+         target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=&amp;title="
+         target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=&amp;title="
+         target="_blank" rel="noopener">
+        <i class="fab fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=&amp;body=">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+<div id="TOC">
+<ul>
+<li><a href="#tldr"><span class="toc-section-number">1</span> <strong>TL;DR</strong></a></li>
+<li><a href="#introduction"><span class="toc-section-number">2</span> <strong>Introduction</strong></a></li>
+<li><a href="#select"><span class="toc-section-number">3</span> <strong>select()</strong></a><ul>
+<li><a href="#renaming-columns-with-select-or-rename"><span class="toc-section-number">3.1</span> Renaming Columns with <strong>select()</strong> or <strong>rename()</strong></a></li>
+</ul></li>
+<li><a href="#filter"><span class="toc-section-number">4</span> <strong>filter()</strong></a><ul>
+<li><a href="#subset-rows-using-indices-with-slice"><span class="toc-section-number">4.1</span> Subset Rows using Indices with <strong>slice()</strong></a></li>
+</ul></li>
+<li><a href="#mutate"><span class="toc-section-number">5</span> <strong>mutate()</strong></a><ul>
+<li><a href="#recoding-or-creating-indicator-variables-using-if_else-case_when-or-recode"><span class="toc-section-number">5.1</span> Recoding or Creating Indicator Variables using <strong>if_else()</strong>, <strong>case_when()</strong>, or <strong>recode()</strong></a></li>
+</ul></li>
+<li><a href="#summarise"><span class="toc-section-number">6</span> <strong>summarise()</strong></a></li>
+<li><a href="#group_by"><span class="toc-section-number">7</span> <strong>group_by()</strong></a></li>
+<li><a href="#chaining-functions-with-the-pipe-operator"><span class="toc-section-number">8</span> Chaining Functions with the <strong>pipe operator (%&gt;%)</strong></a></li>
+<li><a href="#navigation"><span class="toc-section-number">9</span> Navigation</a></li>
+<li><a href="#notes"><span class="toc-section-number">10</span> Notes</a></li>
+</ul>
+</div>
+
+<div id="tldr" class="section level1">
+<h1><span class="header-section-number">1</span> <strong>TL;DR</strong></h1>
+<p>The 4th post in the <a href="https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/">Scientist’s Guide to R series</a> introduces data transformation techniques useful for wrangling/tidying/cleaning data. Specifically, we will be learning how to use the 6 core functions (and a few others) from the popular <a href="https://www.rdocumentation.org/packages/dplyr/versions/0.7.8">dplyr</a> package, perform similar operations in base R, and chain operations with the pipe operator (<code>%&gt;%</code>) to streamline the process.</p>
+</div>
+<div id="introduction" class="section level1">
+<h1><span class="header-section-number">2</span> <strong>Introduction</strong></h1>
+<p>The 4th post in the <a href="https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/">Scientist’s Guide to R series</a> introduces data transformation techniques useful for wrangling/tidying/cleaning data, which often takes longer than any other step in the data analysis process. Specifically, we will be learning how to use the 6 core functions or “verbs” of the popular <a href="https://dplyr.tidyverse.org/">dplyr</a> package to:</p>
+<ol style="list-style-type: decimal">
+<li><p>Easily <a href="https://dplyr.tidyverse.org/reference/select.html">select</a> a subset of columns.</p></li>
+<li><p><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a> rows using logical tests with values of specified columns.</p></li>
+<li><p>Modify columns or add new ones using <a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a>.</p></li>
+<li><p>Obtain descriptive summaries of data using <a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a> (or the equivalent summarize()).</p></li>
+<li><p>Assign a grouping structure to a data frame to enable subsequent dplyr package function calls to be executed within groups using <a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a>.</p></li>
+<li><p><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a> a data frame for improved readability.</p></li>
+</ol>
+<p>Some additional relevant functions that build on this foundation will also be covered where appropriate.</p>
+<p>While other great packages (and other functions in base R) exist to help you manipulate data, using the dplyr package is perhaps the easiest way to learn these essential data processing techniques. However, if you find yourself working with very large datasets (e.g. &gt; 1,000,000 rows) you might want to check out the <a href="https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html">data.table</a> package, which emphasizes efficiency and performance over readability and ease of use.</p>
+<p>Most dplyr functions accept a data frame or tibble as their first argument and return a data frame as their output. This is a key design feature that enables you to apply a series of operations to a data frame in a chain using the pipe operator (<code>%&gt;%</code>), as demonstrated in <a href="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#chaining-functions-with-the-pipe-operator">section 8</a>.</p>
+</div>
+<div id="select" class="section level1">
+<h1><span class="header-section-number">3</span> <strong>select()</strong></h1>
+<p><code>select()</code> is one of the dplyr functions you can use for subsetting. <code>select()</code> lets you extract a subset of <strong>columns</strong> from a data frame.</p>
+<p>Columns may be specified using indices, names, or using string patterns with the assistance of a few <a href="https://www.rdocumentation.org/packages/dplyr/versions/0.5.0/topics/select_helpers">tidyselect helper functions</a> such as <code>contains()</code>, <code>starts_with()</code>, and <code>ends_with()</code>.</p>
+<pre class="r"><code>library(dplyr) #load the dplyr package with the library function.</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>#the dplyr package will be used throughout this tutorial so make sure it is
+#loaded before trying to run the examples yourself
+
+df &lt;- starwars #assign the star wars data frame (imported when dplyr is loaded) to the label/name &quot;df&quot;
+
+# inspect the structure
+
+glimpse(df)</code></pre>
+<pre><code>## Rows: 87
+## Columns: 14
+## $ name       &lt;chr&gt; &quot;Luke Skywalker&quot;, &quot;C-3PO&quot;, &quot;R2-D2&quot;, &quot;Darth Vader&quot;, &quot;Leia Or~
+## $ height     &lt;int&gt; 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 180, 2~
+## $ mass       &lt;dbl&gt; 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 84.0, 77.~
+## $ hair_color &lt;chr&gt; &quot;blond&quot;, NA, NA, &quot;none&quot;, &quot;brown&quot;, &quot;brown, grey&quot;, &quot;brown&quot;, N~
+## $ skin_color &lt;chr&gt; &quot;fair&quot;, &quot;gold&quot;, &quot;white, blue&quot;, &quot;white&quot;, &quot;light&quot;, &quot;light&quot;, &quot;~
+## $ eye_color  &lt;chr&gt; &quot;blue&quot;, &quot;yellow&quot;, &quot;red&quot;, &quot;yellow&quot;, &quot;brown&quot;, &quot;blue&quot;, &quot;blue&quot;,~
+## $ birth_year &lt;dbl&gt; 19.0, 112.0, 33.0, 41.9, 19.0, 52.0, 47.0, NA, 24.0, 57.0, ~
+## $ sex        &lt;chr&gt; &quot;male&quot;, &quot;none&quot;, &quot;none&quot;, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;,~
+## $ gender     &lt;chr&gt; &quot;masculine&quot;, &quot;masculine&quot;, &quot;masculine&quot;, &quot;masculine&quot;, &quot;femini~
+## $ homeworld  &lt;chr&gt; &quot;Tatooine&quot;, &quot;Tatooine&quot;, &quot;Naboo&quot;, &quot;Tatooine&quot;, &quot;Alderaan&quot;, &quot;T~
+## $ species    &lt;chr&gt; &quot;Human&quot;, &quot;Droid&quot;, &quot;Droid&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Huma~
+## $ films      &lt;list&gt; &lt;&quot;The Empire Strikes Back&quot;, &quot;Revenge of the Sith&quot;, &quot;Return~
+## $ vehicles   &lt;list&gt; &lt;&quot;Snowspeeder&quot;, &quot;Imperial Speeder Bike&quot;&gt;, &lt;&gt;, &lt;&gt;, &lt;&gt;, &quot;Imp~
+## $ starships  &lt;list&gt; &lt;&quot;X-wing&quot;, &quot;Imperial shuttle&quot;&gt;, &lt;&gt;, &lt;&gt;, &quot;TIE Advanced x1&quot;,~</code></pre>
+<pre class="r"><code>#in base R, you would extract columns using either [, &quot;name&quot;] or [[&quot;name&quot;]], or $name
+df[, &quot;name&quot;] #[] returns another data frame</code></pre>
+<pre><code>## # A tibble: 87 x 1
+##    name              
+##    &lt;chr&gt;             
+##  1 Luke Skywalker    
+##  2 C-3PO             
+##  3 R2-D2             
+##  4 Darth Vader       
+##  5 Leia Organa       
+##  6 Owen Lars         
+##  7 Beru Whitesun lars
+##  8 R5-D4             
+##  9 Biggs Darklighter 
+## 10 Obi-Wan Kenobi    
+## # ... with 77 more rows</code></pre>
+<pre class="r"><code>head(df[[&quot;name&quot;]]) #[[]] returns a 1 dimensional vector. head() just shows the 1st 6 values</code></pre>
+<pre><code>## [1] &quot;Luke Skywalker&quot; &quot;C-3PO&quot;          &quot;R2-D2&quot;          &quot;Darth Vader&quot;   
+## [5] &quot;Leia Organa&quot;    &quot;Owen Lars&quot;</code></pre>
+<pre class="r"><code>df[, c(&quot;name&quot;, &quot;mass&quot;, &quot;hair_color&quot;)] #[] can accept a vector of names</code></pre>
+<pre><code>## # A tibble: 87 x 3
+##    name                mass hair_color   
+##    &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;        
+##  1 Luke Skywalker        77 blond        
+##  2 C-3PO                 75 &lt;NA&gt;         
+##  3 R2-D2                 32 &lt;NA&gt;         
+##  4 Darth Vader          136 none         
+##  5 Leia Organa           49 brown        
+##  6 Owen Lars            120 brown, grey  
+##  7 Beru Whitesun lars    75 brown        
+##  8 R5-D4                 32 &lt;NA&gt;         
+##  9 Biggs Darklighter     84 black        
+## 10 Obi-Wan Kenobi        77 auburn, white
+## # ... with 77 more rows</code></pre>
+<pre class="r"><code>#df[[c(&quot;name&quot;, &quot;mass&quot;, &quot;hair_color&quot;)]] #[[]] can&#39;t and returns an error
+
+#or a logical or integer vector the same length as the number of columns
+
+df[, 1:ncol(df) %% 2 == 0] #columns with even indices</code></pre>
+<pre><code>## # A tibble: 87 x 7
+##    height hair_color    eye_color sex    homeworld films     starships
+##     &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;     &lt;list&gt;    &lt;list&gt;   
+##  1    172 blond         blue      male   Tatooine  &lt;chr [5]&gt; &lt;chr [2]&gt;
+##  2    167 &lt;NA&gt;          yellow    none   Tatooine  &lt;chr [6]&gt; &lt;chr [0]&gt;
+##  3     96 &lt;NA&gt;          red       none   Naboo     &lt;chr [7]&gt; &lt;chr [0]&gt;
+##  4    202 none          yellow    male   Tatooine  &lt;chr [4]&gt; &lt;chr [1]&gt;
+##  5    150 brown         brown     female Alderaan  &lt;chr [5]&gt; &lt;chr [0]&gt;
+##  6    178 brown, grey   blue      male   Tatooine  &lt;chr [3]&gt; &lt;chr [0]&gt;
+##  7    165 brown         blue      female Tatooine  &lt;chr [3]&gt; &lt;chr [0]&gt;
+##  8     97 &lt;NA&gt;          red       none   Tatooine  &lt;chr [1]&gt; &lt;chr [0]&gt;
+##  9    183 black         brown     male   Tatooine  &lt;chr [1]&gt; &lt;chr [1]&gt;
+## 10    182 auburn, white blue-gray male   Stewjon   &lt;chr [6]&gt; &lt;chr [5]&gt;
+## # ... with 77 more rows</code></pre>
+<pre class="r"><code>df[, 1:5] #1st 5 columns</code></pre>
+<pre><code>## # A tibble: 87 x 5
+##    name               height  mass hair_color    skin_color 
+##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;      
+##  1 Luke Skywalker        172    77 blond         fair       
+##  2 C-3PO                 167    75 &lt;NA&gt;          gold       
+##  3 R2-D2                  96    32 &lt;NA&gt;          white, blue
+##  4 Darth Vader           202   136 none          white      
+##  5 Leia Organa           150    49 brown         light      
+##  6 Owen Lars             178   120 brown, grey   light      
+##  7 Beru Whitesun lars    165    75 brown         light      
+##  8 R5-D4                  97    32 &lt;NA&gt;          white, red 
+##  9 Biggs Darklighter     183    84 black         light      
+## 10 Obi-Wan Kenobi        182    77 auburn, white fair       
+## # ... with 77 more rows</code></pre>
+<pre class="r"><code>#dplyr::select() makes extracting multiple columns even easier
+select(df, 
+       name, mass, hair_color) #note that names don&#39;t have to be quoted</code></pre>
+<pre><code>## # A tibble: 87 x 3
+##    name                mass hair_color   
+##    &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;        
+##  1 Luke Skywalker        77 blond        
+##  2 C-3PO                 75 &lt;NA&gt;         
+##  3 R2-D2                 32 &lt;NA&gt;         
+##  4 Darth Vader          136 none         
+##  5 Leia Organa           49 brown        
+##  6 Owen Lars            120 brown, grey  
+##  7 Beru Whitesun lars    75 brown        
+##  8 R5-D4                 32 &lt;NA&gt;         
+##  9 Biggs Darklighter     84 black        
+## 10 Obi-Wan Kenobi        77 auburn, white
+## # ... with 77 more rows</code></pre>
+<pre class="r"><code>select(df, name:hair_color) #and you can get all columns in a range using unquoted names</code></pre>
+<pre><code>## # A tibble: 87 x 4
+##    name               height  mass hair_color   
+##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;        
+##  1 Luke Skywalker        172    77 blond        
+##  2 C-3PO                 167    75 &lt;NA&gt;         
+##  3 R2-D2                  96    32 &lt;NA&gt;         
+##  4 Darth Vader           202   136 none         
+##  5 Leia Organa           150    49 brown        
+##  6 Owen Lars             178   120 brown, grey  
+##  7 Beru Whitesun lars    165    75 brown        
+##  8 R5-D4                  97    32 &lt;NA&gt;         
+##  9 Biggs Darklighter     183    84 black        
+## 10 Obi-Wan Kenobi        182    77 auburn, white
+## # ... with 77 more rows</code></pre>
+<pre class="r"><code>select(df, 1:5, 9, 10) #select also accepts column indices and doesn&#39;t require c()</code></pre>
+<pre><code>## # A tibble: 87 x 7
+##    name               height  mass hair_color    skin_color  gender    homeworld
+##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;    
+##  1 Luke Skywalker        172    77 blond         fair        masculine Tatooine 
+##  2 C-3PO                 167    75 &lt;NA&gt;          gold        masculine Tatooine 
+##  3 R2-D2                  96    32 &lt;NA&gt;          white, blue masculine Naboo    
+##  4 Darth Vader           202   136 none          white       masculine Tatooine 
+##  5 Leia Organa           150    49 brown         light       feminine  Alderaan 
+##  6 Owen Lars             178   120 brown, grey   light       masculine Tatooine 
+##  7 Beru Whitesun lars    165    75 brown         light       feminine  Tatooine 
+##  8 R5-D4                  97    32 &lt;NA&gt;          white, red  masculine Tatooine 
+##  9 Biggs Darklighter     183    84 black         light       masculine Tatooine 
+## 10 Obi-Wan Kenobi        182    77 auburn, white fair        masculine Stewjon  
+## # ... with 77 more rows</code></pre>
+<pre class="r"><code>#select everything other than a specified column using the subtraction operator &quot;-&quot;
+select(df, -hair_color, -mass) </code></pre>
+<pre><code>## # A tibble: 87 x 12
+##    name    height skin_color eye_color birth_year sex   gender homeworld species
+##    &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;  
+##  1 Luke S~    172 fair       blue            19   male  mascu~ Tatooine  Human  
+##  2 C-3PO      167 gold       yellow         112   none  mascu~ Tatooine  Droid  
+##  3 R2-D2       96 white, bl~ red             33   none  mascu~ Naboo     Droid  
+##  4 Darth ~    202 white      yellow          41.9 male  mascu~ Tatooine  Human  
+##  5 Leia O~    150 light      brown           19   fema~ femin~ Alderaan  Human  
+##  6 Owen L~    178 light      blue            52   male  mascu~ Tatooine  Human  
+##  7 Beru W~    165 light      blue            47   fema~ femin~ Tatooine  Human  
+##  8 R5-D4       97 white, red red             NA   none  mascu~ Tatooine  Droid  
+##  9 Biggs ~    183 light      brown           24   male  mascu~ Tatooine  Human  
+## 10 Obi-Wa~    182 fair       blue-gray       57   male  mascu~ Stewjon   Human  
+## # ... with 77 more rows, and 3 more variables: films &lt;list&gt;, vehicles &lt;list&gt;,
+## #   starships &lt;list&gt;</code></pre>
+<pre class="r"><code>select(df, -c(name:hair_color)) #everything other than a range of named columns</code></pre>
+<pre><code>## # A tibble: 87 x 10
+##    skin_color eye_color birth_year sex   gender homeworld species films vehicles
+##    &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;   &lt;lis&gt; &lt;list&gt;  
+##  1 fair       blue            19   male  mascu~ Tatooine  Human   &lt;chr~ &lt;chr [2~
+##  2 gold       yellow         112   none  mascu~ Tatooine  Droid   &lt;chr~ &lt;chr [0~
+##  3 white, bl~ red             33   none  mascu~ Naboo     Droid   &lt;chr~ &lt;chr [0~
+##  4 white      yellow          41.9 male  mascu~ Tatooine  Human   &lt;chr~ &lt;chr [0~
+##  5 light      brown           19   fema~ femin~ Alderaan  Human   &lt;chr~ &lt;chr [1~
+##  6 light      blue            52   male  mascu~ Tatooine  Human   &lt;chr~ &lt;chr [0~
+##  7 light      blue            47   fema~ femin~ Tatooine  Human   &lt;chr~ &lt;chr [0~
+##  8 white, red red             NA   none  mascu~ Tatooine  Droid   &lt;chr~ &lt;chr [0~
+##  9 light      brown           24   male  mascu~ Tatooine  Human   &lt;chr~ &lt;chr [0~
+## 10 fair       blue-gray       57   male  mascu~ Stewjon   Human   &lt;chr~ &lt;chr [1~
+## # ... with 77 more rows, and 1 more variable: starships &lt;list&gt;</code></pre>
+<pre class="r"><code># dplyr also provides a number of &quot;select helper&quot; functions that allow you to
+# select variables using string patterns, e.g.
+
+select(df, contains(&quot;m&quot;)) #all columns with names that contain the letter m</code></pre>
+<pre><code>## # A tibble: 87 x 4
+##    name                mass homeworld films    
+##    &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;     &lt;list&gt;   
+##  1 Luke Skywalker        77 Tatooine  &lt;chr [5]&gt;
+##  2 C-3PO                 75 Tatooine  &lt;chr [6]&gt;
+##  3 R2-D2                 32 Naboo     &lt;chr [7]&gt;
+##  4 Darth Vader          136 Tatooine  &lt;chr [4]&gt;
+##  5 Leia Organa           49 Alderaan  &lt;chr [5]&gt;
+##  6 Owen Lars            120 Tatooine  &lt;chr [3]&gt;
+##  7 Beru Whitesun lars    75 Tatooine  &lt;chr [3]&gt;
+##  8 R5-D4                 32 Tatooine  &lt;chr [1]&gt;
+##  9 Biggs Darklighter     84 Tatooine  &lt;chr [1]&gt;
+## 10 Obi-Wan Kenobi        77 Stewjon   &lt;chr [6]&gt;
+## # ... with 77 more rows</code></pre>
+<pre class="r"><code>select(df, starts_with(&quot;m&quot;)) #all columns with names that start with the letter m </code></pre>
+<pre><code>## # A tibble: 87 x 1
+##     mass
+##    &lt;dbl&gt;
+##  1    77
+##  2    75
+##  3    32
+##  4   136
+##  5    49
+##  6   120
+##  7    75
+##  8    32
+##  9    84
+## 10    77
+## # ... with 77 more rows</code></pre>
+<pre class="r"><code>select(df, ends_with(&quot;s&quot;)) #all columns with names that end with the letter s </code></pre>
+<pre><code>## # A tibble: 87 x 5
+##     mass species films     vehicles  starships
+##    &lt;dbl&gt; &lt;chr&gt;   &lt;list&gt;    &lt;list&gt;    &lt;list&gt;   
+##  1    77 Human   &lt;chr [5]&gt; &lt;chr [2]&gt; &lt;chr [2]&gt;
+##  2    75 Droid   &lt;chr [6]&gt; &lt;chr [0]&gt; &lt;chr [0]&gt;
+##  3    32 Droid   &lt;chr [7]&gt; &lt;chr [0]&gt; &lt;chr [0]&gt;
+##  4   136 Human   &lt;chr [4]&gt; &lt;chr [0]&gt; &lt;chr [1]&gt;
+##  5    49 Human   &lt;chr [5]&gt; &lt;chr [1]&gt; &lt;chr [0]&gt;
+##  6   120 Human   &lt;chr [3]&gt; &lt;chr [0]&gt; &lt;chr [0]&gt;
+##  7    75 Human   &lt;chr [3]&gt; &lt;chr [0]&gt; &lt;chr [0]&gt;
+##  8    32 Droid   &lt;chr [1]&gt; &lt;chr [0]&gt; &lt;chr [0]&gt;
+##  9    84 Human   &lt;chr [1]&gt; &lt;chr [0]&gt; &lt;chr [1]&gt;
+## 10    77 Human   &lt;chr [6]&gt; &lt;chr [1]&gt; &lt;chr [5]&gt;
+## # ... with 77 more rows</code></pre>
+<pre class="r"><code># there is also a select helper called &quot;matches&quot; that enables you to select columns
+# with more complex string patterns using regular expressions 
+
+# a detailed introduction to the &quot;matches&quot; select helper, string manipulation,
+# and regular expressions will be covered in a later post.
+
+# see the documentation for select_helpers (from the tidyselect package, which
+# is loaded with dplyr) for more info
+# ?tidyselect::select_helpers
+
+# you can rearrange columns and rename them during the selection process
+select(df, 5:last_col(), 1:4) #select columns 5 to the end, then columns 1 to 4 </code></pre>
+<pre><code>## # A tibble: 87 x 14
+##    skin_color eye_color birth_year sex   gender homeworld species films vehicles
+##    &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;   &lt;lis&gt; &lt;list&gt;  
+##  1 fair       blue            19   male  mascu~ Tatooine  Human   &lt;chr~ &lt;chr [2~
+##  2 gold       yellow         112   none  mascu~ Tatooine  Droid   &lt;chr~ &lt;chr [0~
+##  3 white, bl~ red             33   none  mascu~ Naboo     Droid   &lt;chr~ &lt;chr [0~
+##  4 white      yellow          41.9 male  mascu~ Tatooine  Human   &lt;chr~ &lt;chr [0~
+##  5 light      brown           19   fema~ femin~ Alderaan  Human   &lt;chr~ &lt;chr [1~
+##  6 light      blue            52   male  mascu~ Tatooine  Human   &lt;chr~ &lt;chr [0~
+##  7 light      blue            47   fema~ femin~ Tatooine  Human   &lt;chr~ &lt;chr [0~
+##  8 white, red red             NA   none  mascu~ Tatooine  Droid   &lt;chr~ &lt;chr [0~
+##  9 light      brown           24   male  mascu~ Tatooine  Human   &lt;chr~ &lt;chr [0~
+## 10 fair       blue-gray       57   male  mascu~ Stewjon   Human   &lt;chr~ &lt;chr [1~
+## # ... with 77 more rows, and 5 more variables: starships &lt;list&gt;, name &lt;chr&gt;,
+## #   height &lt;int&gt;, mass &lt;dbl&gt;, hair_color &lt;chr&gt;</code></pre>
+<pre class="r"><code># to select() a single column and turn it into a vector (instead of leaving it as a data frame),
+
+all.equal(
+  pull(select(df, mass), mass), # wrap it in the pull function (also from dplyr)
+  df$mass, # or use the $ symbol
+  df[[&quot;mass&quot;]] # or the equivalent `[[` operator
+  )</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<div id="renaming-columns-with-select-or-rename" class="section level2">
+<h2><span class="header-section-number">3.1</span> Renaming Columns with <strong>select()</strong> or <strong>rename()</strong></h2>
+<p>Columns can also be renamed when subsetting with the <code>select()</code> function or without subsetting using the <code>rename()</code> function (also in the dplyr package).</p>
+<pre class="r"><code>#rename and subset using select
+select(df, nm = name, hgt = height, byear = birth_year) #select columns and rename them</code></pre>
+<pre><code>## # A tibble: 87 x 3
+##    nm                   hgt byear
+##    &lt;chr&gt;              &lt;int&gt; &lt;dbl&gt;
+##  1 Luke Skywalker       172  19  
+##  2 C-3PO                167 112  
+##  3 R2-D2                 96  33  
+##  4 Darth Vader          202  41.9
+##  5 Leia Organa          150  19  
+##  6 Owen Lars            178  52  
+##  7 Beru Whitesun lars   165  47  
+##  8 R5-D4                 97  NA  
+##  9 Biggs Darklighter    183  24  
+## 10 Obi-Wan Kenobi       182  57  
+## # ... with 77 more rows</code></pre>
+<pre class="r"><code>#to just rename columns without subsetting, use dplyr::rename() instead of select()
+rename(df, nm = name, hgt = height, b_year = birth_year) #returns all columns</code></pre>
+<pre><code>## # A tibble: 87 x 14
+##    nm           hgt  mass hair_color   skin_color eye_color b_year sex   gender 
+##    &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  
+##  1 Luke Skyw~   172    77 blond        fair       blue        19   male  mascul~
+##  2 C-3PO        167    75 &lt;NA&gt;         gold       yellow     112   none  mascul~
+##  3 R2-D2         96    32 &lt;NA&gt;         white, bl~ red         33   none  mascul~
+##  4 Darth Vad~   202   136 none         white      yellow      41.9 male  mascul~
+##  5 Leia Orga~   150    49 brown        light      brown       19   fema~ femini~
+##  6 Owen Lars    178   120 brown, grey  light      blue        52   male  mascul~
+##  7 Beru Whit~   165    75 brown        light      blue        47   fema~ femini~
+##  8 R5-D4         97    32 &lt;NA&gt;         white, red red         NA   none  mascul~
+##  9 Biggs Dar~   183    84 black        light      brown       24   male  mascul~
+## 10 Obi-Wan K~   182    77 auburn, whi~ fair       blue-gray   57   male  mascul~
+## # ... with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
+## #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+<pre class="r"><code>#to save the updated names just assign the output back to the same data frame object
+renamed_df &lt;- rename(df, nm = name, hgt = height, b_year = birth_year) 
+
+#In base R you can just assign names using a string vector. 
+#The main disadvantage of this method is that all variable names have to be specified,
+#instead of just the ones that you want to change (which is all you need to do with the rename function)
+#Unlike select() or rename(), the base R method also requires that names be assigned in the correct order,
+#according to the column indices.
+
+df_names &lt;- names(df) #store the original names
+
+names(df) &lt;- c(&quot;nm&quot;, &quot;hgt&quot;, &quot;mass&quot;, 
+               &quot;hair_color&quot;, &quot;skin_color&quot;, &quot;eye_color&quot;,
+               &quot;b_year&quot;) #returns a warning and then all non-specified names become NA</code></pre>
+<pre><code>## Warning: The `value` argument of `names&lt;-` must have the same length as `x` as of tibble 3.0.0.
+## `names` must have length 14, not 7.</code></pre>
+<pre><code>## Warning: The `value` argument of `names&lt;-` can&#39;t be empty as of tibble 3.0.0.
+## Columns 8, 9, 10, 11, 12, and 2 more must be named.</code></pre>
+<pre class="r"><code>names(df) &lt;- df_names #restore the original names from the vector saved above</code></pre>
+</div>
+</div>
+<div id="filter" class="section level1">
+<h1><span class="header-section-number">4</span> <strong>filter()</strong></h1>
+<p><code>filter()</code> is the other core dplyr verb you can use for subsetting your data. <code>filter()</code> lets you extract a subset of <strong>rows</strong> using <a href="https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/#logical-operators">logical operators</a>.</p>
+<p>To filter a data frame, specify the name of the data frame as the 1st argument, then any number of logical tests for values of variables in the data frame that you want to use as filtering criteria.</p>
+<pre class="r"><code># we&#39;ll just work with a few columns to simplify the output and highlight the filtering
+df2 &lt;- select(df, name, height, species, homeworld) 
+
+unique(df2$homeworld) #check the unique values of the homeworld variable, which we will use for filtering</code></pre>
+<pre><code>##  [1] &quot;Tatooine&quot;       &quot;Naboo&quot;          &quot;Alderaan&quot;       &quot;Stewjon&quot;       
+##  [5] &quot;Eriadu&quot;         &quot;Kashyyyk&quot;       &quot;Corellia&quot;       &quot;Rodia&quot;         
+##  [9] &quot;Nal Hutta&quot;      &quot;Bestine IV&quot;     NA               &quot;Kamino&quot;        
+## [13] &quot;Trandosha&quot;      &quot;Socorro&quot;        &quot;Bespin&quot;         &quot;Mon Cala&quot;      
+## [17] &quot;Chandrila&quot;      &quot;Endor&quot;          &quot;Sullust&quot;        &quot;Cato Neimoidia&quot;
+## [21] &quot;Coruscant&quot;      &quot;Toydaria&quot;       &quot;Malastare&quot;      &quot;Dathomir&quot;      
+## [25] &quot;Ryloth&quot;         &quot;Vulpter&quot;        &quot;Troiken&quot;        &quot;Tund&quot;          
+## [29] &quot;Haruun Kal&quot;     &quot;Cerea&quot;          &quot;Glee Anselm&quot;    &quot;Iridonia&quot;      
+## [33] &quot;Iktotch&quot;        &quot;Quermia&quot;        &quot;Dorin&quot;          &quot;Champala&quot;      
+## [37] &quot;Geonosis&quot;       &quot;Mirial&quot;         &quot;Serenno&quot;        &quot;Concord Dawn&quot;  
+## [41] &quot;Zolan&quot;          &quot;Ojom&quot;           &quot;Aleen Minor&quot;    &quot;Skako&quot;         
+## [45] &quot;Muunilinst&quot;     &quot;Shili&quot;          &quot;Kalee&quot;          &quot;Umbara&quot;        
+## [49] &quot;Utapau&quot;</code></pre>
+<pre class="r"><code># use filter to get a subset of all star wars characters from either Tatooine or Naboo
+
+filter(df2, 
+       homeworld == &quot;Tatooine&quot; | homeworld == &quot;Naboo&quot;) #recall that the vertical bar `|` is the logical operator &#39;or&#39;</code></pre>
+<pre><code>## # A tibble: 21 x 4
+##    name               height species homeworld
+##    &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;    
+##  1 Luke Skywalker        172 Human   Tatooine 
+##  2 C-3PO                 167 Droid   Tatooine 
+##  3 R2-D2                  96 Droid   Naboo    
+##  4 Darth Vader           202 Human   Tatooine 
+##  5 Owen Lars             178 Human   Tatooine 
+##  6 Beru Whitesun lars    165 Human   Tatooine 
+##  7 R5-D4                  97 Droid   Tatooine 
+##  8 Biggs Darklighter     183 Human   Tatooine 
+##  9 Anakin Skywalker      188 Human   Tatooine 
+## 10 Palpatine             170 Human   Naboo    
+## # ... with 11 more rows</code></pre>
+<pre class="r"><code># this is read: filter the data frame &quot;df2&quot; to extract rows where the value of
+# the variable homeworld is equal to &quot;Tatooine&quot; or homeworld is equal to &quot;Naboo&quot;
+
+#in base R, one equivalent option would be:
+
+df2[(df2$homeworld == &quot;Tatooine&quot; | df2$homeworld == &quot;Naboo&quot;), ]</code></pre>
+<pre><code>## # A tibble: 31 x 4
+##    name               height species homeworld
+##    &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;    
+##  1 Luke Skywalker        172 Human   Tatooine 
+##  2 C-3PO                 167 Droid   Tatooine 
+##  3 R2-D2                  96 Droid   Naboo    
+##  4 Darth Vader           202 Human   Tatooine 
+##  5 Owen Lars             178 Human   Tatooine 
+##  6 Beru Whitesun lars    165 Human   Tatooine 
+##  7 R5-D4                  97 Droid   Tatooine 
+##  8 Biggs Darklighter     183 Human   Tatooine 
+##  9 Anakin Skywalker      188 Human   Tatooine 
+## 10 &lt;NA&gt;                   NA &lt;NA&gt;    &lt;NA&gt;     
+## # ... with 21 more rows</code></pre>
+<pre class="r"><code># notice that the $ is not needed to specify which data set the variable
+# &quot;homeworld&quot; is in for filter but it is if you are passing a logical vector to
+# subset a data frame using `[]` in base R
+
+# this is because R reads (df2$homeworld == &quot;Tatooine&quot; | df2$homeworld == &quot;Naboo&quot;)
+# as a logical test and returns a logical vector, which is then used to specify
+# which rows to extract (those with values == TRUE) and which to discard (those
+# with values == FALSE). This becomes really clear if you just pull out the
+# subsetting predicates and print the result
+
+(df2$homeworld == &quot;Tatooine&quot; | df2$homeworld == &quot;Naboo&quot;)</code></pre>
+<pre><code>##  [1]  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE FALSE
+## [13] FALSE FALSE FALSE FALSE FALSE FALSE    NA  TRUE FALSE    NA FALSE FALSE
+## [25] FALSE FALSE FALSE    NA FALSE FALSE    NA FALSE FALSE  TRUE  TRUE  TRUE
+## [37]  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [49] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE
+## [61] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [73]    NA FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE    NA    NA    NA
+## [85]    NA    NA  TRUE</code></pre>
+<pre class="r"><code># to get indices instead of logical values, you can wrap the above in which(), e.g.
+
+ind &lt;- which(df2$homeworld == &quot;Tatooine&quot; | df2$homeworld == &quot;Naboo&quot;) #returns the indices where the criteria are TRUE
+
+ind #calling an object itself without applying any functions to it just prints it to the console</code></pre>
+<pre><code>##  [1]  1  2  3  4  6  7  8  9 11 20 34 35 36 37 40 41 57 58 59 63 87</code></pre>
+<pre class="r"><code>#note that you could also pass a vector of integers to subset a df2 using `[]`
+df2[ind, ]</code></pre>
+<pre><code>## # A tibble: 21 x 4
+##    name               height species homeworld
+##    &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;    
+##  1 Luke Skywalker        172 Human   Tatooine 
+##  2 C-3PO                 167 Droid   Tatooine 
+##  3 R2-D2                  96 Droid   Naboo    
+##  4 Darth Vader           202 Human   Tatooine 
+##  5 Owen Lars             178 Human   Tatooine 
+##  6 Beru Whitesun lars    165 Human   Tatooine 
+##  7 R5-D4                  97 Droid   Tatooine 
+##  8 Biggs Darklighter     183 Human   Tatooine 
+##  9 Anakin Skywalker      188 Human   Tatooine 
+## 10 Palpatine             170 Human   Naboo    
+## # ... with 11 more rows</code></pre>
+<pre class="r"><code>#to negate a logical test, you can use `!` which means &quot;not&quot;
+# in the context of subsetting, this negates a logical vector 
+
+!(df2$homeworld == &quot;Tatooine&quot; | df2$homeworld == &quot;Naboo&quot;)</code></pre>
+<pre><code>##  [1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE
+## [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE    NA FALSE  TRUE    NA  TRUE  TRUE
+## [25]  TRUE  TRUE  TRUE    NA  TRUE  TRUE    NA  TRUE  TRUE FALSE FALSE FALSE
+## [37] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [49]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE
+## [61]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [73]    NA  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE    NA    NA    NA
+## [85]    NA    NA FALSE</code></pre>
+<pre class="r"><code>#this is why the logical test for not equal to is &quot;!=&quot;
+identical(!(df2$homeworld == &quot;Tatooine&quot;), df2$homeworld != &quot;Tatooine&quot;) #use identical() or all.equal() to test for equality between entire R objects</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code># extract rows for characters who are at least 100 cm tall and are from Naboo
+filter(df2, height &gt;= 100 &amp; homeworld == &quot;Naboo&quot;)</code></pre>
+<pre><code>## # A tibble: 10 x 4
+##    name          height species homeworld
+##    &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;    
+##  1 Palpatine        170 Human   Naboo    
+##  2 Jar Jar Binks    196 Gungan  Naboo    
+##  3 Roos Tarpals     224 Gungan  Naboo    
+##  4 Rugor Nass       206 Gungan  Naboo    
+##  5 Ric Olié         183 &lt;NA&gt;    Naboo    
+##  6 Quarsh Panaka    183 &lt;NA&gt;    Naboo    
+##  7 Gregar Typho     185 Human   Naboo    
+##  8 Cordé            157 Human   Naboo    
+##  9 Dormé            165 Human   Naboo    
+## 10 Padmé Amidala    165 Human   Naboo</code></pre>
+<pre class="r"><code># when using filter(), you can substitute a comma for `&amp;` when specifying multiple criteria
+identical(filter(df2, height &gt;= 100 &amp; homeworld == &quot;Naboo&quot;),
+          
+          filter(df2, height &gt;= 100, homeworld == &quot;Naboo&quot;))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code># multiple or (`|`) clauses can instead be specified using the %in% infix operator
+option1 &lt;- filter(df2, homeworld == &quot;Tatooine&quot; | homeworld == &quot;Naboo&quot; | homeworld == &quot;Alderaan&quot;)
+
+option2 &lt;- filter(filter(df2, homeworld %in% c(&quot;Tatooine&quot;, &quot;Naboo&quot;, &quot;Alderaan&quot;)))
+
+identical(option1, option2)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code># since %in% also returns a logical vector, it can also be negated using `!`, 
+# although they give different results if the data contain missing values (NA)
+
+a &lt;- !(df2$homeworld == &quot;Tatooine&quot; | df2$homeworld == &quot;Naboo&quot; | df2$homeworld == &quot;Alderaan&quot;)
+
+b &lt;- !(df2$homeworld %in% c(&quot;Tatooine&quot;, &quot;Naboo&quot;, &quot;Alderaan&quot;))
+
+all.equal(a, b)</code></pre>
+<pre><code>## [1] &quot;&#39;is.NA&#39; value mismatch: 0 in current 10 in target&quot;</code></pre>
+<pre class="r"><code>b[is.na(a)] #these missing values were converted to TRUE by %in%</code></pre>
+<pre><code>##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
+<pre class="r"><code># to avoid this and other problems many functions have with processing NA
+# values, it is often best to either remove them or impute them, or use the
+# na.rm argument for the function
+
+x &lt;- na.omit(df2$homeworld)
+
+c &lt;- !(x == &quot;Tatooine&quot; | x == &quot;Naboo&quot; | x == &quot;Alderaan&quot;)
+
+# negating a set of `or` clauses for equality is the same as multiple `and`
+# clauses for inequality
+
+d &lt;- x != &quot;Tatooine&quot; &amp; x != &quot;Naboo&quot; &amp; x != &quot;Alderaan&quot;
+
+e &lt;- !(x %in% c(&quot;Tatooine&quot;, &quot;Naboo&quot;, &quot;Alderaan&quot;))
+
+all.equal(c, d, e)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code># key point: you can use logical comparisons and vectors for subsetting in R</code></pre>
+<div id="subset-rows-using-indices-with-slice" class="section level2">
+<h2><span class="header-section-number">4.1</span> Subset Rows using Indices with <strong>slice()</strong></h2>
+<p>Unlike <code>select()</code>, <code>filter()</code> doesn’t allow the use of indices for subsetting. Instead, dplyr has another funciton called <a href="https://dplyr.tidyverse.org/reference/slice.html">slice()</a> for this purpose. <code>slice()</code> doesn’t require you to enclose multiple index values in c() either and it can also operate on indices within groups (see the <a href="https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/#group_by">section 7</a> below for an example).</p>
+<pre class="r"><code>slice(df2, 1:5, 9:14, 25:50)</code></pre>
+<pre><code>## # A tibble: 37 x 4
+##    name              height species homeworld
+##    &lt;chr&gt;              &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;    
+##  1 Luke Skywalker       172 Human   Tatooine 
+##  2 C-3PO                167 Droid   Tatooine 
+##  3 R2-D2                 96 Droid   Naboo    
+##  4 Darth Vader          202 Human   Tatooine 
+##  5 Leia Organa          150 Human   Alderaan 
+##  6 Biggs Darklighter    183 Human   Tatooine 
+##  7 Obi-Wan Kenobi       182 Human   Stewjon  
+##  8 Anakin Skywalker     188 Human   Tatooine 
+##  9 Wilhuff Tarkin       180 Human   Eriadu   
+## 10 Chewbacca            228 Wookiee Kashyyyk 
+## # ... with 27 more rows</code></pre>
+</div>
+</div>
+<div id="mutate" class="section level1">
+<h1><span class="header-section-number">5</span> <strong>mutate()</strong></h1>
+<p><code>mutate()</code> lets you modify and/or create new columns in a data frame.</p>
+<pre class="r"><code>#Say for example that you wanted to calculate the BMI of each character in the starwars data frame
+
+df2 &lt;- select(df, name, height, mass) #extract columns of interest
+
+df3 &lt;- mutate(df2,
+       height_in_m  = height/100, #convert height from cm to m, store in new column &quot;height_in_m&quot;
+       bmi = mass/(height_in_m^2), #add a column called bmi for the calculated body mass index of each character
+       bmi = signif(bmi, 1)) #round it to one significant digit/decimal place &amp; assign back to the same name.
+df3</code></pre>
+<pre><code>## # A tibble: 87 x 5
+##    name               height  mass height_in_m   bmi
+##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;
+##  1 Luke Skywalker        172    77        1.72    30
+##  2 C-3PO                 167    75        1.67    30
+##  3 R2-D2                  96    32        0.96    30
+##  4 Darth Vader           202   136        2.02    30
+##  5 Leia Organa           150    49        1.5     20
+##  6 Owen Lars             178   120        1.78    40
+##  7 Beru Whitesun lars    165    75        1.65    30
+##  8 R5-D4                  97    32        0.97    30
+##  9 Biggs Darklighter     183    84        1.83    30
+## 10 Obi-Wan Kenobi        182    77        1.82    20
+## # ... with 77 more rows</code></pre>
+<pre class="r"><code># assigning a modified variable to the same name overwrites/modifies the column
+
+# note in the above mutate statement I created a new variable then used it in the same function call. 
+# this is possible because mutate() evaluates items from left to right
+
+# the equivalent operations in base R would typically involve several steps
+# requiring separate assignment of intermediate objects
+
+df2$height_in_m &lt;- df2$height/100
+
+df2$bmi &lt;- df2$mass/(df2$height_in_m^2)
+
+df2$bmi &lt;- signif(df2$bmi, 1)
+  
+all.equal(df2, df3)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code># As shown above, mutate lets you combine these steps into a single function call and doesn&#39;t
+# require you to specify the dataframe$ component multiple times, you only have
+# to supply the name of the data frame as the 1st argument.
+
+# the transmute function (also in the dplyr package) is an alternative to mutate that
+# only retains variables you specify (i.e. it combines select and mutate in a single step)
+# You probably won&#39;t use it as often as mutate, but it can be helpful occassionally
+
+transmute(df2,
+       height_in_m  = height/100, #convert height from cm to m, store in new column &quot;height_in_m&quot;
+       bmi = mass/(height_in_m^2), #add a column called bmi for the calculated body mass index of each character
+       bmi = signif(bmi, 1))</code></pre>
+<pre><code>## # A tibble: 87 x 2
+##    height_in_m   bmi
+##          &lt;dbl&gt; &lt;dbl&gt;
+##  1        1.72    30
+##  2        1.67    30
+##  3        0.96    30
+##  4        2.02    30
+##  5        1.5     20
+##  6        1.78    40
+##  7        1.65    30
+##  8        0.97    30
+##  9        1.83    30
+## 10        1.82    20
+## # ... with 77 more rows</code></pre>
+<div id="recoding-or-creating-indicator-variables-using-if_else-case_when-or-recode" class="section level2">
+<h2><span class="header-section-number">5.1</span> Recoding or Creating Indicator Variables using <strong>if_else()</strong>, <strong>case_when()</strong>, or <strong>recode()</strong></h2>
+<p>A common use of mutate (or transmute) is to encode a new variable (or overwrite an existing one) based on values of an existing variable in a data frame using the <a href="https://dplyr.tidyverse.org/reference/recode.html">recode()</a>, <a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else()</a> or <a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a> functions in the dplyr package.</p>
+<p><code>if_else()</code> is a condensed version of a simple if/else statement with only 2 outcomes: one if the condition specified as the 1st argument evaluates to <code>TRUE</code> and one if it evaluates to <code>FALSE</code> (i.e. no <code>else if</code> components). <code>case_when()</code> lets you use multiple <code>if_else()</code> calls together without having to nest them explicitly. General control flow operations using conditional statments (<code>if</code>, <code>else</code>, <code>else if</code>, etc.) may be covered in a later blog post… For now I recommend <a href="https://adv-r.hadley.nz/control-flow.html">this section of the advanced R book</a> for those who want to learn more about it before moving on.</p>
+<pre class="r"><code># to create an indicator/dummy/2-level variable (e.g. 1/0, T/F) you can use
+# if_else() (or ifelse()):
+
+if_else(df$height &gt; 180, #part 1. logical test
+        &quot;tall&quot;, #part 2. value if TRUE
+        &quot;short&quot;) #part 3. value if FALSE (should be same class as the value if TRUE)</code></pre>
+<pre><code>##  [1] &quot;short&quot; &quot;short&quot; &quot;short&quot; &quot;tall&quot;  &quot;short&quot; &quot;short&quot; &quot;short&quot; &quot;short&quot; &quot;tall&quot; 
+## [10] &quot;tall&quot;  &quot;tall&quot;  &quot;short&quot; &quot;tall&quot;  &quot;short&quot; &quot;short&quot; &quot;short&quot; &quot;short&quot; &quot;short&quot;
+## [19] &quot;short&quot; &quot;short&quot; &quot;tall&quot;  &quot;tall&quot;  &quot;tall&quot;  &quot;short&quot; &quot;short&quot; &quot;short&quot; &quot;short&quot;
+## [28] NA      &quot;short&quot; &quot;short&quot; &quot;tall&quot;  &quot;tall&quot;  &quot;short&quot; &quot;tall&quot;  &quot;tall&quot;  &quot;tall&quot; 
+## [37] &quot;tall&quot;  &quot;short&quot; &quot;short&quot; &quot;tall&quot;  &quot;short&quot; &quot;short&quot; &quot;short&quot; &quot;short&quot; &quot;short&quot;
+## [46] &quot;short&quot; &quot;short&quot; &quot;tall&quot;  &quot;tall&quot;  &quot;tall&quot;  &quot;short&quot; &quot;tall&quot;  &quot;tall&quot;  &quot;tall&quot; 
+## [55] &quot;tall&quot;  &quot;tall&quot;  &quot;tall&quot;  &quot;short&quot; &quot;tall&quot;  &quot;tall&quot;  &quot;short&quot; &quot;short&quot; &quot;short&quot;
+## [64] &quot;tall&quot;  &quot;tall&quot;  &quot;tall&quot;  &quot;short&quot; &quot;tall&quot;  &quot;tall&quot;  &quot;tall&quot;  &quot;short&quot; &quot;short&quot;
+## [73] &quot;short&quot; &quot;tall&quot;  &quot;tall&quot;  &quot;short&quot; &quot;tall&quot;  &quot;tall&quot;  &quot;tall&quot;  &quot;short&quot; &quot;tall&quot; 
+## [82] NA      NA      NA      NA      NA      &quot;short&quot;</code></pre>
+<pre class="r"><code># use mutate to add it to an existing data frame
+
+mutate(select(df, name, height), #apply mutate to a subset of the data using a nested select call
+       tall_or_short = if_else(height &gt; 180, 
+                              &quot;tall&quot;, 
+                              &quot;short&quot;)) </code></pre>
+<pre><code>## # A tibble: 87 x 3
+##    name               height tall_or_short
+##    &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;        
+##  1 Luke Skywalker        172 short        
+##  2 C-3PO                 167 short        
+##  3 R2-D2                  96 short        
+##  4 Darth Vader           202 tall         
+##  5 Leia Organa           150 short        
+##  6 Owen Lars             178 short        
+##  7 Beru Whitesun lars    165 short        
+##  8 R5-D4                  97 short        
+##  9 Biggs Darklighter     183 tall         
+## 10 Obi-Wan Kenobi        182 tall         
+## # ... with 77 more rows</code></pre>
+<pre class="r"><code># to specify more than 2 conditions/outputs you can use case_when():
+mutate(select(df, name, height), 
+       size_class = case_when(height &gt; 200 ~ &quot;tall&quot;, #logical_test ~ value_if_TRUE,
+                              height &lt; 200 &amp;  height &gt; 100 ~ &quot;medium&quot;, 
+                              height &lt; 100 ~ &quot;short&quot;)
+       ) </code></pre>
+<pre><code>## # A tibble: 87 x 3
+##    name               height size_class
+##    &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;     
+##  1 Luke Skywalker        172 medium    
+##  2 C-3PO                 167 medium    
+##  3 R2-D2                  96 short     
+##  4 Darth Vader           202 tall      
+##  5 Leia Organa           150 medium    
+##  6 Owen Lars             178 medium    
+##  7 Beru Whitesun lars    165 medium    
+##  8 R5-D4                  97 short     
+##  9 Biggs Darklighter     183 medium    
+## 10 Obi-Wan Kenobi        182 medium    
+## # ... with 77 more rows</code></pre>
+<pre class="r"><code># you can recode a variable using recode():
+
+recoded_using_recode &lt;- mutate(select(df, name, hair_color),
+       hair_color = recode(hair_color, #the variable you want to recode
+                           &quot;blond&quot; = &quot;BLOND&quot;,#old_value = new_value
+                           &quot;brown&quot; = &quot;BROWN&quot;) #you can recode any number of values this way
+       #unspecified values are unaltered
+       ) 
+
+recoded_using_recode</code></pre>
+<pre><code>## # A tibble: 87 x 2
+##    name               hair_color   
+##    &lt;chr&gt;              &lt;chr&gt;        
+##  1 Luke Skywalker     BLOND        
+##  2 C-3PO              &lt;NA&gt;         
+##  3 R2-D2              &lt;NA&gt;         
+##  4 Darth Vader        none         
+##  5 Leia Organa        BROWN        
+##  6 Owen Lars          brown, grey  
+##  7 Beru Whitesun lars BROWN        
+##  8 R5-D4              &lt;NA&gt;         
+##  9 Biggs Darklighter  black        
+## 10 Obi-Wan Kenobi     auburn, white
+## # ... with 77 more rows</code></pre>
+<pre class="r"><code># unforunately, unlike other dplyr functions, recode()-ed values are specified as
+# &quot;old_value&quot; = &quot;new_value&quot; instead of the more common &quot;new&quot; = &quot;old&quot; scheme used
+# by select() and rename()
+
+# an alternative would be to use case_when(), e.g.:
+
+recoded_using_case_when &lt;- mutate(select(df, name, hair_color),
+       hair_color = case_when(hair_color == &quot;blond&quot; ~ &quot;BLOND&quot;,
+                              hair_color == &quot;brown&quot; ~ &quot;BROWN&quot;, 
+                              TRUE ~ as.character(hair_color)))
+
+identical(recoded_using_recode, recoded_using_case_when) </code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code># This time we add in the &quot;TRUE ~ as.character(hair_color)&quot; part to signify that
+# all other non-NA cases should be the existing value of hair color as a
+# character string; otherwise non-matching values are coded as missing values (`NA`)
+
+# note that recode, like most R functions, returns a copy of the data object, 
+# that you have to assign to a name if you want to save it in the environment
+
+#of course you can also recode variables in base R using the assingnment operator:
+
+#`&lt;-` (keyboard shortcut = )
+
+df$hair_color[df$hair_color == &quot;blond&quot;] &lt;- &quot;BLOND&quot;
+df$hair_color[df$hair_color == &quot;brown&quot;] &lt;- &quot;BROWN&quot;
+
+#but this modifies the data frame in place, which isn&#39;t always what you want
+#e.g. if you are just experimenting with a coding scheme and then decide you
+#want to change it back you&#39;ll have to rerun earlier portions of your R script
+#to recover the previous version</code></pre>
+</div>
+</div>
+<div id="summarise" class="section level1">
+<h1><span class="header-section-number">6</span> <strong>summarise()</strong></h1>
+<p><code>summarise()</code> makes it easy to turn a data frame into a smaller data frame of summary statistics.</p>
+<pre class="r"><code>summary1 &lt;- summarise(df, #as for the other dplyr functions, the data source is specified as the 1st argument
+                      n = n(), #n() is a special function for use in summarize that returns the number of values
+                      mean_height = mean(height, na.rm = TRUE), #summary stat name in the output = function(column) in the input
+                      median_mass = median(mass, na.rm = TRUE))
+
+summary1</code></pre>
+<pre><code>## # A tibble: 1 x 3
+##       n mean_height median_mass
+##   &lt;int&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+## 1    87        174.          79</code></pre>
+<pre class="r"><code>#summarise() and summarize() do the same thing and just accommodate different user spelling preferences
+summary2 &lt;- summarize(df, #as for the other dplyr functions, the data source is specified as the 1st argument
+                      n = n(), #n() is a special function for use in summarize that returns the number of values
+                      mean_height = mean(height, na.rm = TRUE), #summary stat name in the output = function(column) in the input
+                      median_mass = median(mass, na.rm = TRUE))
+
+
+identical(summary1, summary2)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="group_by" class="section level1">
+<h1><span class="header-section-number">7</span> <strong>group_by()</strong></h1>
+<p><code>group_by()</code> adds an explicit grouping structure to a data frame that can subsequently be used by other dplyr functions to perform operations within each level of the grouping variable or level combination of the grouping variables if you specify multiple grouping variables. This is particularly useful in conjunction with either <code>summarize()</code> or <code>mutate()</code>, enabling you to calculate summary statistics or transform variables separately for each of the groups defined by <code>group_by()</code>.</p>
+<pre class="r"><code>#structure of the data before grouping
+glimpse(df)</code></pre>
+<pre><code>## Rows: 87
+## Columns: 14
+## $ name       &lt;chr&gt; &quot;Luke Skywalker&quot;, &quot;C-3PO&quot;, &quot;R2-D2&quot;, &quot;Darth Vader&quot;, &quot;Leia Or~
+## $ height     &lt;int&gt; 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 180, 2~
+## $ mass       &lt;dbl&gt; 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 84.0, 77.~
+## $ hair_color &lt;chr&gt; &quot;BLOND&quot;, NA, NA, &quot;none&quot;, &quot;BROWN&quot;, &quot;brown, grey&quot;, &quot;BROWN&quot;, N~
+## $ skin_color &lt;chr&gt; &quot;fair&quot;, &quot;gold&quot;, &quot;white, blue&quot;, &quot;white&quot;, &quot;light&quot;, &quot;light&quot;, &quot;~
+## $ eye_color  &lt;chr&gt; &quot;blue&quot;, &quot;yellow&quot;, &quot;red&quot;, &quot;yellow&quot;, &quot;brown&quot;, &quot;blue&quot;, &quot;blue&quot;,~
+## $ birth_year &lt;dbl&gt; 19.0, 112.0, 33.0, 41.9, 19.0, 52.0, 47.0, NA, 24.0, 57.0, ~
+## $ sex        &lt;chr&gt; &quot;male&quot;, &quot;none&quot;, &quot;none&quot;, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;,~
+## $ gender     &lt;chr&gt; &quot;masculine&quot;, &quot;masculine&quot;, &quot;masculine&quot;, &quot;masculine&quot;, &quot;femini~
+## $ homeworld  &lt;chr&gt; &quot;Tatooine&quot;, &quot;Tatooine&quot;, &quot;Naboo&quot;, &quot;Tatooine&quot;, &quot;Alderaan&quot;, &quot;T~
+## $ species    &lt;chr&gt; &quot;Human&quot;, &quot;Droid&quot;, &quot;Droid&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Huma~
+## $ films      &lt;list&gt; &lt;&quot;The Empire Strikes Back&quot;, &quot;Revenge of the Sith&quot;, &quot;Return~
+## $ vehicles   &lt;list&gt; &lt;&quot;Snowspeeder&quot;, &quot;Imperial Speeder Bike&quot;&gt;, &lt;&gt;, &lt;&gt;, &lt;&gt;, &quot;Imp~
+## $ starships  &lt;list&gt; &lt;&quot;X-wing&quot;, &quot;Imperial shuttle&quot;&gt;, &lt;&gt;, &lt;&gt;, &quot;TIE Advanced x1&quot;,~</code></pre>
+<pre class="r"><code>df3 &lt;- select(df, name, species, height, mass)#1st. extract just the columns of interest
+
+grouped_data &lt;- group_by(df3, species) #group the data frame &quot;df3&quot; by the variable &quot;species&quot;
+
+class(grouped_data) #new additional class = &quot;grouped_df&quot;</code></pre>
+<pre><code>## [1] &quot;grouped_df&quot; &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<pre class="r"><code>glimpse(grouped_data) #note that the structure now has a groups attribute</code></pre>
+<pre><code>## Rows: 87
+## Columns: 4
+## Groups: species [38]
+## $ name    &lt;chr&gt; &quot;Luke Skywalker&quot;, &quot;C-3PO&quot;, &quot;R2-D2&quot;, &quot;Darth Vader&quot;, &quot;Leia Organ~
+## $ species &lt;chr&gt; &quot;Human&quot;, &quot;Droid&quot;, &quot;Droid&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human&quot;,~
+## $ height  &lt;int&gt; 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 180, 228,~
+## $ mass    &lt;dbl&gt; 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 84.0, 77.0, ~</code></pre>
+<pre class="r"><code>slice(grouped_data, 1) #look at the 1st row of each group</code></pre>
+<pre><code>## # A tibble: 38 x 4
+## # Groups:   species [38]
+##    name                  species   height  mass
+##    &lt;chr&gt;                 &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt;
+##  1 Ratts Tyerell         Aleena        79    15
+##  2 Dexter Jettster       Besalisk     198   102
+##  3 Ki-Adi-Mundi          Cerean       198    82
+##  4 Mas Amedda            Chagrian     196    NA
+##  5 Zam Wesell            Clawdite     168    55
+##  6 C-3PO                 Droid        167    75
+##  7 Sebulba               Dug          112    40
+##  8 Wicket Systri Warrick Ewok          88    20
+##  9 Poggle the Lesser     Geonosian    183    80
+## 10 Jar Jar Binks         Gungan       196    66
+## # ... with 28 more rows</code></pre>
+<pre class="r"><code>#next summarise calculates the specified summary statistics within species
+summarise(grouped_data,
+          n = n(), 
+          mean_height = mean(height, na.rm = TRUE), 
+          median_mass = median(mass, na.rm = TRUE))</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 38 x 4
+##    species       n mean_height median_mass
+##    &lt;chr&gt;     &lt;int&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Aleena        1         79         15  
+##  2 Besalisk      1        198        102  
+##  3 Cerean        1        198         82  
+##  4 Chagrian      1        196         NA  
+##  5 Clawdite      1        168         55  
+##  6 Droid         6        131.        53.5
+##  7 Dug           1        112         40  
+##  8 Ewok          1         88         20  
+##  9 Geonosian     1        183         80  
+## 10 Gungan        3        209.        74  
+## # ... with 28 more rows</code></pre>
+<pre class="r"><code>#summarise and summarize do the same thing and just accommodate different user spelling preferences
+identical(summary1, summary2)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>#to apply mutate() within each level of a grouping variable, simply use mutate
+#on a grouped data frame:
+mutated_grouped_data &lt;- mutate(grouped_data, 
+                               scaled_mass = scale(mass)) #convert raw masses into standardized masses (i.e. z-scores)
+
+select(mutated_grouped_data, name, mass, scaled_mass) #just print the relevant parts</code></pre>
+<pre><code>## Adding missing grouping variables: `species`</code></pre>
+<pre><code>## # A tibble: 87 x 4
+## # Groups:   species [38]
+##    species name                mass scaled_mass[,1]
+##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;           &lt;dbl&gt;
+##  1 Human   Luke Skywalker        77         -0.298 
+##  2 Droid   C-3PO                 75          0.103 
+##  3 Droid   R2-D2                 32         -0.740 
+##  4 Human   Darth Vader          136          2.75  
+##  5 Human   Leia Organa           49         -1.74  
+##  6 Human   Owen Lars            120          1.92  
+##  7 Human   Beru Whitesun lars    75         -0.401 
+##  8 Droid   R5-D4                 32         -0.740 
+##  9 Human   Biggs Darklighter     84          0.0628
+## 10 Human   Obi-Wan Kenobi        77         -0.298 
+## # ... with 77 more rows</code></pre>
+<pre class="r"><code>#note that this is done within species, and the results differ from the same
+#operation applied to the ungrouped data
+identical(
+mutated_grouped_data$scaled_mass,
+mutate(df3, scaled_mass = scale(mass))$scaled_mass,
+)</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code>#it is recommended that you ungroup the data after you&#39;re finished mutating it
+#if you want subsequent operations to be applied to the entire data frame
+#instead of within groups
+ungrouped_data &lt;- ungroup(mutated_grouped_data)
+
+glimpse(ungrouped_data) #notice that the groups attribute is no longer there</code></pre>
+<pre><code>## Rows: 87
+## Columns: 5
+## $ name        &lt;chr&gt; &quot;Luke Skywalker&quot;, &quot;C-3PO&quot;, &quot;R2-D2&quot;, &quot;Darth Vader&quot;, &quot;Leia O~
+## $ species     &lt;chr&gt; &quot;Human&quot;, &quot;Droid&quot;, &quot;Droid&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Hum~
+## $ height      &lt;int&gt; 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 180, ~
+## $ mass        &lt;dbl&gt; 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 84.0, 77~
+## $ scaled_mass &lt;dbl[,1]&gt; &lt;matrix[26 x 1]&gt;</code></pre>
+<pre class="r"><code>#and grouped_df3 is no longer one of the data frame&#39;s classes
+class(ungrouped_data)</code></pre>
+<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+</div>
+<div id="chaining-functions-with-the-pipe-operator" class="section level1">
+<h1><span class="header-section-number">8</span> Chaining Functions with the <strong>pipe operator (%&gt;%)</strong></h1>
+<p>Thanks to the <a href="https://github.com/tidyverse/magrittr">magrittr</a> package, you can use the pipe operator, “%&gt;%”, which allows you to apply a series of functions to an object using easily readable code without requiring you to save intermediate objects.</p>
+<p>Note that you don’t have to load the magrittr package in a separate call to the library() function since the pipe operator is imported from magrittr automatically when you load the dplyr package.</p>
+<p>The pipe operator takes the object on the left and passes it to the first argument of the function to the right. Functions in dplyr and other tidyverse packages take data as the 1st argument. Those function which output the same type of object that they accept as inputs (i.e. the data argument) can be chained using the “%&gt;%” quite easily.</p>
+<p>For example,</p>
+<pre class="r"><code># %&gt;% lets you turn this nested code (evaluated from the inside out)... 
+
+arrange(summarize(group_by(select(starwars, species, mass), species), 
+                  mean_mass = mean(mass, na.rm = T)), desc(mean_mass))</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 38 x 2
+##    species      mean_mass
+##    &lt;chr&gt;            &lt;dbl&gt;
+##  1 Hutt            1358  
+##  2 Kaleesh          159  
+##  3 Wookiee          124  
+##  4 Trandoshan       113  
+##  5 Besalisk         102  
+##  6 Neimodian         90  
+##  7 Kaminoan          88  
+##  8 Nautolan          87  
+##  9 Mon Calamari      83  
+## 10 Human             82.8
+## # ... with 28 more rows</code></pre>
+<pre class="r"><code># ...which could also be written more clearly like this:
+
+arrange(#evaluated last
+  
+  summarize(#evaluated 3rd
+    
+    group_by(#evaluated 2nd
+      
+      select(#evaluated 1st
+        
+        starwars, species, mass), #1. from the starwars data frame, select() the columns species and mass
+      
+      species), #2. then use group_by() to group the data by species
+    
+    mean_mass = mean(mass, na.rm = T)),  #3. then use summarize() to calculate the mean() mass for each species
+  
+  desc(mean_mass)) #4. then arrange() the summary data frame by mean_mass in descending order</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 38 x 2
+##    species      mean_mass
+##    &lt;chr&gt;            &lt;dbl&gt;
+##  1 Hutt            1358  
+##  2 Kaleesh          159  
+##  3 Wookiee          124  
+##  4 Trandoshan       113  
+##  5 Besalisk         102  
+##  6 Neimodian         90  
+##  7 Kaminoan          88  
+##  8 Nautolan          87  
+##  9 Mon Calamari      83  
+## 10 Human             82.8
+## # ... with 28 more rows</code></pre>
+<pre class="r"><code># ... into this tidy chain, which reads much more naturally
+
+sorted_mass_by_sw_species_chained &lt;- starwars %&gt;% #take the starwars df  
+  
+  select(species, mass) %&gt;% #pass it to the 1st agrument of select() (i.e. data), then extract species and mass
+  
+  group_by(species) %&gt;% #output of select() becomes the input to the 1st argument of group_by(); group it by species
+  
+  summarise(mean_mass = mean(mass, na.rm = T)) %&gt;% #summarise() the grouped data frame to get the mean mass per group
+  
+  arrange(desc(mean_mass)) # arrange the grouped summary by the mean mass column in descending order</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre class="r"><code>sorted_mass_by_sw_species_chained</code></pre>
+<pre><code>## # A tibble: 38 x 2
+##    species      mean_mass
+##    &lt;chr&gt;            &lt;dbl&gt;
+##  1 Hutt            1358  
+##  2 Kaleesh          159  
+##  3 Wookiee          124  
+##  4 Trandoshan       113  
+##  5 Besalisk         102  
+##  6 Neimodian         90  
+##  7 Kaminoan          88  
+##  8 Nautolan          87  
+##  9 Mon Calamari      83  
+## 10 Human             82.8
+## # ... with 28 more rows</code></pre>
+<pre class="r"><code># the order of operations using %&gt;% is so much more obvious and produces code
+# that can be read at a glance and doesn&#39;t require intermediate objects which
+# each occupy memory, e.g.
+
+starwars_sub &lt;- select(starwars, 
+                       species, mass) 
+
+grouped_starwars_sub &lt;- group_by(starwars_sub, 
+                                 species) 
+
+mass_by_sw_species &lt;- summarise(grouped_starwars_sub, 
+                                mean_mass = mean(mass, na.rm = T))</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre class="r"><code>sorted_mass_by_sw_species_unchained &lt;- arrange(mass_by_sw_species, 
+                                               desc(mean_mass)) 
+
+# and then have to be deleted afterwards to reclaim the memory 
+rm(starwars_sub)
+rm(grouped_starwars_sub)
+rm(mass_by_sw_species)
+
+identical(sorted_mass_by_sw_species_chained, sorted_mass_by_sw_species_unchained) #the output is the same</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code># note: the keyboard shortcut for %&gt;% is ctrl + shift + M (at least on Windows machines)</code></pre>
+<p>We’ve seen that the default behaviour of <code>%&gt;%</code> is to pass the output of the left hand side (LHS) to the 1st argument of the right hand side (RHS), i.e.</p>
+<p><code>x %&gt;% f(y)</code> is equivalent to <code>f(x, y)</code></p>
+<p>This is great if you’re working with tidyverse functions that accept a data frame as the 1st argument, but what if you want to pass the LHS output to another argument or position in the function on the RHS (e.g. functions with data arguments in other positions)?</p>
+<p><code>%&gt;%</code> enables you to do this by automatically assigning the LHS output to the special value “<code>.</code>”. To change the argument you want to assign the LHS output to, you just have to set that argument to “<code>.</code>”, e.g.</p>
+<p><code>x %&gt;% f(y)</code> is equivalent to <code>x %&gt;% f(., y)</code> and</p>
+<p><code>y %&gt;% f(x, .)</code> is equivalent to <code>f(x, y)</code> and</p>
+<p><code>z %&gt;% f(x, y, .)</code> is equivalent to <code>f(x, y, z)</code></p>
+</div>
+<div id="navigation" class="section level1">
+<h1><span class="header-section-number">9</span> Navigation</h1>
+<p>Click <a href="https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/">here</a> to go back to the previous post or <a href="https://craig.rbind.io/post/2020-01-25-asgr-2-1-data-transformation-part-2/">here</a> to go to the next one on reshaping data with the tidyr package.</p>
+</div>
+<div id="notes" class="section level1">
+<h1><span class="header-section-number">10</span> Notes</h1>
+<ul>
+<li><p>To explore dplyr and in more depth checkout <a href="https://r4ds.had.co.nz/transform.html">chapter 5 of R for data science</a>.</p></li>
+<li><p>To learn more about subsetting using base R I highly recommend <a href="https://adv-r.hadley.nz/subsetting.html">chapter 4 of the Advanced R book</a>.</p></li>
+<li><p>For more details on other data manipulation techniques in base R checkout the <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf">official R introductory manual</a>.</p></li>
+</ul>
+<p>Thank you for visiting my blog. I welcome any suggestions for future posts, comments or other feedback you might have. Feedback from beginners and science students/trainees (or with them in mind) is especially helpful in the interest of making this guide even better for them.</p>
+<p>This blog is something I do as a volunteer in my free time. If you’ve found it helpful and want to give back, <a href="https://www.buymeacoffee.com/huttoncp">coffee donations</a> would be appreciated.</p>
+<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="huttoncp" data-color="#FF5F5F" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
+</div>
+
+    </div>
+
+    
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/r/">R</a>
+  
+  <a class="badge badge-light" href="/tags/r-basics/">R basics</a>
+  
+</div>
+
+
+
+    
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <div class="media author-card" itemscope itemtype="http://schema.org/Person">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu2f2cc1d9a2e5ef4dd3cb6b37c4b590f4_2725710_250x250_fill_q90_lanczos_center.jpg" itemprop="image" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title" itemprop="name"><a href="/authors/admin/">Dr. Craig P. Hutton</a></h5>
+      <h6 class="card-subtitle">Psychologist | Data Scientist</h6>
+      
+      <ul class="network-icon" aria-hidden="true">
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="/#contact" >
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://twitter.com/huttoncp" target="_blank" rel="noopener">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://scholar.google.ca/citations?user=bMNjAzkAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+              <i class="ai ai-google-scholar"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://github.com/huttoncp" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+      <div class="article-widget">
+        <div class="hr-light"></div>
+        <h3>Related</h3>
+        <ul>
+          
+          <li><a href="/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/">A Scientist&#39;s Guide to R: Step 2.0. Basic Operations &amp; Data Structures</a></li>
+          
+          <li><a href="/post/2019-06-22-asgr-1-getting-data-into-r/">A Scientist&#39;s Guide to R: Step 1. Getting Data into R</a></li>
+          
+          <li><a href="/post/2019-05-17-asgr-basic-workflow/">A Scientist&#39;s Guide to R: Introduction and Basic Workflow</a></li>
+          
+        </ul>
+      </div>
+      
+    
+
+    
+
+    <div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://craig-rbind-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  </div>
+</article>
+
+<div class="container">
+  <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    Copyright &copy; 2024 by Craig P. Hutton &middot; 
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+</div>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+      
+
+      
+      
+    
+
+    
+    
+
+    
+    
+    
+    <script id="dsq-count-scr" src="//craig-rbind-io.disqus.com/count.js" async></script>
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.3258b3a711acd6208568ec000de4beec.js"></script>
+
+  </body>
+</html>
+
+

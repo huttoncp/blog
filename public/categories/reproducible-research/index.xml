@@ -1,106 +1,125 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Reproducible Research on Craig Hutton, PhD</title>
-    <link>/categories/reproducible-research/</link>
+    <link>https://craig.rbind.io/categories/reproducible-research/</link>
     <description>Recent content in Reproducible Research on Craig Hutton, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
-    <lastBuildDate>Mon, 30 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 03 Oct 2021 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/categories/reproducible-research/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://craig.rbind.io/categories/reproducible-research/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>A Scientist&#39;s Guide to R: Step 3.0 - exploring data with elucidate</title>
-      <link>/post/2020-11-17-asgr-3-0-exploring-data-with-elucidate/</link>
-      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
+      <title>A Scientist&#39;s Guide to R: Step 3.2 - missing data</title>
+      <link>https://craig.rbind.io/post/2021-10-03-asgr-3-2-missing-data/</link>
+      <pubDate>Sun, 03 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>/post/2020-11-17-asgr-3-0-exploring-data-with-elucidate/</guid>
-      <description>1 TL;DR2 Introduction3 Installation &amp;amp; setup4 interrogating data4.1 checking for row copies()4.2 count()-ing unique values4.3 describe()-ing missingness &amp;amp; extreme values5 descriptives5.1 describe() a vector5.2 grouped descriptions5.3 describe_all() columns in a data frame5.4 confidence intervals6 to see, look6.1 Anscombe’s lesson: numeric descriptions can be misleading6.2 plot_*-ting data with elucidate7 interacting with data representations8 fix ’er up9 performance evaluations9.</description>
+      <guid>https://craig.rbind.io/post/2021-10-03-asgr-3-2-missing-data/</guid>
+      <description>1 TL;DR2 Introduction2.1 types of missingness2.2 detecting missing values3 Navigation4 Notes1 TL;DRThis post provides guidance on how to handle missing data.
+2 IntroductionThis post in the Scientist’s Guide to R series introduces you to the problem of missing data and offers several strategies for dealing with it.
+2.1 types of missingnessmissing completely at random</description>
+    </item>
+    
+    <item>
+      <title>A Scientist&#39;s Guide to R: Step 3.1 - data visualization with ggplot2&#43;</title>
+      <link>https://craig.rbind.io/post/2021-05-17-asgr-3-1-data-visualization/</link>
+      <pubDate>Mon, 17 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://craig.rbind.io/post/2021-05-17-asgr-3-1-data-visualization/</guid>
+      <description>1 TL;DR2 Introduction3 Setup4 ggplot2 basics5 aesthetic customization5.1 titles/labels5.2 fill5.3 colour/color5.4 reordering factors5.5 colour palettes5.6 colourblind-friendly palettes5.7 size5.8 shape5.9 linetype5.10 alpha (transparency/opacity)5.11 jittering to reduce overplotting5.12 coordinates5.12.1 coord_flip()5.12.2 coord_cartesian()5.13 guides (legends)5.14 x &amp;amp; y axis modifications5.14.1 scale_x_continuous()/scale_y_continuous()5.14.2 scale_x_discrete()/scale_y_discrete()5.</description>
+    </item>
+    
+    <item>
+      <title>A Scientist&#39;s Guide to R: Step 3.0 - exploring data with elucidate</title>
+      <link>https://craig.rbind.io/post/2020-12-07-asgr-3-0-exploring-data-with-elucidate/</link>
+      <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://craig.rbind.io/post/2020-12-07-asgr-3-0-exploring-data-with-elucidate/</guid>
+      <description>1 TL;DR2 Introduction3 Installation &amp;amp; Setup4 Interrogating Data4.1 checking for row copies() and dupes()4.2 count()-ing unique values4.3 describe()-ing missingness &amp;amp; extreme values5 Descriptives5.1 describe() a vector with summary statistics5.2 grouped descriptions5.3 describe_all() columns in a data frame5.4 confidence intervals6 To see, look6.1 Anscombe’s lesson: numeric descriptions can be misleading6.2 plot_*-ting data with elucidate6.</description>
     </item>
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 2.5 - dates &amp; times</title>
-      <link>/post/2020-10-10-asgr-2-5-dates/</link>
+      <link>https://craig.rbind.io/post/2020-10-10-asgr-2-5-dates/</link>
       <pubDate>Sat, 10 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/2020-10-10-asgr-2-5-dates/</guid>
+      <guid>https://craig.rbind.io/post/2020-10-10-asgr-2-5-dates/</guid>
       <description>1 TL;DR2 Introduction2.1 load packages3 date/time basics4 which day is it?5 reading dates6 time zones7 month names8 extracting datetime components9 days in a month10 custom date formats11 date calculations11.1 correcting excel date-to-numeric conversions12 planning a behavioural neuroscience experiment12.1 turning the planning script into a function13 Navigation14 Notes1 TL;DRDates/times are the last type of data you’ll probably work with on a fairly regular basis.</description>
     </item>
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 2.4 - forcats for factors</title>
-      <link>/post/2020-08-29-asgr-2-4-factors/</link>
+      <link>https://craig.rbind.io/post/2020-08-29-asgr-2-4-factors/</link>
       <pubDate>Sat, 29 Aug 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/2020-08-29-asgr-2-4-factors/</guid>
+      <guid>https://craig.rbind.io/post/2020-08-29-asgr-2-4-factors/</guid>
       <description>1 TL;DR2 Introduction2.1 load packages2.2 import data3 Factor basics4 factors and data visualization5 factors and modelling6 Navigation7 Notes1 TL;DRFactors are one of the two remaining types of data you’ll encounter on a fairly regular basis. This post will show you how to use the forcats tidyverse package in R so you’ll know how to handle factors when you encounter them.</description>
     </item>
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 2.3 - string manipulation and regex</title>
-      <link>/post/2020-06-28-asgr-2-3-string-manipulation/</link>
+      <link>https://craig.rbind.io/post/2020-06-28-asgr-2-3-string-manipulation/</link>
       <pubDate>Sun, 28 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/2020-06-28-asgr-2-3-string-manipulation/</guid>
+      <guid>https://craig.rbind.io/post/2020-06-28-asgr-2-3-string-manipulation/</guid>
       <description>1 TL;DR2 Introduction3 Regular expressions4 Detecting pattern matches with str_detect(), str_which(), str_count(), and str_locate().5 Subsetting strings &amp;amp; data frames with str_subset(), str_sub(), str_match(), &amp;amp; str_extract().6 Combining and splitting strings using str_c(), str_flatten(), str_split(), &amp;amp; str_glue().7 Manage the lengths of strings using str_length(), str_pad(), str_trunc(), &amp;amp; str_trim()8 Mutating strings with str_sub(), str_replace(), str_replace_all(), str_remove(), &amp;amp; str_remove_all()9 You can modify the case of a string using str_to_lower(), str_to_upper(), str_to_title(), &amp;amp; str_to_sentence()10 Example application: Using str_detect() or str_which() to subset with data frames11 Navigation12 Notes1 TL;DRBeing able to work with character strings is an essential skill in data analysis and science.</description>
     </item>
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 2.2 - Joining Data with dplyr</title>
-      <link>/post/2020-03-29-asgr-2-2-joining-data/</link>
+      <link>https://craig.rbind.io/post/2020-03-29-asgr-2-2-joining-data/</link>
       <pubDate>Sun, 29 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/2020-03-29-asgr-2-2-joining-data/</guid>
+      <guid>https://craig.rbind.io/post/2020-03-29-asgr-2-2-joining-data/</guid>
       <description>1 TL;DR2 Introduction2.1 setup3 left_join()4 right_join()5 full_join()6 inner_join()7 semi_join()8 anti_join()9 building data frames using bind_rows() or bind_cols()9.1 add_row()10 joining 3 or more data frames11 merge()12 Navigation13 Notes1 TL;DROut in the real world you may often find yourself working with data from multiple sources. It will probably be stored in separate files and you’ll need to combine them before you can attempt to answer any of your research questions.</description>
     </item>
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 2.1 Data Transformation - part 2</title>
-      <link>/post/2020-01-25-asgr-2-1-data-transformation-part-2/</link>
+      <link>https://craig.rbind.io/post/2020-01-25-asgr-2-1-data-transformation-part-2/</link>
       <pubDate>Sat, 25 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/2020-01-25-asgr-2-1-data-transformation-part-2/</guid>
+      <guid>https://craig.rbind.io/post/2020-01-25-asgr-2-1-data-transformation-part-2/</guid>
       <description>1 TL;DR2 Introduction2.1 “long” data, “wide” data, and “tidy” data3 pivot_longer()4 pivot_wider()5 unite()6 separate()7 Navigation8 Notes1 TL;DRIn the 5th post of the Scientist’s Guide to R series we explore using the tidyr package to reshape data. You’ll learn all about splitting and combining columns and how to do wide to long or long to wide transformations.</description>
     </item>
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 2.1. Data Transformation - Part 1</title>
-      <link>/post/2019-12-30-asgr-2-1-data-transformation-part-1/</link>
+      <link>https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/</link>
       <pubDate>Mon, 30 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/2019-12-30-asgr-2-1-data-transformation-part-1/</guid>
+      <guid>https://craig.rbind.io/post/2019-12-30-asgr-2-1-data-transformation-part-1/</guid>
       <description>1 TL;DR2 Introduction3 select()3.1 Renaming Columns with select() or rename()4 filter()4.1 Subset Rows using Indices with slice()5 mutate()5.1 Recoding or Creating Indicator Variables using if_else(), case_when(), or recode()6 summarise()7 group_by()8 Chaining Functions with the pipe operator (%&amp;gt;%)9 Navigation10 Notes1 TL;DRThe 4th post in the Scientist’s Guide to R series introduces data transformation techniques useful for wrangling/tidying/cleaning data.</description>
     </item>
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 2.0. Basic Operations &amp; Data Structures</title>
-      <link>/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/</link>
+      <link>https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/</link>
       <pubDate>Tue, 06 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/</guid>
+      <guid>https://craig.rbind.io/post/2019-08-06-asgr-2-0-basic-operations-and-data-structures/</guid>
       <description>1 TL;DR2 Introduction3 Basic Calculations4 Logical Operators5 Object Assignment6 Basic Summary Statistics7 Data Structures and Object Assignment7.1 Numeric and Character Vectors7.2 Logical Vectors7.3 Factors7.4 Matrices7.5 Dataframes7.6 Tibbles8 Random Numbers and Sampling9 Functions for Describing the Structural Information of Data Objects10 The Global Environment11 The Working Directory12 Projects13 Useful Keyboard Shortcuts (for R studio users)13.</description>
     </item>
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 1. Getting Data into R</title>
-      <link>/post/2019-06-22-asgr-1-getting-data-into-r/</link>
+      <link>https://craig.rbind.io/post/2019-06-22-asgr-1-getting-data-into-r/</link>
       <pubDate>Sat, 22 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/2019-06-22-asgr-1-getting-data-into-r/</guid>
+      <guid>https://craig.rbind.io/post/2019-06-22-asgr-1-getting-data-into-r/</guid>
       <description>1 TL;DR2 Introduction3 Installing and Loading R Packages4 How to Get Your Data Into R4.1 Comma Delimited (.csv) Files4.2 Tab Delimited (.txt) Files4.3 Files With Other Delimiting Characters (also .txt)4.4 Microsoft Excel Files (.xlsx, .xls)4.5 Files from SPSS, SAS, or Stata4.6 Fixed Width Files (.txt, .gz, .bz2, .xz, .zip, etc.)4.7 html/xml files4.8 JavaScript Object Notation (JSON) Files4.</description>
     </item>
     
     <item>
       <title>A Scientist&#39;s Guide to R: Introduction and Basic Workflow</title>
-      <link>/post/2019-05-17-asgr-basic-workflow/</link>
+      <link>https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/</link>
       <pubDate>Fri, 17 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/2019-05-17-asgr-basic-workflow/</guid>
-      <description>Introduction This tutorial will be the first of many blog posts for new researchers and science program students/trainees on how to use R as an analytical and productivity tool in the process of conducting scientific research. Specifically, in this post I will explain why you might want to use R and provide a brief overview of the basic R workflow used in the analysis of experimentally obtained data.
-As someone who has spent many years analyzing data using a variety of technologies (e.</description>
+      <guid>https://craig.rbind.io/post/2019-05-17-asgr-basic-workflow/</guid>
+      <description>1 Introduction2 Workflow Outline2.1 Navigation2.2 Notes1 IntroductionThis tutorial will be the first of many blog posts for new researchers and science program students/trainees on how to use R as an analytical and productivity tool in the process of conducting scientific research. Specifically, in this post I will explain why you might want to use R and provide a brief overview of the basic R workflow used in the analysis of experimentally obtained data.</description>
     </item>
     
   </channel>

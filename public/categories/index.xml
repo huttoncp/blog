@@ -1,95 +1,113 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Craig Hutton, PhD</title>
-    <link>/categories/</link>
+    <link>https://craig.rbind.io/categories/</link>
     <description>Recent content in Categories on Craig Hutton, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
-    <lastBuildDate>Mon, 30 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 03 Oct 2021 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://craig.rbind.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>data exploration</title>
-      <link>/categories/data-exploration/</link>
-      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/data-exploration/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>data interrogation</title>
-      <link>/categories/data-interrogation/</link>
-      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/data-interrogation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>data visualisation</title>
-      <link>/categories/data-visualisation/</link>
-      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/data-visualisation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>descriptive statistics</title>
-      <link>/categories/descriptive-statistics/</link>
-      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/descriptive-statistics/</guid>
-      <description></description>
-    </item>
     
     <item>
       <title>R</title>
-      <link>/categories/r/</link>
-      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
+      <link>https://craig.rbind.io/categories/r/</link>
+      <pubDate>Sun, 03 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>/categories/r/</guid>
+      <guid>https://craig.rbind.io/categories/r/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Reproducible Research</title>
-      <link>/categories/reproducible-research/</link>
-      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
+      <link>https://craig.rbind.io/categories/reproducible-research/</link>
+      <pubDate>Sun, 03 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>/categories/reproducible-research/</guid>
+      <guid>https://craig.rbind.io/categories/reproducible-research/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>data exploration</title>
+      <link>https://craig.rbind.io/categories/data-exploration/</link>
+      <pubDate>Sun, 03 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://craig.rbind.io/categories/data-exploration/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>missing data</title>
+      <link>https://craig.rbind.io/categories/missing-data/</link>
+      <pubDate>Sun, 03 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://craig.rbind.io/categories/missing-data/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>data visualization</title>
+      <link>https://craig.rbind.io/categories/data-visualization/</link>
+      <pubDate>Mon, 17 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://craig.rbind.io/categories/data-visualization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>data interrogation</title>
+      <link>https://craig.rbind.io/categories/data-interrogation/</link>
+      <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://craig.rbind.io/categories/data-interrogation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>data visualisation</title>
+      <link>https://craig.rbind.io/categories/data-visualisation/</link>
+      <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://craig.rbind.io/categories/data-visualisation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>descriptive statistics</title>
+      <link>https://craig.rbind.io/categories/descriptive-statistics/</link>
+      <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://craig.rbind.io/categories/descriptive-statistics/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Data Cleaning and Transformation</title>
-      <link>/categories/data-cleaning-and-transformation/</link>
+      <link>https://craig.rbind.io/categories/data-cleaning-and-transformation/</link>
       <pubDate>Sat, 10 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/categories/data-cleaning-and-transformation/</guid>
+      <guid>https://craig.rbind.io/categories/data-cleaning-and-transformation/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Data Analysis</title>
-      <link>/categories/data-analysis/</link>
+      <link>https://craig.rbind.io/categories/data-analysis/</link>
       <pubDate>Fri, 17 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/categories/data-analysis/</guid>
+      <guid>https://craig.rbind.io/categories/data-analysis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Statistics</title>
-      <link>/categories/statistics/</link>
+      <link>https://craig.rbind.io/categories/statistics/</link>
       <pubDate>Fri, 17 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/categories/statistics/</guid>
+      <guid>https://craig.rbind.io/categories/statistics/</guid>
       <description></description>
     </item>
     
