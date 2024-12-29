@@ -104,13 +104,13 @@
   </url>
   
   <url>
-    <loc>https://craig.rbind.io/categories/r/</loc>
+    <loc>https://craig.rbind.io/tags/r/</loc>
     <lastmod>2021-10-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://craig.rbind.io/tags/r/</loc>
+    <loc>https://craig.rbind.io/categories/r/</loc>
     <lastmod>2021-10-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -419,13 +419,13 @@
   </url>
   
   <url>
-    <loc>https://craig.rbind.io/categories/statistics/</loc>
+    <loc>https://craig.rbind.io/tags/statistics/</loc>
     <lastmod>2019-05-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://craig.rbind.io/tags/statistics/</loc>
+    <loc>https://craig.rbind.io/categories/statistics/</loc>
     <lastmod>2019-05-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

@@ -25,6 +25,8 @@ name: Dr. Craig P. Hutton
 organizations:
 - name: BC Behavioural Insights Group, Province of British Columbia
   url: "https://www2.gov.bc.ca/gov/content/governments/services-for-government/service-experience-digital-delivery/behavioural-insights"
+- name: Business Intelligence and Data Analytics, University of Victoria Continuing Studies
+  url: "https://continuingstudies.uvic.ca/data-computing-and-technology/programs/business-intelligence-and-data-analytics"
 - name: Data Science Studio, Institute on Aging & Lifelong Health, University of Victoria
   url: "https://dss-ialh.rbind.io"
 
