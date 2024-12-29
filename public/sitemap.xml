@@ -87,55 +87,44 @@
   </url>
   
   <url>
-    <loc>https://craig.rbind.io/post/2021-10-03-asgr-3-2-missing-data/</loc>
-    <lastmod>2021-10-03T00:00:00+00:00</lastmod>
+    <loc>https://craig.rbind.io/post/2021-05-17-asgr-3-1-data-visualization/</loc>
+    <lastmod>2021-05-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://craig.rbind.io/categories/</loc>
-    <lastmod>2021-10-03T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://craig.rbind.io/post/</loc>
-    <lastmod>2021-10-03T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://craig.rbind.io/tags/r/</loc>
-    <lastmod>2021-10-03T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://craig.rbind.io/categories/r/</loc>
-    <lastmod>2021-10-03T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://craig.rbind.io/tags/r/</loc>
+    <lastmod>2021-05-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://craig.rbind.io/categories/reproducible-research/</loc>
-    <lastmod>2021-10-03T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://craig.rbind.io/categories/data-exploration/</loc>
-    <lastmod>2021-10-03T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://craig.rbind.io/categories/missing-data/</loc>
-    <lastmod>2021-10-03T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://craig.rbind.io/post/2021-05-17-asgr-3-1-data-visualization/</loc>
     <lastmod>2021-05-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -419,13 +408,13 @@
   </url>
   
   <url>
-    <loc>https://craig.rbind.io/tags/statistics/</loc>
+    <loc>https://craig.rbind.io/categories/statistics/</loc>
     <lastmod>2019-05-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://craig.rbind.io/categories/statistics/</loc>
+    <loc>https://craig.rbind.io/tags/statistics/</loc>
     <lastmod>2019-05-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

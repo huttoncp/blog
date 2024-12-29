@@ -24,7 +24,7 @@ academic interests:
 name: Dr. Craig P. Hutton
 organizations:
 - name: BC Behavioural Insights Group, Province of British Columbia
-  url: "https://www2.gov.bc.ca/gov/content/governments/services-for-government/service-experience-digital-delivery/behavioural-insights"
+  url: "https://www2.gov.bc.ca/gov/content/data/initiatives/behavioural-insights"
 - name: Business Intelligence and Data Analytics, University of Victoria Continuing Studies
   url: "https://continuingstudies.uvic.ca/data-computing-and-technology/programs/business-intelligence-and-data-analytics"
 - name: Data Science Studio, Institute on Aging & Lifelong Health, University of Victoria
@@ -50,7 +50,7 @@ user_groups:
 - Visitors
 ---
 
-I am a Senior Behavioural Scientist with the Province of British Columbia's [Behavioural Insights Group](https://www2.gov.bc.ca/gov/content/governments/services-for-government/service-experience-digital-delivery/behavioural-insights). I also teach an introductory [data analysis course](https://continuingstudies.uvic.ca/data-computing-and-technology/courses/data-analytics-coding-fundamentals) at the University of Victoria and occasionally work as a data science consultant for the [Winstanley Laboratory](https://winstanleylab.psych.ubc.ca/) at the University of British Columbia. My diverse training in experimental psychology, applied statistics, and data science leads me to apply a multidisciplinary and creative approach to doing research. I deeply enjoy solving complex problems and exploring new ideas.
+I am a Senior Behavioural Scientist with the Province of British Columbia's [Behavioural Insights Group](https://www2.gov.bc.ca/gov/content/data/initiatives/behavioural-insights). I also teach an introductory [data analysis course](https://continuingstudies.uvic.ca/data-computing-and-technology/courses/data-analytics-coding-fundamentals) at the University of Victoria and occasionally work as a data science consultant for the [Winstanley Laboratory](https://winstanleylab.psych.ubc.ca/) at the University of British Columbia. My diverse training in experimental psychology, applied statistics, and data science leads me to apply a multidisciplinary and creative approach to doing research. I deeply enjoy solving complex problems and exploring new ideas.
 
 I’ve worked both as an independent contributor and as a leader of teams of up to 10. In my current role with the Province of British Columbia I primarily work in R.
 

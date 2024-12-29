@@ -7,21 +7,10 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
-    <lastBuildDate>Sun, 03 Oct 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 17 May 2021 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://craig.rbind.io/post/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>A Scientist&#39;s Guide to R: Step 3.2 - missing data</title>
-      <link>https://craig.rbind.io/post/2021-10-03-asgr-3-2-missing-data/</link>
-      <pubDate>Sun, 03 Oct 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://craig.rbind.io/post/2021-10-03-asgr-3-2-missing-data/</guid>
-      <description>1 TL;DR2 Introduction2.1 types of missingness2.2 detecting missing values3 Navigation4 Notes1 TL;DRThis post provides guidance on how to handle missing data.
-2 IntroductionThis post in the Scientist’s Guide to R series introduces you to the problem of missing data and offers several strategies for dealing with it.
-2.1 types of missingnessmissing completely at random</description>
-    </item>
     
     <item>
       <title>A Scientist&#39;s Guide to R: Step 3.1 - data visualization with ggplot2&#43;</title>

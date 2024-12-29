@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; {year} by Craig P. Hutton</copyright>
-    <lastBuildDate>Sun, 03 Oct 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 17 May 2021 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://craig.rbind.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>R</title>
       <link>https://craig.rbind.io/categories/r/</link>
-      <pubDate>Sun, 03 Oct 2021 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 17 May 2021 00:00:00 +0000</pubDate>
       
       <guid>https://craig.rbind.io/categories/r/</guid>
       <description></description>
@@ -24,7 +24,7 @@
     <item>
       <title>Reproducible Research</title>
       <link>https://craig.rbind.io/categories/reproducible-research/</link>
-      <pubDate>Sun, 03 Oct 2021 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 17 May 2021 00:00:00 +0000</pubDate>
       
       <guid>https://craig.rbind.io/categories/reproducible-research/</guid>
       <description></description>
@@ -33,18 +33,9 @@
     <item>
       <title>data exploration</title>
       <link>https://craig.rbind.io/categories/data-exploration/</link>
-      <pubDate>Sun, 03 Oct 2021 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 17 May 2021 00:00:00 +0000</pubDate>
       
       <guid>https://craig.rbind.io/categories/data-exploration/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>missing data</title>
-      <link>https://craig.rbind.io/categories/missing-data/</link>
-      <pubDate>Sun, 03 Oct 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://craig.rbind.io/categories/missing-data/</guid>
       <description></description>
     </item>
     
