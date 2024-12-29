@@ -54,4 +54,4 @@ I’ve worked both as an independent contributor and as a leader of teams of up 
 
 In my free time I enjoy yoga, hiking, skiing, gaming, coding, reading, travel, live music, and visiting with friends and family.
 
-Learn more about my research interests, skills, and experience, by exploring my website or reading my [resume](ch_resume.pdf).
+Learn more about my research interests, skills, and experience, by exploring my website or reading my [resume](resume.pdf).
